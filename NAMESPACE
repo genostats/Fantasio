@@ -1,0 +1,18 @@
+import(Rcpp)
+
+# importFrom("grDevices", "heat.colors")
+# importFrom("graphics", "contour", "image")
+# importFrom("stats", "pchisq", "quantile", "rnorm")
+# importFrom("utils", "read.table", "write.table")
+
+useDynLib(FEstim)
+
+exportClasses(msat.matrix)
+exportMethods(show, dim)
+
+export(set.log.emiss)
+export(random.msat)
+export(festim)
+export(log.proba.emission)
+export(Likelihood, Likelihood.gradient, forward.backward)
+export(read.msat.matrix)
