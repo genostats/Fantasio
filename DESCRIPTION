@@ -6,7 +6,7 @@ Date: 2017-03-26
 Encoding: UTF-8
 Author: Isuru Haupe, Mourad Sahbatou, Marie-Claude Babron,  Hervé Perdry & Anne-Louise Leutenegger
 Maintainer: Hervé Perdry <herve.perdry@u-psud.fr>
-Description: etc etc
+Description: etc etc usw
 License: GPL-3
 LinkingTo: Rcpp
 Depends: Rcpp
