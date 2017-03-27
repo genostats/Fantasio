@@ -32,7 +32,7 @@ read.msat.matrix <- function(mapfile, datafile) {
     le <- length(L)   
     co <- (le-4) / 2
     freq[i, 1:co] <- as.numeric( L[seq(6, le, by = 2)] ) #remplissage de la matrice des fréquance
-    geno[i, 1:co] <- L[ seq(5, le, by = 2) ] #remplissagede la matrice des noms des allèles
+    geno[i, 1:co] <- L[ seq(5, le, by = 2) ] #remplissage de la matrice des noms des allèles
     map$id[i] <- L[1]
     map$chr[i] <- as.integer(L[2])
     map$distance[i] <- as.numeric(L[3])
@@ -47,7 +47,7 @@ read.msat.matrix <- function(mapfile, datafile) {
   while(TRUE)
   {
     
-    L <- scan(b, what = "numeric", nlines = 1, quiet = TRUE)
+    L <- scan(b, what = "character", nlines = 1, quiet = TRUE)
     le <- length(L)
     if(le == 0) break
     maxrow_datafile = maxrow_datafile + 1
@@ -71,7 +71,7 @@ read.msat.matrix <- function(mapfile, datafile) {
   for (i in 1:maxrow_datafile)
   {
     
-    L <- scan(b, what = "character",nlines = 1, quiet = TRUE)
+    L <- scan(b, what = "character", nlines = 1, quiet = TRUE)
     le <- length(L)
     if(le == 0) break
     matrice_genotype[, 2*i-1] <- L[seq(7,le, by = 2)]
@@ -84,24 +84,20 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   #création de la msat matrix re numéroté grâce aux deux matrices créer précédemment 
   #(matrice des génotypes/nom des allèles)
+  #les allèles non présents dans le mapfile sont laissés à 0 -> genotype inconnu/manquant
   
   matrice_genotype_modif <- matrix(0L, nrow = maxrow, ncol = (2* maxrow_datafile)) 
-  
-  row_geno = nrow(matrice_genotype_modif)
-  col_geno = ncol(matrice_genotype_modif)
   
   for (i in 1:ncol(geno))
   {
     for(j in 1:nrow(geno))
     {
-      matrice_genotype_modif [ matrice_genotype == geno[j,i]] <- i
+      matrice_genotype_modif [ j, matrice_genotype[j,] == geno[j,i] ] <- i
     }
   }
   
   
-  new("msat.matrix", maxrow, maxrow_datafile, ped, matrice_genotype_modifier, map, freq)
-  
-  ## il faudra repenser au mode des colonnes de ped : character, numeric ?
+  new("msat.matrix", maxrow, maxrow_datafile, ped, matrice_genotype_modif, map, freq)
 }
 
 

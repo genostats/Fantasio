@@ -1,9 +1,13 @@
 
 # x = a msat matrix
+# -> renvoie une msat matrx avec a et f estimés
 festim <- function(x, verbose = TRUE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)
-  res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N))
+  x@a <- numeric(N)
+  x@f <- numeric(N)
+  
+  # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N))
   for(i in 1:nrow(x)) {
     if(verbose) cat("Individual #",i,"\n")
     logEmission <- x@log.emiss[ c(2*i-1,2*i), ]
@@ -29,12 +33,11 @@ festim <- function(x, verbose = TRUE) {
     }
 
     xx <- optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(0,0), upper = c(Inf, 1), control = list(fnscale = -1))
-    res$a[i] <- xx$par[1]
-    res$f[i] <- xx$par[2]
-    res$likelihood[i] <- xx$value
-    res$convergence[i] <- xx$convergence    
+    x@a[i] <- xx$par[1]
+    x@f[i] <- xx$par[2]
+    if(xx$convergence != 0) warn("Individual #",i, ", id = ", x@ped$id[i], ", optimization algorithm did not converge");
   }
-  res
+  x
 }
 
 
