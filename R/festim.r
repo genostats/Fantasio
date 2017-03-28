@@ -10,7 +10,7 @@ festim <- function(x, verbose = TRUE) {
   # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N))
   for(i in 1:nrow(x)) {
     if(verbose) cat("Individual #",i,"\n")
-    logEmission <- x@log.emiss[ c(2*i-1,2*i), ]
+    logEmission <- get.log.emiss(x,i)
     last_theta <- c(0.05, 0.01)
     last_likelihood <- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, last_theta[1], last_theta[2])
 

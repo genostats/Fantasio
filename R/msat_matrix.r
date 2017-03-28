@@ -15,7 +15,7 @@ setClass("msat.matrix", representation(
       log.emiss = 'matrixOrNULL', # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (même commentaire)
               a = 'numeric',      # valeurs de a et f estimées par la fonction festim
               f = 'numeric',
-       HBD.prob = 'numeric'       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb msats x nb inds)
+       HBD.prob = 'matrix'       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb msats x nb inds)
 ) )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object,ncol,nrow,ped,msat,map,freq) {
