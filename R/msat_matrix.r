@@ -16,6 +16,7 @@ setClass("msat.matrix", representation(
               a = 'numeric',      # valeurs de a et f estimées par la fonction festim
               f = 'numeric',
        HBD.prob = 'matrix'       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb msats x nb inds)
+      #FLOD.prob = 'matrix'       # matrice des FLOD scores  dim = (nb msats x nb inds)
 ) )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object,ncol,nrow,ped,msat,map,freq) {
@@ -48,7 +49,7 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object,nco
   .Object@freq     <- freq
   .Object@log.freq <- log(freq)
   .Object@delta.dist <- delta.dist
-  .Object
+  #.Object@FLOD.prob <- FLOD.prob
 })
 
 # x = une msat.matrix
