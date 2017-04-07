@@ -83,7 +83,7 @@ HBD.plot <- function(x)
   
   ymax <- max(x@FLOD, na.rm = TRUE)
   ymin <- min(x@FLOD, na.rm=TRUE)
-  xmax <- max(x@map$distance, na.rm=TRUE)
+  xmax <- max(res, na.rm=TRUE)
   mycol <- rep(c("cadetblue2",8),11) #couleur des points
   
   #Plotting : tous les chr pour un individus 
@@ -113,11 +113,12 @@ HBD.plot <- function(x)
       d <- x@map$distance[x@map$chr == j]
       n <- last(d)
       d <- x@map$distance[x@map$chr == j+1] + n
-      abline(h=x@map$distance[n],col="grey",lwd=2)
       
+      axis(1,at=res_pos,1:22,col.ticks=0,cex.axis=1.5)
+      abline(v=res_pos,col="grey",lwd=2)
       n <- n + x@map$distance[n2]
     }
-    axis(1,at=res_pos,1:22,col.ticks=0,cex.axis=1.5) 
+     
   }
   
   dev.off()
