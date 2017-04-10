@@ -22,7 +22,7 @@ HBD.plot <- function(x)
       ymax <- max(3, max(x@FLOD[, x@map$chr == i], na.rm = TRUE)) 
       xmax <- max(d, na.rm = TRUE)
       ymin <- min(x@FLOD[, x@map$chr == i], na.rm = TRUE)
-      png(file = paste("Plots/FLOD.","cM.",i,".png",sep = ""), width = 2400, height = 1000, pointsize=24)
+      png(file = paste("Plots/FLOD.","cM.",i,".png",sep = ""), width = 4000, height = 2500, pointsize=24)
           
       #d=distance pour chaque chr i ; r=FLOD pour chaque Indiv j & chr i
       plot(d, r, type="n", pch=16, xlim = c(0,xmax), ylim = c(ymin, ymax), xlab = "Position (cM)", ylab="FLOD", cex.lab=1.4, cex.axis=1.5, main= paste("FLOD (chromosome ",i,")", sep=""), cex.main=1.5)    
@@ -42,9 +42,9 @@ HBD.plot <- function(x)
         if(x@f[j] == 0) next
         r <- x@FLOD[j, x@map$chr == i]
         lines(d, r,col= j)
+        
       } 
-      
-      
+      legend(x = "topright", legend =  c("Individus :", x@ped$famid, "Famid : ",  x@ped$id), lty =0,cex = 1.5) 
                   
       
       
@@ -56,71 +56,48 @@ HBD.plot <- function(x)
   ############################
   
   #prendre la derniere position du chr i
-  n <- 0
-  res <- c(x@map$distance[x@map$chr == 1])
-  res_pos <- c()
+  
+  res <- NULL
+  res_pos <- 5
   
   for ( i in unique(x@map$chr))
   {
     d <- x@map$distance[x@map$chr == i]
-    n2 <- last(d)
-    
-   
-    # ajouter a toutes les positions du chr i + 1 la derniere valeurs 
-    #de la pos du chr i
-   
-    d <- x@map$distance[x@map$chr == i+1] + n
-    v <- d[last(n2)]
-    n <- n + x@map$distance[n2]
-    res <- c(res,d)
-    res_pos <- c(res_pos, v)
+    res <- c(res, max(0,res, na.rm=TRUE)+10+d)
+    res_pos <- c(res_pos, max(0,res)+5)
   }
-  res_pos <- res_pos[!is.na(res_pos)]
-  last_res <- last(res)
-  h <- last(res_pos)
-  res_pos[h +1] <- res[last_res] # utile pour tracer les lignes
   
   
-  ymax <- max(x@FLOD, na.rm = TRUE)
+  
+  ymax <- max(3,x@FLOD, na.rm = TRUE)
   ymin <- min(x@FLOD, na.rm=TRUE)
   xmax <- max(res, na.rm=TRUE)
   mycol <- rep(c("cadetblue2",8),11) #couleur des points
   
-  #Plotting : tous les chr pour un individus 
-  png(file = paste("Plots/FLOD.", "cM.","png",sep=""), width = 2400, height = 800, pointsize = 24 )
-  for ( i in x@nrow)
+  #Plotting : tous les chr pour un individu 
+  #TODO : représenter la region d'intérêt en vert ?
+  
+  for ( i in 1:x@nrow)
   {
-    if(x@f[j] == 0) next
-    plot(res, x@FLOD[i,], type="p", pch=16, xlim=c(0,xmax), ylim = c(ymin,ymax), xlab = "", ylab = "FLOD", cex.lab = 1.4, cex.axis=1.5, col= mycol[unique(x@map$chr)], xaxt="n", cex=0.75 )  #
-    #lines(res,x@FLOD[i,],col=2,lwd=3) # demande des valeurs finie  
-    #for(i in unique(x@map$chr)) 
-    #{
-    #  abline(v=x@map$distance[],col="grey",lwd=2);
-    #  axis(1,at=mean(chr_pos[i:(i+1)]),i,col.ticks=0,cex.axis=1.5)
-    #}
-    #abline(v=chr_pos[23],col="grey",lwd=2);  #
-    #for ( i in 1:ymax)
-    #{
-    #  abline(h=i, col="grey", lwd=1.5, lty=2)
-    #}  
-    #abline(h=3,col="grey",lwd=2)
-    
+    if(x@f[i] == 0) next
+    png(file = paste("Plots/FLOD.","Individu",i, ".cM.genome.png",sep=""), width = 2400, height = 800, pointsize = 24 )
+    plot(res, x@FLOD[i,], type="b",pch=16, lty=1,xlim=c(0,xmax), ylim = c(ymin,ymax), xlab = "", ylab = "FLOD", cex.lab = 1.4, cex.axis=1.5, main= paste("FLOD (individu ",i,")", sep=""), col= mycol[x@map$chr], xaxt="n", cex=0.75 )  
     
     #pour chaque chr les separer par des lignes
-    n <- NULL
     for ( j in unique(x@map$chr))
     {
-      d <- x@map$distance[x@map$chr == j]
-      n <- last(d)
-      d <- x@map$distance[x@map$chr == j+1] + n
-      
-      axis(1,at=res_pos,1:22,col.ticks=0,cex.axis=1.5)
-      abline(v=res_pos,col="grey",lwd=2)
-      n <- n + x@map$distance[n2]
+      abline(v=res_pos[j],col="grey",lwd=2)
+      axis(1,at=mean(res_pos[j:(j+1)]),j,col.ticks=0,cex.axis=1.5)
     }
-     
+    for (j in 1:3) 
+    {
+      abline(h=j,col="grey",lwd=1,lty=2)
+    }
+    abline(h=3,col="grey",lwd=2)
+    legend(x="topright", legend=c(x@ped$famid[i], x@ped$id[i]), lty = 0,cex = 1)
+    dev.off()
   }
+ 
   
-  dev.off()
     
 }

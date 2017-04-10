@@ -1,64 +1,33 @@
 set.HFLOD <- function(x, step = 0.01)
 {
   #initialiser alpha
-  alpha <- matrix(0.0)
-  nb <- 0
-  i <- 0
-  while(nb * step < 1)
+ alpha <- matrix(0.0)
+ nb <- 0
+ i <- 0
+ while(nb * step < 1)
+ {
+   alpha[i] <- nb * step
+   nb <- nb + 1
+   i <- i + 1
+ }
+ alpha[i] <- 1
+  
+
+ 
+  h <- function(alpha)
   {
-    alpha[i] <- nb * step
-    nb <- nb + 1
-    i <- i + 1
+      sum <- c()
+     
+       for (i in 1:x@nrow)
+       {
+          if(x@f[i]==0) next
+          v <- sum(log10(alpha*exp(x@FLOD[i,] *log(10))+(1-alpha)))
+          #v <- sum(log(alpha * (exp(x@FLOD[i,]*log(10))-1) + 1)/log(10))
+          sum <- c(sum,v)
+       }
+    return(sum)
   }
-  alpha[i] <- 1
-  
-  
-  # calculer les HFLOD pour chaque marqueurs 
-  HFLOD <- matrix(0.0, nrow = x@ncol, ncol = 2) #en ligne les marqueurs en colonnes HFLOD et alpha
-  
-#######################################################################################################################################  
-
-  temp <- matrix(alpha)
-  #sum_HFLOD <- 0 
-  
-  ####### obtenir les FLOD pour l'individus i 
-  #ind <- x@nrow
-  #p <- 0
-  #all_FLOD <- NULL
-  
-   
-
-  last <- function(x) { return( length(x) ) } #obtenir le dernier elements de alpha
-  FLOD_ind <- 0
-  for (i in 1:x@ncol)
-  {
-      FLOD_ind <- x@FLOD[,i]#FLOD pour le marqueurs i
-      j <- 1
-      g <- 0
-      while(j <= last(alpha))
-      {
-          g <- temp[j] * (exp(FLOD_ind * log(10))-1)+1
-          temp[j] <- max(g, 0.0001, na.rm = TRUE)
-          temp[j] <- log(temp[j])/log(10)
-          
-          for(v in 1:last(temp))
-          {
-            HFLOD[i] <- HFLOD[i] + temp[i]
-          }
-         j <- j + 1
-          
-          
-        
-    
-      }
-    }
-    
-   
-  
-
-  
-  x@HFLOD <- HFLOD 
-  return(x)
-  
 }
-
+# Error in optim(par = c(0, 1), fn = h) : 
+#objective function in optim evaluates to length 8 not 1
+#besoin de retourner un vecteur de longueur 1
