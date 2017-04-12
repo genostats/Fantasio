@@ -1,33 +1,22 @@
-set.HFLOD <- function(x, step = 0.01)
+set.HFLOD <- function(x)
 {
-  #initialiser alpha
- alpha <- matrix(0.0)
- nb <- 0
- i <- 0
- while(nb * step < 1)
- {
-   alpha[i] <- nb * step
-   nb <- nb + 1
-   i <- i + 1
- }
- alpha[i] <- 1
-  
-
- 
-  h <- function(alpha)
+  HFLOD <- matrix(0.0, nrow = x@ncol, ncol = 2)
+  for (j in 1:x@ncol)
   {
-      sum <- c()
-     
-       for (i in 1:x@nrow)
-       {
-          if(x@f[i]==0) next
-          v <- sum(log10(alpha*exp(x@FLOD[i,] *log(10))+(1-alpha)))
-          #v <- sum(log(alpha * (exp(x@FLOD[i,]*log(10))-1) + 1)/log(10))
-          sum <- c(sum,v)
-       }
-    return(sum)
+    # function h(alpha)
+    h <- function(alpha)
+    {
+      return(sum(log10(alpha*exp(x@FLOD[,j] *log(10))+(1-alpha)), na.rm = TRUE))
+      #return(sum(log(alpha * (exp(x@FLOD[,j]*log(10))-1) + 1)/log(10), na.rm = TRUE))
+    }
+    
+    #optimization of h(alpha)
+    res <- optim(par = 1, fn = h, method="L-BFGS-B", lower = 0, upper = 1, control = list(fnscale = -1)) 
+    #        optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(0,0), upper = c(Inf, 1), control = list(fnscale = -1))
+    HFLOD[j,1]<-res$value
+    HFLOD[j,2]<-res$par        
   }
+  x@HFLOD <- HFLOD
+  return(x)
 }
-# Error in optim(par = c(0, 1), fn = h) : 
-#objective function in optim evaluates to length 8 not 1
-#besoin de retourner un vecteur de longueur 1
+

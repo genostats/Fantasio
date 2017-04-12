@@ -15,9 +15,9 @@ setClass("msat.matrix", representation(
       log.emiss = 'matrixOrNULL', # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (mÃªme commentaire)
               a = 'numeric',      # valeurs de a et f estimÃ©es par la fonction festim
               f = 'numeric',
-       HBD.prob = 'matrix',       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb msats x nb inds)
-           FLOD = 'matrix',       # matrice des FLOD scores  dim = (nb msats x nb inds)
-          HFLOD = 'matrix'        # calcul des LOD scores en présence de consanguinité
+       HBD.prob = 'matrix',       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
+           FLOD = 'matrix',       # matrice des FLOD scores  dim = (nb inds x nb msats)
+          HFLOD = 'matrix'       # matrice des HFLOD scores dim = (nb msats x 2)
 ) )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object,ncol,nrow,ped,msat,map,freq) {

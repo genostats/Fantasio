@@ -94,7 +94,7 @@ HBD.plot <- function(x)
       abline(h=j,col="grey",lwd=1,lty=2)
     }
     abline(h=3,col="grey",lwd=2)
-    legend(x="topright", legend=c(x@ped$famid[i], x@ped$id[i]), lty = 0,cex = 1)
+    legend(x="topright", legend=c("Familly_ID : ",x@ped$famid[i],"Individual_ID : ", x@ped$id[i]), lty = 0,cex = 1)
     dev.off()
   }
  
