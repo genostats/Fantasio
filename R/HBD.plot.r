@@ -75,7 +75,7 @@ HBD.plot <- function(x)
   mycol <- rep(c("cadetblue2",8),11) #couleur des points
   
   #Plotting : tous les chr pour un individu 
-  #TODO : représenter la region d'intérêt en vert ?
+  
   
   for ( i in 1:x@nrow)
   {
