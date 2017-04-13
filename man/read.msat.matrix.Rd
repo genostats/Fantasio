@@ -22,7 +22,7 @@ which creates an object with the information of the sample (number of individual
 \value{return an msat_matrix object}
 \seealso{msat_matrix}
 \exemples{
-> x <- read.msat.matrix("map_msat.in", "data_msat.in")
-> x
-> str(x)
+x <- read.msat.matrix("map_msat.in", "data_msat.in")
+x
+str(x)
 }
