@@ -1,1 +1,4 @@
 * dans fonction festim ajouter au data frame res les colonnes famid et id
+* dans forward_backward gérer les cas f == 0 et f == 1 de la meme façon que dans Likelihood ... !
+* calcul (approché) de la hessienne en (a,f)
+* jeter un oeil sur la fonction festim / choix d'optimisation ...
