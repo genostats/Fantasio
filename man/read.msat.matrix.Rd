@@ -7,6 +7,7 @@ thus it creates all the arguments necessary for the function msat_matrix()}
 \arguments{
 	\item{mapfile.in}{a mapfile of the sample}
 	\item{datafile.in}{a datafile of the sample}
+	}
 \details{
 the function read.msat.matrix() creates the following arguments:
 ncol = number of genetics marker
@@ -21,8 +22,8 @@ which creates an object with the information of the sample (number of individual
 }
 \value{return an msat_matrix object}
 \seealso{msat_matrix}
-\exemples{
-x <- read.msat.matrix("map_msat.in", "data_msat.in")
-x
-str(x)
+\examples{
+  x <- read.msat.matrix("map_msat.in", "data_msat.in")
+  x
+  str(x)
 }
