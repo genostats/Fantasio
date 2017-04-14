@@ -1,4 +1,5 @@
 \name{set.HBD.prob}
+\alias{set.HBD.prob}
 \title{Add HBD Probabilities To The msat_matrix Object }
 \description{Add HBD Prob for all the individual in the sample}
 \usage{
@@ -9,8 +10,8 @@ set.HBD.prob(x)
 }
 \details{before using set.HDB.prob with an object x make sure it have his coefficient a and f estimated with str(nameOftheObject)}
 \value{return an object x with a and f estimated}
-\seealso{festim(), read.msat.matrix()}
+\seealso{ \code{\link{festim}},  \code{\link{read.msat.matrix}}}
 \examples{
-> x <- set.HBD.prob(x)
-> str(x)
+x <- set.HBD.prob(x)
+str(x)
 }

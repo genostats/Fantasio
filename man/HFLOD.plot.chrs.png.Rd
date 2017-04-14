@@ -1,11 +1,12 @@
 \name{HFLOD.plot.chrs.png}
+\alias{HFLOD.plot.chrs.png}
 \title{PLot of all chromosom's HFLOD in function of their positions}
-  \description{output in a folder called HFLOD all the all chromosom's positions in function of their HFLOD}
+  \description{output in a folder called "HFLOD" all the  chromosom's positions in function of their HFLOD in ".png" format}
 \usage{HFLOD.plot.chrs.png(x)}
 \arguments{
-  \item{x}{a matrix with HFLOD probabilities already computes}
+  \item{x}{a matrix with HFLOD probabilities already computes (which means it have been passed to festim(), HBD.prob(), set.FLOD() and set.HFLOD() )}
 }
-\seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chr}},  \code{\link{HFLOD.manhattan.plot}}}
+\seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chr}},  \code{\link{HFLOD.manhattan.plot}}, \code{\link{festim}}}
 \examples{
   require(FEstim)
   x <- read.msat.matrix("Example/mapfile.in", "Example/datafile.txt")

@@ -1,10 +1,12 @@
 \name{HBD.prob}
-\title{Computes HBD probabilities for all the individual in the sample}
-\description{Returns a matrix with all the HBD computes for each marker for each individual}
+\alias{HBD.prob}
+\title{HBD probabilities for all the individual in the sample}
+\description{Returns a matrix with all the HBD computes for each marker for each individual }
 \usage{HBD.prob(x)}
 \arguments{
-\item{x}{a msat.matrix with a and f computed}
+\item{x}{a msat.matrix with a and f computed (which means it have been passed to festim() )}
 }
+\seealso{\code{\link{festim}}, \code{\link{set.FLOD}}}
 \value{A matrix with HBD computes}
 \examples{
 require(FEstim)
