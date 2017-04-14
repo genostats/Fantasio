@@ -1,7 +1,7 @@
 \name{HFLOD.plot.chrs.png}
 \alias{HFLOD.plot.chrs.png}
 \title{PLot of all chromosom's HFLOD in function of their positions}
-  \description{output in a folder called "HFLOD" all the  chromosom's positions in function of their HFLOD in ".png" format}
+  \description{output in your current directory, in a folder called "HFLOD" all the  chromosom's positions in function of their HFLOD in ".png" format}
 \usage{HFLOD.plot.chrs.png(x)}
 \arguments{
   \item{x}{a matrix with HFLOD probabilities already computes (which means it have been passed to festim(), HBD.prob(), set.FLOD() and set.HFLOD() )}

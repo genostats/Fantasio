@@ -77,7 +77,7 @@ HFLOD.manhattan.plot <- function(x)
   {
     abline(h=j,col="grey",lwd=1,lty=2)
   }
-  abline(h=3,col="grey",lwd=2)
+  abline(h=3.3,col="grey",lwd=2)
 }
  
   
