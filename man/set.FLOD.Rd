@@ -1,6 +1,6 @@
 \name{set.FLOD}
 \alias{set.FLOD}
-\title{Computes FLOD probabilities for all the individual's markers}
+\title{Computes FLOD probabilities}
 \description{Returns a matrix with FLOD computes for each marker of each individual }
 \usage{FLOD.prob(x, q)}
 \arguments{

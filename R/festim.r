@@ -7,7 +7,7 @@ festim <- function(x, verbose = TRUE) {
   x@a <- numeric(N)
   x@f <- numeric(N)
   
-  # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N))
+  # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N), famid = numeric(N), id = numeric(N))
   for(i in 1:nrow(x)) {
     if(verbose) cat("Individual #",i,"\n")
     logEmission <- get.log.emiss(x,i)

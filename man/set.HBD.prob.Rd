@@ -1,7 +1,7 @@
 \name{set.HBD.prob}
 \alias{set.HBD.prob}
-\title{Add HBD Probabilities To The msat_matrix Object }
-\description{Add HBD Prob for all the individual in the sample}
+\title{Compute HBD Probabilities}
+\description{Add HBD Prob for all the individual in the sample into the object}
 \usage{
 set.HBD.prob(x)
 }

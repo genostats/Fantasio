@@ -1,6 +1,6 @@
 \name{HBD.prob}
 \alias{HBD.prob}
-\title{HBD probabilities for all the individual in the sample}
+\title{Computes HBD probabilities}
 \description{Returns a matrix with all the HBD computes for each marker for each individual }
 \usage{HBD.prob(x)}
 \arguments{

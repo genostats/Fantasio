@@ -1,12 +1,12 @@
 Package: FEstim
 Type: Package
-Title: Blah blah
+Title: FSuite package
 Version: 0.1
 Date: 2017-03-26
 Encoding: UTF-8
 Author: Isuru Haupe, Mourad Sahbatou, Marie-Claude Babron,  Hervé Perdry & Anne-Louise Leutenegger
 Maintainer: Hervé Perdry <herve.perdry@u-psud.fr>
-Description: etc etc usw
+Description: This package can be use to analyze microsatellite and/or SNP data of individuals, it goals are for : - Population genetic studies (estimating and detecting inbreeding on individuals without known genealogy, estimating the population proportion of mating types and the  individual probability to be offspring of different mating types) - Rare disease studies (performing homozygosity mapping with heterogeneity) - Multifactorial disease studies (HBD-GWAS strategy).
 License: GPL-3
 LinkingTo: Rcpp
 Depends: Rcpp

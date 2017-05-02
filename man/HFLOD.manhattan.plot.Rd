@@ -1,6 +1,6 @@
 \name{HFLOD.manhattan.plot}
 \alias{HFLOD.manhattan.plot}
-\title{Manhattan plot of all chromosom's HFLOD in function of their positions}
+\title{Manhattan plot}
   \description{output a manhattan plot of all chromosom's positions in function of their HFLOD}
 \usage{HFLOD.plot.chrs.png(x)}
 \arguments{
