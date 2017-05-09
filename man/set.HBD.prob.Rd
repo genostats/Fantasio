@@ -12,6 +12,7 @@ set.HBD.prob(x)
 \value{return an object x with a and f estimated}
 \seealso{ \code{\link{festim}},  \code{\link{read.msat.matrix}}}
 \examples{
-x <- set.HBD.prob(x)
+
+x <- HBD.prob(x)
 str(x)
 }

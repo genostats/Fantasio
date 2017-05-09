@@ -12,7 +12,7 @@
 \value{a matrix with FLOD values}
 \examples{
 require(FEstim)
-x <- read.msat.matrix("Example/mapfile.in", "Example/datafile.txt")
+x <- read.msat.matrix("Example/map_snp.in", "Example/data_snp.txt")
 x <- festim(x)
 x <- HBD.prob(x)
 x <- set.FLOD(x, q = 0.00001)
