@@ -1,6 +1,6 @@
 read.msat.matrix <- function(mapfile, datafile) {
   
-  # première lecture de mapfile -> compter nb lignes et nb colonnes du fichier mapfile
+  # premiC(re lecture de mapfile -> compter nb lignes et nb colonnes du fichier mapfile
   
   a <- file(mapfile, open = "r") # ouverture du fichier mapfile 
   
@@ -18,28 +18,28 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   close(a)
   
-  # deuxième lecture : création des matrice des fréquences et de la matrice des noms des allèles
+  # deuxiC(me lecture : crC)ation des matrice des frC)quences et de la matrice des noms des allC(les
   
-  freq <- matrix(0.0, nrow = maxrow, ncol = (maxcol - 4)/2) # matrice des fréquences = nb msat * nb max d'allèles
-  geno <- matrix(" ", nrow = maxrow, ncol = (maxcol - 4)/2) # matrice des noms des allèles
-  map <- data.frame(id = rep(NA, maxrow), chr = 0L, distance = 0.)# création de la matrice map (contient les 3 premières colonnes)
+  freq <- matrix(0.0, nrow = maxrow, ncol = (maxcol - 4)/2) # matrice des frC)quences = nb msat * nb max d'allC(les
+  geno <- matrix(" ", nrow = maxrow, ncol = (maxcol - 4)/2) # matrice des noms des allC(les
+  map <- data.frame(id = rep(NA, maxrow), chr = 0L, distance = 0.)# crC)ation de la matrice map (contient les 3 premiC(res colonnes)
   
-  a <- file(mapfile, open = "r") #fermeture et ouverture pour reprendre le fichier au début
+  a <- file(mapfile, open = "r") #fermeture et ouverture pour reprendre le fichier au dC)but
   
   for(i in 1:maxrow)
   {
     L <- scan(a, what = "character", nlines = 1, quiet = TRUE)
     le <- length(L)   
     co <- (le-4) / 2
-    freq[i, 1:co] <- as.numeric( L[seq(6, le, by = 2)] ) #remplissage de la matrice des fréquance
-    geno[i, 1:co] <- L[ seq(5, le, by = 2) ] #remplissage de la matrice des noms des allèles
+    freq[i, 1:co] <- as.numeric( L[seq(6, le, by = 2)] ) #remplissage de la matrice des frC)quance
+    geno[i, 1:co] <- L[ seq(5, le, by = 2) ] #remplissage de la matrice des noms des allC(les
     map$id[i] <- L[1]
     map$chr[i] <- as.integer(L[2])
     map$distance[i] <- as.numeric(L[3])
   }
   close(a)
   
-  #compter le nombre de ligne dans le fichier datafile pour créer la matrice des génotypes
+  #compter le nombre de ligne dans le fichier datafile pour crC)er la matrice des gC)notypes
   b <- file(datafile, open="r") #ouverture du fichier datafile 
   
   maxrow_datafile <- 0 #compter le nb de ligne ds le fichier datafile (voir plus bas pourquoi) *
@@ -56,17 +56,17 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   close(b)
   
-  # matrice des génotypes = nb de msat(ligne dans le fichier mapfile) * 2(nb d'individus)
+  # matrice des gC)notypes = nb de msat(ligne dans le fichier mapfile) * 2(nb d'individus)
   # soit nb de ligne ds le fichier data *
   
-  matrice_genotype <- matrix("", nrow = maxrow, ncol = (2 * maxrow_datafile) ) #msat matrix non re numéroté
+  matrice_genotype <- matrix("", nrow = maxrow, ncol = (2 * maxrow_datafile) ) #msat matrix non re numC)rotC)
   ped <- data.frame( famid = rep(NA, maxrow_datafile), 
-                     id = NA, father = NA, mother = NA, sex = NA, phenotype = NA) #création de la matrice ped
+                     id = NA, father = NA, mother = NA, sex = NA, phenotype = NA) #crC)ation de la matrice ped
   
-  b <- file(datafile, open="r")#reprendre le fichier au début
+  b <- file(datafile, open="r")#reprendre le fichier au dC)but
   
   #OBJECTIF
-  #lire en ligne le fichier et remplir en colonne la matrice des génotypes
+  #lire en ligne le fichier et remplir en colonne la matrice des gC)notypes
   
   for (i in 1:maxrow_datafile)
   {
@@ -82,9 +82,9 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   close(b)
   
-  #création de la msat matrix re numéroté grâce aux deux matrices créer précédemment 
-  #(matrice des génotypes/nom des allèles)
-  #les allèles non présents dans le mapfile sont laissés à 0 -> genotype inconnu/manquant
+  #crC)ation de la msat matrix re numC)rotC) grC"ce aux deux matrices crC)er prC)cC)demment 
+  #(matrice des gC)notypes/nom des allC(les)
+  #les allC(les non prC)sents dans le mapfile sont laissC)s C  0 -> genotype inconnu/manquant
   
   matrice_genotype_modif <- matrix(0L, nrow = maxrow, ncol = (2* maxrow_datafile)) 
   

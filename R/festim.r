@@ -1,6 +1,6 @@
 
 # x = a msat matrix
-# -> renvoie une msat matrx avec a et f estimés
+# -> renvoie une msat matrx avec a et f estimC)s
 festim <- function(x, verbose = TRUE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)
@@ -32,7 +32,7 @@ festim <- function(x, verbose = TRUE) {
       last_likelihood[-1]
     }
 
-    xx <- optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(0,0), upper = c(Inf, 1), control = list(fnscale = -1))
+    xx <- optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(1e-3,0), upper = c(Inf, 0.5), control = list(fnscale = -1))
     x@a[i] <- xx$par[1]
     x@f[i] <- xx$par[2]
     if(xx$convergence != 0) warn("Individual #",i, ", id = ", x@ped$id[i], ", optimization algorithm did not converge");

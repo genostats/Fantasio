@@ -2,27 +2,27 @@ setClassUnion("numericOrNULL",members=c("numeric", "NULL"))
 setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClass("msat.matrix", representation(
            # input slots
-           ncol = 'numeric',      # nb msats
-           nrow = 'numeric',      # nb inds
-            ped = 'data.frame',   # le contenu typique d'un .fam / 6 premières cols d'un .ped
-           msat = 'matrix',       # matrice de génotypes (nb msats x 2 nb inds)
-            map = 'data.frame',   # id, chr, distance
-           freq = 'matrix',       # matrice de fréquences alléliques (nb msat x max allele)
-        epsilon = 'numericOrNULL',# la valeur d'epsilon utilisée pour calculer la précédente
+           ncol = 'numeric',            # nb msats
+           nrow = 'numeric',            # nb inds
+            ped = 'data.frame',         # le contenu typique d'un .fam / 6 premiC(res cols d'un .ped
+           msat = 'matrix',             # matrice de gC)notypes (nb msats x 2 nb inds)
+            map = 'data.frame',         # id, chr, distance
+           freq = 'matrix',             # matrice de frC)quences allC)liques (nb msat x max allele)
+        epsilon = 'numericOrNULL',      # la valeur d'epsilon utilisC)e pour calculer la prC)cC)dente
            # output slots
-       log.freq = 'matrix',       # log de la précédente (il est utile qu'elle soit précalculée)
-     delta.dist = 'numericOrNULL',# diff(map$distance) + faire attention au chgt de chr
-      log.emiss = 'matrixOrNULL', # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (même commentaire)
-              a = 'numeric',      # valeurs de a et f estimées par la fonction festim
-              f = 'numeric',
-       HBD.prob = 'matrix',       # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
-           FLOD = 'matrix',       # matrice des FLOD scores  dim = (nb inds x nb msats)
-          HFLOD = 'matrix'        # matrice des HFLOD scores dim = (nb msats x 2)
+       log.freq = 'matrix',             # log de la prC)cC)dente (il est utile qu'elle soit prC)calculC)e)
+     delta.dist = 'numericOrNULL',      # diff(map$distance) + faire attention au chgt de chr
+      log.emiss = 'matrixOrNULL',       # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (mC*me commentaire)
+              a = 'numeric',            # valeurs de a et f estimC)es par la fonction festim
+              f = 'numeric',      
+       HBD.prob = 'matrix',             # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
+           FLOD = 'matrix',             # matrice des FLOD scores  dim = (nb inds x nb msats)
+          HFLOD = 'matrix'              # matrice des HFLOD scores dim = (nb msats x 2)
 ) )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object,ncol,nrow,ped,msat,map,freq) {
-  if(nrow(freq) != ncol) stop("freq dimension mismatch")
-  if(nrow(msat) != ncol | ncol(msat) != 2*nrow) stop("msat dimension mismatch")
+  #if(nrow(freq) != ncol) stop("freq dimension mismatch")
+  #if(nrow(msat) != ncol | ncol(msat) != 2*nrow) stop("msat dimension mismatch")
   if(nrow(ped) != nrow) stop("ped dimension mismatch")
   w <- is.na(msat)
   if(any(w)) {
@@ -32,10 +32,10 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object,nco
   if(max(msat) > ncol(freq)) stop("allele exceeding number of columns of freq")
 
   ## TODO 
-  # vérifier que dans map, les marqueurs sont bien ordonnés sur chaque chromosome...
+  # vC)rifier que dans map, les marqueurs sont bien ordonnC)s sur chaque chromosome...
   # et que les chromosomes ne sont pas en vrac
 
-  # même code dans random.msat
+  # mC*me code dans random.msat
   delta.dist <- diff(map$distance)
   # traiter proprement les changements de chromosomes
   I <- cumsum(rle(map$chr)$length)
@@ -46,7 +46,7 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object,nco
   .Object@nrow     <- nrow
   .Object@ped      <- ped
   .Object@msat     <- msat
-  .Object@map      <- map
+  .Object@map      <- map 
   .Object@freq     <- freq
   .Object@log.freq <- log(freq)
   .Object@delta.dist <- delta.dist
