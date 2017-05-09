@@ -1,0 +1,45 @@
+Fri May  7 20:30:29 CEST 2010
+*****************************************************
+** FEstim (version 1.3)                            **
+** Copyright (C) 2003-2010 Anne-Louise Leutenegger **
+*****************************************************
+ This program comes with ABSOLUTELY NO WARRANTY;
+ This is free software, and you are welcome to redistribute it
+ under certain conditions;
+
+Marker file: map_msat.in
+ Map information read for 672 markers
+
+Data file: data_msat.in
+ Data information read for 1 individuals
+ All individuals will be analysed independently
+
+Gemini tolerance: 0.0000100000
+
+Estimation for family 1 individual 21:
+ iter	                F	                A	              loglikY
+    0	     0.0500000000	     0.0500000000	     -2049.0746698035
+    1	     0.0923347773	     0.0375000002	     -2048.7041620985
+    2	     0.0924180777	     0.0377719123	     -2048.7039984931
+    3	     0.0819174962	     0.0403645828	     -2048.5810552410
+    4	     0.0736392278	     0.0424910155	     -2048.5590937306
+    5	     0.0755670933	     0.0420993481	     -2048.5572680861
+    6	     0.0754037899	     0.0421489610	     -2048.5572522215
+    7	     0.0754037899	     0.0421489610	     -2048.5572522215
+ITERATIVE PROCESS TERMINATED BECAUSE:
+ Specified tolerance on normalized gradient met
+Getting Monte Carlo Information Matrix (F= 0.07540 , A= 0.04215 ):
+MC iterations=8000
+Info comp:
+  Ix[0][0]=1870.422	Ix[0][1]=2258.677
+  Ix[1][0]=2258.677	Ix[1][1]=8448.737
+  MC StdE(Ix): [0][0]=3.842588	[0][1]=0.395110
+               [1][0]=0.395110	[1][1]=22.150868
+  Std errors (from Ix): F= 0.028098 , A= 0.013221
+Cond exp score: d[0]= -0.264221 , d[1]= -0.500514
+  MC StdE(d): [0]=0.282905, [1]=0.812199
+Info observed:
+  Iy[0][0]=1230.221	Iy[0][1]= 519.113
+  Iy[1][0]= 519.113	Iy[1][1]=3172.055
+  Std errors: F=sqrt(0.000873)= 0.029549 , A=sqrt(0.000339)= 0.018402
+
