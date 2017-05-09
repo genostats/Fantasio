@@ -25,3 +25,5 @@ export(HFLOD.plot.chrs.png)
 export(HFLOD.manhattan.plot)
 export(createSubmap)
 export(bed.logEmiss)
+export(submap)
+

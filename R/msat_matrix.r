@@ -17,7 +17,8 @@ setClass("msat.matrix", representation(
               f = 'numeric',      
        HBD.prob = 'matrix',             # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
            FLOD = 'matrix',             # matrice des FLOD scores  dim = (nb inds x nb msats)
-          HFLOD = 'matrix'              # matrice des HFLOD scores dim = (nb msats x 2)
+          HFLOD = 'matrix',              # matrice des HFLOD scores dim = (nb msats x 2)
+         Submap = 'matrix'
 ) )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object,ncol,nrow,ped,msat,map,freq) {

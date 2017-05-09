@@ -35,34 +35,38 @@ getMarkersChromosom <- function(x, chr,intensity, hotspot_version)
       s <- b
     submap <- c(submap, s)
   }
-    return(submap)
+  return(submap)
 }
 # x = une bed matrix
 # renvoie une "pseudo" msat matrix sans genotypes mais avec log emiss...
 createSubmap <- function(x, intensity = 10, hotspot_version = "hg17")
 {
-    final_submap <- c()
-    for(chr in 1:22)
-    {
-      #get marker's index for all the chromosom
-      submap <- getMarkersChromosom(x, chr, intensity, hotspot_version) 
-      final_submap <- c(final_submap, submap)
-    }
-    #return(final_submap)#a submap has been created
-    
-    map <- x@snps[ final_submap , c("id","chr")]
-    if(all(x@snps$dist == 0)) {
-      map$distance <- x@snps$dist[final_submap]
-    } else {
-      map$distance <- x@snps$pos[final_submap]*1e-6
-    }
-    
-    res <- new("msat.matrix", length(final_submap), nrow(x), 
-              x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")]
-              ,matrix(nrow = 0, ncol = 0), map, matrix(0, nrow = 0 , ncol =0))
-    res@log.emiss <- bed.logEmiss(x, final_submap, 1e-3)
-    res@epsilon <- 1e-3
-    return(res)
+  final_submap <- c()
+  for(chr in 1:22)
+  {
+    #get marker's index for all the chromosom
+    submap <- getMarkersChromosom(x, chr, intensity, hotspot_version) 
+    final_submap <- c(final_submap, submap)
+  }
+  #return(final_submap)#a submap has been created
+  
+  map <- x@snps[ final_submap , c("id","chr")]
+  if(all(x@snps$dist == 0)) {
+    map$distance <- x@snps$dist[final_submap]
+  } else {
+    map$distance <- x@snps$pos[final_submap]*1e-6
+  }
+  
+  res <- new("msat.matrix", length(final_submap), nrow(x), 
+             x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")]
+             ,matrix(nrow = 0, ncol = 0), map, matrix(0, nrow = 0 , ncol =0))
+  res@log.emiss <- bed.logEmiss(x, final_submap, 1e-3)
+  res@epsilon <- 1e-3
+  res <- festim(res)
+  res <- HBD.prob(res)
+  res <- FLOD.prob(res)
+  res <- set.HFLOD(res)
+  return(res)
 }
 
 
