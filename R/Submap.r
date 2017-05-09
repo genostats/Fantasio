@@ -1,7 +1,7 @@
 # x = bedmatrix, n = the number of submap
 submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg17")
 {
-  submap <- matrix(list(), nrow=n, ncol=1)
+  submap <- array(list(), c(n,1))
   for ( i in 1:n)
   {
     cat("creating submap number : ", i, "\n" )
