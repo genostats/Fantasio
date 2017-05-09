@@ -10,7 +10,8 @@
 \value{A matrix with HBD computes}
 \examples{
 require(FEstim)
-x <- read.msat.matrix("Example/in_markall.txt", "Example/in_datall.txt")
+system.file("extdata/in_markall.txt", "extdata/in_datall.txt", package="FEstim")
+x <- read.msat.matrix("in_markall.txt", "in_datall.txt")
 x <- festim(x)
 x <- HBD.prob(x)
 }

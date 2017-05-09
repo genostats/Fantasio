@@ -13,7 +13,8 @@ this function uses optimize() to sort the best alpha possible for a given marker
 \seealso{ \code{\link{HBD.prob}}, \code{\link{set.FLOD}}, \code{\link{festim}} }
 \examples{
 require(FEstim)
-x <- read.msat.matrix("Example/map_snp.in", "Example/data_snp.txt")
+system.file("extdata/map_snp.in", "extdata/data_snp.txt", package="FEstim")
+x <- read.msat.matrix("map_snp.in", "data_snp.txt")
 x <- festim(x)
 x <- HBD.prob(x)
 x <- set.FLOD(x)

@@ -12,7 +12,6 @@ getSegment <- function(chr, intensity, hotspot_version)
   
   #save only the hotspot with the right intensity
   w <- which(chr_hotspot$IntensitycMMb > intensity)
-  #w <- match(chr_hotspot$IntensitycMMb > intensity, chr_hotspot$IntensitycMMb, nomatch = 0)
   #create a matrix with segments delimitations
   segment_table <- cbind( c(0,chr_hotspot$End[w]),
                           c(chr_hotspot$Start[w],Inf) )

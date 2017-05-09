@@ -10,7 +10,8 @@
 \seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chrs.png}},  \code{\link{HFLOD.manhattan.plot}}, \code{\link{festim}}}
 \examples{
 require(FEstim)
-x <- read.msat.matrix("Example/mapfile.in", "Example/datafile.txt")
+system.file("extdata/map_snp.in", "extdata/data_snp.in", package="FEstim")
+x <- read.msat.matrix("map_snp.in", "data_snp.in")
 x <- festim(x)
 x <- HBD.prob(x)
 x <- set.FLOD(x)

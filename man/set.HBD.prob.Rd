@@ -12,7 +12,10 @@ set.HBD.prob(x)
 \value{return an object x with a and f estimated}
 \seealso{ \code{\link{festim}},  \code{\link{read.msat.matrix}}}
 \examples{
-
+require(FEstim)
+system.file("extdata/in_markall.txt", "extdata/in_datall.txt", package="FEstim")
+x <- read.msat.matrix("Example/in_markall.txt", "Example/in_datall.txt")
+x <- festim(x)
 x <- HBD.prob(x)
 str(x)
 }

@@ -27,6 +27,7 @@ function msat_matrix which creates an object with the information of the sample 
 \value{return an msat_matrix object}
 \seealso{ \code{\link{msat.matrix}}}
 \examples{
+system.file("extdata/map_msat", "extdata/data_msat.in", package="FEstim")
   x <- read.msat.matrix("map_msat.in", "data_msat.in")
   x
   str(x) #information of your msat.matrix
