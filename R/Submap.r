@@ -8,6 +8,9 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg17")
     spider <- createSubmap(x, intensity, hotspot_version)
     submap[[i,1]] <- spider
   }
-  cat("Finish ! \n")
+  cat("Done ! \n")
   return(submap)
 }
+
+#3 min pour 5 sous cartes en moyennes
+#60 min pour les 100 sous cartes en moyennes
