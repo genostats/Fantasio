@@ -1,66 +1,64 @@
-getSegment <- function(chr, intensity, hotspot_version) 
-{
-  #select the correct hotspot file
-  hotspot <- switch(hotspot_version,
-                    hg17 = { data(hotspot_hg17); hotspot_hg17;},
-                    hg18 = { data(hotspot_hg18); hotspot_hg18;},
-                    hg19 = { data(hotspot_hg19); hotspot_hg19; })
-  
-  #save all  current chromosom's hotspots
-  chr_hotspot <- hotspot[ which(hotspot[,1]==chr),]
-  #hotspot_hg17[which(hotspot_hg17==chr),]
-  
-  #save only the hotspot with the right intensity
-  w <- which(chr_hotspot$IntensitycMMb > intensity)
-  #create a matrix with segments delimitations
-  segment_table <- cbind( c(0,chr_hotspot$End[w]),
-                          c(chr_hotspot$Start[w],Inf) )
-  return(segment_table)
-}
+#getSegment <- function(chr, intensity, hotspot_version) 
+#{
+#  #select the correct hotspot file
+#  hotspot <- switch(hotspot_version,
+#                    hg17 = { data(hotspot_hg17); hotspot_hg17;},
+#                    hg18 = { data(hotspot_hg18); hotspot_hg18;},
+#                    hg19 = { data(hotspot_hg19); hotspot_hg19; })
+#  
+#  #save all  current chromosom's hotspots
+#  chr_hotspot <- hotspot[which(hotspot[,1]==chr),]
+#  #hotspot_hg17[which(hotspot_hg17==chr),]
+#  
+#  #save only the hotspot with the right intensity
+#  w <- which(chr_hotspot$IntensitycMMb > intensity)
+#  
+#  #create a matrix with segments delimitations
+#  segment_table <- cbind(c(0,chr_hotspot$End[w]),
+#                         c(chr_hotspot$Start[w],Inf) )
+#  return(segment_table)
+#}
 
-getMarkersChromosom <- function(x, chr,intensity, hotspot_version)
+getMarkersChromosom <- function(chr, segment_map, mkrmap)
 {
-  submap <- c() #save the marker's index for the current chromosom
-  v <- x@snps$pos[x@snps$chr==chr]  
-  segment_table <- getSegment(chr, intensity, hotspot_version) #get the hotspot for this chr
-  
   #find the markers index in the interval
+  submap <- c()
+  segment_table <- segment_map[[chr]]
+  mkr <- mkrmap[[chr]]
+  #trouver les mkr dans le segment puis en choisir un au hasard
   for ( i in 1:nrow(segment_table))
   {
-    b <- which(v > segment_table[i,1] & v < segment_table[i,2])
-    #select a random index in those markers
+    b <- which(mkr > segment_table[i,1] & mkr < segment_table[i,2])
     if (length(b)== 0) next
-    s <- sample(b, 1, replace= TRUE)
-    if(length(b) == 1)
-      s <- b
+    if(length(b) == 1) s <- b
+    s <- sample(b, 1)
     submap <- c(submap, s)
   }
   return(submap)
 }
 # x = une bed matrix
 # renvoie une "pseudo" msat matrix sans genotypes mais avec log emiss...
-createSubmap <- function(x, intensity = 10, hotspot_version = "hg17")
+createSubmap <- function(x, segment_map, mkrmap)
 {
-  final_submap <- c()
+  submap <- c()
   for(chr in 1:22)
   {
-    #get marker's index for all the chromosom
-    submap <- getMarkersChromosom(x, chr, intensity, hotspot_version) 
-    final_submap <- c(final_submap, submap)
+    v <- getMarkersChromosom(chr, segment_map, mkrmap)
+    submap <- c(submap, v)
   }
-  #return(final_submap)#a submap has been created
+  #return(submap)#a submap has been created
   
-  map <- x@snps[ final_submap , c("id","chr")]
+  map <- x@snps[submap , c("id","chr")]
   if(all(x@snps$dist == 0)) {
-    map$distance <- x@snps$dist[final_submap]
+    map$distance <- x@snps$dist[submap]
   } else {
-    map$distance <- x@snps$pos[final_submap]*1e-6
+    map$distance <- x@snps$pos[submap]*1e-6
   }
   
-  res <- new("msat.matrix", length(final_submap), nrow(x), 
+  res <- new("msat.matrix", length(submap), nrow(x), 
              x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")]
              ,matrix(nrow = 0, ncol = 0), map, matrix(0, nrow = 0 , ncol =0))
-  res@log.emiss <- bed.logEmiss(x, final_submap, 1e-3)
+  res@log.emiss <- bed.logEmiss(x, submap, 1e-3)
   res@epsilon <- 1e-3
   res <- festim(res)
   res <- HBD.prob(res)
