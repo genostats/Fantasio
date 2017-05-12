@@ -58,6 +58,7 @@ createSubmap <- function(x, segment_map, mkrmap)
   res <- new("msat.matrix", length(submap), nrow(x), 
              x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")]
              ,matrix(nrow = 0, ncol = 0), map, matrix(0, nrow = 0 , ncol =0))
+  
   res@log.emiss <- bed.logEmiss(x, submap, 1e-3)
   res@epsilon <- 1e-3
   res <- festim(res)

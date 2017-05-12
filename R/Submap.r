@@ -12,7 +12,7 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg17")
     chr_hotspot <- hotspot[which(hotspot[,1]==i),]
     w <- which(chr_hotspot$IntensitycMMb > intensity)
     segment <- cbind(c(0,chr_hotspot$End[w]),
-                      c(chr_hotspot$Start[w],Inf) )
+                     c(chr_hotspot$Start[w],Inf) )
     VI[[i]] <- segment
   }
   
@@ -28,7 +28,7 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg17")
   submap <- array(list(), c(n,1))
   for ( i in 1:n)
   {
-    cat("creating submap number : ", i, "\n" )
+    cat("creating submap number : ", i,"/", n, "\n" )
     spider <- createSubmap(x, VI, VII)
     submap[[i,1]] <- spider
   }
