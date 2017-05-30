@@ -44,7 +44,7 @@ HBD.plot <- function(x)
         lines(d, r,col= j)
         
       } 
-      legend(x = "topright", legend =  c("Individus :", x@ped$famid, "Famid : ",  x@ped$id), lty =0,cex = 1.5) 
+      legend(x = "topright", legend =  paste(x@ped$famid, x@ped$id, sep="_"), lty = 1, col = 1:x@nrow, cex = 1.5) 
                   
       
       
@@ -80,8 +80,8 @@ HBD.plot <- function(x)
   for ( i in 1:x@nrow)
   {
     if(x@f[i] == 0) next
-    png(file = paste("Plots/FLOD.","Individu",i, ".cM.genome.png",sep=""), width = 2400, height = 800, pointsize = 24 )
-    plot(res, x@FLOD[i,], type="b",pch=16, lty=1,xlim=c(0,xmax), ylim = c(ymin,ymax), xlab = "", ylab = "FLOD", cex.lab = 1.4, cex.axis=1.5, main= paste("FLOD (individu ",i,")", sep=""), col= mycol[x@map$chr], xaxt="n", cex=0.75 )  
+    png(file = paste("Plots/FLOD.Individu",x@ped$famid[i], ".", x@ped$id[i],".cM.genome.png",sep=""), width = 2400, height = 800, pointsize = 24 )
+    plot(res, x@FLOD[i,], type="b",pch=16, lty=1,xlim=c(0,xmax), ylim = c(ymin,ymax), xlab = "", ylab = "FLOD", cex.lab = 1.4, cex.axis=1.5, main= paste("FLOD : individu ", x@ped$famid[i], "_", x@ped$id[i], sep=""), col= mycol[x@map$chr], xaxt="n", cex=0.75 )  
     
     #pour chaque chr les separer par des lignes
     for ( j in unique(x@map$chr))
@@ -94,7 +94,7 @@ HBD.plot <- function(x)
       abline(h=j,col="grey",lwd=1,lty=2)
     }
     abline(h=3,col="grey",lwd=2)
-    legend(x="topright", legend=c("Familly_ID : ",x@ped$famid[i],"Individual_ID : ", x@ped$id[i]), lty = 0,cex = 1)
+    #legend(x="topright", legend=c("Familly_ID : ",x@ped$famid[i],"Individual_ID : ", x@ped$id[i]), lty = 0,cex = 1)
     dev.off()
   }
  
