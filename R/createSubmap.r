@@ -8,22 +8,18 @@ getMarkerChromosom <- function(map)
   #Step 4 : choose a random mkr
   for( i in 1:length(map))
   {
-    b <- map[[i]]
-    if(length(b) == 1) 
+    if (length(map[[i]])== 0) next
+    if(length(map[[i]]) == 1) 
     {
-      s <- b
+      s <- map[[i]]
     } else { 
-        s <- sample(b, 1)
+        s <- sample(map[[i]], 1)
       }
    submap <- c(submap, s)
   }
   
   return(submap)
 }
-
-
-
-
 
 # x = a bed matrix
 # return an" msat matrix without genotypes but with log emiss...
@@ -51,10 +47,10 @@ createSubmap <- function(x, mkr_map)
   
   res@log.emiss <- bed.logEmiss(x, submap, 1e-3)
   res@epsilon <- 1e-3
-  #res <- festim(res)
-  #res <- HBD.prob(res)
-  #res <- FLOD.prob(res)
-  #res <- set.HFLOD(res)
+  res <- festim(res)
+  res <- HBD.prob(res)
+  res <- FLOD.prob(res)
+  res <- set.HFLOD(res)
   return(res)
 }
 
