@@ -6,8 +6,9 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
   N <- nrow(x)
   x@a <- numeric(N)
   x@f <- numeric(N)
-  x@likelihood <- numeric(N)
-  x@lrt <- numeric(N)
+  x@likelihood0 <- numeric(N)
+  x@likelihood1 <- numeric(N)
+  x@p.lrt <- numeric(N)
 
   # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N), famid = numeric(N), id = numeric(N))
   for(i in 1:nrow(x)) {
@@ -24,7 +25,7 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
       if(debug) cat("a = ", theta[1], " f = ", theta[2])
       last_theta <<- theta
       last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, theta[1], theta[2])
-      if(verbose) cat(" likelihood = ", last_likelihood[1], " gradient = ", last_likelihood[-1], "\n")
+      if(debug) cat(" likelihood = ", last_likelihood[1], " gradient = ", last_likelihood[-1], "\n")
       last_likelihood[1]
     }
 
@@ -42,8 +43,9 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
 
     x@a[i] <- xx$par[1]
     x@f[i] <- xx$par[2]
-    x@likelihood[i] <- xx$value
-    x@lrt[i] <- 2*(xx$value - likelihood0)
+    x@likelihood1[i] <- xx$value
+    x@likelihood0[i] <- likelihood0
+    x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 1, lower.tail = FALSE)
   }
   x
 }
