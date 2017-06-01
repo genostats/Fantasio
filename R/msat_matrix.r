@@ -14,7 +14,9 @@ setClass("msat.matrix", representation(
      delta.dist = 'numericOrNULL',      # diff(map$distance) + faire attention au chgt de chr
       log.emiss = 'matrixOrNULL',       # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (mC*me commentaire)
               a = 'numeric',            # valeurs de a et f estimC)es par la fonction festim
-              f = 'numeric',      
+              f = 'numeric',
+     likelihood = 'numeric',            # vraisemblance aux valeurs calculés
+            lrt = 'numeric',            # le likelihood ratio test
        HBD.prob = 'matrix',             # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
            FLOD = 'matrix',             # matrice des FLOD scores  dim = (nb inds x nb msats)
           HFLOD = 'matrix',              # matrice des HFLOD scores dim = (nb msats x 2)
