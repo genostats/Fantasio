@@ -3,3 +3,11 @@
 * calcul (approchi) de la hessienne en (a,f)
 * jeter un oeil sur la fonction festim / choix d'optimisation ...
 * dans festim() modifier test pour appel set.log.emiss (penser aux msat matrix cr????es avec une sous carte)
+
+????
+
+* créer fonction mating type
+* gérer les fratries 
+* HFLOD seulement sur les individus consanguins( INBRED == TRUE)
+
+????

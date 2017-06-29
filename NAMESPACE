@@ -1,4 +1,5 @@
 import(Rcpp)
+import(xlsx)
 
 # importFrom("grDevices", "heat.colors")
 # importFrom("graphics", "contour", "image")
@@ -24,4 +25,8 @@ export(HFLOD.plot.chrs.png)
 export(HFLOD.manhattan.plot)
 export(bed.logEmiss)
 export(submap)
-
+export(submap.summary)
+export(submap.estim)
+export(submap.likelihood)
+export(submap.HBD)
+export(HBD.recap)

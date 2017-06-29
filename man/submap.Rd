@@ -22,7 +22,7 @@ To put it in a nutshell the function select a random marker in all the segments 
 
 system.file("extdata/geb.bim", "extdata/geb.fam", "extdata/geb.bed", package="FEstim")
 
-  x <- read.bed.matrix("Examples/geb")
+  x <- read.bed.matrix("geb")
   
   h <- submap(x, 5)
   

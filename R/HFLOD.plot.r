@@ -1,8 +1,8 @@
-#plot pour un chromosome donne
+#plot for a known chromosom
 
 HFLOD.plot.chr <- function(x, chr) 
 {
-  #Obtenir les distances
+  #find the distance
   w <- which(x@map$chr == chr)
   d <- x@map$distance[w]
   n <- length(d)
@@ -12,7 +12,7 @@ HFLOD.plot.chr <- function(x, chr)
   ymax <- max(3.3, max(x@HFLOD[w,], na.rm = TRUE)) 
   xmax <- max(d, na.rm = TRUE)
   ymin <- 0
-  #d=distance pour chaque chr i ; r=HFLOD pour chaque Indiv j & chr i
+  #d=distance for each chr i ; r=HFLOD for each individual j & chr i
   plot(d, r, type="l", pch=16, xlim = c(0,xmax), ylim = c(ymin, ymax), 
       xlab = "Position (cM)", ylab="HFLOD", main= paste("HFLOD (chromosome ",chr,")", sep=""))    
   
@@ -23,13 +23,13 @@ HFLOD.plot.chr <- function(x, chr)
 }
 
 ##############################################
-#plot pour tout les chr sauvegarder ds des png
+#saving plot for all the chromosom on png format
 
 HFLOD.plot.chrs.png <- function(x)
 { 
 
-  dir.create("Plots")#creation du dossier Plots contenant les sorties
-  for ( i in unique(x@map$chr)) # pour chaque chr on fait un plot 
+  dir.create("Plots")#create de Plots folder
+  for ( i in unique(x@map$chr)) # for each chr we make a plot 
   {
     png(file = paste("Plots/HFLOD.","cM.",i,".png",sep = ""), width = 2400, height = 1000, pointsize=24)
     par(cex = 1.45)
@@ -39,10 +39,10 @@ HFLOD.plot.chrs.png <- function(x)
 }
 
 ##############################################
-#plot du manhattan plot 
+#manhattan plot 
 HFLOD.manhattan.plot <- function(x)
 {
-  #prendre la derniere position du chr i
+  #take the last position of the chr i
   res <- NULL
   res_pos <- 5
   

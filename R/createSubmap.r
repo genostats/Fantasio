@@ -47,7 +47,7 @@ createSubmap <- function(x, mkr_map)
   
   res@log.emiss <- bed.logEmiss(x, submap, 1e-3)
   res@epsilon <- 1e-3
-  res <- festim(res)
+  res <- festim(res, verbose = FALSE)
   res <- HBD.prob(res)
   res <- FLOD.prob(res)
   res <- set.HFLOD(res)

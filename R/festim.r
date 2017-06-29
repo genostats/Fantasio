@@ -21,7 +21,15 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
     last_likelihood <- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, last_theta[1], last_theta[2])
 
     f <- function(theta) { 
-      if(theta[1] < 0) theta[1] <- 0
+      if(theta[1] < 0) theta[1] <- 1e-2
+      if(theta[2] < 0) { 
+        theta[2] <- 0
+        if(debug) cat("Negative f set to 0")
+      }
+      if(theta[2] > 0.999) { 
+        theta[2] <- 0.999
+        if(debug) cat("f larger than 0.999 set to 0.999")
+      }
       if(debug) cat("a = ", theta[1], " f = ", theta[2])
       last_theta <<- theta
       last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, theta[1], theta[2])
@@ -30,16 +38,25 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
     }
 
     gradf <- function(theta) {
-      if(theta[1] < 0) theta[1] <- 0
+      if(theta[1] < 0) theta[1] <- 1e-2
+      if(theta[2] < 0) { 
+        theta[2] <- 0
+      }
+      if(theta[2] > 0.999) { 
+        theta[2] <- 0.999
+      }
       if(all(theta == last_theta)) return(last_likelihood[-1])
-      warn("Optimization algorithm might been having a glitch")
+      warning("Optimization algorithm might been having a glitch")
       last_theta <<- theta
       last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, theta[1], theta[2])
       last_likelihood[-1]
     }
 
-    xx <- optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(1e-2,0), upper = c(Inf, 0.5), control = list(fnscale = -1))
-    if(xx$convergence != 0) warn("Individual #",i, ", id = ", x@ped$id[i], ", optimization algorithm did not converge");
+    xx <- optim( last_theta, f, gradf, method="L-BFGS-B", lower = c(1e-2,0), upper = c(Inf, 0.999), control = list(fnscale = -1))
+    if(xx$convergence != 0) {
+      warning("Individual #",i, ", id = ", x@ped$id[i], ", optimization algorithm did not converge");
+      xx$par <- c(NA, NA)
+    }
 
     x@a[i] <- xx$par[1]
     x@f[i] <- xx$par[2]

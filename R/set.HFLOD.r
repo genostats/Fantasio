@@ -1,6 +1,7 @@
 set.HFLOD <- function(x)
 {
   HFLOD <- matrix(0.0, nrow = x@ncol, ncol = 2)
+  
   for (j in 1:x@ncol)
   {
     # function h(alpha)
