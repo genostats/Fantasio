@@ -1,7 +1,7 @@
 
 # x = a msat matrix
 # -> renvoie une msat matrx avec a et f estimés
-festim <- function(x, verbose = TRUE, debug = FALSE) {
+festim <- function(x, verbose = TRUE, debug = FALSE, probs = TRUE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)
   x@a <- numeric(N)
@@ -63,6 +63,11 @@ festim <- function(x, verbose = TRUE, debug = FALSE) {
     x@likelihood1[i] <- xx$value
     x@likelihood0[i] <- likelihood0
     x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 1, lower.tail = FALSE)
+  }
+  if(probs) {
+    x <- set.HBD.prob(x)
+    x <- set.FLOD(x)
+    x <- set.HFLOD(x)
   }
   x
 }

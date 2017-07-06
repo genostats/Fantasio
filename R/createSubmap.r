@@ -3,34 +3,35 @@ getMarkerChromosom <- function(map)
 {
   #find the markers index in the interval
   submap <- c()
-
   
   #Step 4 : choose a random mkr
-  for( i in 1:length(map))
+  for( i in 1:length(map))  # on parcourt les segments
   {
-    if (length(map[[i]])== 0) next
+    if(length(map[[i]]) == 0) next  # segment vide...
     if(length(map[[i]]) == 1) 
     {
       s <- map[[i]]
     } else { 
-        s <- sample(map[[i]], 1)
-      }
-   submap <- c(submap, s)
+      s <- sample(map[[i]], 1)
+    }
+    submap <- c(submap, s)
   }
   
   return(submap)
 }
 
 # x = a bed matrix
+# mkr_map = list qui donne pour chaque chromosome la carte des segments
+#  une carte de segments = une liste d'indices...
 # return an" msat matrix without genotypes but with log emiss...
 
-createSubmap <- function(x, mkr_map)
+createSubmap <- function(x, mkr_map, epsilon = 1e-3)
 {
   submap <- c()
   for(chr in 1:22)
   {
-    n <- mkr_map[[chr]]
-    v <- getMarkerChromosom(n)
+    map <- mkr_map[[chr]]
+    v <- getMarkerChromosom(map)
     submap <- c(submap, v)
   }
   
@@ -41,17 +42,12 @@ createSubmap <- function(x, mkr_map)
     map$distance <- x@snps$pos[submap]*1e-6
   }
   
-  res <- new("msat.matrix", length(submap), nrow(x), 
-             x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")]
-             ,matrix(nrow = 0, ncol = 0), map, matrix(0, nrow = 0 , ncol =0))
-  
-  res@log.emiss <- bed.logEmiss(x, submap, 1e-3)
-  res@epsilon <- 1e-3
-  res <- festim(res, verbose = FALSE)
-  res <- HBD.prob(res)
-  res <- FLOD.prob(res)
-  res <- set.HFLOD(res)
-  return(res)
+  log.emiss <- bed.logEmiss(x, submap, epsilon)
+
+  new("submap.matrix", length(submap), nrow(x), submap, 
+      x@ped[,c("famid", "id", "father", "mother", "sex", "pheno")],
+      map, log.emiss, epsilon)
+
 }
 
 

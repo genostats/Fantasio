@@ -1,5 +1,6 @@
-set.FLOD.prob <- function(x, q = 0.00001)
+set.FLOD <- function(x, q = 0.00001)
 {
+  #Computation of FLOD score with the formula
   FLOD_prob <- matrix(0.0, nrow = x@nrow, ncol = x@ncol)
   for (i in 1:x@nrow)
   {

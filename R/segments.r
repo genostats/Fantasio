@@ -1,11 +1,9 @@
 # x = an bedmatrix, n = the number of submap
 
-submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg19")
+segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRUE)
 {
-  cat(" Go grab a cup of your favorite beverage, it might takes some time ! :)")
-  cat("\n")
-  cat(paste("You are currently using version", hotspot_version, "of hotspot"))
-  cat("\n")
+  if(verbose) cat(" Go grab a cup of your favorite beverage, it might takes some time ! :)\n")
+  if(verbose) cat(paste("You are currently using version", hotspot_version, "of hotspot\n"))
   hotspot <- switch(hotspot_version,
                     hg17 = { data(hotspot_hg17); hotspot_hg17;},
                     hg18 = { data(hotspot_hg18); hotspot_hg18;},
@@ -14,7 +12,7 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg19")
   
   #Step 1 : list of all the genome's hotspot
   
-  cat("Gathering all informations about genome's hotspot : ")
+  if(verbose) cat("Gathering all informations about genome's hotspot : ")
   
   VI <- list()
   for ( i in 1:22)
@@ -26,11 +24,11 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg19")
                      c(chr_hotspot$Start[w],Inf) )
     VI[[i]] <- segment
   }
-  cat("\n")
+  if(verbose) cat("\n")
   
   #Step 2 : list of all the genome's markers
   
-  cat("Gathering all the genome's markers : ")
+  if(verbose) cat("Gathering all the genome's markers : ")
   
   VII <- list()
   for( j in 1:22)
@@ -43,8 +41,8 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg19")
   
   #Step 3 : list of all the segment in the genome
   
-  cat("Gathering all the segments for the genome thanks to previous infos : ")
-  shift <- sapply(1:22, function(i) which(x@snps == i)[1]) - 1
+  if(verbose) cat("Gathering all the segments for the genome thanks to previous infos : ")
+  shift <- sapply(1:22, function(i) which(x@snps == i)[1]) - 1L
   
   VIII <- list()
   for(i in 1:22)
@@ -63,29 +61,8 @@ submap <- function(x, n = 100, intensity = 10 , hotspot_version = "hg19")
     }
     VIII[[i]] <- chr
   }
-  cat("\n")
-  
-  submap <- array(list(), c(n,1))
-  #for ( i in 1:n)
-  # { 
-  #   set.seed(i)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
-  #   cat("creating submap number : ", i,"/", n, "\n" )
-  #   spider <- createSubmap(x, VIII) #invisible(createSubmap(x, VIII))
-  #   submap[[i,1]] <- spider
-  # }
-  
-  #for ( i in 1:n)
-  #{ 
-    set.seed(92)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
-    cat("creating submap number : ", 92,"/", n, "\n" )
-    spider <- createSubmap(x, VIII) #invisible(createSubmap(x, VIII))
-    submap[[i,1]] <- spider
-  #}
-  cat("Creation of all the Submap over ! \n")
-  return(submap)
-  
-  
-  #x@Submap <- Submap 
-  #return(x)
-}
+  if(verbose) cat("\n")
+ 
+  VIII
+} 
 

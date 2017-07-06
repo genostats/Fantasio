@@ -33,7 +33,7 @@ submap.summary <- function(h, a.threshold = 1)
   
   #write.table(df,"dataframe.txt",sep="\t",col.names = colnames(df))
   #library("xlsx", character.only = TRUE)
-  write.xlsx(df, "dataframe.xlsx") 
+  #write.xlsx(df, "dataframe.xlsx") 
   return(df)
   
   
