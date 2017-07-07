@@ -1,6 +1,6 @@
 import(Rcpp)
 import(xlsx)
-
+import(parallel)
 # importFrom("grDevices", "heat.colors")
 # importFrom("graphics", "contour", "image")
 # importFrom("stats", "pchisq", "quantile", "rnorm")
