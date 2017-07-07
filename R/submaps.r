@@ -1,11 +1,11 @@
 # paralleliser !!
-submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1e-3, run.festim = TRUE, probs = TRUE,  verbose = TRUE) {
+submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1e-3, run.festim = TRUE, proba = TRUE,  verbose = TRUE) {
 
   ff <- function(i, run.festim) {
     set.seed(i)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
     spider <- createSubmap(x, segments, epsilon) 
     if(run.festim) 
-      spider <- festim(spider, probs = probs)
+      spider <- festim(spider, probs = proba)
     spider
   }
 
@@ -16,7 +16,7 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
   
   if(n.cores == 1) {
     submap <- lapply(1:n, ff, run.festim = run.festim)
-  } else {
+  }else {
     RNGkind("L'Ecuyer-CMRG")
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
