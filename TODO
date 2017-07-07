@@ -9,7 +9,7 @@
     {
       plink2 --bfile plink --cm-map   ....projg4/Maps/genetic_map_b37/genetic_map_chr${i}_combined_b37.txt    $i    --make-bed
     }
-
+* modifier la borne de a dans festim (trop élevé)
 
 ????
 
