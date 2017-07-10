@@ -41,7 +41,7 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   
   #Step 3 : list of all the segment in the genome
   #TODO renommer les variables !!!
-  if(verbose) cat("Finding which markers are beytween two hotspots : ")
+  if(verbose) cat("Finding which markers are between two hotspots : ")
   shift <- sapply(1:22, function(i) which(x@snps == i)[1]) - 1L
   
   VIII <- list()
