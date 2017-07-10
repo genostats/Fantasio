@@ -1,7 +1,7 @@
 #x an msat.matrix with a and f computed
-set.HBD.prob <- function(x)
+set.HBD.prob <- function(x, inbred_individuals = which(x@f > 0))
 {
-  l <- which(x@f > 0)
+  l <- inbred_individuals
   
   HBD_prob <- matrix(NA, nrow= length(l), ncol = x@ncol)#matrice contenant les probabilites pour les individus
   #dimnames(HBD_prob) <- list(rownames(HBD_prob, do.NULL = FALSE, prefix = "individual_"), colnames(HBD_prob) <- c(x@map$id))
