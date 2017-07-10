@@ -5,7 +5,7 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
     set.seed(i)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
     spider <- createSubmap(x, segments, epsilon) 
     if(run.festim) 
-      spider <- festim(spider, probs = proba)
+      spider <- festim(spider, probs = proba, verbose = verbose)
     spider
   }
 
@@ -25,6 +25,7 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
     parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] )
     submap <- parLapply(cl, 1:n, ff, run.festim = run.festim)
     stopCluster(cl)
+    gc()
   }
   
   #submap <- vector("list", n)
@@ -39,7 +40,7 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
   #}
 
   if(verbose) cat("Creation of all the Submaps over ! \n")
-  return(submap)
+  new("list.submaps", submap)
 }
 
 

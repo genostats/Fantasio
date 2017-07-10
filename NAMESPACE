@@ -8,7 +8,7 @@ import(parallel)
 
 useDynLib(FEstim)
 
-exportClasses(msat.matrix, f.matrix, submap.matrix)
+exportClasses(msat.matrix, f.matrix, submap.matrix, list.submaps, hotspot.segments)
 exportMethods(show, dim)
 
 export(random.msat)

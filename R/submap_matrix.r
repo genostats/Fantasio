@@ -14,10 +14,3 @@ setMethod('show', signature("submap.matrix"),
 )
 
 
-#setClass("liste.submap", representation = (
-#        submap_info = 'list'
-#))
-#setMethod('show', signature("liste.submap"), 
-#  function(object){
-#    for(i in 1:length(object))    
-#  })
