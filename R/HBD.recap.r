@@ -1,34 +1,47 @@
-#pb le nombre d'individus avec un f > 0 varie selon les sous-cartes
 HBD.recap <- function(h)
 {
-  snps <- as.vector(sapply(h, function(x) colnames(x@HBD.prob))) #every markers that has been choosen on submaps
-  b <- as.data.frame(table(snps),  stringsAsFactors=FALSE)  #count the number of times the marker has been choosen
-  n <- matrix(nrow = nrow(b), ncol = nrow(h[[1]]@HBD.prob) + 1) # create the matrix : HBD.recap
-  namevector <- c("Freq", rownames(h[[1]]@HBD.prob)) #vector or column names
-  dimnames(n) <- list(rownames(n) <- c(b$snps), colnames(n) <- namevector) #give name to matrix
-  n[,1] <- b$Freq
-  a <- ncol(n) #use to put data on the matrix
+  proba <- submap.HBD(h)
+
+  #tableau comptant le nombre de fois ou un marqueur a ete selectionne
+  marqueurs <- c()
+  for(i in 1:5)
+     marqueurs <- c(marqueurs, colnames(proba[[i]]))
+  marqueurs <- as.data.frame(table(marqueurs), stringsAsFactors=FALSE)
   
+  #tableau comptant le nombre de fois ou un individus est apparu
+  individuals <- c()
+  for(i in 1:5)
+      individuals <- c(individuals, rownames(proba[[i]]))
+  individuals <- as.data.frame(table(individuals), stringsAsFactors=FALSE) 
   
-  az <- vapply(h, function(hh) match( b$snps, colnames(hh@HBD.prob)), integer(length(b$snps))  )
-  #through all the markers
-  for( i in 1:nrow(n))
+  #creation de la matrice = individus x marqueurs
+  matrice <- matrix(0, nrow = nrow(individuals), ncol = nrow(marqueurs))
+  dimnames(matrice) <- list(individuals[,1], marqueurs[,1])
+  
+  #trouver l'/les indice(s) et la/les sous-carte(s) avec des valeurs pour chaque marqueur
+  az <- vapply(proba, function(jj) match(marqueurs[,1], colnames(jj)), integer(length(marqueurs[,1])))
+  
+  #boucle de remplissage de la matrice
+  for( i in 1:ncol(matrice))
   {
     az1 <- az[i,]
     I <- which(!is.na(az1))
-    v <- vapply( I, function(i) h[[i]]@HBD.prob[, az1[i]], double(nrow(h[[1]]@HBD.prob)) )
-    #v <- sapply( I, function(i) h[[i]]@HBD.prob[, az1[i]]) 
-    n[i,seq(21,a, by = 1)] <- apply(v,1,mean)
+    v <- sapply(I, function(i) proba[[i]][, az1[i]], simplify = F)
+    
+    #if(is.list(v))
+    #{
+    division <- c()# conserver tous les indices des individus
+      for( j in 1:length(v))
+      {
+        m <- match(rownames(as.data.frame(v[[j]])), rownames(matrice))
+        division <- c(division, m)
+        matrice[m,i] <- matrice[m,i] + v[[j]]
+      }
+    matrice[division,i] <- matrice[division,i] / marqueurs[i,2] #diviser par le nombre de fois ou le marqueur a ete selectionne
+  }
+    #else{
+    #  m <- match(rownames(v), rownames(matrice))
+    #  matrice[m,i] <- v
+    #}
+    matrice
   }  
-  return(n)
-}  
-
-#for( i in 1:nrow(n))
-#{
-#  cat(i,  ",")
-#  id <- b$snps[i]
-#  v <- Reduce( cbind, lapply( h, function(hh) if(id %in% colnames(hh@HBD.prob)) hh@HBD.prob[,str()] ))
-#  n[i,seq(2,a, by = 1)] <- apply(v,1,mean)
-#}
-
-#v <- vapply( I, function(i) h[[i]]@HBD.prob[, az1[i]], double(nrow(h[[i]]@HBD.prob)) )

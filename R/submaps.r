@@ -1,9 +1,9 @@
-# paralleliser !!
-submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1e-3, run.festim = TRUE, proba = TRUE,  verbose = TRUE) {
+
+submaps <- function(x, n = 100, segment = segments(x), n.cores = 1, epsilon = 1e-3, run.festim = TRUE, proba = TRUE,  verbose = TRUE) {
 
   ff <- function(i, run.festim) {
     set.seed(i)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
-    spider <- createSubmap(x, segments, epsilon) 
+    spider <- createSubmap(x, segment, epsilon) 
     if(run.festim) 
       spider <- festim(spider, probs = proba, verbose = verbose)
     spider
@@ -21,8 +21,8 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
       s <- rbind(s, nextRNGStream(s[i-1,]))
-    cl <- makeForkCluster(n.cores)
-    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] )
+    cl <- makeForkCluster(n.cores) #create slaves
+    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) #use of paralelisation
     submap <- parLapply(cl, 1:n, ff, run.festim = run.festim)
     stopCluster(cl)
     gc()
@@ -33,7 +33,7 @@ submaps <- function(x, n = 100, segments = segments(x), n.cores = 1, epsilon = 1
   #{ 
   #  set.seed(i)  # FOR DEBUG PURPOSE TO BE REMOVED!!!
   #  if(verbose) cat("creating submap number : ", i,"/", n, "\n" )
-  #  spider <- createSubmap(x, segments, epsilon) 
+  #  spider <- createSubmap(x, segment, epsilon) 
   #  if(run.festim) 
   #    spider <- festim(spider)
   #  submap[[i]] <- spider

@@ -2,24 +2,27 @@ setClassUnion("numericOrNULL",members=c("numeric", "NULL"))
 setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClass("f.matrix", representation(
           # input slots
-          ncol = 'numeric',              # nb loci
-          nrow = 'numeric',              # nb inds
-          ped = 'data.frame',            # le contenu typique d'un .fam / 6 premieres cols d'un .ped
+          ncol = 'numeric',              # number of loci
+          nrow = 'numeric',              # number of individual
+          ped = 'data.frame',            # the first 6 columns of a .ped
           map = 'data.frame',            # id, chr, distance
-          epsilon = 'numeric',     # la valeur d'epsilon utilisee pour calculer les log emission
-          # dérive de map, précalculé à l'initialisation
+          epsilon = 'numeric',           # value of epsilon use for computing log emission precalculated at initialisation
           delta.dist = 'numericOrNULL',  # diff(map$distance) + faire attention au chgt de chr
-          # créés à partir d'une msat matrix / d'une bed matrix...
-          log.emiss = 'matrixOrNULL',    # matrice de logs proba d'emission si statut = 0 ou 1 (2 nb inds x nb msats) (meme commentaire)
+          
+          # slot created from an msatmatrix/bed.matrix
+          
+          log.emiss = 'matrixOrNULL',    # matrix of log proba emission if statut = 0 or 1(2 nb inds x nb msats) 
+          
           # output slots
-          a = 'numeric',                 # valeurs de a et f estimees par la fonction festim
+          
+          a = 'numeric',                 # value of a and f estimated by festim
           f = 'numeric',
-          likelihood0 = 'numeric',       # vraisemblance sous H0 (f = 0)
-          likelihood1 = 'numeric',       # vraisemblance sous H1, ie aux valeurs calculés 
-          p.lrt = 'numeric',             # le likelihood ratio test
-          HBD.prob = 'matrix',           # proba d'etre HBD = 1 ; un individu par colonne : dim = (nb inds x nb msats)
-          FLOD = 'matrix',               # matrice des FLOD scores  dim = (nb inds x nb msats)
-          HFLOD = 'matrix'               # matrice des HFLOD scores dim = (nb msats x 2)
+          likelihood0 = 'numeric',       # likelihood under H0 (f = 0)
+          likelihood1 = 'numeric',       # likelihood under H1 
+          p.lrt = 'numeric',             # likelihood ratio test
+          HBD.prob = 'matrix',           # proba HBD = 1 ; one individual per column : dim = (nb inds x nb msats)
+          FLOD = 'matrix',               # matrix of FLOD scores dim = (nb inds x nb msats)
+          HFLOD = 'matrix'               # matrix of HFLOD scores dim = (nb msats x 2)
 ))
 
 setMethod('initialize', signature='f.matrix', definition=function(.Object, ncol, nrow, ped, map, log.emiss, epsilon=1e-3) {

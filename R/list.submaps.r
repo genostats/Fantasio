@@ -3,7 +3,7 @@ setClass("list.submaps", representation = (
 ))
 setMethod('show', signature("list.submaps"), 
   function(object){
-       cat('A list of submaps with ', length(object), ' submaps\n ')
+       cat('A list of', length(object), 'submaps\n ')
   })
 
 

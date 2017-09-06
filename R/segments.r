@@ -61,6 +61,6 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   }
   if(verbose) cat("\n")
  
-  new("hotspot.segments",VIII)
+  new("hotspot.segments", VIII)
 } 
 

@@ -26,7 +26,7 @@ submap.summary <- function(h, a.threshold = 1)
   df <- data.frame(FID           = h[[1]]@ped$famid, 
                    IID           = h[[1]]@ped$id,
                    STATUS        = h[[1]]@ped$pheno,
-                   SUBMAPS       = length(h),#cat(length(h), "/", length(h))
+                   SUBMAPS       = paste(length(h), "/", length(h)),
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),
@@ -35,7 +35,7 @@ submap.summary <- function(h, a.threshold = 1)
                    A_MEDIAN      = apply(a, 1, median, na.rm=TRUE),
                    pLRT_MEDIAN   = pLRT_MEDIAN, 
                    INBRED        = as.integer(pLRT_MEDIAN < 0.05), 
-                   LRT_inf_0.05  = nValidSubmap)
+                   pLRT_inf_0.05 = nValidSubmap)
   
   for(i in 1:nrow(df))
   {

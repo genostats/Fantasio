@@ -2,10 +2,10 @@ setClassUnion("numericOrNULL",members=c("numeric", "NULL"))
 setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClass("msat.matrix", representation(
            # input slots
-           msat = 'matrix',             # matrice de gC)notypes (nb msats x 2 nb inds)
-           freq = 'matrix',             # matrice de frC)quences allC)liques (nb msat x max allele)
+           msat = 'matrix',             # genotype matrix (nb msats x 2 nb inds)
+           freq = 'matrix',             # allelic frequencies matrix (nb msat x max allele)
            # output slots
-       log.freq = 'matrix'              # log de la prC)cC)dente (il est utile qu'elle soit prC)calculC)e)
+       log.freq = 'matrix'              # previous log (il est utile qu'elle soit precalculee)
 ), contains = "f.matrix" )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object, ncol, nrow, ped, msat, map, freq, epsilon = 1e-3) {

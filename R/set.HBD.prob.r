@@ -1,10 +1,21 @@
-#x an msat.matrix with a and f computed
-set.HBD.prob <- function(x, inbred_individuals = which(x@f > 0))
+#x an matrix with a and f computed 
+# inbred_individual à utiliser
+set.HBD.prob <- function(x)
 {
-  l <- inbred_individuals
+  l <- which(x@f > 0 & x@a < 1)
   
-  HBD_prob <- matrix(NA, nrow= length(l), ncol = x@ncol)#HBD matrix
-  dimnames(HBD_prob) <- list(rownames(HBD_prob, do.NULL = FALSE, prefix = "individual_"), colnames(HBD_prob) <- c(x@map$id))
+  id    <- c(x@ped$id[l])
+  famid <- c(x@ped$famid[l])
+  
+  namevector <- c()
+  
+  for(i in 1:length(id))
+  {
+    namevector <- c(namevector, paste("individual", id[i], famid[i], sep = "_"))
+  }
+  
+  HBD_prob <- matrix(NA, nrow = length(l), ncol = x@ncol)#HBD matrix
+  dimnames(HBD_prob) <- list(rownames(HBD_prob) <- namevector, colnames(HBD_prob) <- c(x@map$id))
   
   for (i in 1:nrow(HBD_prob))
   {
@@ -12,10 +23,11 @@ set.HBD.prob <- function(x, inbred_individuals = which(x@f > 0))
     {
         HBD_prob[i,1:x@ncol] <-forward.backward(get.log.emiss(x, i), x@delta.dist, x@a[l[i]], x@f[l[i]] )[2,]
     }
-      
   }
   x@HBD.prob <- HBD_prob 
   return(x)
 }
+
+
 
 
