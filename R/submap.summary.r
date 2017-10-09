@@ -1,8 +1,8 @@
 submap.summary <- function(h, a.threshold = 1)
 {  
-  f <-  sapply(h, function(x) x@f) 
-  a <-  sapply(h, function(x) x@a)
-  p <- sapply(h , function(x) x@p.lrt)
+  f <-  sapply(h@atlas, function(x) x@f) 
+  a <-  sapply(h@atlas, function(x) x@a)
+  p <- sapply(h@atlas , function(x) x@p.lrt)
   w.a <- (a > a.threshold)
   f[w.a] <- NA
   p[w.a] <- NA
@@ -18,15 +18,15 @@ submap.summary <- function(h, a.threshold = 1)
   }
   
   #treat the case whe quality is equal to NA
-  quality <- (rowSums(sapply(h, function(x) x@a < a.threshold) )/length(h))*100
+  quality <- (rowSums(sapply(h@atlas, function(x) x@a < a.threshold) )/length(h))*100
   n <- which(is.na(quality))
   quality[n] <- 0
   
   
-  df <- data.frame(FID           = h[[1]]@ped$famid, 
-                   IID           = h[[1]]@ped$id,
-                   STATUS        = h[[1]]@ped$pheno,
-                   SUBMAPS       = paste(length(h), "/", length(h)),
+  df <- data.frame(FID           = h@atlas[[1]]@ped$famid, 
+                   IID           = h@atlas[[1]]@ped$id,
+                   STATUS        = h@atlas[[1]]@ped$pheno,
+                   SUBMAPS       = paste(length(h@atlas), "/", length(h@atlas)),
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),

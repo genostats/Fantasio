@@ -1,31 +1,29 @@
-\name{submap}
-\alias{submap}
-\title{Creating several random submap}
+\name{submaps}
+\alias{submaps}
+\title{Creating several random submaps}
 \description{
-Return an arraylist that contains multiple submap created thanks to an bedmatrix.}
-\usage{submap(x = bedmatrix, n = 100, intensity = 10, hotspot_version = "hg17")}
+Return an submap.matrix object that contain multiple submaps and summaries}
+\usage{x, n = 100, segment = segments(x), n.cores = 1, epsilon = 1e-3, run.festim = TRUE, proba = TRUE,  verbose = TRUE}
 \arguments{
 	\item{x}{a bedmatrix}
 	\item{n}{the number of submap to create, default is 100}
-	\item{intensity}{the minimal intensity with which the hotspot has to be chosen, default is 10}
-	\item{hotspot_version}{the file in which hotspot has to be chosen, default is hg17}
+	\item{segment}{the list of segments outputed by the segments() function}
+	\item{n.cores}{the number of core use to create submaps, default is 1}
+	\item{run.festim}{if you want to compute a, f, likelihood0, likelihood1, p.lrt, default is TRUE}
+	\item{proba}{if you want to compute HBD, FLOD, HFLOD probabilities, default is TRUE}
+	\item{verbose}{if you want info from festim() function, default is TRUE }
 	}
 \details{
-This function use a file, "hotspot_hg", given by the package that gives hotspots of recombination for the genome, with the "intensity"" for condition the function finds all the hotspots which have an intensity equal or higher to "intensity", with all the hotspots selected the function creates a list of segment.
-
-After that the function finds all the markers between two hotspots (that is to say a segment) and for all the genome.
-
-To put it in a nutshell the function select a random marker in all the segments (delimitate by two hotspots) and creates a submap with all the random markers choosen.
+If you want to compute HBD, FLOD, HFLOD probabilities make sure that run.festim is TRUE.
 }
-\value{Return an arraylist with all the submap created.}
+\value{Return an submap.matrix object with all the submaps created and some summaries.}
 \examples{
-
+require(FEstim)
 system.file("extdata/geb.bim", "extdata/geb.fam", "extdata/geb.bed", package="FEstim")
-
-  x <- read.bed.matrix("geb")
-  
-  h <- submap(x, 5)
-  
-  str(h) #to see all the submap's infos
-  str(h[n]) #to see the infos of a particular submap 
+x <- read.bed.matrix("geb")
+s <- segments(x)
+h <- submaps(x, 5, s)  
+h
+str(h) #to see all the submap's infos
+str(h[n]) #with n a particular submap
 }

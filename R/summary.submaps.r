@@ -1,9 +1,9 @@
 # a summary for a particular submap because depending on the submap markers differs
-summary.submaps <- function(x)
+summary.submaps <- function(h)
 {
-  df <- as.data.frame(sapply(h, function(x) ncol(x)))
+  df <- as.data.frame(sapply(h@atlas, function(x) ncol(x)))
   n_submaps <- c()
-  for(i in 1:length(h)) n_submaps <- c(n_submaps, paste("Submap", i))
+  for(i in 1:length(h@atlas)) n_submaps <- c(n_submaps, paste("Submap", i))
   rownames(df) <- n_submaps
   colnames(df) <- "number_of_markers_used"
   df

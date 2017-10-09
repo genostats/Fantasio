@@ -11,7 +11,7 @@
   require(FEstim)
   system.file("extdata/map_snp.in", "extdata/data_snp.in", package="FEstim")
   x <- read.msat.matrix("map_snp.in", "data_snp.in")
-  x <- festim(x)
+  x <- festim(x, probs = FALSE)
   x <- HBD.prob(x)
   x <- set.FLOD(x)
   x <- set.HFLOD(x)
