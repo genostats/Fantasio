@@ -2,7 +2,7 @@
 \alias{set.FLOD}
 \title{Computes HFLOD probabilities for all the individual's markers}
 \description{Returns a matrix with HFLOD computes for each marker of each individual}
-\usage{HFLOD.prob(x)}
+\usage{set.HFLOD(x)}
 \arguments{
   \item{x}{a matrix with FLOD probabilities already computes (which means it have been passed to festim(), HBD.prob(), set.FLOD() )}
 }

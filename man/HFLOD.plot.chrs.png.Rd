@@ -6,6 +6,7 @@
 \arguments{
   \item{x}{a matrix with HFLOD probabilities already computes (which means it have been passed to festim() with default value )}
 }
+\value{A folder created in your directory named HFLOD/.}
 \seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chr}},  \code{\link{HFLOD.manhattan.plot}}, \code{\link{festim}}}
 \examples{
   require(FEstim)

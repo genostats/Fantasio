@@ -7,6 +7,9 @@
   \item{x}{a matrix with HFLOD probabilities already computes}
   \item{chr}{a chromosom which HFLOD plot is wanted}
 }
+\value{
+A plot of all the HFLOD for the chromosome.
+}
 \seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chrs.png}},  \code{\link{HFLOD.manhattan.plot}}, \code{\link{festim}}}
 \examples{
 require(FEstim)

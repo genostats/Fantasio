@@ -5,11 +5,13 @@ setClass("list.submaps", representation(
         likelihood_summary = 'listOrNULL',
         estimation_summary = 'listOrNULL', 
         marker_summary = 'dataframeOrNULL',
-        submap_summary = 'dataframeOrNULL'
+        submap_summary = 'dataframeOrNULL',
+        bedmatrix = 'bed.matrix'
 ))
-setMethod('initialize', signature='list.submaps', definition=function(.Object, submaps)
+setMethod('initialize', signature='list.submaps', definition=function(.Object, submaps, bedmatrix)
 {
   .Object@atlas <- submaps
+  .Object@bedmatrix <- bedmatrix
   .Object
 })
 setMethod('show', signature("list.submaps"), 

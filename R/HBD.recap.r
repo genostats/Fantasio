@@ -15,6 +15,15 @@ HBD.recap <- function(h)
   
   dimnames(matrice) <- list(individuals[,1], marqueurs[,1])
   
+  #to order chromosome in the matrix
+  
+  po <- match(colnames(matrice), x@snps$id)
+  snp.chr <- x@snps$chr[po]
+  snp.pos <- x@snps$pos[po]
+  #voo <- order(vi)
+  matrice <- matrice[, order(snp.chr, snp.pos)]
+  
+  
   #trouver l'/les indice(s) et la/les sous-carte(s) avec des valeurs pour chaque marqueur
   az <- vapply(proba, function(jj) match(marqueurs[,1], colnames(jj)), integer(length(marqueurs[,1])))
   

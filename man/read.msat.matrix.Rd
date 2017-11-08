@@ -4,10 +4,10 @@
 \description{
 This function takes in arguments two files : a mapfile and a datafile, 
 thus it creates all the arguments necessary for the function msat_matrix()}
-\usage{ read.msat.matrix("mapfile.in", "datafile.in")}
+\usage{ read.msat.matrix("mapfile", "datafile")}
 \arguments{
-	\item{mapfile.in}{a mapfile  sample}
-	\item{datafile.in}{a datafile of the sample}
+	\item{mapfile.in}{a mapfile}
+	\item{datafile.in}{a datafile}
 	}
 \details{
 The function use informations from both files to create an msat.matrix objet which resume all information from previous files.

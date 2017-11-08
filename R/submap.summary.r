@@ -1,8 +1,8 @@
-submap.summary <- function(h, a.threshold = 1)
+submap.summary <- function(submaps, a.threshold = 1)
 {  
-  f <-  sapply(h@atlas, function(x) x@f) 
-  a <-  sapply(h@atlas, function(x) x@a)
-  p <- sapply(h@atlas , function(x) x@p.lrt)
+  f <-  sapply(submaps, function(x) x@f) 
+  a <-  sapply(submaps, function(x) x@a)
+  p <- sapply(submaps , function(x) x@p.lrt)
   w.a <- (a > a.threshold)
   f[w.a] <- NA
   p[w.a] <- NA
@@ -17,16 +17,16 @@ submap.summary <- function(h, a.threshold = 1)
     nValidSubmap <- c(nValidSubmap, sum(l[i,], na.rm = TRUE ))
   }
   
-  #treat the case whe quality is equal to NA
-  quality <- (rowSums(sapply(h@atlas, function(x) x@a < a.threshold) )/length(h))*100
+  #treat the case when quality is equal to NA
+  quality <- (rowSums(sapply(submaps, function(x) x@a < a.threshold) )*100)/length(submaps)
   n <- which(is.na(quality))
   quality[n] <- 0
   
   
-  df <- data.frame(FID           = h@atlas[[1]]@ped$famid, 
-                   IID           = h@atlas[[1]]@ped$id,
-                   STATUS        = h@atlas[[1]]@ped$pheno,
-                   SUBMAPS       = paste(length(h@atlas), "/", length(h@atlas)),
+  df <- data.frame(FID           = submaps[[1]]@ped$famid, 
+                   IID           = submaps[[1]]@ped$id,
+                   STATUS        = submaps[[1]]@ped$pheno,
+                   SUBMAPS       = paste(length(submaps), "/", length(submaps)),
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),
@@ -34,7 +34,7 @@ submap.summary <- function(h, a.threshold = 1)
                    F_MEDIAN      = apply(f, 1, median, na.rm=TRUE),
                    A_MEDIAN      = apply(a, 1, median, na.rm=TRUE),
                    pLRT_MEDIAN   = pLRT_MEDIAN, 
-                   INBRED        = as.integer(pLRT_MEDIAN < 0.05), 
+                   INBRED        = pLRT_MEDIAN < 0.05, 
                    pLRT_inf_0.05 = nValidSubmap)
   
   for(i in 1:nrow(df))

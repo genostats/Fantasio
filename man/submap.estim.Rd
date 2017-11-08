@@ -9,7 +9,7 @@
     \item{h}{a submap.matrix object}
   }
   
-  \value{retur a list of two dataframe, the first contains all the f computed and the second all the a computed. 
+  \value{return a list of two dataframe, the first contains all the f computed and the second all the a computed. 
 }
   \examples{
     require(FEstim)
