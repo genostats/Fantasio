@@ -39,9 +39,10 @@ submaps <- function(x, n = 100, segment = segments(x), n.cores = 1, epsilon = 1e
   #  submap[[i]] <- spider
   #}
 
-  if(verbose) cat("Creation of all the Submaps over ! \n")
-  submaps <- new("list.submaps", submap, x)
+  
+  submaps <- new("list.submaps", submap, x, segment)
   submaps <- setSummary(submaps)
+  if(verbose) cat("Creation of all the Submaps over ! \n")
   submaps
 }
 

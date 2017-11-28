@@ -2,7 +2,7 @@
 #HBD.segments : list de dataframe pour chaque individus avec les segments contenant au moins 5 marqueurs consecutifs au dessus ou egale a un threshold
 #individual.number : le numero de l'individus sortis dans HBD.recap ou HBD.segments (meme indidividus) dont on veut le plot
 
-HBD.plot.id <- function(HBD.recap, HBD.segments, individual.number, distance= "cM", regions="empty", outfile="empty")
+HBD.plot.id <- function(HBD.recap, HBD.segments, individual.number, distance= "cM", regions="empty", outfile="empty", save_img=F)
 {
   #recuperer les id de l'individus necessaire pour la fonction plot
   name <- rownames(HBD.recap)
@@ -14,9 +14,14 @@ HBD.plot.id <- function(HBD.recap, HBD.segments, individual.number, distance= "c
   if (outfile=="empty") {outfile=paste("HBD_", name[individual.number],"_",distance,".png",sep="")} else { outfile=paste(outfile,".png",sep="") }
 
   #creation d'un fichier png et plot
-  png(filename = outfile, width = 1000, height = 1000,pointsize=24)
+  if(save_img)
+  {
+    png(filename = outfile, width = 1000, height = 1000,pointsize=24)
+    plot_HBD_IID(HBD.segments, individual.number, distance = distance, regions = myreg, main=paste("HBD segments of ",name[individual.number]))
+    dev.off()
+  }
   plot_HBD_IID(HBD.segments, individual.number, distance = distance, regions = myreg, main=paste("HBD segments of ",name[individual.number]))
-  dev.off()
+ 
 }
 
 

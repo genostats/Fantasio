@@ -1,25 +1,35 @@
-HBD.recap <- function(h, by_segments=F)
+HBD.recap <- function(submaps, by_segments=F)
 {
-  proba <- submap.HBD(h)#recuperer les probas HBD pour chaque sous cartes sous forme d'une liste
+  proba <- submap.HBD(submaps)#recuperer les probas HBD pour chaque sous cartes sous forme d'une liste
 
   if(by_segments)
   {
+    #donner un nom aux colonnes
+    marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)#recuperer le nom des marqueurs
+    chr <- submaps@bedmatrix@snps$chr[match(marker_names, submaps@bedmatrix@snps$id)]#a quel chromosome appartient ce marqueur
+    columns_names <- paste(rep("Segment",length(marker_names)), seq(1,length(marker_names)), rep("chr", length(marker_names)), chr, sep = "_")
+    
+    
     nom <- unique(unlist(sapply(proba, function(x) rownames(x)))) #recuperer le nom de chaque individus apparut
+    
     matrice <- matrix(NA, nrow=length(nom), ncol=ncol(proba[[1]]))#creer une matrice avec les individus en lignes 
                                                                   #et les segments en colonnes
     rownames(matrice) <- nom
+    colnames(matrice) <- columns_names
+    
+    #boucle de remplissage
     Sum <- 0
-    for(j in 1 : length(nom))
+    for(j in 1 : length(nom))#parcourir chaque individus
     {
       cpt <- 0
-      for(i in 1:length(proba))
+      for(i in 1:length(proba))#parcourir chaque sous-cartes 
       {
-        line <- which(nom[j] == rownames(proba[[i]]))
-        if(length(line) == 0) next()
-        Sum <- Sum + proba[[i]][line, ]
+        line <- which(nom[j] == rownames(proba[[i]]))#recuperer la lignes correspondant a notre individu
+        if(length(line) == 0) next()#si l'individu n'est pas dans la sous-carte on passe
+        Sum <- Sum + proba[[i]][line, ]#on somme chaque ligne entres elles
         cpt <- cpt + 1 
       }
-      matrice[j, ] <- Sum / cpt
+      matrice[j, ] <- Sum / cpt#on fait la moyenne
       
     }
     return(matrice)
@@ -40,9 +50,9 @@ HBD.recap <- function(h, by_segments=F)
   
   #to order chromosome in the matrix
   
-  po <- match(colnames(matrice), x@snps$id)
-  snp.chr <- x@snps$chr[po]
-  snp.pos <- x@snps$pos[po]
+  po <- match(colnames(matrice), submaps@bedmatrix@snps$id)
+  snp.chr <- submaps@bedmatrix@snps$chr[po]
+  snp.pos <- submaps@bedmatrix@snps$pos[po]
   #voo <- order(vi)
   matrice <- matrice[, order(snp.chr, snp.pos)]
   

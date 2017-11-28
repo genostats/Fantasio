@@ -5,7 +5,8 @@ plot_HBD_IID <- function (HBD_segments, individual_number, distance = "cM", regi
   suppressMessages(library(quantsmooth))
   
   color  <- function (val) {
-    if (val==1) {col="skyblue3"}
+    if(is.na(val)){col="black"}
+    else if (val==1) {col="skyblue3"}
     else if (val==2) {col="tomato"}
     else {col="grey"}
     col
@@ -30,7 +31,7 @@ plot_HBD_IID <- function (HBD_segments, individual_number, distance = "cM", regi
     
     text(larg*i,lengthChromosome(12,distance)+0.75*ecart,i)
     
-    #recuper les lignes pour un individus specifique et un chromosome specifique
+    #recuperer les lignes pour un individus specifique et un chromosome specifique
     seg_chr=HBD_segments[[individual_number]][HBD_segments[[individual_number]]$chromosome==i,] 
     
     if (dim(seg_chr)[1]>0)

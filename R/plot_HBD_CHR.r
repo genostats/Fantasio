@@ -5,7 +5,8 @@ plot_HBD_CHR <- function (HBD_segments, distance = "cM", chr, list_id, regions, 
   suppressMessages(library(quantsmooth))
   
   color  <- function (val) {
-    if (val==1) {col="skyblue3"}
+    if(is.na(val)){col="black"}
+    else if (val==1) {col="skyblue3"}
     else if (val==2) {col="tomato"}
     else {col="grey"}
     col

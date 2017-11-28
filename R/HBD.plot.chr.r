@@ -3,7 +3,7 @@
 #chr : le numero du chromosome
 #listid : la liste des individus a prendre en compte 
 
-HBD.plot.chr <- function(HBD.recap, HBD.segments, distance="cM", chr, listid="empty", regions="empty", outfile="empty")
+HBD.plot.chr <- function(HBD.recap, HBD.segments, distance="cM", chr, listid="empty", regions="empty", outfile="empty", save_img=F)
 {
   
   nom <- rownames(HBD.recap)	
@@ -45,10 +45,17 @@ HBD.plot.chr <- function(HBD.recap, HBD.segments, distance="cM", chr, listid="em
   } 
   
   #creation du fichier png et appel de la fonction de plot
-  png(filename = outfile, width = 2100, height = 1000,pointsize=24)
+  if(save_img)
+  {
+    png(filename =  outfile, width = 2100, height = 1000,pointsize=24)
+    par(mar = c(4.1, 10.1, 4.1, 2.1)); 
+    plot_HBD_CHR(HBD_segments = HBD,distance= distance,chr= chr,list_id = list_id,regions = myreg,start=mystart)
+    dev.off()
+  }
   par(mar = c(4.1, 10.1, 4.1, 2.1)); 
   plot_HBD_CHR(HBD_segments = HBD,distance= distance,chr= chr,list_id = list_id,regions = myreg,start=mystart)
-  dev.off()
+  
+  
 
 }
 
