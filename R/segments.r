@@ -26,7 +26,7 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   }
   if(verbose) cat("\n")
   
-  #Step 2 : list of all the genome's markers
+  #Step 2 : list of all the marker's position
   
   if(verbose) cat("Gathering all the genome's markers : ")
   

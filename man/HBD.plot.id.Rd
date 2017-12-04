@@ -18,7 +18,6 @@ chromosome and its start and end positions (in cM (default) or bp if the distanc
 }
 
 \value{Return a plot of segment for the given individual}
-}
 \examples{
   require(FEstim)
   system.file("geb")    #a changer

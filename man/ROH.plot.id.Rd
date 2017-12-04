@@ -22,6 +22,6 @@
   }
   
   \value{Return a plot of segment for the given individual}
-}
+
 \examples{
 }

@@ -4,7 +4,7 @@
 \description{
   Use this function if you want to plot HBD segments for a given chromosome.
 }
-\usage{HBD.plot.id(HBD.recap, HBD.segments, distance="cM", chr, listid="empty", regions="empty", outfile="empty", save_img=F)
+\usage{HBD.plot.id(HBD.recap, HBD.segments, distance="cM", chr, listid="empty", regions="empty", outfile="empty", save_img=F)}
 \arguments{
   \item{HBD.recap}{a matrix created by HBD.recap function}
   \item{HBD.segments}{a matrix created by HBD.segments function}
@@ -20,7 +20,7 @@ chromosome and its start and end positions (in cM (default) or bp if the distanc
 }
 
 \value{Return a plot of segment for the given chromosome}
-}
+
 \examples{
   require(FEstim)
   system.file("geb")    #a changer

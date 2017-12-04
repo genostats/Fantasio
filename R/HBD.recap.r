@@ -6,7 +6,11 @@ HBD.recap <- function(submaps, by_segments=F)
   {
     #donner un nom aux colonnes
     marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)#recuperer le nom des marqueurs
-    chr <- submaps@bedmatrix@snps$chr[match(marker_names, submaps@bedmatrix@snps$id)]#a quel chromosome appartient ce marqueur
+    correspondance <- match(marker_names, submaps@bedmatrix@snps$id)
+    
+    chr <- submaps@bedmatrix@snps$chr[correspondance]#a quel chromosome appartient ce marqueur
+    
+    ##trop lourd ?
     columns_names <- paste(rep("Segment",length(marker_names)), seq(1,length(marker_names)), rep("chr", length(marker_names)), chr, sep = "_")
     
     
@@ -18,15 +22,15 @@ HBD.recap <- function(submaps, by_segments=F)
     colnames(matrice) <- columns_names
     
     #boucle de remplissage
-    Sum <- 0
     for(j in 1 : length(nom))#parcourir chaque individus
     {
+      Sum <- 0
       cpt <- 0
       for(i in 1:length(proba))#parcourir chaque sous-cartes 
       {
-        line <- which(nom[j] == rownames(proba[[i]]))#recuperer la lignes correspondant a notre individu
+        line <- which(nom[j] == rownames(proba[[i]]))#recuperer la lignes correspondant a notre individu pour la sous-carte i
         if(length(line) == 0) next()#si l'individu n'est pas dans la sous-carte on passe
-        Sum <- Sum + proba[[i]][line, ]#on somme chaque ligne entres elles
+        Sum <- Sum + proba[[i]][line, ]#on somme chaque ligne entres elles -> peut y avoir different marqueur mais meme segment
         cpt <- cpt + 1 
       }
       matrice[j, ] <- Sum / cpt#on fait la moyenne
