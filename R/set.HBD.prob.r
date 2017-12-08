@@ -1,6 +1,6 @@
 #x an matrix with a and f computed 
 # a modifier condition
-set.HBD.prob <- function(x, condition = which(x@p.lrt < 0.05 & x@a <= 1))
+set.HBD.prob <- function(x, condition = which(x@a <= 1))
 {
   id    <- c(x@ped$id[condition])
   famid <- c(x@ped$famid[condition])
@@ -9,7 +9,7 @@ set.HBD.prob <- function(x, condition = which(x@p.lrt < 0.05 & x@a <= 1))
   
   for(i in 1:length(id))
   {
-    namevector <- c(namevector, paste(id[i], famid[i], sep = "_"))
+    namevector <- c(namevector, id[i])
   }
   
   HBD_prob <- matrix(NA, nrow = length(condition), ncol = x@ncol)#HBD matrix

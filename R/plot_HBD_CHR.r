@@ -26,7 +26,7 @@ plot_HBD_CHR <- function (HBD_segments, distance = "cM", chr, list_id, regions, 
   div=length(list_id)/10
   
   #creer un plot vide 
-  plot(c(start,end),c(-0.5,length(list_id))/div+0.5,type="n",xaxt="n",yaxt="n",ylab="",xlab=myxlab,main=paste("HBD segments on chromosome ",chr,sep=""), cex.main=1.5, cex.lab=1.5,font.lab=2)
+  plot(c(start,end),c(-1,length(list_id))/div+0.5,type="n",xaxt="n",yaxt="n",ylab="",xlab=myxlab,main=paste("HBD segments on chromosome ",chr,sep=""), cex.main=1.5, cex.lab=1.5,font.lab=2)
   #	axis(1, at = (end-abs(start))/2 ,labels = myxlab,col.ticks="white",font.axis=2, cex.axis=1.5 )
   
   

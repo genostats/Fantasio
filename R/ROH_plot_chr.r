@@ -28,7 +28,7 @@ color  <- function (val) {
 	else {col="grey"}
 	col
 }
-
+####################################################################################################################
 plot_ROH_CHR <- function (ROH, distance, chr, list_id, regions, start="", end="", color2="green4") {
 
 	if (distance=="cM")         {pos1=which(colnames(ROH)=="POS1_cM"); pos2=which(colnames(ROH)=="POS2_cM"); myxlab="Position (cM)"; coeff=1; if (length(pos1)==0) {stop("no genetic distances in ROH file")}}
@@ -69,7 +69,8 @@ plot_ROH_CHR <- function (ROH, distance, chr, list_id, regions, start="", end=""
 	}
 }
 
-ROH.plot.chr <- function(ROHfile, chr, outfile, listid="empty", regions="empty", distance="cM", map, save_file=F)
+#####################################################################################################################
+ROH.plot.chr <- function(ROHfile, map, chr, outfile, listid="empty", regions="empty", distance="cM", save_file=F)
 {
   ROH=read.table(ROHfile,h=T)
   

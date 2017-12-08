@@ -14,7 +14,7 @@ HBD.recap <- function(submaps, by_segments=F)
     columns_names <- paste(rep("Segment",length(marker_names)), seq(1,length(marker_names)), rep("chr", length(marker_names)), chr, sep = "_")
     
     
-    nom <- unique(unlist(sapply(proba, function(x) rownames(x)))) #recuperer le nom de chaque individus apparut
+    nom <- as.vector(submaps@submap_summary[which(submaps@submap_summary$INBRED == TRUE),]$IID) #recuperer le nom de chaque individus apparut
     
     matrice <- matrix(NA, nrow=length(nom), ncol=ncol(proba[[1]]))#creer une matrice avec les individus en lignes 
                                                                   #et les segments en colonnes
@@ -43,14 +43,13 @@ HBD.recap <- function(submaps, by_segments=F)
   marqueurs <- as.data.frame(table(unlist(sapply(proba, function(x) colnames(x)))), stringsAsFactors=FALSE)
   
   ##tableau comptant le nombre de fois ou un individus est apparu
-  individuals <- as.data.frame(table(unlist(sapply(proba, function(x) rownames(x)))), stringsAsFactors=FALSE) 
-
+  individuals <- as.vector(submaps@submap_summary[which(submaps@submap_summary$INBRED == TRUE),]$IID)
   
   #creation de la matrice = individus x marqueurs
-  matrice <- matrix(0, nrow = nrow(individuals), ncol = nrow(marqueurs))
-  nb_probs <- matrix(0L, nrow = nrow(individuals), ncol = nrow(marqueurs))
+  matrice <- matrix(0, nrow = length(individuals), ncol = nrow(marqueurs))
+  nb_probs <- matrix(0L, nrow = length(individuals), ncol = nrow(marqueurs))
   
-  dimnames(matrice) <- list(individuals[,1], marqueurs[,1])
+  dimnames(matrice) <- list(individuals, marqueurs[,1])
   
   #to order chromosome in the matrix
   
@@ -76,7 +75,9 @@ HBD.recap <- function(submaps, by_segments=F)
     for( j in 1:length(v))
     {
       m <- M[[ I[j] ]]
-      matrice[m,i] <- matrice[m,i] + v[[j]]
+      right_index <- which(!is.na(m))
+      m <- m[!is.na(m)]
+      matrice[m,i] <- matrice[m,i] + v[[j]][right_index]
       nb_probs[m,i] <- nb_probs[m,i] + 1
     }
   }

@@ -26,7 +26,7 @@ color  <- function (val) {
 	else {col="grey"}
 	col
 }
-
+#####################################################################################
 plot_ROH_IID <- function (ROH, distance, regions,color2="green4", main="") {
 
 	if (distance=="cM")         {ecart=25; larg=2; pos1=which(colnames(ROH)=="POS1_cM"); pos2=which(colnames(ROH)=="POS2_cM"); if (length(pos1)==0) {stop("no genetic distances in ROH file")}}
@@ -90,7 +90,7 @@ plot_ROH_IID <- function (ROH, distance, regions,color2="green4", main="") {
 	}
 
 }
-
+##################################################################################################################
 ROH.plot.id <- function(ROHfile, map, distance="cM", regions="empty", outfile="empty", fid, iid, save_file=F  )
 {
   ROH=read.table(ROHfile,h=T)
