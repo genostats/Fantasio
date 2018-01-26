@@ -30,5 +30,6 @@ segment.summary <- function(s)
     number_of_segments = n_seg, 
     number_of_markers= n_mark
   )
+  df
 }
 
