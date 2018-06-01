@@ -5,9 +5,9 @@ getMarkerChromosom <- function(map)
   submap <- c()
   
   #Step 4 : choose a random mkr
-  for( i in 1:length(map))  # on parcourt les segments
+  for( i in 1:length(map))  # throughout the segment
   {
-    if(length(map[[i]]) == 0) next  # segment vide...
+    if(length(map[[i]]) == 0) next  # empty segment
     if(length(map[[i]]) == 1) 
     {
       s <- map[[i]]

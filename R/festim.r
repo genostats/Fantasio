@@ -1,6 +1,6 @@
 
 # x = a msat matrix
-# -> renvoie une msat matrx avec a et f estimés
+# -> renvoie une msat matrx avec a et f estimés entre autres
 festim <- function(x, verbose = TRUE, debug = FALSE, probs = TRUE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)

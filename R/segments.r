@@ -12,7 +12,7 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   
   #Step 1 : list of all the genome's hotspot
   
-  if(verbose) cat("Gathering all informations about genome's hotspot : ")
+  if(verbose) cat("Gathering all hotspots for the genome : ")
   
   VI <- list()
   for ( i in 1:22)
@@ -26,7 +26,7 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   }
   if(verbose) cat("\n")
   
-  #Step 2 : list of all the genome's markers
+  #Step 2 : list of all the marker's position
   
   if(verbose) cat("Gathering all the genome's markers : ")
   
@@ -40,8 +40,8 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
   cat("\n")
   
   #Step 3 : list of all the segment in the genome
-  
-  if(verbose) cat("Gathering all the segments for the genome thanks to previous infos : ")
+  #TODO renommer les variables !!!
+  if(verbose) cat("Finding which markers are between two hotspots : ")
   shift <- sapply(1:22, function(i) which(x@snps == i)[1]) - 1L
   
   VIII <- list()
@@ -53,16 +53,14 @@ segments <- function(x, intensity = 10 , hotspot_version = "hg19", verbose = TRU
     chr <- list()
     for( j in 1:nrow(chr_segment))
     {
-      b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2])
+      b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2])#which markers are contains between two hotspots
       if (length(b)== 0) next
-      
       chr[[j]] <- b + shift[[i]]
-      
     }
     VIII[[i]] <- chr
   }
   if(verbose) cat("\n")
  
-  VIII
+  new("hotspot.segments", VIII)
 } 
 

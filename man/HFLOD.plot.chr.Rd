@@ -7,12 +7,15 @@
   \item{x}{a matrix with HFLOD probabilities already computes}
   \item{chr}{a chromosom which HFLOD plot is wanted}
 }
+\value{
+A plot of all the HFLOD for the chromosome.
+}
 \seealso{ \code{\link{set.HFLOD}},  \code{\link{HFLOD.plot.chrs.png}},  \code{\link{HFLOD.manhattan.plot}}, \code{\link{festim}}}
 \examples{
 require(FEstim)
 system.file("extdata/map_snp.in", "extdata/data_snp.in", package="FEstim")
 x <- read.msat.matrix("map_snp.in", "data_snp.in")
-x <- festim(x)
+x <- festim(x, probs = FALSE)
 x <- HBD.prob(x)
 x <- set.FLOD(x)
 x <- set.HFLOD(x)

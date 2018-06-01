@@ -1,6 +1,6 @@
 import(Rcpp)
-import(xlsx)
-
+#import(xlsx)
+import(parallel)
 # importFrom("grDevices", "heat.colors")
 # importFrom("graphics", "contour", "image")
 # importFrom("stats", "pchisq", "quantile", "rnorm")
@@ -8,7 +8,7 @@ import(xlsx)
 
 useDynLib(FEstim)
 
-exportClasses(msat.matrix, f.matrix, submap.matrix)
+exportClasses(msat.matrix, f.matrix, submap.matrix, list.submaps, hotspot.segments)
 exportMethods(show, dim)
 
 export(random.msat)
@@ -30,3 +30,9 @@ export(submap.estim)
 export(submap.likelihood)
 export(submap.HBD)
 export(HBD.recap)
+export(summary.submaps, segment.summary, summary.map)
+export(summary.marker)
+export(setSummary)
+export(HBD.segments)
+export(HBD.plot.id, HBD.plot.chr)
+export(ROH.plot.chr, ROH.plot.id)
