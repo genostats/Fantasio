@@ -18,10 +18,6 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object, nc
   }
   if(max(msat) > ncol(freq)) stop("allele exceeding number of columns of freq")
 
-  ## TODO 
-  # vC)rifier que dans map, les marqueurs sont bien ordonnC)s sur chaque chromosome...
-  # et que les chromosomes ne sont pas en vrac
-
   .Object@msat     <- msat
   .Object@freq     <- freq
   .Object@log.freq <- log(freq)
