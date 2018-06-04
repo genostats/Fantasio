@@ -1,3 +1,10 @@
+##################################################################################
+#This function  is uses to create a msat.matrix object similar to a submap.matrix#
+#object                                                                          #
+#                                                                                #
+##################################################################################
+
+
 setClassUnion("numericOrNULL",members=c("numeric", "NULL"))
 setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClass("msat.matrix", representation(
@@ -17,6 +24,10 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object, nc
     msat[w] <- 0
   }
   if(max(msat) > ncol(freq)) stop("allele exceeding number of columns of freq")
+
+  ## TODO 
+  # vC)rifier que dans map, les marqueurs sont bien ordonnC)s sur chaque chromosome...
+  # et que les chromosomes ne sont pas en vrac
 
   .Object@msat     <- msat
   .Object@freq     <- freq

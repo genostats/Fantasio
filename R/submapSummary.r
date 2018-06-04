@@ -1,4 +1,4 @@
-submap.summary <- function(submaps, a.threshold = 1)
+submapSummary <- function(submaps, a.threshold = 1)
 {  
   f <-  sapply(submaps, function(x) x@f) 
   a <-  sapply(submaps, function(x) x@a)
@@ -18,7 +18,7 @@ submap.summary <- function(submaps, a.threshold = 1)
   }
   
   #treat the case when quality is equal to NA
-  quality <- (rowSums(sapply(submaps, function(x) x@a < a.threshold) )*100)/length(submaps)
+  quality <- (rowSums(sapply(submaps, function(x) x@a <= a.threshold) )*100)/length(submaps)
   n <- which(is.na(quality))
   quality[n] <- 0
   

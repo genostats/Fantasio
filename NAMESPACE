@@ -1,38 +1,53 @@
 import(Rcpp)
-#import(xlsx)
 import(parallel)
-# importFrom("grDevices", "heat.colors")
-# importFrom("graphics", "contour", "image")
-# importFrom("stats", "pchisq", "quantile", "rnorm")
-# importFrom("utils", "read.table", "write.table")
-
 useDynLib(FEstim)
 
-exportClasses(msat.matrix, f.matrix, submap.matrix, list.submaps, hotspot.segments)
-exportMethods(show, dim)
+#classes
+exportClasses(msat.matrix, f.matrix, list.submaps, hotspots.matrix, hotspot.segments, snps.matrix, snps.segments)
 
-export(random.msat)
+
+#computing functions
 export(festim)
 export(log.proba.emission)
-export(Likelihood, Likelihood.gradient, forward.backward)
-export(read.msat.matrix)
+export(Likelihood, Likelihood.gradient)
+export(forward.backward)
 export(set.HBD.prob)
 export(set.FLOD)
 export(set.HFLOD)
-
-export(HFLOD.plot.chr)
-export(HFLOD.plot.chrs.png)
-export(HFLOD.manhattan.plot)
 export(bed.logEmiss)
-export(segments, submaps)
-export(submap.summary)
-export(submap.estim)
-export(submap.likelihood)
+
+#submap by hotspots
+export(createSegmentsListByHotspots)
+export(makeSubmapsByHotspots)
+
+#submap by snps
+export(createSegmentsListBySnps)
+export(makeSubmapsBySnps)
+
+#submaps summary 
+export(submapSummary)
+export(submapEstim)
+export(submapLikelihood)
 export(submap.HBD)
-export(HBD.recap)
-export(summary.submaps, segment.summary, summary.map)
-export(summary.marker)
+export(recap)
+export(markerSummary)
+export(segmentsListSummary)
+export(summaryMap)
+export(summaryMarker)
 export(setSummary)
 export(HBD.segments)
-export(HBD.plot.id, HBD.plot.chr)
-export(ROH.plot.chr, ROH.plot.id)
+
+#plotting functions
+export(HBD.plot.id)
+export(HBD.plot.chr)
+
+export(ROH.plot.chr)
+export(ROH.plot.id)
+
+export(HFLOD.manhattan.plot)
+export(HFLOD.plot.chr)
+
+#others
+export(read.msat.matrix)
+export(random.msat)
+exportMethods(show, dim)

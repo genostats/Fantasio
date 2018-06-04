@@ -1,4 +1,4 @@
-submap.estim <- function(submaps)
+submapEstim <- function(submaps)
 {
   estimation <- list()
   dfA <- data.frame("estimation of a.submap" = sapply(submaps, function(x) x@a))

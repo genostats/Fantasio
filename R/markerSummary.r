@@ -1,5 +1,6 @@
 # a summary for a particular submap because depending on the submap markers differs
-summary.submaps <- function(h)
+
+markerSummary <- function(h)
 {
   df <- as.data.frame(sapply(h@atlas, function(x) ncol(x)))
   n_submaps <- c()

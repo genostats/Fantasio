@@ -1,4 +1,4 @@
-submap.likelihood <- function(submaps)
+submapLikelihood <- function(submaps)
 {
   likelihood <- list()
   df0 <- data.frame(likelihoodH0 = sapply(submaps, function(x) x@likelihood0))

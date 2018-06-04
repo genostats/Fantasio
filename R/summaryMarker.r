@@ -1,6 +1,6 @@
-summary.marker <- function(submaps, bedmatrix)
+summaryMarker <- function(submaps, bedmatrix)
 {
-  b <- summary.map(submaps)
+  b <- summaryMap(submaps)
   res <- c()
   for(i in 1:length(submaps))
   {

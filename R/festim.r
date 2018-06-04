@@ -1,7 +1,16 @@
+##################################################################################
+#This function allow the computation of a, f, likelihood0, likelihood1 and p.lrt #                                                                                #
+#!!! x : a submap matrix                                                         #                                       
+#!!! verbose : if you want to have little infos about the computation process    #
+#!!! debug : if you want to have precise infos about the computation process     #
+#                                                                                #
+#*** return the submap matrix with each slots filled                             #
+##################################################################################
 
-# x = a msat matrix
-# -> renvoie une msat matrx avec a et f estimés entre autres
-festim <- function(x, verbose = TRUE, debug = FALSE, probs = TRUE) {
+
+#probs=TRUE,
+
+festim <- function(x, verbose=TRUE, debug=FALSE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)
   x@a <- numeric(N)
@@ -64,11 +73,13 @@ festim <- function(x, verbose = TRUE, debug = FALSE, probs = TRUE) {
     x@likelihood0[i] <- likelihood0
     x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 1, lower.tail = FALSE)
   }
-  if(probs) {
-    x <- set.HBD.prob(x)
-    x <- set.FLOD(x)
-    x <- set.HFLOD(x)
-  }
+  #if(probs) {
+  #  if(verbose) cat("Computing posterior HBD probabilities\n")
+  #  #x <- set.HBD.prob(x, all=all.individual)
+  #  if(verbose) cat("Computing FLOD and HFLOD\n")
+  #  #x <- set.FLOD(x)
+  #  #x <- set.HFLOD(x)
+  #}
   x
 }
 
