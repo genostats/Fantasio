@@ -27,19 +27,29 @@ getMarkerChromosom <- function(chrSegmentsList)
   return(submap)
 }
 
-##################################################################################
-#This function create a submap                                                   #
-#                                                                                #
-#!!! bedmatrix : a bed.matrix                                                    #                                       
-#!!! segmentsList : a list of segments for every chromosomes                     #
-#!!! epsilon : the value of epsilon for submaps                                  #
-#!!! fileName : a fileName with the list of markers wanted for the submap        #
-#                                                                                #
-#*** return a new submap object                                                  #
-##################################################################################
-
-
-
+#' Creation of a submaps
+#' 
+#' This function creates a submaps using the list segments created by using the hotspots in the genome
+#' 
+#' @param bedmatrix a bed.matrix object 
+#' @param segmentsList a list of segment for each chromosomes
+#' @param epsilon the value of epsilon for submaps
+#' @param fileName a fileName with the list of markers wanted for the submap
+#' 
+#' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker and put it into a vector.
+#' @details Once the iteration over the list is over, the function will create an object and filled some of his slot.
+#' @details If you are using a fileName, please make sure to have one marker per line
+#' 
+#' @return return an hotspots.matrix object with some of his slots filled.
+#' 
+#' @seealso \code{\link{makeSubmapsByHotspots}}
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
+#' 
+#' @export
 createSubmapByHotpots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
   

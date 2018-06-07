@@ -1,11 +1,29 @@
-##################################################################################
-#This function create a submaps using a step for creating a submap                #
-#                                                                                #
-#                                                                                #
-#*** return a new submap object                                                  #
-##################################################################################
-#map : segment et mini_segment du chr 
-
+#' Creation of a submaps
+#' 
+#' This function creates a submaps using the list segments created by using gap between markers
+#' 
+#' @param bedmatrix a bed.matrix object 
+#' @param segmentsList a list of segment for each chromosomes
+#' @param epsilon the value of epsilon for submaps
+#' @param step one marker every step
+#' @param unit the unit in which the submaps is to be made, two options are possible "cM" or "Bases"
+#' @param fileName You have the possibility to pass your own list of marker, that is to say, your own submaps 
+#' 
+#' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker 
+#' and from this marker chose a marker every "step" step from back to end.
+#' @details Once the iteration over the list is over, the function will create an object and filled some of his slot.
+#' @details If you are using a fileName, please make sure to have one marker per line
+#' 
+#' @return return an snps.matrix object with some of his slots filled.
+#' 
+#' @seealso \code{\link{makeSubmapsBySnps}}
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
+#' 
+#' @export
 createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, step=0.5, unit="cM", fileName)
 {
   if( unit != "Bases" & unit != "cM")
@@ -30,7 +48,7 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, step=0.5
       map <- segmentsList@snps.segments[[chr]]
       if(length(map) > 0)
       {
-        v <- getMarkerChromosomBySnps(bedmatrix, map, step, unit)
+        v <- getMarkerChromosomBySnps(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
         
         if(unit == "Bases")
         {

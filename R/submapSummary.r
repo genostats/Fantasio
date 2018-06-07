@@ -26,7 +26,7 @@ submapSummary <- function(submaps, a.threshold = 1)
   df <- data.frame(FID           = submaps[[1]]@ped$famid, 
                    IID           = submaps[[1]]@ped$id,
                    STATUS        = submaps[[1]]@ped$pheno,
-                   SUBMAPS       = paste(length(submaps), "/", length(submaps)),
+                   SUBMAPS       = paste(length(a), "/", length(submaps)),
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),

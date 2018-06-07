@@ -1,17 +1,24 @@
-##################################################################################
-#This function create a plot for an individuals                                  #
-#                                                                                #
-#!!! Submaps : a list object                                                     #                                       
-#!!! ROHfile : (optional) a ROHfile                                              #
-#!!! unit : cM ou Bases                                                          #
-#!!! individual.id : the individual id                                           #
-#!!! individual.id : the individual family id                                    #
-#!!! regions : (optional) a regions you want to be emphasize                     #
-#!!! outfille : (optional) the name of the plot                                  #
-#                                                                                #
-#*** return a plot                                                               #
-##################################################################################
-
+#' plot of HBD segment 
+#' 
+#' This function plots the HBD segments for all the chromosoms of a given individual
+#' 
+#' @param Submaps a list.submap object
+#' @param ROHfile a ROH file from which the segments will be plotted (optional)
+#' @param unit the unit uses for position in the plot, "cM" or "Bases"
+#' @param individual.id the individual id 
+#' @param family.id the family id 
+#' @param regions a specific region to be enlighted in the plot (optional)
+#' @param outfile a name for the plot (optional)
+#' 
+#' @return return a plot of the individual's HBD segments.
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
+#' HBD.plot.id(submaps, individual.id="IID", family.id="FID")
+#' 
+#' @export
 HBD.plot.id <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, regions, outfile)
 {
   if(!missing(Submaps) & !missing(ROHfile))

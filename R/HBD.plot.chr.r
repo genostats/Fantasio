@@ -11,12 +11,27 @@
 #                                                                                #
 #*** return a plot                                                               #
 ##################################################################################
-
-#HBD.recap : dataframe avec les moyennes des probabilites HBD pour tous les individus et tout les marqueurs apparu au moins une fois
-#HBD.segments : list de dataframe pour chaque individus avec les segments contenant au moins 5 marqueurs consecutifs au dessus ou egale a un threshold
-#chr : le numero du chromosome
-#listid : la liste des individus a prendre en compte 
-
+#' plot of HBD segment 
+#' 
+#' This function plots the HBD segments for a given chromosom and all the individual
+#' 
+#' @param Submaps a list.submap object
+#' @param ROHfile a ROH file from which the segments will be plotted (optional)
+#' @param unit the unit uses for position in the plot, "cM" or "Bases"
+#' @param chr the chromosom wanted 
+#' @param list.ids a vector containing a list of individuals from which only the HBD segments for this chromosome will be ploted (optional)
+#' @param regions a specific region to be enlighted in the plot (optional)
+#' @param outfile a name for the plot (optional)
+#' 
+#' @return return a plot of the chromosome HBD segments for all the individual
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
+#' HBD.plot.chr(submaps, chr=1)
+#' 
+#' @export
 HBD.plot.chr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, outfile)
 {
   if(!missing(Submaps) & !missing(ROHfile))

@@ -1,5 +1,28 @@
-# x = an bedmatrix, n = the number of submap
-
+#' Creation of a list of segments 
+#' 
+#' This function is used to create a list of segments delimited by using hotspots file of the genome.
+#' 
+#' @param bedmatrix a bed.matrix object 
+#' @param intensity Allows the user to select hotspots having recombination intensity higher than a threshold (in cM/Mb). Default value is 10 cM/Mb.
+#' @param hotspot_version the version of the hotspots files
+#' @param hotspot_file a personnal hotspots file with right columns in it ( see hotspots files )
+#' @param verbose Allow the use to know the sequence of action when the list is created, default is TRUE
+#' @param number_of_marker a threshold indicating the number of minimum marker in a segment, default is 50
+#' 
+#' @details This function is used to create a list of chromosome list, which contains segments delimited by using the hotpost file.
+#' @details The list is then wrapped under an object of class hotspots.segments for simplicity sake. 
+#' @details In each segment you have the index of all the makers in it, these index correpond to markers in the bedmatrix object. 
+#' @details The list structure can be analyse using `str()` function on the object (! careful the result can look messy if not handle properly)
+#' @details You can give your own hotspots file, be sure to respect the format of the hotpots file, use a default hotpots file for it.
+#' 
+#' @return an hotspots.segments object
+#' 
+#' @seealso \code{\link{read.bed.matrix}}
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)
+#' @export
 createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 50)
 {
   if(verbose) cat(" Go grab a cup of your favorite beverage, it might takes some time ! :)\n")
@@ -16,7 +39,7 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   
   
   #Step 1 : list of all the genome's hotspot
-  ##on boucle seulement sur le nombre de chromosome dans le fichier de hotspots, si plus de chromosome dans les donnees => infos perdues
+  
   if(verbose) cat("Gathering all hotspots for the genome : ")
   
   VI <- list()
@@ -45,7 +68,7 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   cat("\n")
   
   #Step 3 : list of all the segment in the genome
-  #TODO renommer les variables !!!
+
   if(verbose) cat("Finding which markers are between two hotspots : ")
   shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
@@ -58,7 +81,7 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
     chr <- list()
     for( j in 1:nrow(chr_segment))
     {
-      b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2])#which markers are  between two hotspots
+      b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
       if (length(b)== 0) next
       chr[[j]] <- b + shift[[i]]
     }

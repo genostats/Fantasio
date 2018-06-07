@@ -26,7 +26,7 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
 
     if(verbose) cat("Estimation f and a for individual #",i,"\n")
 
-    last_theta <- c(0.05, 0.01)
+    last_theta <- c(0.05, 0.05)
     last_likelihood <- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, last_theta[1], last_theta[2])
 
     f <- function(theta) { 

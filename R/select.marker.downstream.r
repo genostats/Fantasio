@@ -19,13 +19,13 @@ select.marker.downstream <- function(x, vector, pas, random, unit)
     }
     marker <- marker - 1
   }
-  seg <- c(vector[marker], seg)                     #touver la position du marqueur dans le vector (i.e. dans la bed.matrix)
+  seg <- c(vector[marker], seg)                     #touver la position du marqueur dans le vector 
   
   while(marker > 1)
   {
     marker <- which.min(abs(dist-(dist[marker]-pas)))
     #distance diff
-    if((dist[which(vector == seg[1])] - dist[marker]) < pas)
+    if((dist[which(vector == seg[1])] - dist[marker]) < pas) # the first element in the vector is the last entered
     {
       if(marker == 1)
       {
