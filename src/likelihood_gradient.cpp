@@ -54,7 +54,12 @@ NumericVector logLikelihood_gradientf(NumericMatrix logEmiss, NumericVector Dist
       df_lt11 = -ex/t11; 
 
       da_lt00 = -d*f*(ex+1)/t00;
-      da_lt01 = da_lt10 = d*(ex+1)/(-ex);
+      // gérer le cas d = 0 
+      // (qui ne devrait normalement pas être rencontré avec des données parfaitement propres...)
+     if(d > 0) 
+        da_lt01 = da_lt10 = d*(ex+1)/(-ex);
+      else 
+        da_lt01 = da_lt10 = 1/a;
       da_lt11 = -d*(1-f)*(ex+1)/t11;
     }
     // ---------------------------
