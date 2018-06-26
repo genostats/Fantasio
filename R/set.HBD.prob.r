@@ -23,28 +23,28 @@
 #' individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
 #' makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HBD.prob is use inside this function
 #' @export
-set.HBD.prob <- function(submaps, list.id, quality = 95)
+set.HBD.prob <- function(submaps, list.id, quality = 95, test)
 {
   if(!missing(list.id))
   {
     if(list.id == "all")
     {
-      condition <- 1:nrow(submaps@submap_summary)
+      condition <- test
     }else{
       vec <- strsplit(list.id, "_")
-      condition <- sapply(vec, function(i) which(submaps@submap_summary$FID == i[1] & submaps@submap_summary$IID == i[2]))
+      condition <- sapply(vec, function(i) which(submaps@submap_summary$FID[test] == i[1] & submaps@submap_summary$IID[test] == i[2]))
     }
   }else{
-    condition <- which(submaps@submap_summary$QUALITY >= quality & submaps@submap_summary$INBRED)
+    condition <- which(submaps@submap_summary$QUALITY[test] >= quality & submaps@submap_summary$INBRED[test])
     if(length(condition) == 0)
     {
       cat("WARNING :No inbred found with the following default parameters : QUALITY = ", quality , "; inbred = TRUE 
-          you can try to change quality parameters or give a vector of individual or use 'all' parameter \n 
-          !!! Instead using all the individuals in the sample\n")
+            you can try to change quality parameters or give a vector of individual or use 'all' parameter \n 
+            !!! Instead using all the individuals in the sample with a STATUS of 2\n")
       #for simplicity sake, not returning an empty results
-      condition <- 1:nrow(submaps@submap_summary)
+      condition <- test
     }
-      
+    
   }
   
   id    <- as.vector(submaps@submap_summary$IID[condition])
@@ -70,6 +70,7 @@ set.HBD.prob <- function(submaps, list.id, quality = 95)
   }
   l <- list(submaps, condition)
   return(l)
+  
 }
 
 

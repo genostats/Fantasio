@@ -22,7 +22,7 @@
 #' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.
 #' @param quality Allows the user to choose the minimal quality (in %) to include an inbred individual into the analysis. Default is 95 (%).
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments
-#' 
+#' @param test a vector containing the index of the different individual with a STATUS of 2
 #' 
 #' @details the function filled the empty slots of the list.submaps object. It calls different functions and uses the results of each one to filled 
 #' the object.
@@ -49,7 +49,7 @@
 #' submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList) #this function is a wrapper that uses the function setSummary
 #' 
 #' @export
-setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segments=FALSE, q=1e-4, threshold=0.5, quality=95, n.consecutive.marker=5)
+setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segments=FALSE, q=1e-4, threshold=0.5, quality=95, n.consecutive.marker=5, test)
 {
   if(run_a_f)
   {
@@ -61,7 +61,7 @@ setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segmen
   
   if(run_a_f && probs)
   {
-    l1 <- set.HBD.prob(submaps, list.id=list.id, quality=quality)
+    l1 <- set.HBD.prob(submaps, list.id=list.id, quality=quality, test=test)
     submaps <- l1[[1]]
     submaps <- set.FLOD(submaps=submaps, condition=l1[[2]], q=q)
     

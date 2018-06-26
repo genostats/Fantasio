@@ -31,7 +31,7 @@
 #' bedMatrix <- read.bed.matrix("yourFile")
 #' segmentList <- createSegmentsListBySnps(bedMatrix)
 #' @export
-createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE)
+createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE,numberOfChromosome=22)
 {
   if( unit != "Bases" & unit != "cM")
     stop("Error only cM or Bases are accepted")
@@ -42,7 +42,7 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   if(verbose) cat("Finding segments for the genome : ")
   VI <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!! to be put back
-  for(i in 1:22)
+  for(i in 1:numberOfChromosome)
   {
     cat(".")
     chr_distances <- bedmatrix@snps$dist[which(bedmatrix@snps$chr==i)]
@@ -67,11 +67,11 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   #find the marker of a segment
   if(verbose) cat("Finding which markers are between two segments: ")
   #shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L !!!!!
-  shift <- sapply(1:22, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
+  shift <- sapply(1:numberOfChromosome, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
   VIII <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!!!
-  for(i in 1:22)
+  for(i in 1:numberOfChromosome)
   {
     cat(".")
     chr_segments <- VI[[i]]

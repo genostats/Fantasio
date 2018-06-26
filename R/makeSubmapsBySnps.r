@@ -58,6 +58,12 @@
 makeSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = createSegmentsListBySnps(x), n.cores = 1, epsilon = 1e-3, run.festim=TRUE, list.id, proba=TRUE,
                     recap.by.segments = FALSE,  verbose=TRUE, debug=FALSE, step=0.5, unit="cM", threshold=0.5, q = 1e-4, quality=95, n.consecutive.marker=5) {
   
+  test <- which(bedmatrix@ped$pheno == 2)
+  if(length(test) == 0)
+  {
+    stop("Error no individual with a STATUS equal to 2. ")
+  }
+  
   if(class(segmentsList)[1] != "snps.segments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")
   
@@ -89,7 +95,7 @@ makeSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = createSegmentsL
 
   
   submaps <- new("list.submaps", submap, bedmatrix, segmentsList@snps.segments, recap.by.segments)
-  submaps <- setSummary(submaps, run_a_f = run.festim, probs = proba, by_segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
+  submaps <- setSummary(submaps, run_a_f = run.festim, probs = proba, by_segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker, test=test)
   if(verbose) cat("Creation of all the Submaps over ! \n")
   submaps
 }
