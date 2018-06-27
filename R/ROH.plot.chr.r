@@ -1,3 +1,31 @@
+#' Creation of plot using ROH file
+#' 
+#' This function is use to plot HBD segments for a chromosome using an ROH file
+#' 
+#' @param ROHfile an ROH file
+#' @param submaps a list.submaps object
+#' @param unit the unit used to plot 
+#' @param chr the chromosome from which plot will be made
+#' @param outfile the name of the plot
+#' @param listid a vector containing the family id follow by the individual id 
+#' @param regions a matrix containing the value to ve highlighted in the plot
+#' 
+#' @details Use this function when you want to use an ROH file to plot your HBD segments for a specific chromosome.
+#' @details Two unit are accepted : "Bases" or "cM".
+#' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
+#' @details -the chromosome number 
+#' @details -start 
+#' @details -end 
+#' 
+#' @return This function returns a plot of the HBD segments for a specific chromosome
+#' 
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)
+#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
+#' ROH.plot.chr(yourROHfile, submaps)
+#' @export
 ROH.plot.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
 {
   ROH <- read.table(ROHfile,h=T)

@@ -23,6 +23,11 @@
 #' @param regions a specific region to be enlighted in the plot (optional)
 #' @param outfile a name for the plot (optional)
 #' 
+#' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
+#' @details -the chromosome number 
+#' @details -start 
+#' @details -end
+#' 
 #' @return return a plot of the chromosome HBD segments for all the individual
 #' 
 #' @examples  

@@ -1,8 +1,22 @@
-#' Summary of marker picked
-#'
+#' Summary of marker picked 
+#' 
 #' This function is uses to return the number of segments and number of marker in the list of segments outputed by the function 
-#' `createSegmentsListByHotspots`
-#'
+#' 
+#' @param segmentList the list of segments 
+#' 
+#' @details 
+#' 
+#' @return This function returns a dataframe with three columns : 
+#' @return - chromosom
+#' @return - number_of_segments 
+#' @return - number_of_marker
+#' 
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)
+#' segmentsListSummary(segmentList)
+#' 
 #' @export
 segmentsListSummary <- function(segmentList)
 {

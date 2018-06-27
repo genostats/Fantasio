@@ -51,6 +51,9 @@
 #' @export
 setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segments=FALSE, q=1e-4, threshold=0.5, quality=95, n.consecutive.marker=5, test)
 {
+  if(class(submaps)[1] != "list.submaps")
+    stop("Need a list.submaps matrix to eat")
+  
   if(run_a_f)
   {
     submaps@likelihood_summary <- submapLikelihood(submaps@atlas)
@@ -67,6 +70,7 @@ setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segmen
     
     if(!(class(submaps@atlas[[1]])[1] == "snps.matrix" & by_segments))
     {
+      cat("Summary for HBD, FLOD, HFLOD can't be computed using snps, use hotposts instead to make your submap")
       l2 <- recap(submaps, by_segments=by_segments, list.id=list.id)
   	  submaps@HBD_recap <- l2[[1]]
   	  submaps@FLOD_recap <- l2[[2]]

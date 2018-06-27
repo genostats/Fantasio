@@ -33,6 +33,11 @@
 #' @export
 createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE,numberOfChromosome=22)
 {
+  if(class(bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   if( unit != "Bases" & unit != "cM")
     stop("Error only cM or Bases are accepted")
   if(unit =="Bases")

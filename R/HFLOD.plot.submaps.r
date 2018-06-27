@@ -1,14 +1,29 @@
-#options(echo=FALSE);
-#suppressMessages(library(caTools))
-#suppressMessages(library(zoo))
-
-#param <- commandArgs(trailingOnly=T)
-#folder   <- eval(paste(text=param[1]) valeur des HFLOD scores
-#distance <- eval(paste(text=param[2]))unit
-#nbchr    <- eval(paste(text=param[3]))
-#nbSNP_MA <- eval(paste(text=param[4])) de base = 50 dans perl ? palier ? Moving Average ?
-#regions  <- eval(paste(text=param[5]))
-
+#' Plot of the HFLOD 
+#' 
+#' This fonction plot the HFLOD score for a chromosome
+#' 
+#' @param submaps a list.submaps object
+#' @param unit the unit used to plot 
+#' @param chr the chromosome number from which to plot HFLOD score
+#' @param regions a matrix containing the value to ve highlighted in the plot
+#' @param color2 the color of the regions highlighted
+#' @param nbSNP_MA
+#' 
+#' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
+#' @details - the chromosome number 
+#' @details - start 
+#' @details - end
+#' 
+#' 
+#' @return This function returns a manhattan plot of all the HFLOD score over all the chromosome
+#' 
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)
+#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
+#' HFLOD.manhattan.plot(h)
+#' @export
 HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", nbSNP_MA = 50) 
 {
   if(submaps@bySegments)

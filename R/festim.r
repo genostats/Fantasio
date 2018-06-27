@@ -1,15 +1,23 @@
-##################################################################################
-#This function allow the computation of a, f, likelihood0, likelihood1 and p.lrt #                                                                                #
-#!!! x : a submap matrix                                                         #                                       
-#!!! verbose : if you want to have little infos about the computation process    #
-#!!! debug : if you want to have precise infos about the computation process     #
-#                                                                                #
-#*** return the submap matrix with each slots filled                             #
-##################################################################################
-
-
-#probs=TRUE,
-
+#' Computation of a and f 
+#' 
+#' This function is use to computes a and f and other statistical value (p.lrt, likelihood0, likelihood1)
+#' 
+#' @param x a submap matrix   
+#' @param segmentsList a list of segment for each chromosome
+#' @param verbose if you want to have little infos about the computation process
+#' @param debug  if you want to have precise infos about the computation process   
+#' 
+#' @details This function is using the optim function with an L-BGFS method to find the best value for a and f
+#' 
+#' @return return the submap matrix with the slot a, f, p.lrt, likelihood0 and 1 filled.
+#' 
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList) #<- inside this function is called the festim function
+#' 
+#' @export
 festim <- function(x, verbose=TRUE, debug=FALSE) {
   if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)

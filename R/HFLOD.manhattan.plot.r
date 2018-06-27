@@ -1,8 +1,26 @@
-#distance_mean <- function(submaps, submaps_num)
-#{
-#  sapply(1:22, function(i) max(submaps@atlas[[submaps_num]]@map$distance[submaps@atlas[[submaps_num]]@map$chr == i]))
-#}
-
+#' Creation of an manhattan plot of the HFLOD
+#' 
+#' This fonction to plot a manhanttan plot of the HFLOD score
+#' 
+#' @param submaps a list.submaps object
+#' @param regions a matrix containing the value to ve highlighted in the plot
+#' @param unit the unit used to plot 
+#' 
+#' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
+#' @details - the chromosome number 
+#' @details - start 
+#' @details - end
+#' 
+#' 
+#' @return This function returns a manhattan plot of all the HFLOD score over all the chromosome
+#' 
+#' 
+#' @examples  
+#' bedMatrix <- read.bed.matrix("yourFile")
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)
+#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
+#' HFLOD.manhattan.plot(h)
+#' @export
 HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
 {
   if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snps.matrix")

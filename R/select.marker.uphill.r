@@ -24,7 +24,7 @@ select.marker.uphill <- function(x, vector, pas, random, unit)
   {
     marker <- which.min(abs(dist-(dist[marker]+pas)))
     #distance inferieur
-    if((dist[marker] - dist[which(vector == seg[length(seg)])]) < pas)
+    if((dist[marker] - dist[which(vector == seg[length(seg)])]) < pas)#new element to be added - last element in seg
     {
       if(marker == length(vector))
       {

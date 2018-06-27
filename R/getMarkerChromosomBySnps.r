@@ -22,11 +22,9 @@ getMarkerChromosomBySnps <- function(x, map, pas, unit="cM")
         {
           random <- which(mini_segments == sample(mini_segments, 1))
         }
-        start <- select.marker.downstream(x, mini_segments, pas, random, unit)      #parcout en amont
-        end   <- select.marker.uphill(x, mini_segments, pas, random, unit)          #parcout en aval
+        start <- select.marker.downstream(x, mini_segments, pas=pas, random, unit)      #parcout en amont
+        end   <- select.marker.uphill(x, mini_segments, pas=pas, random, unit)          #parcout en aval
         res <- c(start, end)
-      
-        
       }
       submap <- c(submap, res)
     }

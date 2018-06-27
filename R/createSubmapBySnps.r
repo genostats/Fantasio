@@ -49,15 +49,13 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, step=0.5
       if(length(map) > 0)
       {
         v <- getMarkerChromosomBySnps(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
-        
         if(unit == "Bases")
         {
           tmp_dist <- bedmatrix@snps$pos[v]
-        }
-        else{
+        }else{
           tmp_dist <- bedmatrix@snps$dist[v]
         }
-        #test pour verifier l'ecart entre les snps aux bornes entre deux mini segments
+        #test pour verifier l'ecart entre les snps aux bornes entre deux minis segments
         tmp <- diff(tmp_dist)
         v <- v[which(tmp >= step)]
         submap <- c(submap, v)

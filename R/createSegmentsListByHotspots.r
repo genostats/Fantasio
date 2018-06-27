@@ -25,6 +25,11 @@
 #' @export
 createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 50)
 {
+  if(class(bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   if(verbose) cat(" Go grab a cup of your favorite beverage, it might takes some time ! :)\n")
   if(verbose) cat(paste("You are currently using version", hotspot_version, "of hotspot\n"))
   
