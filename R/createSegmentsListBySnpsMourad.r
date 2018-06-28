@@ -45,7 +45,7 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   
   ### start and end of a segments
   if(verbose) cat("Finding segments for the genome : ")
-  VI <- list()
+  segmentsList <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!! to be put back
   for(i in 1:numberOfChromosome)
   {
@@ -61,12 +61,12 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
     }
     segment <- cbind( c(0, k[c(FALSE,TRUE)]), 
                       c(k[c(TRUE,FALSE)],Inf))  
-    VI[[i]] <- segment
+    segmentsList[[i]] <- segment
   }
   
   if(verbose) cat("\n")
   # number of snps in a chr
-  VII <- table(bedmatrix@snps$chr)
+  markersList <- table(bedmatrix@snps$chr)
   
   
   #find the marker of a segment
@@ -74,13 +74,13 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   #shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L !!!!!
   shift <- sapply(1:numberOfChromosome, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
-  VIII <- list()
+  segmentsAndMarkerList <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!!!
   for(i in 1:numberOfChromosome)
   {
     cat(".")
-    chr_segments <- VI[[i]]
-    mkr <- seq(1, VII[i])
+    chr_segments <- segmentsList[[i]]
+    mkr <- seq(1, markersList[i])
     chr <- list()
     for(j in 1:nrow(chr_segments))
     {
@@ -88,41 +88,41 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
       if(length(b)==0) next()
       chr[[j]] <- b + shift[[i]]
     }
-    VIII[[i]] <- chr
+    segmentsAndMarkerList[[i]] <- chr
   }
   if(verbose) cat("\n")
   
-  for(i in 1:length(VIII))
-    VIII[[i]] <- null.remover(VIII[[i]])
+  for(i in 1:length(segmentsAndMarkerList))
+    segmentsAndMarkerList[[i]] <- null.remover(segmentsAndMarkerList[[i]])
   
   #finding the mini segments
   if(verbose) cat("Finding mini segments ")
-  VIV <- list()
-  for(i in 1:length(VIII))
+  miniSegmentAndMarkerList <- list()
+  for(i in 1:length(segmentsAndMarkerList))
   {
     cat(".")
     temp <- list()
-    for(j in 1:length(VIII[[i]]))
+    for(j in 1:length(segmentsAndMarkerList[[i]]))
     {
-      if((length(VIII[[i]][[j]]) / number_of_segments) >= number_of_marker ) #>= number_of_marker in one segments 
+      if((length(segmentsAndMarkerList[[i]][[j]]) / number_of_segments) >= number_of_marker ) #>= number_of_marker in one segments 
       {
-        #decouper le segment en N (=number_of_segments) mini-segments de taille T (=length(VIII[[i]][[j]])/number_of_segments) marqueurs.
+        #decouper le segment en N (=number_of_segments) mini-segments de taille T (=length(segmentsAndMarkerList[[i]][[j]])/number_of_segments) marqueurs.
         #si T est un entier, la taille du mini-segment est exactement T
         #si T n'est pas un entier, la taille est round(T) ou round(T)+1 en fonction des resultats de ceiling(...)
         #La proportion de mini-segments de taille round(T)+1 augmente lorsque T approche de round(T)+1
         #Note: cette commande donne toujours exactement N (=number_of_segments) mini-segments
-        l <- split(VIII[[i]][[j]], ceiling(seq_along(VIII[[i]][[j]])/(length(VIII[[i]][[j]])/number_of_segments))) 
+        l <- split(segmentsAndMarkerList[[i]][[j]], ceiling(seq_along(segmentsAndMarkerList[[i]][[j]])/(length(segmentsAndMarkerList[[i]][[j]])/number_of_segments))) 
         temp[[j]] <- l
       }else{
-        temp[[j]] <- VIII[[i]][[j]]
+        temp[[j]] <- segmentsAndMarkerList[[i]][[j]]
       }
     }
-    VIV[[i]] <- temp
-    VIV[[i]] <- null.remover(VIV[[i]])
+    miniSegmentAndMarkerList[[i]] <- temp
+    miniSegmentAndMarkerList[[i]] <- null.remover(miniSegmentAndMarkerList[[i]])
   }
   if(verbose) cat("\n")
   
-  new("snps.segments", gap, VIV)
+  new("snps.segments", gap, miniSegmentAndMarkerList)
 }
 
 

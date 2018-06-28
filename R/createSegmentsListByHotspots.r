@@ -47,15 +47,15 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   
   if(verbose) cat("Gathering all hotspots for the genome : ")
   
-  VI <- list()
+  segmentsList <- list()
   for ( i in unique(hotspot$Chromosome))
   {
     cat(".")
     chr_hotspot <- hotspot[which(hotspot$Chromosome==i),]
-    w <- which(chr_hotspot$IntensitycMMb > intensity)
-    segment <- cbind(c(0,chr_hotspot$End[w]),
-                     c(chr_hotspot$Start[w],Inf) )
-    VI[[i]] <- segment
+    hotspotsList <- which(chr_hotspot$IntensitycMMb > intensity)
+    segment <- cbind(c(0,chr_hotspot$End[hotspotsList]),
+                     c(chr_hotspot$Start[hotspotsList],Inf) )
+    segmentsList[[i]] <- segment
   }
   if(verbose) cat("\n")
   
@@ -63,12 +63,12 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   
   if(verbose) cat("Gathering all the genome's markers : ")
   
-  VII <- list()
+  markersList <- list()
   for( j in unique(hotspot$Chromosome))
   { 
     cat(".")
-    v <- bedmatrix@snps$pos[bedmatrix@snps$chr==j] 
-    VII[[j]] <- v
+    markerIndexChromosome <- bedmatrix@snps$pos[bedmatrix@snps$chr==j] 
+    markersList[[j]] <- markerIndexChromosome
   }
   cat("\n")
   
@@ -77,26 +77,26 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   if(verbose) cat("Finding which markers are between two hotspots : ")
   shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
-  VIII <- list()
+  segmentsAndMarkerList <- list()
   for(i in unique(hotspot$Chromosome))
   {
     cat(".")
-    chr_segment <- VI[[i]]
-    mkr <- VII[[i]]
+    chr_segment <- segmentsList[[i]]
+    mkr <- markersList[[i]]
     chr <- list()
     for( j in 1:nrow(chr_segment))
     {
-      b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
-      if (length(b)== 0) next
-      chr[[j]] <- b + shift[[i]]
+      intercept <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
+      if (length(intercept)== 0) next
+      chr[[j]] <- intercept + shift[[i]]
     }
-    VIII[[i]] <- chr
-    VIII[[i]] <- null.remover(VIII[[i]])
-    VIII[[i]] <- cleanHotspots(VIII[[i]], number_of_marker)  
+    segmentsAndMarkerList[[i]] <- chr
+    segmentsAndMarkerList[[i]] <- null.remover(segmentsAndMarkerList[[i]])
+    segmentsAndMarkerList[[i]] <- cleanHotspots(segmentsAndMarkerList[[i]], number_of_marker)  
   }
   if(verbose) cat("\n")
   
    
-  new("hotspot.segments", VIII)
+  new("hotspot.segments", segmentsAndMarkerList)
 } 
 

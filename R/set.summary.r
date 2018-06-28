@@ -70,12 +70,13 @@ setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segmen
     
     if(!(class(submaps@atlas[[1]])[1] == "snps.matrix" & by_segments))
     {
-      cat("Summary for HBD, FLOD, HFLOD can't be computed using snps, use hotposts instead to make your submap")
       l2 <- recap(submaps, by_segments=by_segments, list.id=list.id)
   	  submaps@HBD_recap <- l2[[1]]
   	  submaps@FLOD_recap <- l2[[2]]
   	  submaps@HBD_segments <- HBD.segments(submaps, threshold=threshold, n.consecutive.marker=n.consecutive.marker) 
   	  submaps@HFLOD <- set.HFLOD(submaps)
+    }else{
+      cat("Summary for HBD, FLOD, HFLOD can't be computed using snps, use hotposts instead to make your submap")
     }
   	
   }  
