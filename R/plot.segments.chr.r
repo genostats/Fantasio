@@ -25,6 +25,10 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   
   #creer un plot vide 
   y_max <- length(list_id)+1
+  
+  mar.default <- c(5,4,4,2) + 0.1
+  par(mar = mar.default + c(0, 4, 0, 0)) 
+  
   plot(x <- c(start,end), y <- c(0,y_max), 
        type="n", yaxt="n", ylab="", xlab=myxlab, 
        main=paste("HBD segments on chromosome ",chr,sep=""))
@@ -46,6 +50,8 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
                               orientation="h",legend = FALSE, length.out = end)
   
   #dessiner les segments HBD
+  tmp <- strsplit(list_id, " _ ")
+  list_id <- sapply(tmp, function(i) i[2])
   for (j in 1:length(list_id)){
     if(byROHfile)
     {

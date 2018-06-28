@@ -26,7 +26,9 @@ plot.HBD.segments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile
     individuals_name <- strsplit(individuals_name, "_")
     individuals_name <- sapply(individuals_name, function(i) match(i, Submaps@bedmatrix@ped$id))
     individuals_name <- individuals_name[!is.na(individuals_name)]
-    individuals_name <- Submaps@bedmatrix@ped$id[individuals_name]
+    #individuals_name <- Submaps@bedmatrix@ped$id[individuals_name]
+    individuals_name <- paste(Submaps@bedmatrix@ped$famid[individuals_name],"_",Submaps@bedmatrix@ped$id[individuals_name])
+    
     
     list.ids <- individuals_name
   }
