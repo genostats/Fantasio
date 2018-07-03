@@ -26,6 +26,14 @@
 #' @export
 HBD.plot.id <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, regions, outfile)
 {
+  if(class(Submaps@atlas[[1]])[1] != "snps.matrix" & class(Submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  if(class(Submaps@bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   if(!missing(Submaps) & !missing(ROHfile))
   {
     plot.ROH.segments.id(Submaps=Submaps, ROHfile, unit, individual.id=individual.id, family.id=family.id, regions, outfile=outfile)

@@ -34,6 +34,14 @@
 #' @export
 set.FLOD <- function(submaps, condition, q = 1e-4)
 {
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  if(class(submaps@bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   #Computation of FLOD score with the formula
   for(i in 1:length(submaps@atlas))
   {

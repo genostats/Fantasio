@@ -15,7 +15,7 @@ setClass("list.submaps", representation(
         HBD_recap = 'matrixOrNULL',
         FLOD_recap = 'matrixOrNULL',  
         HBD_segments = 'listOrNULL',
-        HFLOD = 'matrixOrNULL',
+        HFLOD = 'dataframeOrNULL',
         bedmatrix = 'bed.matrix', 
         bySegments = "logical"
 ))

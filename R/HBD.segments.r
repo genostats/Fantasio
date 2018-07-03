@@ -10,7 +10,7 @@
 #*** return a list of dataframe with HBD.segment for each individuals            #
 ##################################################################################
 
-HBD.segments <- function(submaps, n.consecutive.marker = 5, threshold = 0.5, by_segments=F)
+HBD.segments <- function(submaps, n.consecutive.marker = 5, threshold = 0.5, by_segments=FALSE)
 {
 
   if(by_segments)

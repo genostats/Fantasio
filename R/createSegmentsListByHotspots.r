@@ -25,6 +25,7 @@
 #' @export
 createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 50)
 {
+  
   if(class(bedmatrix)[1] != "bed.matrix")
   {
     stop("Need a bed.matrix to eat")
@@ -34,7 +35,17 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   if(verbose) cat(paste("You are currently using version", hotspot_version, "of hotspot\n"))
   
   if(!missing(hotspot_file))
-    hotspot <- hotspot_file
+  {
+    dataFrameColNames <- c("Chromosome", "Start", "End", "IntensitycMMb")
+    test <- sapply(sapply(dataFrameColNames, function(i) i %in% colnames(hotspot_file)))
+    if(all(test))
+      hotspot <- hotspot_file
+    else
+      stop("Your file is not written properly, please ensure that you have a dataframe with atleast the following columns names : 
+           Chromosome, Start, End, IntensitycMMb and the correct informations in it 
+           Thank you.")
+  }
+    
   else{
     hotspot <- switch(hotspot_version,
                     hg17 = { data(hotspot_hg17); hotspot_hg17;},

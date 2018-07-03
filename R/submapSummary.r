@@ -1,5 +1,9 @@
 submapSummary <- function(submaps, a.threshold = 1)
 {  
+  if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  
   f <-  sapply(submaps, function(x) x@f) 
   a <-  sapply(submaps, function(x) x@a)
   p <- sapply(submaps , function(x) x@p.lrt)

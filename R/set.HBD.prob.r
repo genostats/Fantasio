@@ -25,14 +25,22 @@
 #' @export
 set.HBD.prob <- function(submaps, list.id, quality = 95, test)
 {
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  if(class(submaps@bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   if(!missing(list.id))
   {
     if(list.id == "all")
     {
-      condition <- test
+      condition <- 1:submaps@atlas[[1]]@nrow
     }else{
       vec <- strsplit(list.id, "_")
-      condition <- sapply(vec, function(i) which(submaps@submap_summary$FID[test] == i[1] & submaps@submap_summary$IID[test] == i[2]))
+      condition <- sapply(vec, function(i) which(submaps@submap_summary$FID == i[1] & submaps@submap_summary$IID == i[2]))
     }
   }else{
     condition <- which(submaps@submap_summary$QUALITY[test] >= quality & submaps@submap_summary$INBRED[test])

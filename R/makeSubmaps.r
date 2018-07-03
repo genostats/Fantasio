@@ -22,7 +22,7 @@
 #' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.
 #' @param quality Allows the user to choose the minimal quality (in %) to include an inbred individual into the analysis. Default is 95 (%).
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments
-#' @param byHotspots whether the submaps are to be made using segments created by hotspots or segments created by gap between markers
+#' @param byHotspots whether the submaps are to be made using segments created by hotspots or segments created by gap between markers (default is TRUE)
 #' @param step the value of the step to be made to chose the next marker in each segment
 #' @param unit this argument is use only when you make submaps using segments created using the gap between markers, two options are allowed "Base", "cM"
 #' 
@@ -54,13 +54,33 @@
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmap(bedMatrix, 5, segmentList)
+#' segmentList <- createSegmentsListByHotspots(bedMatrix)  #segmentList <- createSegmentsListSnps(bedMatrix)
+#' submaps <- makeSubmap(bedMatrix, 5, segmentList)        #submaps <- makeSubmap(bedMatrix, 5, segmentList, byHotspots=FALSE)
 #' @export
-makeSubmaps <- function(bedmatrix, n = 100, segmentsList, n.cores = 1, epsilon = 1e-3, run.festim=TRUE, list.id, run.proba=TRUE,
-                    recap.by.segments = FALSE,  verbose=TRUE, debug=FALSE, threshold=0.5, q = 1e-4, quality=95, n.consecutive.marker=5, byHotspots=TRUE,
-                    step = 0.5, unit = "cM") {
-
+makeSubmaps <- function(bedmatrix,
+                        n = 100,
+                        segmentsList,
+                        n.cores = 1,
+                        epsilon = 1e-3,
+                        run.festim=TRUE,
+                        list.id,
+                        run.proba=TRUE,
+                        recap.by.segments = FALSE,
+                        verbose=TRUE,
+                        debug=FALSE,
+                        threshold=0.5,
+                        q = 1e-4,
+                        quality=95,
+                        n.consecutive.marker=5,
+                        byHotspots=TRUE,
+                        step = 0.5,
+                        unit = "cM") 
+{
+  if(class(bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   statusTwo <- which(bedmatrix@ped$pheno == 2)
   if(length(statusTwo) == 0)
   {

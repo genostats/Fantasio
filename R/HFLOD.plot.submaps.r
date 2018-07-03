@@ -26,23 +26,38 @@
 #' @export
 HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", nbSNP_MA = 50) 
 {
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  if(class(submaps@bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
   if(submaps@bySegments)
   {
     HFLOD <- submaps@HFLOD
-    pos <- submaps@atlas[[1]]@map$dist
-    chromosome <- submaps@bedmatrix@snps$chr[submaps@atlas[[1]]@submap]
+    #to get mean position when working by segments
+    if(unit == "cM")
+      pos <- HFLOD$pos_cM
+    else
+      pos <- HFLOD$pos_Bp
+    
+    chromosome <- HFLOD$CHR
   }
   #HFLOD=read.table(paste(folder,"/HFLOD.temp.txt",sep=""),h=T)
   #pos <- sapply(submaps@atlas, function(hh) hh@submap)
   #pos <- unique(unlist(pos))
   else{
     HFLOD <- submaps@HFLOD
-    pos <- as.data.frame(table(unlist(sapply(submaps@atlas, function(hh) hh@submap))), stringsAsFactors=FALSE)
-    pos <- as.numeric(pos$Var1)
-    pos <- sort(pos)
-    chromosome <- submaps@bedmatrix@snps$chr[pos]
-    pos <- submaps@bedmatrix@snps$dist[pos]
+    if(unit == "cM")
+      pos <- HFLOD$pos_cM
+    else
+      pos <- HFLOD$pos_Bp
+    
+    chromosome <- HFLOD$CHR
   }
+  
   
   
 
@@ -89,9 +104,12 @@ HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", 
     
     
     #toplot <- HFLOD[HFLOD$CHR==c,]
-    toplot_HFLOD <- HFLOD[chromosome == chr, 1]
-    toplot_MA    <- HFLOD[chromosome == chr, 2]
-    toplot_pos   <- pos[chromosome == chr]
+    toplot_HFLOD <- HFLOD$HFLOD[HFLOD$CHR == chr]
+    toplot_MA    <- HFLOD$HFLOD[HFLOD$CHR == chr]
+    if(unit == "cM")
+      toplot_pos   <- HFLOD$pos_cM[HFLOD$CHR == chr]
+    else 
+      toplot_pos   <- HFLOD$pos_Bp[HFLOD$CHR == chr]
     
     ymax <- max(3.3,max(toplot_HFLOD))
     

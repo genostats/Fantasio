@@ -23,25 +23,40 @@
 #' @export
 HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
 {
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
+  if(class(submaps@bedmatrix)[1] != "bed.matrix")
+  {
+    stop("Need a bed.matrix to eat")
+  }
+  
+  
   if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snps.matrix")
     stop("Cannot plot by segments for snps.matrix object")
   
   if(submaps@bySegments)
   {
     HFLOD <- submaps@HFLOD
-    pos <- submaps@atlas[[1]]@map$dist
-    chromosome <- submaps@bedmatrix@snps$chr[submaps@atlas[[1]]@submap]
+    #to get mean position when working by segments
+    if(unit == "cM")
+      pos <- HFLOD$pos_cM
+    else
+      pos <- HFLOD$pos_Bp
+    
+    chromosome <- HFLOD$CHR
   }
   #HFLOD=read.table(paste(folder,"/HFLOD.temp.txt",sep=""),h=T)
   #pos <- sapply(submaps@atlas, function(hh) hh@submap)
   #pos <- unique(unlist(pos))
   else{
     HFLOD <- submaps@HFLOD
-    pos <- as.data.frame(table(unlist(sapply(submaps@atlas, function(hh) hh@submap))), stringsAsFactors=FALSE)
-    pos <- as.numeric(pos$Var1)
-    pos <- sort(pos)
-    chromosome <- submaps@bedmatrix@snps$chr[pos]
-    pos <- submaps@bedmatrix@snps$dist[pos]
+    if(unit == "cM")
+      pos <- HFLOD$pos_cM
+    else
+      pos <- HFLOD$pos_Bp
+    
+    chromosome <- HFLOD$CHR
   }
   
   
@@ -62,7 +77,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   }else{
     myxlab <- "Position (Mb)"
     coeff  <- 1e6
-    pos    <- pos/1e6
+    # pos    <- pos/1e6
   }
   
   
@@ -93,7 +108,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   #2)Manhattan plot
   #ymax <- max(3.3,max(HFLOD$HFLOD))
   
-  ymax <- max(3.3,max(HFLOD[,1]))
+  ymax <- max(3.3,max(HFLOD$HFLOD))
   mycol <- rep(c("cadetblue2",8),11)
   
   
@@ -115,20 +130,20 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   
   #png(file=paste(folder,"/HFLOD.",distance,".png",sep=""), width = 2400, height = 800,pointsize=24)
   #plot (axis_mp,HFLOD,pch=16,ylim=c(0,ymax),xlab="",ylab="HFLOD",cex.lab=1.4,cex.axis=1.5,col=mycol[HFLOD$CHR],xaxt="n",cex=0.75)
-  plot (axis_mp,HFLOD[,1],pch=16,ylim=c(0,ymax),xlab="",ylab="HFLOD",cex.lab=1.4,cex.axis=1.5,col=mycol[chromosome],xaxt="n",cex=0.75)
+  plot (axis_mp,HFLOD$HFLOD,pch=16,ylim=c(0,ymax),xlab="",ylab="HFLOD",cex.lab=1.4,cex.axis=1.5,col=mycol[chromosome],xaxt="n",cex=0.75)
                                                                                                         
   if (!missing(regions)) {
     for (i in 1:nrow(myreg_mp)) {
       polygon(x = myreg_mp[i,c("start","end","end","start")]/coeff,
-              y = c(rep(-10,2),rep(max(HFLOD[,1])+10,2)),
+              y = c(rep(-10,2),rep(max(HFLOD$HFLOD)+10,2)),
               col=color2,
               border=color2,
               lwd=2)
     }
-    points(axis_mp,HFLOD[,1],pch=16,col=mycol[chromosome],cex=0.75)
+    points(axis_mp,HFLOD$HFLOD,pch=16,col=mycol[chromosome],cex=0.75)
   }
   #lines(axis_mp,HFLOD$MA_HFLOD,col=2,lwd=3)
-  lines(axis_mp,HFLOD[,2],col=2,lwd=2)
+  lines(axis_mp,HFLOD$ALPHA,col=2,lwd=2)
   
   for(i in 1:length(unique(chromosome))) {
     abline(v=chr_pos[i],col="grey",lwd=2)
