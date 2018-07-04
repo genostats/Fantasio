@@ -3,11 +3,11 @@
 #' This fonction plot the HFLOD score for a chromosome
 #' 
 #' @param submaps a list.submaps object
-#' @param unit the unit used to plot 
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM") 
 #' @param chr the chromosome number from which to plot HFLOD score
 #' @param regions a matrix containing the value to ve highlighted in the plot
-#' @param color2 the color of the regions highlighted
-#' @param nbSNP_MA
+#' @param color2 the color of the regions highlighted (default is "green4")
+#' @param nbSNP_MA number of SNP for the moving average (default is 50)
 #' 
 #' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
 #' @details - the chromosome number 
@@ -26,13 +26,16 @@
 #' @export
 HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", nbSNP_MA = 50) 
 {
-  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
-  
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
+  
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.")
+  
+  
+  if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snps.matrix")
+    stop("Cannot plot by segments for snps.matrix object")
+  
   
   if(submaps@bySegments)
   {
@@ -44,17 +47,12 @@ HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", 
       pos <- HFLOD$pos_Bp
     
     chromosome <- HFLOD$CHR
-  }
-  #HFLOD=read.table(paste(folder,"/HFLOD.temp.txt",sep=""),h=T)
-  #pos <- sapply(submaps@atlas, function(hh) hh@submap)
-  #pos <- unique(unlist(pos))
-  else{
+  }else{
     HFLOD <- submaps@HFLOD
     if(unit == "cM")
       pos <- HFLOD$pos_cM
-    else
+    else 
       pos <- HFLOD$pos_Bp
-    
     chromosome <- HFLOD$CHR
   }
   
@@ -108,7 +106,7 @@ HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", 
     toplot_MA    <- HFLOD$HFLOD[HFLOD$CHR == chr]
     if(unit == "cM")
       toplot_pos   <- HFLOD$pos_cM[HFLOD$CHR == chr]
-    else 
+    else
       toplot_pos   <- HFLOD$pos_Bp[HFLOD$CHR == chr]
     
     ymax <- max(3.3,max(toplot_HFLOD))

@@ -4,9 +4,9 @@
 #' 
 #' @param bedmatrix a bed.matrix object 
 #' @param segmentsList a list of segment for each chromosomes
-#' @param epsilon the value of epsilon for submaps
-#' @param step one marker every step
-#' @param unit the unit in which the submaps is to be made, two options are possible "cM" or "Bases"
+#' @param epsilon genotype error rate (default is 0.001)
+#' @param step one marker every step (default is 0.5)
+#' @param unit this argument is used only when you make submaps using segments created using the gap between markers, two options are allowed "Bases", "cM" (default is "cM")
 #' @param fileName You have the possibility to pass your own list of marker, that is to say, your own submaps 
 #' 
 #' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker 
@@ -49,13 +49,15 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, step=0.5
       if(length(map) > 0)
       {
         v <- getMarkerChromosomBySnps(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
+        
         if(unit == "Bases")
         {
           tmp_dist <- bedmatrix@snps$pos[v]
-        }else{
+        }
+        else{
           tmp_dist <- bedmatrix@snps$dist[v]
         }
-        #test pour verifier l'ecart entre les snps aux bornes entre deux minis segments
+        #test pour verifier l'ecart entre les snps aux bornes entre deux mini segments
         tmp <- diff(tmp_dist)
         v <- v[which(tmp >= step)]
         submap <- c(submap, v)

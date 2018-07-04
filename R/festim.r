@@ -1,15 +1,15 @@
 #' Computation of a and f 
 #' 
-#' This function is use to computes a and f and other statistical value (p.lrt, likelihood0, likelihood1)
+#' This function is used to compute a and f and other statistical values (p.lrt, likelihood0, likelihood1)
 #' 
 #' @param x a submap matrix   
-#' @param segmentsList a list of segment for each chromosome
-#' @param verbose if you want to have little infos about the computation process
-#' @param debug  if you want to have precise infos about the computation process   
+#' @param segmentsList a list of segments for each chromosome
+#' @param verbose whether you want informations about the computation process (default is TRUE)
+#' @param debug  whether you want advanced output about the computation process (default is FALSE)
 #' 
 #' @details This function is using the optim function with an L-BGFS method to find the best value for a and f
 #' 
-#' @return return the submap matrix with the slot a, f, p.lrt, likelihood0 and 1 filled.
+#' @return returns the submap matrix with the slot a, f, p.lrt, likelihood0 and likelihood1 filled.
 #' 
 #' 
 #' @examples  

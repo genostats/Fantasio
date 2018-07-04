@@ -1,12 +1,27 @@
+#' Number of marker selected in a submap
+#' 
+#' This function gives for each marker the number of time that it has been selected in a submap. 
+#' 
+#' @param submaps a list of submaps 
+#' @param bedmatrix a bed.matrix object
+#' 
+#' @details the dataframe contains the following elements :
+#' @details - by columns is the number of markers used
+#' @details - by row is the number of time picked
+#' 
+#' @return this function returns a dataframe.
+#' 
+#' @seealso \code{\link{}}
+#' 
+#' @examples  
+#' 
+#' @export
 summaryMarker <- function(submaps, bedmatrix)
 {
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
-  
   if(class(bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
   
   
   b <- summaryMap(submaps)

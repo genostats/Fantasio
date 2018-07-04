@@ -25,7 +25,6 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   
   #creer un plot vide 
   y_max <- length(list_id)+1
-  
   mar.default <- c(5,4,4,2) + 0.1
   par(mar = mar.default + c(0, 4, 0, 0)) 
   
@@ -52,6 +51,7 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   #dessiner les segments HBD
   tmp <- strsplit(list_id, " _ ")
   list_id <- sapply(tmp, function(i) i[2])
+  
   for (j in 1:length(list_id)){
     if(byROHfile)
     {

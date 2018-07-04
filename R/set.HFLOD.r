@@ -1,6 +1,6 @@
 #' Computation of HFLOD scores
 #' 
-#' This function is uses to compute HFLOD scores on individual present in a sample
+#' This function is used to compute HFLOD scores on individuals in a sample
 #' 
 #' @param submaps a list.submaps object
 #' 
@@ -27,7 +27,7 @@ set.HFLOD <- function(submaps)
   {
     stop("Need a bed.matrix to eat")
   }
-
+  
   if(submaps@bySegments)
   {
     index <- sapply(submaps@atlas, function(i) i@submap) #index of the marker
@@ -75,7 +75,7 @@ set.HFLOD <- function(submaps)
     # function h(alpha)
     h <- function(alpha)
       return(sum(log10( alpha*exp(submaps@FLOD_recap[,j]*log(10))+(1-alpha) ), na.rm = TRUE))
-
+    
     # optimisation of h(alpha) ; 
     res <- optimize( h, c(0,1), maximum = TRUE, tol = 0.001 )
     

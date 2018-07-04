@@ -1,3 +1,20 @@
+#' Estimation of likelihood0 and likelihood2
+#' 
+#' This function creates a summary on the submaps created. 
+#' 
+#' @param submaps a list of submaps 
+#' 
+#' @details the first element of the list is the estimation of likelihood0
+#' @details the second element of the list is the estimation of likelihood1
+#' 
+#' @return this function returns a list of dataframe.
+#' 
+#' @seealso \code{\link{}}
+#' 
+#' @examples  
+#' 
+#' @export
+
 submapLikelihood <- function(submaps)
 {
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")

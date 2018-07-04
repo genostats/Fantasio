@@ -1,8 +1,37 @@
+#' Submap summary
+#' 
+#' This function creates a summary on the submaps created. 
+#' 
+#' @param submaps a list of submaps 
+#' @param a.threshold  the maximum value for a (default is 1)
+#' 
+#' @details This function gives for each genotyped individual summary statistics about the calculations.
+#' @details This function returns a dataframe with 13 columns :
+#' @details - FID : family identifier
+#' @details - IID : individual identifier
+#' @details - STATUS : status (1 non affected, 2 affected, 0 unknown)
+#' @details - submaps : number of submaps used
+#' @details - QUALITY: percentage of valid submaps (i.e. submaps with a < 1)
+#' @details - F_MIN: minimum f on valid submaps
+#' @details - F_MAX: maximum f on valid submaps
+#' @details - F_MEAN: mean f on valid submaps
+#' @details - F_MEDIAN: median f on valid submaps (recommended to estimate f)
+#' @details - A_MEDIAN: median a on valid submaps (recommended to estimate a)
+#' @details - pLRT_MEDIAN: median p-value of LRT tests on valid submaps
+#' @details - INBRED: a flag indicating if the individual is inbred (pLRT_MEDIAN <0.05) or not
+#' @details - pLRT_<0.05: number of valid submaps with a LRT having a p-value below 0.05
+
+#' @return this function returns a dataframe.
+#' 
+#' @seealso \code{\link{}}
+#' 
+#' @examples  
+#' 
+#' @export
 submapSummary <- function(submaps, a.threshold = 1)
 {  
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
-  
   
   f <-  sapply(submaps, function(x) x@f) 
   a <-  sapply(submaps, function(x) x@a)

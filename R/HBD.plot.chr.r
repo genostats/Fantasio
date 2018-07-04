@@ -1,24 +1,11 @@
-##################################################################################
-#This function allows to plot graphs about the HBD probabilities for a chromosome#
-#and every individual                                                            #
-#!!! Submaps : the list of objects                                               #                                       
-#!!! ROHfile : (optionnal) if you want to create the plot using an ROH file      #
-#!!! unit    : bases or cM  3                                                    #
-#!!! chr     : the number of the chromosome you want                             #
-#!!! list.ids: (optional) a list of individual you want                          #
-#!!! regions : a region you want to be emphasize                                 #
-#!!! outfile : the name of the plot                                              #
-#                                                                                #
-#*** return a plot                                                               #
-##################################################################################
 #' plot of HBD segment 
 #' 
 #' This function plots the HBD segments for a given chromosom and all the individual
 #' 
 #' @param Submaps a list.submap object
 #' @param ROHfile a ROH file from which the segments will be plotted (optional)
-#' @param unit the unit uses for position in the plot, "cM" or "Bases"
-#' @param chr the chromosom wanted 
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
+#' @param chr the chromosome number from which to plot HBD segment
 #' @param list.ids a vector containing a list of individuals from which only the HBD segments for this chromosome will be ploted (optional)
 #' @param regions a specific region to be enlighted in the plot (optional)
 #' @param outfile a name for the plot (optional)
@@ -39,13 +26,13 @@
 #' @export
 HBD.plot.chr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, outfile)
 {
+  
   if(class(Submaps@atlas[[1]])[1] != "snps.matrix" & class(Submaps@atlas[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
   
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
+  
   
   if(!missing(Submaps) & !missing(ROHfile))
   {

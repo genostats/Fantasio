@@ -33,7 +33,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' 
 #' @param bedmatrix a bed.matrix object 
 #' @param segmentsList a list of segment for each chromosomes
-#' @param epsilon the value of epsilon for submaps
+#' @param epsilon genotype error rate (default is 0.001)
 #' @param fileName a fileName with the list of markers wanted for the submap
 #' 
 #' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker and put it into a vector.

@@ -3,8 +3,8 @@
 #' This fonction to plot a manhanttan plot of the HFLOD score
 #' 
 #' @param submaps a list.submaps object
-#' @param regions a matrix containing the value to ve highlighted in the plot
-#' @param unit the unit used to plot 
+#' @param regions a matrix containing the value to be highlighted in the plot
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' 
 #' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
 #' @details - the chromosome number 
@@ -23,13 +23,11 @@
 #' @export
 HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
 {
-  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
-  
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
+  
+  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.")
   
   
   if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snps.matrix")
@@ -43,19 +41,14 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
       pos <- HFLOD$pos_cM
     else
       pos <- HFLOD$pos_Bp
-    
+          
     chromosome <- HFLOD$CHR
-  }
-  #HFLOD=read.table(paste(folder,"/HFLOD.temp.txt",sep=""),h=T)
-  #pos <- sapply(submaps@atlas, function(hh) hh@submap)
-  #pos <- unique(unlist(pos))
-  else{
+  }else{
     HFLOD <- submaps@HFLOD
     if(unit == "cM")
       pos <- HFLOD$pos_cM
-    else
+    else 
       pos <- HFLOD$pos_Bp
-    
     chromosome <- HFLOD$CHR
   }
   
@@ -77,7 +70,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   }else{
     myxlab <- "Position (Mb)"
     coeff  <- 1e6
-    # pos    <- pos/1e6
+    pos    <- pos/1e6
   }
   
   
@@ -106,7 +99,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   #toplot_pos   <- pos[which(h@atlas[[1]]@map$chr == chr)]
   
   #2)Manhattan plot
-  #ymax <- max(3.3,max(HFLOD$HFLOD))
+
   
   ymax <- max(3.3,max(HFLOD$HFLOD))
   mycol <- rep(c("cadetblue2",8),11)
@@ -130,6 +123,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
   
   #png(file=paste(folder,"/HFLOD.",distance,".png",sep=""), width = 2400, height = 800,pointsize=24)
   #plot (axis_mp,HFLOD,pch=16,ylim=c(0,ymax),xlab="",ylab="HFLOD",cex.lab=1.4,cex.axis=1.5,col=mycol[HFLOD$CHR],xaxt="n",cex=0.75)
+  
   plot (axis_mp,HFLOD$HFLOD,pch=16,ylim=c(0,ymax),xlab="",ylab="HFLOD",cex.lab=1.4,cex.axis=1.5,col=mycol[chromosome],xaxt="n",cex=0.75)
                                                                                                         
   if (!missing(regions)) {
@@ -140,7 +134,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit="cM")
               border=color2,
               lwd=2)
     }
-    points(axis_mp,HFLOD$HFLOD,pch=16,col=mycol[chromosome],cex=0.75)
+    points(axis_mp,HFLOD[,1],pch=16,col=mycol[chromosome],cex=0.75)
   }
   #lines(axis_mp,HFLOD$MA_HFLOD,col=2,lwd=3)
   lines(axis_mp,HFLOD$ALPHA,col=2,lwd=2)

@@ -4,11 +4,11 @@
 #' 
 #' @param ROHfile an ROH file
 #' @param submaps a list.submaps object
-#' @param unit the unit used to plot 
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param regions a matrix containing the value to ve highlighted in the plot
 #' @param outfile the name of the plot
-#' @param family_id the family id of the individual
-#' @param individual_id the individual id of the individual
+#' @param family_id the individual id of the individual wanted
+#' @param individual_id the family id of the individual wanted
 #' @param save_file whether you want or not to save the plot
 
 #' 

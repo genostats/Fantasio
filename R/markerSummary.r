@@ -1,5 +1,20 @@
-# a summary for a particular submap because depending on the submap markers differs
-
+#' Number of marker selected in a submap
+#' 
+#' This function gives for each submap the number of marker selected. 
+#' 
+#' @param submaps a list.submaps object
+#' 
+#' @details the dataframe contains the following elements :
+#' @details - by columns is the number of markers used
+#' @details - by row is each submap
+#' 
+#' @return this function returns a dataframe.
+#' 
+#' @seealso \code{\link{}}
+#' 
+#' @examples  
+#' 
+#' @export
 markerSummary <- function(h)
 {
   df <- as.data.frame(sapply(h@atlas, function(x) ncol(x)))

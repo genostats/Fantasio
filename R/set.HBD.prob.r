@@ -1,11 +1,15 @@
 #' Computation of HBD probabilities
 #' 
-#' This function is uses to compute HBD probabilities on individual present in a sample
+#' This function is used to compute HBD probabilities on individuals in a sample
 #' 
-#' @param submaps a list.submaps object
-#' @param list.id A vector containing a list of individuals. Only this list of individuals will have their HBD probabilities computed
-#' @param quality the minimum percentage use to assume if a submap is valid, default is 95
-#' 
+#' @param submaps A list.submaps object
+#' @param list.id you can either :
+#'     - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
+#'       for individuals who are considerated INBRED and with a QUALITY
+#'       greater or equal to 95%}
+#'     - enter a list of individual for a computation of HBD, FLOD score HFLOD score for them
+#'     - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual
+#' @param quality The minimum percentage use to assume if a submap is valid (default is 95)
 #' @details This function iterates over the slots atlas of the list.submaps object.
 #' @details For each submaps in the slots atlas of the object, the slot HBD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
 #' @details By default the function only computes HBD probabilities for INBRED individuals and with a quality equal or greater than 95%. However if you pass the keyword "all" to 
@@ -23,36 +27,33 @@
 #' individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
 #' makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HBD.prob is use inside this function
 #' @export
-set.HBD.prob <- function(submaps, list.id, quality = 95, test)
+set.HBD.prob <- function(submaps, list.id, quality = 95)
 {
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
-  
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
   
   if(!missing(list.id))
   {
     if(list.id == "all")
     {
-      condition <- 1:submaps@atlas[[1]]@nrow
+      condition <- 1:nrow(submaps@submap_summary)
     }else{
       vec <- strsplit(list.id, "_")
       condition <- sapply(vec, function(i) which(submaps@submap_summary$FID == i[1] & submaps@submap_summary$IID == i[2]))
     }
   }else{
-    condition <- which(submaps@submap_summary$QUALITY[test] >= quality & submaps@submap_summary$INBRED[test])
+    condition <- which(submaps@submap_summary$QUALITY >= quality & submaps@submap_summary$INBRED)
     if(length(condition) == 0)
     {
       cat("WARNING :No inbred found with the following default parameters : QUALITY = ", quality , "; inbred = TRUE 
-            you can try to change quality parameters or give a vector of individual or use 'all' parameter \n 
-            !!! Instead using all the individuals in the sample with a STATUS of 2\n")
+          you can try to change quality parameters or give a vector of individual or use 'all' parameter \n 
+          !!! Instead using all the individuals in the sample\n")
       #for simplicity sake, not returning an empty results
-      condition <- test
+      condition <- 1:nrow(submaps@submap_summary)
     }
-    
+      
   }
   
   id    <- as.vector(submaps@submap_summary$IID[condition])
@@ -78,7 +79,6 @@ set.HBD.prob <- function(submaps, list.id, quality = 95, test)
   }
   l <- list(submaps, condition)
   return(l)
-  
 }
 
 

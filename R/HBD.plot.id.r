@@ -4,9 +4,9 @@
 #' 
 #' @param Submaps a list.submap object
 #' @param ROHfile a ROH file from which the segments will be plotted (optional)
-#' @param unit the unit uses for position in the plot, "cM" or "Bases"
-#' @param individual.id the individual id 
-#' @param family.id the family id 
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
+#' @param individual.id the individual id of the individual wanted
+#' @param family.id the family id of the individual wanted
 #' @param regions a specific region to be enlighted in the plot (optional)
 #' @param outfile a name for the plot (optional)
 #' 
@@ -30,9 +30,7 @@ HBD.plot.id <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, 
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
   
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")
-  {
     stop("Need a bed.matrix to eat")
-  }
   
   if(!missing(Submaps) & !missing(ROHfile))
   {

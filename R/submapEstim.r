@@ -1,3 +1,19 @@
+#'Summury of estimation through the submaps
+#'
+#'This function creates a summary of the a and f estimationq on submaps created. 
+#' 
+#' @param submaps a list of submaps
+#' 
+#' @details The first element of the returned list is the estimation of f through the submaps. 
+#' @details The second element of the returned list is the estimation of a through the submaps. 
+#' 
+#' @return this fonction returns a list of dataframe.
+#' 
+#' @seealso \code{\link{}}
+#' 
+#' @examples  
+#' 
+#' @export
 submapEstim <- function(submaps)
 {
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")

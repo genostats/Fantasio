@@ -4,8 +4,8 @@
 #' 
 #' @param ROHfile an ROH file
 #' @param submaps a list.submaps object
-#' @param unit the unit used to plot 
-#' @param chr the chromosome from which plot will be made
+#' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
+#' @param chr the chromosome number from which to plot ROH
 #' @param outfile the name of the plot
 #' @param listid a vector containing the family id follow by the individual id 
 #' @param regions a matrix containing the value to ve highlighted in the plot
