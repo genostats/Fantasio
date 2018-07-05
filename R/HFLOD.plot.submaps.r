@@ -32,6 +32,8 @@ HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", 
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.")
   
+  if(is.null(submaps@HFLOD))
+    stop("HFLOD slots in the object is empty, cannot plot")
   
   if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snps.matrix")
     stop("Cannot plot by segments for snps.matrix object")

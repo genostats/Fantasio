@@ -24,16 +24,18 @@
 #' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 #' 
 #' @export
-createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, step=0.5, unit="cM", fileName)
+createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
-  if( unit != "Bases" & unit != "cM")
-    stop("Error only cM or Bases are accepted")
+  if(class(segmentsList)[1] != "snps.segments")
+    stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")
   
-  if(unit=="Bases")
-    step <-  step*1e6
+  unit <- segmentsList@unit
+  step <- segmentsList@gap 
+  
+  if( unit != "Bases" & unit != "cM")
+    stop("Error only cM or Bases are accepted, please make sure to choose between 'cM' or 'Bases' when creating segments list.")
+  
     
-  if(segmentsList@gap != step)
-      stop("step and gap not equal!")
   
   if(!missing(fileName))
   {

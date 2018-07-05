@@ -33,6 +33,8 @@ HBD.plot.chr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, ou
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix to eat")
   
+  if(is.null(Submaps@HBD_recap))
+    stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered INBRED.")
   
   if(!missing(Submaps) & !missing(ROHfile))
   {

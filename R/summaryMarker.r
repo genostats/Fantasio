@@ -28,12 +28,18 @@ summaryMarker <- function(submaps, bedmatrix)
   res <- c()
   for(i in 1:length(submaps))
   {
-    res <- c(res, length(which(b$Freq == i)))
+    taille <- length(which(b$Freq == i))
+    if(taille == 0)
+      break()
+    
+    res <- c(res, taille)
+      
+    
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
   
   df <- data.frame(
-    number_of_time_picked = 0:length(submaps),
+    number_of_time_picked = 0:length(res),
     number_of_markers = c(zero, res)
   )
   df

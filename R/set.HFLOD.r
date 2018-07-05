@@ -28,6 +28,7 @@ set.HFLOD <- function(submaps)
     stop("Need a bed.matrix to eat")
   }
   
+
   if(submaps@bySegments)
   {
     index <- sapply(submaps@atlas, function(i) i@submap) #index of the marker
@@ -42,8 +43,8 @@ set.HFLOD <- function(submaps)
     {
       for(j in 1:ncol(index))#get position of the marker
       {
-        poscM[i, j] <- x@snps$dist[index[i,j]]
-        posBp[i, j] <- x@snps$pos[index[i,j]]
+        poscM[i, j] <- submaps@bedmatrix@snps$dist[index[i,j]]
+        posBp[i, j] <- submaps@bedmatrix@snps$pos[index[i,j]]
       }
       #calculate mean value
       poscM_mean <- c(poscM_mean, mean(poscM[i,]))
@@ -51,25 +52,26 @@ set.HFLOD <- function(submaps)
     }
     
     
-    HFLOD <- data.frame(CHR = submaps@atlas[[1]]@map$chr, 
+    HFLOD <- data.frame(CHR    = submaps@atlas[[1]]@map$chr, 
                         pos_cM = poscM_mean, 
                         pos_Bp = posBp_mean)
     
   }else{
-    names <- colnames(submaps@FLOD_recap)
-    index <- match(names, submaps@bedmatrix@snps$id)
+    names       <- colnames(submaps@FLOD_recap)
+    index       <- match(names, submaps@bedmatrix@snps$id)
     distance_cM <- submaps@bedmatrix@snps$dist[index]
     distance_bP <- submaps@bedmatrix@snps$pos[index]
     chr <- x@snps$chr[index]
     
-    HFLOD <- data.frame(CHR = chr, 
-                        SNPS = names, 
+    HFLOD <- data.frame(CHR    = chr, 
+                        SNPS   = names, 
                         pos_cM = distance_cM,
-                        pos_Bp =distance_bP)
+                        pos_Bp = distance_bP)
   }
   # HFLOD <- matrix(0.0, nrow = ncol(submaps@FLOD_recap), ncol = 2)
-  HFLOD_value <- c()
-  ALPHA_value <- c()
+  HFLOD_value <- numeric(nrow(HFLOD))
+  ALPHA_value <- numeric(nrow(HFLOD))
+  #with a 100 submaps consume a lot of time (by SNPS)
   for (j in 1:nrow(HFLOD))
   {
     # function h(alpha)
@@ -80,8 +82,8 @@ set.HFLOD <- function(submaps)
     res <- optimize( h, c(0,1), maximum = TRUE, tol = 0.001 )
     
     
-    HFLOD_value <- c(HFLOD_value, res$objective) # HFLOD = h(alpha max)
-    ALPHA_value <- c(ALPHA_value, res$maximum)   # alpha max 
+    HFLOD_value[j] <- res$objective # HFLOD = h(alpha max)
+    ALPHA_value[j] <- res$maximum   # alpha max 
   }
   HFLOD$HFLOD <- HFLOD_value
   HFLOD$ALPHA <- ALPHA_value

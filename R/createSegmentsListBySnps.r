@@ -31,8 +31,9 @@
 #' bedMatrix <- read.bed.matrix("yourFile")
 #' segmentList <- createSegmentsListBySnps(bedMatrix)
 #' @export
-createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE, numberOfChromosome=22)
+createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE)
 {
+  # options(gaston.autosomes = c(1:30, 35))
   
   if(class(bedmatrix)[1] != "bed.matrix" )
   {
@@ -49,10 +50,13 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   if(verbose) cat("Finding segments for the genome : ")
   VI <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!! to be put back
-  for(i in 1:numberOfChromosome)
+  for(i in getOption("gaston.autosomes"))
   {
     cat(".")
     chr_distances <- bedmatrix@snps$dist[which(bedmatrix@snps$chr==i)]
+    if(length(chr_distances) == 0)
+      next()
+    
     k <- c()
     for(j in 1:length(chr_distances))
     {
@@ -74,11 +78,11 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   #find the marker of a segment
   if(verbose) cat("Finding which markers are between two segments: ")
   #shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L !!!!!
-  shift <- sapply(1:numberOfChromosome, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
+  shift <- sapply(getOption("gaston.autosomes"), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
   VIII <- list()
   #for(i in unique(bedmatrix@snps$chr)) !!!!
-  for(i in 1:numberOfChromosome)
+  for(i in 1:length(VI))
   {
     cat(".")
     chr_segments <- VI[[i]]
@@ -124,7 +128,7 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   }
   if(verbose) cat("\n")
   
-  new("snps.segments", gap, VIV)
+  new("snps.segments", gap, unit, VIV)
 }
 
 

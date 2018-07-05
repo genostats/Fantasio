@@ -6,11 +6,13 @@
 
 setClass("snps.segments", representation(
   gap = 'numeric',
+  unit = 'character',
   snps.segments = 'list'
 ))
 
-setMethod('initialize', signature='snps.segments', definition=function(.Object, gap, segments) {
+setMethod('initialize', signature='snps.segments', definition=function(.Object, gap, unit, segments) {
   .Object@gap <- gap
+  .Object@unit <- unit
   .Object@snps.segments <- segments
   .Object
 })

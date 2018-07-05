@@ -32,6 +32,9 @@ HBD.plot.id <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, 
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix to eat")
   
+  if(is.null(Submaps@HBD_recap))
+    stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered INBRED.")
+  
   if(!missing(Submaps) & !missing(ROHfile))
   {
     plot.ROH.segments.id(Submaps=Submaps, ROHfile, unit, individual.id=individual.id, family.id=family.id, regions, outfile=outfile)
