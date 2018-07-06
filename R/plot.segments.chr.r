@@ -21,7 +21,6 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   
   end <- quantsmooth::lengthChromosome(chr,unit)/coeff
   
-  #div <- length(list_id)/10
   
   #creer un plot vide 
   y_max <- length(list_id)+1

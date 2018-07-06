@@ -35,12 +35,5 @@ plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, 
     outfile <- paste(outfile,".png",sep="") 
   }
   
-  #if(save_file)
-  #{
-  #  png(filename = outfile, width = 1000, height = 1000,pointsize=24)
-  #  plot_ROH_IID(ROH,unit, myreg, main=paste("ROHs of ",family.id,"_",individual.id,sep=""))
-  #  dev.off()
-  #}
-  
   plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, individual.id=individual.id, unit=unit, regions=myreg, main=paste("ROHs of ",family.id,"_",individual.id,sep=""))
 }

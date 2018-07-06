@@ -20,12 +20,7 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
   
   HBD.recap <- Submaps@HBD_recap
   HBD.segments <- Submaps@HBD_segments
-  
-  ##recuperer les id de l'individus necessaire pour la fonction plot
-  #name <- rownames(HBD.recap)
-  #name <- sapply(strsplit(name, "_"), function(i) i[2])
-  #id   <- which(name == individual.id)
-  
+
   individuals_name <- rownames(HBD.recap)#get the name of the individual
   individuals_name <- strsplit(individuals_name, "_")
   individuals_name <- sapply(individuals_name, function(i) match(i, Submaps@bedmatrix@ped$id))
@@ -52,15 +47,7 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
   else {
     outfile <- paste(outfile,".png",sep="") 
   }
-  
-  #creation d'un fichier png et plot
-  #if(save_img)
-  #{
-  #  png(filename = outfile, width = 1000, height = 1000,pointsize=24)
-  #  plot_HBD_IID(HBD.segments, id, unit = unit, regions = myreg, main=paste("HBD segments of ",name[id]))
-  #  dev.off()
-  #}
-  
+
   plot.segments.id(fileOrSubmaps=HBD, individual.id=id, unit = unit, regions = myreg, main=paste("HBD segments of ",family.id, "_", individual.id, sep = ""))
 }
 

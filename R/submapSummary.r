@@ -76,9 +76,6 @@ submapSummary <- function(submaps, a.threshold = 1)
       df[i,5:13] <- NA
   }
   
-  #write.table(df,"dataframe.txt",sep="\t",col.names = colnames(df))
-  #library("xlsx", character.only = TRUE)
-  #write.xlsx(df, "dataframe.xlsx") 
   return(df)
   
   

@@ -33,8 +33,6 @@
 #' @export
 createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE)
 {
-  # options(gaston.autosomes = c(1:30, 35))
-  
   if(class(bedmatrix)[1] != "bed.matrix" )
   {
     stop("Need a bed.matrix to eat")
@@ -46,10 +44,9 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   if(unit =="Bases")
     gap <- gap * 1e6
   
-  ### start and end of a segments
+  # start and end of a segments
   if(verbose) cat("Finding segments for the genome : ")
   VI <- list()
-  #for(i in unique(bedmatrix@snps$chr)) !!! to be put back
   for(i in getOption("gaston.autosomes"))
   {
     cat(".")
@@ -77,11 +74,9 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   
   #find the marker of a segment
   if(verbose) cat("Finding which markers are between two segments: ")
-  #shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L !!!!!
   shift <- sapply(getOption("gaston.autosomes"), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
   VIII <- list()
-  #for(i in unique(bedmatrix@snps$chr)) !!!!
   for(i in 1:length(VI))
   {
     cat(".")
@@ -130,27 +125,3 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   
   new("snps.segments", gap, unit, VIV)
 }
-
-
-
-
-
-#Enlever car n'est plus necessaire suite a la ligne de commande precedente. A confirmer?
-#if(length(l) > 1)
-#{
-#  index <- c()
-#  for(k in 1:length(l))
-#  {
-#    if(length(l[[k]]) <= number_of_marker)
-#    {
-#      if(k == length(l))
-#        l[[k-1]] <- c(l[[k]], l[[k-1]])
-#      else
-#        l[[k+1]] <- c(l[[k]], l[[k+1]])
-#        #l[[k]] <- NULL
-#    }else{
-#      index <- c(index, k)
-#    }
-#  }
-#  l <- l[index]
-#}

@@ -81,13 +81,6 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
     x@likelihood0[i] <- likelihood0
     x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 1, lower.tail = FALSE)
   }
-  #if(probs) {
-  #  if(verbose) cat("Computing posterior HBD probabilities\n")
-  #  #x <- set.HBD.prob(x, all=all.individual)
-  #  if(verbose) cat("Computing FLOD and HFLOD\n")
-  #  #x <- set.FLOD(x)
-  #  #x <- set.HFLOD(x)
-  #}
   x
 }
 

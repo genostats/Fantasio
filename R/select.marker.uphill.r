@@ -1,7 +1,7 @@
 select.marker.uphill <- function(x, vector, pas, random, unit)
 {
   random_snp <- random
-  if(unit=="Bases")                              #recuperer les distances pour pouvoir trouver le marqueur le plus proche a chaque saut
+  if(unit=="Bases")                                  #recuperer les distances pour pouvoir trouver le marqueur le plus proche a chaque saut
     dist <- x@snps$pos[vector]
   else
     dist <- x@snps$dist[vector]

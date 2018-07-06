@@ -65,8 +65,22 @@
 #' segmentList <- createSegmentsListByHotspots(bedMatrix)
 #' submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList)
 #' @export
-makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSegmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3, run.festim=TRUE, list.id, run.proba=TRUE,
-                    recap.by.segments = FALSE,  verbose=TRUE, debug=FALSE, threshold=0.5, q = 1e-4, quality=95, n.consecutive.marker=5) {
+makeAllSubmapsByHotspots <- function(bedmatrix,
+                                     n = 100,
+                                     segmentsList = createSegmentsListByHotspots(bedmatrix),
+                                     n.cores = 1,
+                                     epsilon = 1e-3,
+                                     run.festim=TRUE,
+                                     list.id,
+                                     run.proba=TRUE,
+                                     recap.by.segments = FALSE,
+                                     verbose=TRUE,
+                                     debug=FALSE,
+                                     threshold=0.5,
+                                     q = 1e-4,
+                                     quality=95,
+                                     n.consecutive.marker=5)
+{
 
   if(class(segmentsList)[1] != "hotspot.segments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")

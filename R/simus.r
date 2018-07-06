@@ -1,9 +1,9 @@
 
 random.msat <- function(N, a, f, map, freq) {
 
-  ## copy paste de la methode initialize
+
   delta.dist <- diff(map$distance)
-  # traiter proprement les changements de chromosomes
+  # treat properly the change of chromosome
   I <- cumsum(rle(map$chr)$length)
   I <- I[-length(I)]
   delta.dist[I+1] <- -1

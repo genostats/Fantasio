@@ -28,9 +28,7 @@ unit.plot.id <- function(file, unit, byROHfile, individual.id)
     if(unit=="cM"){
       ecart <- 25
       larg  <- 2
-      #pos1  <- which(colnames(file[[individual.id]])=="start_dist")
       pos1  <- which(colnames(file)=="start_dist")
-      #pos2  <- which(colnames(file[[individual.id]])=="end_dist")
       pos2  <- which(colnames(file)=="end_dist")
       if (length(pos1)==0)
       {
@@ -40,9 +38,7 @@ unit.plot.id <- function(file, unit, byROHfile, individual.id)
     else if(unit=="bases"){
       ecart <- 2.5e7
       larg  <- 2
-      #pos1  <- which(colnames(file[[individual.id]])=="start_pos")
       pos1  <- which(colnames(file)=="start_pos")
-      #pos2  <- which(colnames(file[[individual.id]])=="end_pos")
       pos2  <- which(colnames(file)=="end_pos")
     }
     else 

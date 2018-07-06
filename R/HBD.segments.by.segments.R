@@ -24,20 +24,16 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   family_id <- submaps@bedmatrix@ped$famid[individuals_name]
   individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
   
-  #recuperer le nom des marqueurs pour connaitre l'emplacement du segments dans le chr
+  #find the name of the marke to find the index of the segments in the chromosome
   marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)
   
   
-  #a quel chromosome appartient ce marqueur
+  #from which chromosome this marker correspond
   correspondance <- match(marker_names, submaps@bedmatrix@snps$id)
   
   chromosome <- submaps@bedmatrix@snps$chr[correspondance]
   
-  ##recuperer le nom de l'individus
-  #nom <- rownames(HBD_recap)
-  #nom <- strsplit(nom, "_")
-  
-  #recuperer les distances et positions de chaques segment 
+  #find the positions and distances of all the segmetn
   
   start_dist <- c()
   end_dist <- c()
@@ -45,27 +41,27 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   start_pos <- c() 
   end_pos <- c()
   
-  for(i in 1:22)#boucle sur les chr
+  for(i in 1:22)
   {
-    segment_chr <- submaps@segments_list[[i]]#recuperer la liste des segments pour le chr i
+    segment_chr <- submaps@segments_list[[i]]#get the list of segments in the chromosome i
     
-    for(j in 1:length(segment_chr))#boucle sur les segments du chromosome
+    for(j in 1:length(segment_chr))#loop over the segments
     {
-      if(length(segment_chr[[j]])== 0) next()#si pas de segment donc on passe
+      if(length(segment_chr[[j]])== 0) next()
       
-      start <- segment_chr[[ j ]][ 1 ]# premier marqueur
-      end <- segment_chr[[ j ]][ length( segment_chr[[ j ]] ) ]# dernier marqueur
+      start <- segment_chr[[ j ]][ 1 ]# first marker
+      end <- segment_chr[[ j ]][ length( segment_chr[[ j ]] ) ]# last marker
       
-      #debut du segment 
+      #segment start
       start_dist <- c(start_dist, submaps@bedmatrix@snps$dist[ start ])
       
-      #fin du segment -> dernier marqueur
+      #segment end -> last marker
       end_dist   <- c(end_dist, submaps@bedmatrix@snps$dist[ end ] )
       
-      #debut du segment 
+      #segment start
       start_pos  <- c(start_pos, submaps@bedmatrix@snps$pos[ start ])
       
-      #fin du segment -> dernier marqueur 
+      #segment end-> last marker
       end_pos    <- c(end_pos, submaps@bedmatrix@snps$pos[ end ])
       
       
@@ -88,15 +84,9 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
     
     good_segments_length <-as.numeric( all_segments$length[ good_segments ] )
     
-    #good_segments_start<- as.numeric( ( c(0,cumsum(all_segments$lengths))+1)[ good_segments ] )
-    
     good_segments_start<- as.numeric( cumsum(all_segments$lengths)[ good_segments ] )
     
     good_segments_end<-as.numeric( good_segments_start+good_segments_length )
-    
-    
-    
-    #splitting <- strsplit(nom[i], "_")#recuperer l'id de l'individus
     
     
     segment_dataframe<-data.frame(individual  = rep(individuals_name[i], length(good_segments_start)),

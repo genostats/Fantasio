@@ -67,8 +67,22 @@
 #' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 #' 
 #' @export
-makeAllSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = createSegmentsListBySnps(x), n.cores = 1, epsilon = 1e-3, run.festim=TRUE, list.id, proba=TRUE,
-                    recap.by.segments = FALSE,  verbose=TRUE, debug=FALSE, threshold=0.5, q = 1e-4, quality=95, n.consecutive.marker=5) {
+makeAllSubmapsBySnps <- function(bedmatrix,
+                                 n = 100,
+                                 segmentsList = createSegmentsListBySnps(x),
+                                 n.cores = 1,
+                                 epsilon = 1e-3,
+                                 run.festim=TRUE,
+                                 list.id,
+                                 proba=TRUE,
+                                 recap.by.segments = FALSE,
+                                 verbose=TRUE,
+                                 debug=FALSE,
+                                 threshold=0.5,
+                                 q = 1e-4,
+                                 quality=95,
+                                 n.consecutive.marker=5) 
+{
   
   if(class(segmentsList)[1] != "snps.segments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")

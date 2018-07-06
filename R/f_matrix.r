@@ -27,21 +27,16 @@ setClass("f.matrix", representation(
           likelihood1 = 'numeric',       # likelihood under H1 
           p.lrt = 'numeric',             # likelihood ratio test
           HBD.prob = 'matrix',           # proba HBD = 1 ; one individual per column : dim = (nb inds x nb msats)
-          FLOD = 'matrix'               # matrix of FLOD scores dim = (nb inds x nb msats)
-          #HFLOD = 'matrix'               # matrix of HFLOD scores dim = (nb msats x 2)
+          FLOD = 'matrix'                # matrix of FLOD scores dim = (nb inds x nb msats)
+          #HFLOD = 'matrix'              # matrix of HFLOD scores dim = (nb msats x 2)
 ))
 
 setMethod('initialize', signature='f.matrix', definition=function(.Object, ncol, nrow, ped, map, log.emiss, epsilon=1e-3) {
   if(nrow(ped) != nrow) stop("ped dimension mismatch")
   if(nrow(map) != ncol) stop("map dimension mismatch")
- 
-  ## TODO 
-  # verifier que dans map, les marqueurs sont bien ordonnes sur chaque chromosome...
-  # et que les chromosomes ne sont pas en vrac
- 
-  # meme code dans random.msat
+
   delta.dist <- diff(map$distance)
-  # traiter proprement les changements de chromosomes
+  # properly treat the change of chromosome
   I <- cumsum(rle(map$chr)$length)
   I <- I[-length(I)]
   delta.dist[I] <- -1 

@@ -43,11 +43,11 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
     
     all_segments<-rle(test)
     
-    good_segments<- as.numeric(which( all_segments$length >= min_segment_size & all_segments$value )-1) #pour obtenir le premier marqueur
+    good_segments<- as.numeric(which( all_segments$length >= min_segment_size & all_segments$value )-1) #first marker
     
     good_segments_length <-as.numeric(all_segments$length[ good_segments+1 ]) 
     
-    good_segments_start<- as.numeric(cumsum(all_segments$lengths)[ good_segments ]+1)#pour obtenir le debut du segment
+    good_segments_start<- as.numeric(cumsum(all_segments$lengths)[ good_segments ]+1)#segment start
     
     good_segments_end<-as.numeric(good_segments_start+good_segments_length-1)
     
@@ -61,14 +61,6 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
     
     start_dist <- submaps@bedmatrix@snps$dist[correspondance[as.numeric(good_segments_start)]]
     end_dist <- submaps@bedmatrix@snps$dist[correspondance[as.numeric(good_segments_end)]]
-    
-    
-    
-    
-    
-    #splitting <- strsplit(nom[i], "_")
-   
-    
     
     
     #dataframe

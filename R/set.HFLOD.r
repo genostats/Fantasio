@@ -68,10 +68,9 @@ set.HFLOD <- function(submaps)
                         pos_cM = distance_cM,
                         pos_Bp = distance_bP)
   }
-  # HFLOD <- matrix(0.0, nrow = ncol(submaps@FLOD_recap), ncol = 2)
   HFLOD_value <- numeric(nrow(HFLOD))
   ALPHA_value <- numeric(nrow(HFLOD))
-  #with a 100 submaps consume a lot of time (by SNPS)
+  
   for (j in 1:nrow(HFLOD))
   {
     # function h(alpha)
