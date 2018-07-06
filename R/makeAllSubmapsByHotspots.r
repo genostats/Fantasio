@@ -113,8 +113,7 @@ makeAllSubmapsByHotspots <- function(bedmatrix,
   
 
   
-  submaps <- new("list.submaps", submap, bedmatrix, segmentsList, recap.by.segments)
-  submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, by_segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
+  submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
   if(verbose) cat("Creation of all the Submaps over ! \n")
   submaps
 }

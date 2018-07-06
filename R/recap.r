@@ -3,7 +3,7 @@
 #' This function creates HBD and FLOD recap dataframe.
 #' 
 #' @param submaps a list.submaps object
-#' @param by_segments : whether you want the recap by segments or snps
+#' @param recap.by.segments : whether you want the recap by segments or snps
 #' @param list.id : a list individual 
 #' 
 #' @details For each individual and each marker the function computes 
@@ -21,7 +21,7 @@
 #' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
 #' ROH.plot.id(yourROHfile, submaps, FID, IID)
 #' @export
-recap <- function(submaps, by_segments=F, list.id)
+recap <- function(submaps, recap.by.segments=F, list.id)
 {
   
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
@@ -54,7 +54,7 @@ recap <- function(submaps, by_segments=F, list.id)
   proba_HBD  <- submap.HBD(submaps)
   proba_FLOD <- submap.FLOD(submaps)
   
-  if(by_segments)
+  if(recap.by.segments)
   {
     recap.by.segments(submaps, proba_HBD, proba_FLOD)
   }
