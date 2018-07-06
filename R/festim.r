@@ -30,12 +30,12 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
   # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N), famid = numeric(N), id = numeric(N))
   for(i in 1:nrow(x)) {
     logEmission <- get.log.emiss(x,i)
-    likelihood0 <- .Call('festim_logLikelihood', PACKAGE = "FEstim", logEmission, x@delta.dist, 0.01, 0)
+    likelihood0 <- .Call('festim_logLikelihood', PACKAGE = "Fantasio", logEmission, x@delta.dist, 0.01, 0)
 
     if(verbose) cat("Estimation f and a for individual #",i,"\n")
 
     last_theta <- c(0.05, 0.05)
-    last_likelihood <- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, last_theta[1], last_theta[2])
+    last_likelihood <- .Call('festim_logLikelihood_gradient', PACKAGE = "Fantasio", logEmission, x@delta.dist, last_theta[1], last_theta[2])
 
     f <- function(theta) { 
       if(theta[1] < 0) theta[1] <- 1e-2
@@ -49,7 +49,7 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
       }
       if(debug) cat("a = ", theta[1], " f = ", theta[2])
       last_theta <<- theta
-      last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, theta[1], theta[2])
+      last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "Fantasio", logEmission, x@delta.dist, theta[1], theta[2])
       if(debug) cat(" likelihood = ", last_likelihood[1], " gradient = ", last_likelihood[-1], "\n")
       last_likelihood[1]
     }
@@ -65,7 +65,7 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
       if(all(theta == last_theta)) return(last_likelihood[-1])
       warning("Optimization algorithm might been having a glitch")
       last_theta <<- theta
-      last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "FEstim", logEmission, x@delta.dist, theta[1], theta[2])
+      last_likelihood <<- .Call('festim_logLikelihood_gradient', PACKAGE = "Fantasio", logEmission, x@delta.dist, theta[1], theta[2])
       last_likelihood[-1]
     }
 

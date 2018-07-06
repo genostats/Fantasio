@@ -24,7 +24,7 @@
 #' 
 #' @import Rcpp
 #' @import parallel
-#' @useDynLib FEstim
+#' @useDynLib Fantasio
 #' 
 #' @exportClass msat.matrix
 #' @exportClass f.matrix

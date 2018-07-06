@@ -12,9 +12,9 @@ random.msat <- function(N, a, f, map, freq) {
   f <- rep_len(f, N)
   S <- Y <- NULL
   for(i in 1:N) {
-    s <- .Call('festim_simu0', PACKAGE = "FEstim", delta.dist, a[i], f[i])
+    s <- .Call('festim_simu0', PACKAGE = "Fantasio", delta.dist, a[i], f[i])
     S <- cbind(S, s)
-    Y <- cbind(Y, .Call('festim_simu_geno', PACKAGE = "FEstim", s, freq))
+    Y <- cbind(Y, .Call('festim_simu_geno', PACKAGE = "Fantasio", s, freq))
   }
  
   list(S = S, 

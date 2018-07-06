@@ -1,6 +1,6 @@
-Package: FEstim
+Package: Fantasio
 Type: Package
-Title: FSuite package
+Title: Fantasio-package
 Version: 0.1
 Date: 2017-03-26
 Encoding: UTF-8
@@ -13,3 +13,4 @@ Depends: Rcpp, RcppParallel, methods, gaston, parallel, quantsmooth, zoo
 NeedsCompilation: yes
 LazyLoad: yes
 LazyData: yes
+RoxygenNote: 6.0.1
