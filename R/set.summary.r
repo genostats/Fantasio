@@ -56,45 +56,43 @@
 #' submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList) #this function is a wrapper that uses the function setSummary
 #' 
 #' @export
-setSummary <- function(submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segments=FALSE, q=1e-4, threshold=0.5, quality=95, n.consecutive.marker=5)
+setSummary <- function (submaps, list.id, run_a_f = TRUE, probs = TRUE, by_segments = FALSE,
+    q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.marker = 5)
 {
-  if(class(submaps)[1] != "list.submaps")
-    stop("Need a list.submaps matrix to eat")
-   
-  
-  if(run_a_f)
-  {
-    submaps@likelihood_summary <- submapLikelihood(submaps@atlas)
-  	submaps@estimation_summary <- submapEstim(submaps@atlas)
-  	submaps@marker_summary <- summaryMarker(submaps@atlas, submaps@bedmatrix)
-  	submaps@submap_summary <- submapSummary(submaps@atlas)
-  }
-  
-  test <- which(submaps@bedmatrix@ped$pheno == 2)
-  if(length(test) == 0)
-  {
-    cat("Cannot computes HBD, FLOD score and HFLOD score without 
-        individuals with a STATUS 2, you can try using a the list.id arguments.\n")
-    return(submaps)
-  }
-  
-  if(run_a_f && probs)
-  {
-    l1 <- set.HBD.prob(submaps, list.id=list.id, quality=quality)
-    submaps <- l1[[1]]
-    submaps <- set.FLOD(submaps=submaps, condition=l1[[2]], q=q)
-    
-    if(!(class(submaps@atlas[[1]])[1] == "snps.matrix" & by_segments))
-    {
-      l2 <- recap(submaps, by_segments=by_segments, list.id=list.id)
-  	  submaps@HBD_recap <- l2[[1]]
-  	  submaps@FLOD_recap <- l2[[2]]
-  	  submaps@HBD_segments <- HBD.segments(submaps, threshold=threshold, n.consecutive.marker=n.consecutive.marker, by_segments = by_segments) 
-  	  submaps@HFLOD <- set.HFLOD(submaps)
-    }else{
-      cat("Summary for HBD, FLOD, HFLOD can't be computed using snps, use hotposts instead to make your submap")
+    if (class(submaps)[1] != "list.submaps")
+        stop("Need a list.submaps matrix to eat")
+    if (run_a_f) {
+        submaps@likelihood_summary <- submapLikelihood(submaps@atlas)
+        submaps@estimation_summary <- submapEstim(submaps@atlas)
+        submaps@marker_summary <- summaryMarker(submaps@atlas,
+            submaps@bedmatrix)
+        submaps@submap_summary <- submapSummary(submaps@atlas)
     }
-  	
-  }  
-  submaps
+    test <- which(submaps@bedmatrix@ped$pheno == 2)
+    if(run_a_f & probs & length(test) == 0 & missing(list.id) ) {
+        cat("Cannot computes HBD, FLOD score and HFLOD score without individuals\n")
+        cat("with pheno = 2. Use setSummary with a list.id argument.\n")
+        return(submaps)
+    }
+    if (run_a_f & probs) {
+        l1 <- set.HBD.prob(submaps, list.id = list.id, quality = quality)
+        submaps <- l1[[1]]
+        submaps <- set.FLOD(submaps = submaps, condition = l1[[2]],
+            q = q)
+        if (!(class(submaps@atlas[[1]])[1] == "snps.matrix" &
+            by_segments)) {
+            l2 <- recap(submaps, by_segments = by_segments, list.id = list.id)
+            submaps@HBD_recap <- l2[[1]]
+            submaps@FLOD_recap <- l2[[2]]
+            submaps@HBD_segments <- HBD.segments(submaps, threshold = threshold,
+                n.consecutive.marker = n.consecutive.marker,
+                by_segments = by_segments)
+            submaps@HFLOD <- set.HFLOD(submaps)
+        }
+        else {
+            cat("Summary for HBD, FLOD, HFLOD can't be computed using snps, use hotposts instead to make your submap")
+        }
+    }
+    submaps
 }
+
