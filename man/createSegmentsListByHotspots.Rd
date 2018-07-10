@@ -6,7 +6,7 @@
 \usage{
 createSegmentsListByHotspots(bedmatrix, intensity = 10,
   hotspot_version = "hg19", hotspot_file, verbose = TRUE,
-  number_of_marker = 50)
+  number_of_marker = 0)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
