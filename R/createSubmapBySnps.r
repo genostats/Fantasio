@@ -5,8 +5,6 @@
 #' @param bedmatrix a bed.matrix object 
 #' @param segmentsList a list of segment for each chromosomes
 #' @param epsilon genotype error rate (default is 0.001)
-#' @param step one marker every step (default is 0.5)
-#' @param unit this argument is used only when you make submaps using segments created using the gap between markers, two options are allowed "Bases", "cM" (default is "cM")
 #' @param fileName You have the possibility to pass your own list of marker, that is to say, your own submaps 
 #' 
 #' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker 
@@ -16,7 +14,7 @@
 #' 
 #' @return return an snps.matrix object with some of his slots filled.
 #' 
-#' @seealso \code{\link{makeSubmapsBySnps}}
+#' @seealso makeSubmapsBySnps
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")

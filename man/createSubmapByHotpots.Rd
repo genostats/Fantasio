@@ -36,5 +36,5 @@ submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 
 }
 \seealso{
-\code{\link{makeSubmapsByHotspots}}
+makeSubmapsByHotspots
 }

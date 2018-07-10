@@ -41,7 +41,7 @@ individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "fami
 makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HBD.prob is use inside this function
 }
 \seealso{
-\code{\link{set.FLOD}}
+set.FLOD
 
-\code{\link{set.HFLOD}}
+set.HFLOD
 }

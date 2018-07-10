@@ -29,5 +29,5 @@ the dataframe contains the following elements :
 
 }
 \seealso{
-\code{\link{}}
+setSummary
 }

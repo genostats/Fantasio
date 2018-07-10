@@ -25,7 +25,8 @@
 #' 
 #' @return an snps.segments object
 #' 
-#' @seealso \code{\link{read.bed.matrix}}
+#' @seealso read.bed.matrix
+#' @seealso Fantasio
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")

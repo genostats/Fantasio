@@ -25,5 +25,5 @@ the second element of the list is the estimation of likelihood1
 
 }
 \seealso{
-\code{\link{}}
+setSummary
 }

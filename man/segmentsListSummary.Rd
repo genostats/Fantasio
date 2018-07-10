@@ -6,6 +6,9 @@
 \usage{
 segmentsListSummary(segmentList)
 }
+\arguments{
+\item{segmentList}{A list of segments}
+}
 \description{
 This function is uses to return the number of segments and number of marker in the list of segments outputed by the function 
 `createSegmentsListByHotspots`

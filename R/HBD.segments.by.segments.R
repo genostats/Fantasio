@@ -24,7 +24,7 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   family_id <- submaps@bedmatrix@ped$famid[individuals_name]
   individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
   
-  #find the name of the marke to find the index of the segments in the chromosome
+  #find the name of the marker to find the index of the segments in the chromosome
   marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)
   
   
@@ -80,13 +80,13 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
     
     all_segments<-rle(test)
     
-    good_segments<-as.numeric( which( all_segments$length >= min_segment_size & all_segments$value ) )
+    good_segments<-as.numeric( which( all_segments$length >= min_segment_size & all_segments$value )-1 )
     
-    good_segments_length <-as.numeric( all_segments$length[ good_segments ] )
+    good_segments_length <-as.numeric( all_segments$length[ good_segments+1 ] )
     
-    good_segments_start<- as.numeric( cumsum(all_segments$lengths)[ good_segments ] )
+    good_segments_start<- as.numeric( cumsum(all_segments$lengths)[ good_segments ] +1)
     
-    good_segments_end<-as.numeric( good_segments_start+good_segments_length )
+    good_segments_end<-as.numeric( good_segments_start+good_segments_length -1)
     
     
     segment_dataframe<-data.frame(individual  = rep(individuals_name[i], length(good_segments_start)),

@@ -5,7 +5,7 @@
 \title{Creation summary statistic files}
 \usage{
 setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
-  by_segments = FALSE, q = 1e-04, threshold = 0.5, quality = 95,
+  recap.by.segments = FALSE, q = 1e-04, threshold = 0.5, quality = 95,
   n.consecutive.marker = 5)
 }
 \arguments{
@@ -22,7 +22,7 @@ setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
 
 \item{probs}{a flag indicating if the HBD probabilities and FLOD score has been computed for the submaps (default is TRUE)}
 
-\item{by_segments}{if the summary files has to be computed considering segments or snps (defaut is FALSE) 
+\item{recap.by.segments}{if the summary files has to be computed considering segments or snps (defaut is FALSE) 
 (more information in the documentation of `makeSubmapsByHotspots` or`makeSubmapsBySnps` functions)}
 
 \item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
@@ -32,14 +32,6 @@ setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
 \item{quality}{The minimum percentage use to assume if a submap is valid (default is 95)}
 
 \item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBD segments (default is 5)}
-
-\item{epsilon}{genotype error rate (default is 0.001)}
-
-\item{run.festim}{whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps}
-
-\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score}
-
-\item{test}{a vector containing the index of the different individual with a STATUS of 2 (individual with the disease)}
 }
 \value{
 return a new list object containing every dataframe and object created
@@ -74,29 +66,31 @@ submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList) #this function is a 
 
 }
 \seealso{
-\code{\link{makeSubmapsByHotspots}}
+Fantasio
 
-\code{\link{createSegmentsListByHotspots}}
+makeSubmapsBySnps
 
-\code{\link{festim}}
+createSegmentsListByHotspots
 
-\code{\link{set.HBD.prob}}
+festim
 
-\code{\link{set.FLOD}}
+set.HBD.prob
 
-\code{\link{set.HFLOD}}
+set.FLOD
 
-\code{\link{recap}}
+set.HFLOD
 
-\code{\link{setSummary}}
+recap
 
-\code{\link{submapLikelihood}}
+setSummary
 
-\code{\link{submapEstim}}
+submapLikelihood
 
-\code{\link{summaryMarker}}
+submapEstim
 
-\code{\link{submapSummary}}
+summaryMarker
 
-\code{\link{HBD.segments}}
+submapSummary
+
+HBD.segments
 }

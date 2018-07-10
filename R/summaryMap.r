@@ -10,7 +10,8 @@
 #' 
 #' @return  This function returns a dataframe.
 #' 
-#' @seealso \code{\link{setSummary}}
+#' @seealso setSummary
+#'
 #' @examples  
 #' 
 #' @export

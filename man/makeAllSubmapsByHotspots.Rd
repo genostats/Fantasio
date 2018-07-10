@@ -87,29 +87,31 @@ segmentList <- createSegmentsListByHotspots(bedMatrix)
 submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList)
 }
 \seealso{
-\code{\link{makeSubmapsBySnps}}
+Fantasio
 
-\code{\link{createSegmentsListByHotspots}}
+makeSubmapsBySnps
 
-\code{\link{festim}}
+createSegmentsListByHotspots
 
-\code{\link{set.HBD.prob}}
+festim
 
-\code{\link{set.FLOD}}
+set.HBD.prob
 
-\code{\link{set.HFLOD}}
+set.FLOD
 
-\code{\link{recap}}
+set.HFLOD
 
-\code{\link{setSummary}}
+recap
 
-\code{\link{submapLikelihood}}
+setSummary
 
-\code{\link{submapEstim}}
+submapLikelihood
 
-\code{\link{summaryMarker}}
+submapEstim
 
-\code{\link{submapSummary}}
+summaryMarker
 
-\code{\link{HBD.segments}}
+submapSummary
+
+HBD.segments
 }

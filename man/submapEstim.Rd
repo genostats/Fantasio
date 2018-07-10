@@ -25,5 +25,5 @@ The second element of the returned list is the estimation of a through the subma
 
 }
 \seealso{
-\code{\link{}}
+setSummary
 }

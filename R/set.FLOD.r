@@ -6,24 +6,22 @@
 #' @param condition A vector containing a list of individuals. Only this list of individuals will have their FLOD scores computed
 #' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.
 #' 
-#' Computation of FLOD scores
-#' 
-#' This function is used to compute FLOD scores on individuals in a sample
-#' 
-#' @param submaps a list.submaps object
-#' @param condition A vector containing a list of individuals. Only this list of individuals will have their FLOD scores computed
-#' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
-#' 
 #' @details This function iterates over the slots atlas of the list.submaps object.
 #' @details For each submaps in the slots atlas of the object, the slot FLOD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
 #' 
 #' @return the list.submaps object with each FLOD.prob slot of each submaps in the slot atlas computed
 #' 
-#' @seealso \code{\link{set.HBD.prob}}
-#' @seealso \code{\link{set.HFLOD}}
+#' @seealso set.HBD.prob
+#' @seealso set.HFLOD
 #' 
 #' @import Rcpp
 #' @import parallel
+#' @importFrom graphics abline axis lines par plot points polygon text 
+#' @importFrom grDevices dev.off png 
+#' @importFrom methods callNextMethod  
+#' @importFrom stats median optim optimize pchisq 
+#' @importFrom utils data read.table
+#' 
 #' @useDynLib Fantasio
 #' 
 #' @exportClass msat.matrix

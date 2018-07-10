@@ -17,20 +17,21 @@
 #' 
 #' @return an hotspots.segments object
 #' 
-#' @seealso \code{\link{read.bed.matrix}}
+#' @seealso read.bed.matrix
+#' @seealso Fantasio
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")
 #' segmentList <- createSegmentsListByHotspots(bedMatrix)
 #' @export
-createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 50)
+createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 0)
 {
   if(class(bedmatrix)[1] != "bed.matrix" )
-  {
     stop("Need a bed.matrix to eat")
-  }
   
-  if(verbose) cat(paste("You are currently using version", hotspot_version, "of hotspot\n"))
+  
+  if(verbose) 
+    cat( paste("You are currently using version", hotspot_version, "of hotspot\n") )
   
   if(!missing(hotspot_file))
   {

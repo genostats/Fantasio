@@ -27,5 +27,5 @@ make sure to provide a list of submaps in argument. This function returns a data
 
 }
 \seealso{
-\code{\link{setSummary}}
+setSummary
 }

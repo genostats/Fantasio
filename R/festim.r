@@ -3,7 +3,6 @@
 #' This function is used to compute a and f and other statistical values (p.lrt, likelihood0, likelihood1)
 #' 
 #' @param x a submap matrix   
-#' @param segmentsList a list of segments for each chromosome
 #' @param verbose whether you want informations about the computation process (default is TRUE)
 #' @param debug  whether you want advanced output about the computation process (default is FALSE)
 #' 

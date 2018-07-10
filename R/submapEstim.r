@@ -9,7 +9,7 @@
 #' 
 #' @return this fonction returns a list of dataframe.
 #' 
-#' @seealso \code{\link{}}
+#' @seealso setSummary
 #' 
 #' @examples  
 #' 

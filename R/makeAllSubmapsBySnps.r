@@ -47,19 +47,20 @@
 #' 
 #' @return return a new list object containing every dataframe and object created 
 #' 
-#' @seealso \code{\link{makeSubmapsByHotspots}}
-#' @seealso \code{\link{createSegmentsListByHotspots}}
-#' @seealso \code{\link{festim}}
-#' @seealso \code{\link{set.HBD.prob}}
-#' @seealso \code{\link{set.FLOD}}
-#' @seealso \code{\link{set.HFLOD}}
-#' @seealso \code{\link{recap}}
-#' @seealso \code{\link{setSummary}}
-#' @seealso \code{\link{submapLikelihood}}
-#' @seealso \code{\link{submapEstim}}
-#' @seealso \code{\link{summaryMarker}}
-#' @seealso \code{\link{submapSummary}}
-#' @seealso \code{\link{HBD.segments}}
+#' @seealso Fantasio
+#' @seealso makeSubmapsBySnps
+#' @seealso createSegmentsListByHotspots
+#' @seealso festim
+#' @seealso set.HBD.prob
+#' @seealso set.FLOD
+#' @seealso set.HFLOD
+#' @seealso recap
+#' @seealso setSummary
+#' @seealso submapLikelihood
+#' @seealso submapEstim
+#' @seealso summaryMarker
+#' @seealso submapSummary
+#' @seealso HBD.segments
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")
@@ -67,22 +68,11 @@
 #' submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 #' 
 #' @export
-makeAllSubmapsBySnps <- function(bedmatrix,
-                                 n = 100,
-                                 segmentsList = createSegmentsListBySnps(x),
-                                 n.cores = 1,
-                                 epsilon = 1e-3,
-                                 run.festim=TRUE,
-                                 list.id,
-                                 proba=TRUE,
-                                 recap.by.segments = FALSE,
-                                 verbose=TRUE,
-                                 debug=FALSE,
-                                 threshold=0.5,
-                                 q = 1e-4,
-                                 quality=95,
-                                 n.consecutive.marker=5) 
+makeAllSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = createSegmentsListBySnps(bedmatrix), n.cores = 1, epsilon = 1e-3,
+                                 run.festim=TRUE, list.id, run.proba=TRUE, recap.by.segments = FALSE, verbose=TRUE, debug=FALSE,
+                                 threshold=0.5, q = 1e-04, quality=95, n.consecutive.marker=5)
 {
+  
   
   if(class(segmentsList)[1] != "snps.segments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")
@@ -113,8 +103,9 @@ makeAllSubmapsBySnps <- function(bedmatrix,
     gc()
   }
 
+  submaps <- new("list.submaps", submap, bedmatrix, segmentsList@snps.segments, recap.by.segments, segmentsList@unit , segmentsList@gap)
   
-  submaps <- setSummary(submaps, run_a_f = run.festim, probs = proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
-  if(verbose) cat("Creation of all the Submaps over ! \n")
+  submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
+  if(verbose) cat("Creation of all the Submaps by distance over ! \n")
   submaps
 }

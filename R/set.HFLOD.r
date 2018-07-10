@@ -9,8 +9,8 @@
 #' @return the list.submaps object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
 #' The second value is the moving average probability.
 #' 
-#' @seealso \code{\link{set.HBD.prob}}
-#' @seealso \code{\link{set.FLOD}}
+#' @seealso set.HBD.prob
+#' @seealso set.FLOD
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")

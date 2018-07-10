@@ -11,7 +11,15 @@
 #' @details The same is done with the FLOD scores.  
 #' @details This function returns a list of two dataframes with HBD and FLOD in it.
 #' 
-#'  
+#' @seealso Fantasio
+#' @seealso makeSubmapsBySnps
+#' @seealso createSegmentsListByHotspots
+#' @seealso festim
+#' @seealso set.HBD.prob
+#' @seealso set.FLOD
+#' @seealso set.HFLOD
+#' @seealso HBD.segments
+#'
 #' @return This function returns a list of dataframes. 
 #' 
 #' 
@@ -21,7 +29,7 @@
 #' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
 #' ROH.plot.id(yourROHfile, submaps, FID, IID)
 #' @export
-recap <- function(submaps, recap.by.segments=F, list.id)
+recap <- function(submaps, recap.by.segments=FALSE, list.id)
 {
   
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")

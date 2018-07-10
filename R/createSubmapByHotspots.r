@@ -42,7 +42,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' 
 #' @return return an hotspots.matrix object with some of his slots filled.
 #' 
-#' @seealso \code{\link{makeSubmapsByHotspots}}
+#' @seealso makeSubmapsByHotspots
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")

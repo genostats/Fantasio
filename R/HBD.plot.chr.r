@@ -15,6 +15,9 @@
 #' @details -start 
 #' @details -end
 #' 
+#' @seealso Fantasio
+#' @seealso set.HFLOD
+#' 
 #' @return return a plot of the chromosome HBD segments for all the individual
 #' 
 #' @examples  

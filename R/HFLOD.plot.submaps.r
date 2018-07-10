@@ -14,6 +14,7 @@
 #' @details - start 
 #' @details - end
 #' 
+#' @seealso set.HFLOD
 #' 
 #' @return This function returns a manhattan plot of all the HFLOD score over all the chromosome
 #' 

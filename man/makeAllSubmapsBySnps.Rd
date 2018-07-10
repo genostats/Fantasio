@@ -6,7 +6,7 @@
 \usage{
 makeAllSubmapsBySnps(bedmatrix, n = 100,
   segmentsList = createSegmentsListBySnps(x), n.cores = 1,
-  epsilon = 0.001, run.festim = TRUE, list.id, proba = TRUE,
+  epsilon = 0.001, run.festim = TRUE, list.id, run.proba = TRUE,
   recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
   threshold = 0.5, q = 1e-04, quality = 95, n.consecutive.marker = 5)
 }
@@ -26,6 +26,8 @@ makeAllSubmapsBySnps(bedmatrix, n = 100,
 \item{list.id}{a list of individuals from which to computes HBD, 
 FLOD score and HFLOD score (see details for more informations)}
 
+\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score}
+
 \item{recap.by.segments}{if you want the summary of probabilities by snps or by segments}
 
 \item{verbose}{whether you want informations about computations}
@@ -42,8 +44,6 @@ to include an inbred individual into the analysis. Default is 95.}
 
 \item{n.consecutive.marker}{the number of consecutive marker with a 
 probabilities equal or greater to the value of threshold, to be use to fing HBD segments}
-
-\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score}
 }
 \value{
 return a new list object containing every dataframe and object created
@@ -89,29 +89,31 @@ submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 
 }
 \seealso{
-\code{\link{makeSubmapsByHotspots}}
+Fantasio
 
-\code{\link{createSegmentsListByHotspots}}
+makeSubmapsBySnps
 
-\code{\link{festim}}
+createSegmentsListByHotspots
 
-\code{\link{set.HBD.prob}}
+festim
 
-\code{\link{set.FLOD}}
+set.HBD.prob
 
-\code{\link{set.HFLOD}}
+set.FLOD
 
-\code{\link{recap}}
+set.HFLOD
 
-\code{\link{setSummary}}
+recap
 
-\code{\link{submapLikelihood}}
+setSummary
 
-\code{\link{submapEstim}}
+submapLikelihood
 
-\code{\link{summaryMarker}}
+submapEstim
 
-\code{\link{submapSummary}}
+summaryMarker
 
-\code{\link{HBD.segments}}
+submapSummary
+
+HBD.segments
 }

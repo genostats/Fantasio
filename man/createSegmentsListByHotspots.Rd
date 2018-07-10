@@ -44,5 +44,7 @@ bedMatrix <- read.bed.matrix("yourFile")
 segmentList <- createSegmentsListByHotspots(bedMatrix)
 }
 \seealso{
-\code{\link{read.bed.matrix}}
+read.bed.matrix
+
+Fantasio
 }

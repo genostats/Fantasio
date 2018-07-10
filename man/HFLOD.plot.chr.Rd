@@ -42,3 +42,6 @@ segmentList <- createSegmentsListByHotspots(bedMatrix)
 submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
 HFLOD.manhattan.plot(h)
 }
+\seealso{
+set.HFLOD
+}

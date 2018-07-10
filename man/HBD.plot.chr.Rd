@@ -44,3 +44,8 @@ submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 HBD.plot.chr(submaps, chr=1)
 
 }
+\seealso{
+Fantasio
+
+set.HFLOD
+}

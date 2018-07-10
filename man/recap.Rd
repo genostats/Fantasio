@@ -4,12 +4,12 @@
 \alias{recap}
 \title{HBD/FLOD recap}
 \usage{
-recap(submaps, by_segments = F, list.id)
+recap(submaps, recap.by.segments = FALSE, list.id)
 }
 \arguments{
 \item{submaps}{a list.submaps object}
 
-\item{by_segments}{: whether you want the recap by segments or snps}
+\item{recap.by.segments}{: whether you want the recap by segments or snps}
 
 \item{list.id}{: a list individual}
 }
@@ -34,4 +34,21 @@ bedMatrix <- read.bed.matrix("yourFile")
 segmentList <- createSegmentsListByHotspots(bedMatrix)
 submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
 ROH.plot.id(yourROHfile, submaps, FID, IID)
+}
+\seealso{
+Fantasio
+
+makeSubmapsBySnps
+
+createSegmentsListByHotspots
+
+festim
+
+set.HBD.prob
+
+set.FLOD
+
+set.HFLOD
+
+HBD.segments
 }

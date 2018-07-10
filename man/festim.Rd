@@ -12,8 +12,6 @@ festim(x, verbose = TRUE, debug = FALSE)
 \item{verbose}{whether you want informations about the computation process (default is TRUE)}
 
 \item{debug}{whether you want advanced output about the computation process (default is FALSE)}
-
-\item{segmentsList}{a list of segments for each chromosome}
 }
 \value{
 returns the submap matrix with the slot a, f, p.lrt, likelihood0 and likelihood1 filled.

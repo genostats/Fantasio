@@ -11,7 +11,7 @@
 #' 
 #' @return this function returns a dataframe.
 #' 
-#' @seealso \code{\link{}}
+#' @seealso setSummary
 #' 
 #' @examples  
 #' 

@@ -4,7 +4,7 @@
 \alias{markerSummary}
 \title{Number of marker selected in a submap}
 \usage{
-markerSummary(h)
+markerSummary(submaps)
 }
 \arguments{
 \item{submaps}{a list.submaps object}
@@ -27,5 +27,5 @@ the dataframe contains the following elements :
 
 }
 \seealso{
-\code{\link{}}
+setSummary
 }

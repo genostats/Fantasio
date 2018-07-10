@@ -13,16 +13,12 @@
 #'     - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual
 #' @param run_a_f a flag indicating if the estimation of a and f has been computed for the submaps using `festim` (default is TRUE)
 #' @param probs a flag indicating if the HBD probabilities and FLOD score has been computed for the submaps (default is TRUE)
-#' @param epsilon genotype error rate (default is 0.001)
-#' @param run.festim whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps  
-#' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score  
 #' @param recap.by.segments if the summary files has to be computed considering segments or snps (defaut is FALSE) 
 #' (more information in the documentation of `makeSubmapsByHotspots` or`makeSubmapsBySnps` functions)
 #' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
 #' @param q  Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality The minimum percentage use to assume if a submap is valid (default is 95)
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBD segments (default is 5)
-#' @param test a vector containing the index of the different individual with a STATUS of 2 (individual with the disease)
 #' 
 #' @details the function filled the empty slots of the list.submaps object. It calls different functions and uses the results of each one to filled 
 #' the object. This function computes summary for the following elements :
@@ -36,19 +32,20 @@
 #' 
 #' @return return a new list object containing every dataframe and object created 
 #' 
-#' @seealso \code{\link{makeSubmapsByHotspots}}
-#' @seealso \code{\link{createSegmentsListByHotspots}}
-#' @seealso \code{\link{festim}}
-#' @seealso \code{\link{set.HBD.prob}}
-#' @seealso \code{\link{set.FLOD}}
-#' @seealso \code{\link{set.HFLOD}}
-#' @seealso \code{\link{recap}}
-#' @seealso \code{\link{setSummary}}
-#' @seealso \code{\link{submapLikelihood}}
-#' @seealso \code{\link{submapEstim}}
-#' @seealso \code{\link{summaryMarker}}
-#' @seealso \code{\link{submapSummary}}
-#' @seealso \code{\link{HBD.segments}}
+#' @seealso Fantasio
+#' @seealso makeSubmapsBySnps
+#' @seealso createSegmentsListByHotspots
+#' @seealso festim
+#' @seealso set.HBD.prob
+#' @seealso set.FLOD
+#' @seealso set.HFLOD
+#' @seealso recap
+#' @seealso setSummary
+#' @seealso submapLikelihood
+#' @seealso submapEstim
+#' @seealso summaryMarker
+#' @seealso submapSummary
+#' @seealso HBD.segments
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")

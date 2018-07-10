@@ -18,8 +18,8 @@
 #' 
 #' @return the list.submaps object with each HBD.prob slot of each submaps in the slot atlas computed
 #' 
-#' @seealso \code{\link{set.FLOD}}
-#' @seealso \code{\link{set.HFLOD}}
+#' @seealso set.FLOD
+#' @seealso set.HFLOD
 #' 
 #' @examples  
 #' bedMatrix <- read.bed.matrix("yourFile")
@@ -31,6 +31,7 @@ set.HBD.prob <- function(submaps, list.id, quality = 95)
 {
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
     stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+  
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix to eat")
   

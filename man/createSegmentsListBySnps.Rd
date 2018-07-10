@@ -54,5 +54,7 @@ bedMatrix <- read.bed.matrix("yourFile")
 segmentList <- createSegmentsListBySnps(bedMatrix)
 }
 \seealso{
-\code{\link{read.bed.matrix}}
+read.bed.matrix
+
+Fantasio
 }

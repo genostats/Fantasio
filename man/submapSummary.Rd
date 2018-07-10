@@ -53,5 +53,5 @@ This function returns a dataframe with 13 columns :
 
 }
 \seealso{
-\code{\link{}}
+setSummary
 }

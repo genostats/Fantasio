@@ -14,10 +14,6 @@ createSubmapBySnps(bedmatrix, segmentsList, epsilon = 0.001, fileName)
 \item{epsilon}{genotype error rate (default is 0.001)}
 
 \item{fileName}{You have the possibility to pass your own list of marker, that is to say, your own submaps}
-
-\item{step}{one marker every step (default is 0.5)}
-
-\item{unit}{this argument is used only when you make submaps using segments created using the gap between markers, two options are allowed "Bases", "cM" (default is "cM")}
 }
 \value{
 return an snps.matrix object with some of his slots filled.
@@ -41,5 +37,5 @@ submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
 
 }
 \seealso{
-\code{\link{makeSubmapsBySnps}}
+makeSubmapsBySnps
 }

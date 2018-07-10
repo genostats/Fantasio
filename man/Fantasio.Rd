@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fantasio.r
 \name{Fantasio}
 \alias{Fantasio}
-\title{Creation of submaps using gap between markers}
+\title{Wrapper for the package Fantasio}
 \usage{
 Fantasio(bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
   n = 100, n.cores = 1, epsilon = 0.001, run.festim = TRUE, list.id,
@@ -14,6 +14,8 @@ Fantasio(bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
 \item{bedmatrix}{a bed.matrix object}
 
 \item{segments}{The method to use for submap creation ("Hotspots" or "Distance")}
+
+\item{segment.options}{a  list of arguments to the function that will create the segments list. The names attribute of args gives the argument names.}
 
 \item{n}{the number of submaps wanted}
 
@@ -46,8 +48,35 @@ to include an inbred individual into the analysis. Default is 95.}
 probabilities equal or greater to the value of threshold, to be use to fing HBD segments}
 }
 \description{
-Creates n submaps and generates summaries following the specified options
+This fonctions is used as a wrapper for the package Fantasio to create segments list and submaps
 }
 \details{
-manuel a finir !!!!!
+This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls two differents function :
+
+`createSegmentsListBySnps` and `createSegmentsListBySnps`. The first function `createSegmentsListBySnps` is used to create
+
+a list of segments though the genome. The second function `createSegmentsListBySnps` is used to create submaps.
+
+The segments arguments accept only two options : Hotspots or Distance.
+
+Depending of the value of the segments argument (Hotspots or Distance) the segments are made by using the hotspots of recombinaison
+
+in the genome thanks to hotspots file, then the submaps are made by Hotspots by picking randomly a maker in every segments created before.
+
+Or the segments are made by using the gaps between markers, then the submaps are made by picking a random marker in
+
+every segments and going through each segment from left to right using a supply step (by default it is 0.5 cM).
+
+To see which arguments can be passed in the list of args in the segment.options please go check the createSegmentListBySnps/Hotspots functions manual.
+}
+\seealso{
+read.bed.matrix
+
+createSegmentsListBySnps
+
+makeAllSubmapsBySnps
+
+makeAllSubmapsByHotspots
+
+makeAllSubmapsByHotspots
 }

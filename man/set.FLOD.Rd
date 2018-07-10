@@ -11,17 +11,7 @@ set.FLOD(submaps, condition, q = 1e-04)
 
 \item{condition}{A vector containing a list of individuals. Only this list of individuals will have their FLOD scores computed}
 
-\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.
-
-Computation of FLOD scores
-
-This function is used to compute FLOD scores on individuals in a sample}
-
-\item{submaps}{a list.submaps object}
-
-\item{condition}{A vector containing a list of individuals. Only this list of individuals will have their FLOD scores computed}
-
-\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
+\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.}
 }
 \value{
 the list.submaps object with each FLOD.prob slot of each submaps in the slot atlas computed
@@ -42,7 +32,7 @@ individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "fami
 makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.FLOD is use inside the function setSummary of this function
 }
 \seealso{
-\code{\link{set.HBD.prob}}
+set.HBD.prob
 
-\code{\link{set.HFLOD}}
+set.HFLOD
 }
