@@ -63,14 +63,20 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
       if(chr_distances[j+1] - chr_distances[j] > gap)
         k <- c(k, j, (j+1) )
     }
+    
     segment <- cbind( c(0, k[c(FALSE,TRUE)]), 
                       c(k[c(TRUE,FALSE)],Inf))  
+    
+    
+    
     VI[[i]] <- segment
   }
+  VI <- VI[!sapply(VI,is.null)]
   
   if(verbose) cat("\n")
   # number of snps in a chr
   VII <- table(bedmatrix@snps$chr)
+  VII <- VII[getOption("gaston.autosomes")]
   
   
   #find the marker of a segment

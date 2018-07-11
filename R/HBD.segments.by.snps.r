@@ -17,8 +17,8 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
   
   individuals_name <- rownames(HBD_recap)#get the name of the individual
   individuals_name <- strsplit(individuals_name, "_")
-  individuals_name <- sapply(individuals_name, function(i) match(i, submaps@bedmatrix@ped$id))
-  individuals_name <- individuals_name[!is.na(individuals_name)]
+  individuals_name <- sapply(individuals_name, function(i) match(i[2], submaps@bedmatrix@ped$id))
+  #individuals_name <- individuals_name[!is.na(individuals_name)]
   
   #find the status of the individual
   STATUS <- submaps@bedmatrix@ped$pheno[individuals_name]
@@ -29,6 +29,7 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
   
   correspondance <- match(colnames(HBD_recap), submaps@bedmatrix@snps$id)#match between marker's name in HBD_recap and the bedmatrix
   chr <- submaps@bedmatrix@snps$chr[correspondance]#chromosome on which we have the marker
+  min_segment_size <- n.consecutive.marker#minimum size of the marker
   
   for(i in 1:nrow(HBD_recap))
   {
@@ -36,20 +37,22 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
     test<- (data >= threshold)#test
     
     
-    
-    min_segment_size <- n.consecutive.marker#minimum size of the marker
-    
     # get the segments
     
     all_segments<-rle(test)
     
     good_segments<- as.numeric(which( all_segments$length >= min_segment_size & all_segments$value )-1) #first marker
     
+    if(good_segments[1] == 0)
+      good_segments[1] <- 1
+    
     good_segments_length <-as.numeric(all_segments$length[ good_segments+1 ]) 
     
     good_segments_start<- as.numeric(cumsum(all_segments$lengths)[ good_segments ]+1)#segment start
     
     good_segments_end<-as.numeric(good_segments_start+good_segments_length-1)
+
+
     
     
     
