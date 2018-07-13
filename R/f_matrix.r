@@ -1,9 +1,3 @@
-##################################################################################
-#This is the mother class for any object of this package                         #
-#                                                                                #
-##################################################################################
-
-
 setClassUnion("numericOrNULL",members=c("numeric", "NULL"))
 setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClass("f.matrix", representation(

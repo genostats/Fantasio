@@ -76,6 +76,7 @@ set.HBD.prob <- function(submaps, list.id, quality = 95)
                                                         submaps@atlas[[i]]@f[j1] )[2,]
       }
     }
+    HBD_prob[!is.finite(HBD_prob)] <- 0
     submaps@atlas[[i]]@HBD.prob <- HBD_prob 
   }
   l <- list(submaps, condition)

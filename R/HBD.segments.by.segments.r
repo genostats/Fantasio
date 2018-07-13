@@ -16,8 +16,8 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   
   individuals_name <- rownames(HBD_recap)#get the name of the individual
   individuals_name <- strsplit(individuals_name, "_")
-  individuals_name <- sapply(individuals_name, function(i) match(i, submaps@bedmatrix@ped$id))
-  individuals_name <- individuals_name[!is.na(individuals_name)]
+  individuals_name <- sapply(individuals_name, function(i) match(i[2], submaps@bedmatrix@ped$id))
+  #individuals_name <- individuals_name[!is.na(individuals_name)]
   
   #find the status of the individual
   STATUS <- submaps@bedmatrix@ped$pheno[individuals_name]
@@ -69,14 +69,14 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   }
   
   
-  
+  min_segment_size = n.consecutive.marker
   #create the dataframe for every individual
   for(i in 1:nrow(HBD_recap))
   {
     data<-c(HBD_recap[i,])#ligne i de la matrice HBD_recap
     test<- as.vector(data >= threshold)#test
     
-    min_segment_size = n.consecutive.marker
+    
     
     all_segments<-rle(test)
     
