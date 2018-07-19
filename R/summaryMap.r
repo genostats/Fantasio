@@ -11,8 +11,6 @@
 #' @return  This function returns a dataframe.
 #' 
 #' @seealso setSummary
-#'
-#' @examples  
 #' 
 #' @export
 summaryMap <- function(submaps)

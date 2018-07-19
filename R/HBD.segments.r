@@ -26,7 +26,6 @@
 #' @seealso setSummary
 #' @seealso set.HBD.prob
 #' 
-#' @examples  
 #' 
 #' @export
 HBD.segments <- function(submaps, n.consecutive.marker = 5, threshold = 0.5, recap.by.segments=FALSE)

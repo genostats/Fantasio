@@ -21,16 +21,10 @@
 #'  
 #' @return This function returns a plot of the HBD segments for a specific individual
 #' 
-#' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-#' ROH.plot.id(yourROHfile, submaps, FID, IID)
 #' @export
 ROH.plot.id <- function(ROHfile, submaps, unit="cM", regions, outfile, family_id, individual_id, save_file=F  )
 {
-  ROH <- read.table(ROHfile,h=T)
+  ROH <- read.table(ROHfile, header=TRUE)
   ROH <- subset(ROH,ROH$FID==family_id & ROH$IID==individual_id)
   
   if(nrow(ROH) == 0)

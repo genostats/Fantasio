@@ -14,17 +14,17 @@
 #' @seealso set.HBD.prob
 #' @seealso set.HFLOD
 #' 
-#' @import Rcpp
-#' @import parallel
+#' @import gaston 
+#' @import HGDP.CEPH
+#' 
 #' @importFrom graphics abline axis lines par plot points polygon text 
 #' @importFrom grDevices dev.off png 
-#' @importFrom methods callNextMethod  
+#' @importFrom methods callNextMethod new
 #' @importFrom stats median optim optimize pchisq 
 #' @importFrom utils data read.table
 #' 
 #' @useDynLib Fantasio
 #' 
-#' @exportClass msat.matrix
 #' @exportClass f.matrix
 #' @exportClass list.submaps
 #' @exportClass hotspots.matrix
@@ -32,11 +32,6 @@
 #' @exportClass snps.matrix
 #' @exportClass snps.segments
 #' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
-#' makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.FLOD is use inside the function setSummary of this function
 #' @export
 set.FLOD <- function(submaps, condition, q = 1e-4)
 {

@@ -24,10 +24,6 @@ the dataframe contains the following elements :
 
 - by row is the number of time picked
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

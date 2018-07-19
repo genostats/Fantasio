@@ -14,7 +14,7 @@
 
 plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, family.id, individual.id)
 {
-  ROH <- read.table(ROHfile,h=T)
+  ROH <- read.table(ROHfile,header=TRUE)
   ROH <- subset(ROH,ROH$FID==family.id & ROH$IID==individual.id)
   
   if(nrow(ROH) == 0)

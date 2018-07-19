@@ -1,6 +1,6 @@
 plot.ROH.segments.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
 {
-  ROH <- read.table(ROHfile,h=T)
+  ROH <- read.table(ROHfile,header=TRUE)
   
   ROH$IID <- as.character(ROH$IID)
 

@@ -47,10 +47,6 @@
 #' @seealso submapSummary
 #' @seealso HBD.segments
 #' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList) #this function is a wrapper that uses the function setSummary
 #' 
 #' @export
 setSummary <- function (submaps, list.id, run_a_f = TRUE, probs = TRUE, recap.by.segments = FALSE,

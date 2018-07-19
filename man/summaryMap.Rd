@@ -22,10 +22,6 @@ make sure to provide a list of submaps in argument. This function returns a data
 
 -Freq : the number of times the marke has been picked
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

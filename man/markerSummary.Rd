@@ -22,10 +22,6 @@ the dataframe contains the following elements :
 
 - by row is each submap
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

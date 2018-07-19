@@ -48,10 +48,6 @@ This function returns a dataframe with 13 columns :
 
 - pLRT_<0.05: number of valid submaps with a LRT having a p-value below 0.05
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

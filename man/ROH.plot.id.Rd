@@ -43,10 +43,3 @@ If you use the regions options make sure to pass a matrix containing one line pe
 
 -end
 }
-\examples{
- 
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-ROH.plot.id(yourROHfile, submaps, FID, IID)
-}

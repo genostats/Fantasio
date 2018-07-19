@@ -21,13 +21,7 @@
 #' @seealso HBD.segments
 #'
 #' @return This function returns a list of dataframes. 
-#' 
-#' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-#' ROH.plot.id(yourROHfile, submaps, FID, IID)
+#'
 #' @export
 recap <- function(submaps, recap.by.segments=FALSE, list.id)
 {

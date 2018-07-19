@@ -19,16 +19,10 @@
 #' 
 #' @return This function returns a plot of the HBD segments for a specific chromosome
 #' 
-#' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-#' ROH.plot.chr(yourROHfile, submaps)
 #' @export
 ROH.plot.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
 {
-  ROH <- read.table(ROHfile,h=T)
+  ROH <- read.table(ROHfile, header=TRUE)
   
   ROH$IID <- as.character(ROH$IID)
   if(missing(listid)) 

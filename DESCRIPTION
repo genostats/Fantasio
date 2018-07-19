@@ -4,13 +4,31 @@ Title: Genectic Data Estimation On Inbreed Individual
 Version: 0.1
 Date: 2017-03-26
 Encoding: UTF-8
+Maintainer: Herve Perdry <herve.perdry@u-psud.fr>
 Author: Isuru Haupe, Mourad Sahbatou, Marie-Claude Babron, Hervé Perdry & Anne-Louise Leutenegger, Steven Gazal, Amaury Vaysse
-Maintainer: Hervé Perdry <herve.perdry@u-psud.fr>
-Description: Use this package to analyze microsatellite and/or SNP data of individuals, it goals are for : - Population genetic studies (estimating and detecting inbreeding on individuals without known genealogy, estimating the population proportion of mating types and the  individual probability to be offspring of different mating types) - Rare disease studies (performing homozygosity mapping with heterogeneity) - Multifactorial disease studies (HBD-GWAS strategy).
+Description: Use this package to analyze microsatellite
+    and/or SNP data of individuals, it goals are for : 
+	- Population genetic studies (estimating and detecting 
+	inbreeding on individuals without known genealogy
+	estimating the population proportion of mating types 
+	and the  individual probability to be offspring 
+	of different mating types) 
+	- Rare disease studies (performing homozygosity 
+	mapping with heterogeneity) 
+	- Multifactorial disease studies (HBD-GWAS strategy).
 License: GPL-3
 LinkingTo: gaston, Rcpp, RcppParallel, RcppEigen
-Depends: Rcpp, RcppParallel, methods, gaston, parallel, quantsmooth, zoo
+Depends: gaston, 
+	     HGDP.CEPH
+Imports: RcppParallel,
+		methods,
+		parallel,
+		quantsmooth,
+		zoo
 NeedsCompilation: yes
 LazyLoad: yes
 LazyData: yes
 RoxygenNote: 6.0.1
+Suggests: knitr,
+		  rmarkdown
+VignetteBuilder: knitr

@@ -25,8 +25,6 @@
 #' 
 #' @seealso setSummary
 #' 
-#' @examples  
-#' 
 #' @export
 submapSummary <- function(submaps, a.threshold = 1)
 {  

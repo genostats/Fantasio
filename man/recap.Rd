@@ -28,13 +28,6 @@ The same is done with the FLOD scores.
 
 This function returns a list of two dataframes with HBD and FLOD in it.
 }
-\examples{
- 
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-ROH.plot.id(yourROHfile, submaps, FID, IID)
-}
 \seealso{
 Fantasio
 

@@ -20,10 +20,6 @@ the first element of the list is the estimation of likelihood0
 
 the second element of the list is the estimation of likelihood1
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

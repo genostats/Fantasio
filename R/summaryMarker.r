@@ -13,8 +13,6 @@
 #' 
 #' @seealso setSummary
 #' 
-#' @examples  
-#' 
 #' @export
 summaryMarker <- function(submaps, bedmatrix)
 {

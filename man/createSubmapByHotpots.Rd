@@ -26,13 +26,22 @@ This function will iterates over the list of segments, then for each segments it
 
 Once the iteration over the list is over, the function will create an object and filled some of his slot.
 
-If you are using a fileName, please make sure to have one marker per line
+If you are using a fileName, please make sure to have one marker per line.
+
+This function is used internally in the package by the function makeAllSubmapsByHotspots
 }
 \examples{
  
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListBySnps(bedMatrix)
-submaps <- makeSubmapsBySnps(bedMatrix, 5, segmentList)
+#install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
+require(Fantasio)
+require(HGDP.CEPH)
+filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+x <- read.bed.matrix(filepath)
+x <- set.stats(x)
+x.me <- select.inds(x, population == "Bedouin")
+x.me@ped$pheno <- rep(2,48)
+segmentList <- createSegmentsListByHotspots(x.me)
+submaps <- createSubmapByHotpots(x.me, segmentList)
 
 }
 \seealso{

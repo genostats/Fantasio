@@ -21,11 +21,6 @@
 #' @seealso set.FLOD
 #' @seealso set.HFLOD
 #' 
-#' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
-#' makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HBD.prob is use inside this function
 #' @export
 set.HBD.prob <- function(submaps, list.id, quality = 95)
 {

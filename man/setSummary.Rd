@@ -58,13 +58,6 @@ the object. This function computes summary for the following elements :
 
 - comutation of HBD segments
 }
-\examples{
- 
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList) #this function is a wrapper that uses the function setSummary
-
-}
 \seealso{
 Fantasio
 

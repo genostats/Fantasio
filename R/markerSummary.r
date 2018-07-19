@@ -12,7 +12,6 @@
 #' 
 #' @seealso setSummary
 #' 
-#' @examples  
 #' 
 #' @export
 markerSummary <- function(submaps)

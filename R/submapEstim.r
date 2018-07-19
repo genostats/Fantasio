@@ -11,7 +11,6 @@
 #' 
 #' @seealso setSummary
 #' 
-#' @examples  
 #' 
 #' @export
 submapEstim <- function(submaps)

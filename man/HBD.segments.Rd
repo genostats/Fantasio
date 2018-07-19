@@ -48,10 +48,6 @@ This function creates HBD segments used for creating plots
 The threshold is the minimum value from which we consider the marker is HBD. From this marker we want a minumum number of consecutive markers to create a HBD segment.
 (argument : n.consecutive.marker)
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 

@@ -19,13 +19,6 @@ This function is used to compute HFLOD scores on individuals in a sample
 \details{
 This function iterates over the slots atlas of the list.submaps object.
 }
-\examples{
- 
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
-makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HFLOD is use inside the function setSummary of this function
-}
 \seealso{
 set.HBD.prob
 

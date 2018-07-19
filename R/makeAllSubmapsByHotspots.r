@@ -3,23 +3,20 @@
 #' This function creates N submaps and allows the creation of summary files
 #' 
 #' @param bedmatrix a bed.matrix object 
-#' @param n the number of submaps wanted  
+#' @param n the number of submaps wanted(default is 100)
 #' @param segmentsList a list of segment for each chromosomes
-#' @param n.cores the number of cores to use if you want to compute submaps using parellelism 
-#' @param epsilon the value of epsilon for submaps
-#' @param run.festim whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps  
-#' @param list.id a list of individuals from which to computes HBD, FLOD score and HFLOD score (see details for more informations)
-#' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score  
-#' @param recap.by.segments if you want the summary of probabilities by snps or by segments
-#' @param verbose whether you want informations about computations
-#' @param debug whether you want advanced output for the computation process
-#' @param threshold the value of the threshold when finding HBD segment
-#' @param q Allows the user to choose the assumed frequency of 
-#' the mutation involved in the disease for each individual. Default is 0.0001.
-#' @param quality Allows the user to choose the minimal quality  to include an 
-#' inbred individual into the analysis. Default is 95 .
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie
-#'  equal or greater to the value of threshold, to be use to fing HBD segments
+#' @param n.cores the number of cores to use if you want to compute submaps using parellelism (default is 1)
+#' @param epsilon genotype error rate (default is 0.001)
+#' @param run.festim whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)
+#' @param list.id a list of individuals (see details for more information)
+#' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)  
+#' @param recap.by.segments if you want the summary of probabilities by snps or by segments (default is FALSE)
+#' @param verbose whether you want informations about computations (default is TRUE)
+#' @param debug whether you want advanced output for the computation process (default is FALSE)
+#' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
+#' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
+#' @param quality Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
+#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments
 #' 
 #' 
 #' @details This function is used to create submaps by randomly picking a marker
@@ -40,9 +37,10 @@
 #'  score HFLOD score for them, each element of the vector should contains the familyId_individualId}
 #'  \item{the character "all" for a computation of HBD, FLOD score and HFLOD score for every individual}
 #' }
-#' @details When doing a number N of submaps the different values computed from the 
-#' snps picked randomly (a, f, p.lrt, ...) in a marker is considered different values 
-#' for the same segments.
+#' @details When doing a number N of submaps using the options recap.by.segments, 
+#' @details the different values computed from the 
+#' @details snps picked randomly (a, f, p.lrt, ...) in a segments is considered different values 
+#' @details for the same segments.
 #' 
 #' @return return a new list object containing every dataframe and object created 
 #' 
@@ -62,9 +60,16 @@
 #' @seealso HBD.segments
 #' 
 #' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListByHotspots(bedMatrix)
-#' submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList)
+#' ##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
+#' require(Fantasio)
+#' require(HGDP.CEPH)
+#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+#' x <- read.bed.matrix(filepath)
+#' x <- set.stats(x)
+#' x.me <- select.inds(x, population == "Bedouin")
+#' x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
+#' segmentList <- createSegmentsListByHotspots(x.me)
+#' submaps <- makeAllSubmapsByHotspots(x.me, 5, segmentList)
 #' @export
 makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSegmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3,
                                      run.festim=TRUE, list.id, run.proba=TRUE, recap.by.segments = FALSE, verbose=TRUE, debug=FALSE,

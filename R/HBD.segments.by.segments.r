@@ -82,6 +82,9 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
     
     good_segments<-as.numeric( which( all_segments$length >= min_segment_size & all_segments$value )-1 )
     
+    if(length(good_segments) == 0)
+      next()
+    
     if(good_segments[1] == 0)
       good_segments[1] <- 1
     

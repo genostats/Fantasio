@@ -37,10 +37,16 @@ If you use the regions options make sure to pass a matrix containing one line pe
 }
 \examples{
  
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-submaps <- makeSubmapsByHotspots(bedMatrix, 10, segmentList)  
-HFLOD.manhattan.plot(h)
+##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
+require(Fantasio)
+require(HGDP.CEPH)
+filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+x <- read.bed.matrix(filepath)
+x <- set.stats(x)
+x.me <- select.inds(x, population == "Bedouin")
+x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
+submaps <- Fantasio(x.me, "Hotspots", n=5)
+HFLOD.manhattan.plot(submaps)
 }
 \seealso{
 set.HFLOD

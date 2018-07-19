@@ -13,36 +13,33 @@ makeAllSubmapsByHotspots(bedmatrix, n = 100,
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
 
-\item{n}{the number of submaps wanted}
+\item{n}{the number of submaps wanted(default is 100)}
 
 \item{segmentsList}{a list of segment for each chromosomes}
 
-\item{n.cores}{the number of cores to use if you want to compute submaps using parellelism}
+\item{n.cores}{the number of cores to use if you want to compute submaps using parellelism (default is 1)}
 
-\item{epsilon}{the value of epsilon for submaps}
+\item{epsilon}{genotype error rate (default is 0.001)}
 
-\item{run.festim}{whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps}
+\item{run.festim}{whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)}
 
-\item{list.id}{a list of individuals from which to computes HBD, FLOD score and HFLOD score (see details for more informations)}
+\item{list.id}{a list of individuals (see details for more information)}
 
-\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score}
+\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)}
 
-\item{recap.by.segments}{if you want the summary of probabilities by snps or by segments}
+\item{recap.by.segments}{if you want the summary of probabilities by snps or by segments (default is FALSE)}
 
-\item{verbose}{whether you want informations about computations}
+\item{verbose}{whether you want informations about computations (default is TRUE)}
 
-\item{debug}{whether you want advanced output for the computation process}
+\item{debug}{whether you want advanced output for the computation process (default is FALSE)}
 
-\item{threshold}{the value of the threshold when finding HBD segment}
+\item{threshold}{the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)}
 
-\item{q}{Allows the user to choose the assumed frequency of 
-the mutation involved in the disease for each individual. Default is 0.0001.}
+\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
 
-\item{quality}{Allows the user to choose the minimal quality  to include an 
-inbred individual into the analysis. Default is 95 .}
+\item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie
-equal or greater to the value of threshold, to be use to fing HBD segments}
+\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments}
 }
 \value{
 return a new list object containing every dataframe and object created
@@ -76,15 +73,26 @@ you can pass several arguments to the list.id arguments :
  \item{the character "all" for a computation of HBD, FLOD score and HFLOD score for every individual}
 }
 
-When doing a number N of submaps the different values computed from the 
-snps picked randomly (a, f, p.lrt, ...) in a marker is considered different values 
+When doing a number N of submaps using the options recap.by.segments,
+
+the different values computed from the
+
+snps picked randomly (a, f, p.lrt, ...) in a segments is considered different values
+
 for the same segments.
 }
 \examples{
  
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-submaps <- makeSubmapsByHotspots(bedMatrix, 5, segmentList)
+##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
+require(Fantasio)
+require(HGDP.CEPH)
+filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+x <- read.bed.matrix(filepath)
+x <- set.stats(x)
+x.me <- select.inds(x, population == "Bedouin")
+x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
+segmentList <- createSegmentsListByHotspots(x.me)
+submaps <- makeAllSubmapsByHotspots(x.me, 5, segmentList)
 }
 \seealso{
 Fantasio

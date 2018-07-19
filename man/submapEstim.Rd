@@ -20,10 +20,6 @@ The first element of the returned list is the estimation of f through the submap
 
 The second element of the returned list is the estimation of a through the submaps.
 }
-\examples{
- 
-
-}
 \seealso{
 setSummary
 }

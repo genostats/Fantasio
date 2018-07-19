@@ -33,13 +33,6 @@ By default the function only computes HBD probabilities for INBRED individuals a
 the list.id argument, this function will then computes HBD probabilities for all the individuals in your data. If you want a specific individual, then give a vector containing the family id 
 and the individual id separated by an underscore to the list.id argument.
 }
-\examples{
- 
-bedMatrix <- read.bed.matrix("yourFile")
-segmentList <- createSegmentsListByHotspots(bedMatrix)
-individualList <- c("familyID0_individualID0", "familyID1_individualID2"), "familyID2_individualID2")
-makeSubmapsByHotspots(bedMatrix, 10, segmentList, list.id=individualList)  #the function set.HBD.prob is use inside this function
-}
 \seealso{
 set.FLOD
 

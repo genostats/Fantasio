@@ -29,8 +29,15 @@
 #' @seealso Fantasio
 #' 
 #' @examples  
-#' bedMatrix <- read.bed.matrix("yourFile")
-#' segmentList <- createSegmentsListBySnps(bedMatrix)
+#' #install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
+#' require(Fantasio)
+#' require(HGDP.CEPH)
+#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+#' x <- read.bed.matrix(filepath)
+#' x <- set.stats(x)
+#' x.me <- select.inds(x, population == "Bedouin")
+#' x.me@ped$pheno <- rep(2,48)
+#' segmentList <- createSegmentsListBySnps(x.me)
 #' @export
 createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, number_of_segments=20, unit="cM", verbose=TRUE)
 {
