@@ -18,8 +18,7 @@ Description: Use this package to analyze microsatellite
 	- Multifactorial disease studies (HBD-GWAS strategy).
 License: GPL-3
 LinkingTo: gaston, Rcpp, RcppParallel, RcppEigen
-Depends: gaston, 
-	     HGDP.CEPH
+Depends: gaston 
 Imports: RcppParallel,
 		methods,
 		parallel,
@@ -29,6 +28,6 @@ NeedsCompilation: yes
 LazyLoad: yes
 LazyData: yes
 RoxygenNote: 6.0.1
-Suggests: knitr,
-		  rmarkdown
+Suggests: knitr, rmarkdown, HGDP.CEPH
 VignetteBuilder: knitr
+Additional_repositories: https://genostats.github.io/R/
