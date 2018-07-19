@@ -53,9 +53,9 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
             Thank you.")
   }else{
     hotspot <- switch(hotspot_version,
-                    hg17 = { data(hotspot_hg17); hotspot_hg17;},
-                    hg18 = { data(hotspot_hg18); hotspot_hg18;},
-                    hg19 = { data(hotspot_hg19); hotspot_hg19; })
+                    hg17 = Fantasio::hotspot_hg17,
+                    hg18 = Fantasio::hotspot_hg18,
+                    hg19 = Fantasio::hotspot_hg19 )
   }
   
   
