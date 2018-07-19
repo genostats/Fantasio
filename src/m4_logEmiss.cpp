@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 #include <iostream>
-#include "gaston.h"
+#include "gaston/matrix4.h"
 #include <math.h>
 #include "LSE.h"
 
