@@ -122,4 +122,3 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   
   return(l)
 }
-

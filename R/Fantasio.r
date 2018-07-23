@@ -53,34 +53,34 @@
 #' submaps <- Fantasio(x.me, "Hotspots", n=5)
 #' 
 #' @export
-Fantasio <- function(bedmatrix, segments = c("Hotspots", "Distance"), segment.options, 
-                     n = 100, n.cores = 1, epsilon = 0.001, run.festim = TRUE, list.id, 
-                     run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE, 
-                     debug = FALSE, threshold = 0.5, q = 1e-04, quality = 95, 
-                     n.consecutive.marker = 5) {
-  
-  
-  qdfuohfuis3489dsifs93iksdi2_tmp <<- bedmatrix #to correct : nodes produced errors; first error: external pointer is not valid
-  
+Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
+                      n = 100, n.cores = 1, epsilon = 0.001, run.festim = TRUE,
+                      list.id, run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
+                      debug = FALSE, threshold = 0.5, q = 1e-04, quality = 95,
+                      n.consecutive.marker = 5)
+{
   segments <- match.arg(segments)
-  if(missing(segment.options)) # default value
+  if (missing(segment.options))
     segment.options <- list()
-  
-  if(segments == "Distance" & recap.by.segments) {
+  if (segments == "Distance" & recap.by.segments) {
     recap.by.segments <- FALSE
-    warning('segments = "Distance" implies recap.by.segments = FALSE')
+    warning("segments = \"Distance\" implies recap.by.segments = FALSE")
   }
-  
-  if(segments == "Distance") {
-    s <- do.call(createSegmentsListBySnps, c(bedmatrix = bedmatrix, segment.options))
-    h <- makeAllSubmapsBySnps(qdfuohfuis3489dsifs93iksdi2_tmp, n, s, n.cores, epsilon, run.festim, list.id, run.proba, recap.by.segments, verbose, debug, threshold, q, quality, n.consecutive.marker)
-    #h <- makeAllSubmapsBySnps(bedmatrix, n, s, n.cores, epsilon, run.festim, list.id, run.proba, recap.by.segments, verbose, debug, threshold, q, quality, n.consecutive.marker)
-  } else {
-    s <- do.call(createSegmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
-    h <- makeAllSubmapsByHotspots(qdfuohfuis3489dsifs93iksdi2_tmp, n, s, n.cores, epsilon, run.festim, list.id, run.proba, recap.by.segments, verbose, debug, threshold, q, quality, n.consecutive.marker)
-    #h <- makeAllSubmapsByHotspots(bedmatrix, n, s, n.cores, epsilon, run.festim, list.id, run.proba, recap.by.segments, verbose, debug, threshold, q, quality, n.consecutive.marker)
+  if (segments == "Distance") {
+    s <- do.call(createSegmentsListBySnps, c(bedmatrix = bedmatrix,
+                                             segment.options))
+    h <- makeAllSubmapsBySnps(get(deparse(substitute(bedmatrix))),
+                              n, s, n.cores, epsilon, run.festim, list.id, run.proba,
+                              recap.by.segments, verbose, debug, threshold, q,
+                              quality, n.consecutive.marker)
   }
-  
-  rm(qdfuohfuis3489dsifs93iksdi2_tmp, pos = ".GlobalEnv")
+  else {
+    s <- do.call(createSegmentsListByHotspots, c(bedmatrix = bedmatrix,
+                                                 segment.options))
+    h <- makeAllSubmapsByHotspots(get(deparse(substitute(bedmatrix))),
+                                  n, s, n.cores, epsilon, run.festim, list.id, run.proba,
+                                  recap.by.segments, verbose, debug, threshold, q,
+                                  quality, n.consecutive.marker)
+  }
   h
 }

@@ -49,7 +49,8 @@ submapSummary <- function(submaps, a.threshold = 1)
   }
   
   #treat the case when quality is equal to NA
-  quality <- (rowSums(sapply(submaps, function(x) x@a <= a.threshold) )*100)/length(submaps)
+  submaps_used <- rowSums(sapply(submaps, function(x) x@a <= a.threshold))
+  quality <- (submaps_used*100)/length(submaps)
   n <- which(is.na(quality))
   quality[n] <- 0
   
@@ -57,7 +58,7 @@ submapSummary <- function(submaps, a.threshold = 1)
   df <- data.frame(FID           = submaps[[1]]@ped$famid, 
                    IID           = submaps[[1]]@ped$id,
                    STATUS        = submaps[[1]]@ped$pheno,
-                   SUBMAPS       = paste(length(a), "/", length(submaps)),
+                   SUBMAPS       = paste(submaps_used, "/", length(submaps)),
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),
@@ -75,7 +76,5 @@ submapSummary <- function(submaps, a.threshold = 1)
   }
   
   return(df)
-  
-  
 }
 
