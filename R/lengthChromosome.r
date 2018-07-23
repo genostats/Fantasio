@@ -1,7 +1,7 @@
 lengthChromosome <- function (chr, units = c("bases", "cM"), build = 37) {
     units <- match.arg(units)
     if(!(build %in% 35:38))
-      stop("Argument 'build' should be 35,36, 37 or 38")
+      stop("Argument 'build' should be 35, 36, 37 or 38")
 
     x <- if(build == 35) Fantasio::cytobands.b35
          else if(build == 36) Fantasio::cytobands.b36
