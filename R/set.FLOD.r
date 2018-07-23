@@ -15,7 +15,6 @@
 #' @seealso set.HFLOD
 #' 
 #' @import gaston 
-#' @import HGDP.CEPH
 #' 
 #' @importFrom graphics abline axis lines par plot points polygon text 
 #' @importFrom grDevices dev.off png 

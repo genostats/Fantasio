@@ -11,4 +11,5 @@ set.allelic.frequencies <- function(x, freq)
     stop("length of the replacement vector for slot p mismatch")
   
   x@p <- as.numeric(freq)
+  x
 }

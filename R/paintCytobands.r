@@ -1,4 +1,4 @@
-paintCytobands <- function (chr, pos = c(0, 0), units = "bases", build = 37,
+paintCytobands <- function (chr, pos = c(0, 0), units = c("bases", "cM"), build = 37,
     width = 0.4, length.out, orientation = c("h", "v"), legend = TRUE, 
     cex.leg = 0.7, ...) {
 

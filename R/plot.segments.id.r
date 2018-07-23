@@ -5,7 +5,8 @@ plot.segments.id <-
             unit = "cM",
             regions,
             color2 = "green4",
-            main)
+            main,
+            build=37)
   {
     #choisir dans quelle unite le plot sera fait
     l <-
@@ -22,7 +23,7 @@ plot.segments.id <-
       x = c(larg * 0.5, larg * 11.5),
       y = c(
         0,
-        quantsmooth::lengthChromosome(1, unit) + quantsmooth::lengthChromosome(12, unit) +
+        lengthChromosome(1, unit, build) + lengthChromosome(12, unit, build) +
           1.25 * ecart
       ),
       type = "n",
@@ -39,22 +40,20 @@ plot.segments.id <-
     for (i in 1:22) {
       if (i < 12) {
         i2 <- i
-        offset_y <- quantsmooth::lengthChromosome(12, unit) + ecart
+        offset_y <- lengthChromosome(12, unit, build) + ecart
       } else {
         i2 <- i - 11
         offset_y <- 0
       }
       
       #dessiner le chromosome
-      quantsmooth::paintCytobands(
+      paintCytobands(
         i,
         units = unit,
-        pos = c(
-          larg * i2,
-          offset_y + quantsmooth::lengthChromosome(i, unit) + ecart / 4
-        ),
+        pos = c(larg * i2, offset_y + lengthChromosome(i, unit, build) + ecart / 4),
         orientation = "v",
-        legend = FALSE
+        legend = FALSE,
+        build = build
       )
       
       text(larg * i2, offset_y - 0.25 * ecart, i)
@@ -71,10 +70,10 @@ plot.segments.id <-
             yy <-
               c(
                 0.25 * ecart + abs(
-                  quantsmooth::lengthChromosome(i, unit) - c(regions_chr$start[k], regions_chr$end[k])
+                  lengthChromosome(i, unit, build) - c(regions_chr$start[k], regions_chr$end[k])
                 ),
                 0.25 * ecart + abs(
-                  quantsmooth::lengthChromosome(i, unit) - c(regions_chr$end[k], regions_chr$start[k])
+                  lengthChromosome(i, unit, build) - c(regions_chr$end[k], regions_chr$start[k])
                 )
               )
             
@@ -107,10 +106,10 @@ plot.segments.id <-
           yy <-
             c(
               0.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos1], seg_chr[k, pos2])
+                lengthChromosome(i, unit, build) - c(seg_chr[k, pos1], seg_chr[k, pos2])
               ),
               0.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos2], seg_chr[k, pos1])
+                lengthChromosome(i, unit, build) - c(seg_chr[k, pos2], seg_chr[k, pos1])
               )
             )
           

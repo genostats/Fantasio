@@ -4,7 +4,8 @@
 \alias{HBD.plot.chr}
 \title{plot of HBD segment}
 \usage{
-HBD.plot.chr(Submaps, ROHfile, unit = "cM", chr, list.ids, regions, outfile)
+HBD.plot.chr(Submaps, ROHfile, unit = "cM", chr, list.ids, regions, outfile,
+  inbred = FALSE, build = 37)
 }
 \arguments{
 \item{Submaps}{a list.submap object}
@@ -20,6 +21,10 @@ HBD.plot.chr(Submaps, ROHfile, unit = "cM", chr, list.ids, regions, outfile)
 \item{regions}{a specific region to be enlighted in the plot (optional)}
 
 \item{outfile}{a name for the plot (optional)}
+
+\item{inbred}{whether you want to plot only INBRED individuals or not (default is FALSE)}
+
+\item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
 return a plot of the chromosome HBD segments for all the individual

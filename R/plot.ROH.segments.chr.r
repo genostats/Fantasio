@@ -1,4 +1,4 @@
-plot.ROH.segments.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
+plot.ROH.segments.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions, build)
 {
   ROH <- read.table(ROHfile,header=TRUE)
   
@@ -31,5 +31,5 @@ plot.ROH.segments.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, l
   }
 
   
-  plot.segments.chr(byROHfile=TRUE, fileOrSubmaps=ROH,unit= unit,chr= chr,list_id = listid, regions = myreg)
+  plot.segments.chr(byROHfile=TRUE, fileOrSubmaps=ROH,unit= unit,chr= chr,list_id = listid, regions = myreg, build=build)
 }

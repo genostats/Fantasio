@@ -18,7 +18,9 @@ Fantasio is composed of several functions. Its goals are for:
 
 Fantasio  implements the creation of several random sparse submaps on genome-wide data (to remove linkage disequilibrium). It also provides graphical outputs to facilitate interpretations of homozygosity mapping results and plots.
 
-In this vignette, we illustrate how to use the package, using the data set HGDP-CEPH, a ship which contains 1043 individuals and 660918 markers.  Not  all options of the functions are described here, but rather their basic usage.  The reader is advised to look at the manual page of the function for details.
+In this vignette, we illustrate how to use the package, using the data set HGDP-CEPH, a ship which contains 1043 individuals and 660918 markers. In order to access the data, you will need to download the HGDP.CEPH package (see below how) and load it.
+
+Not  all options of the functions are described here, but rather their basic usage.  The reader is advised to look at the manual page of the function for details.
 
 ### Principal concepts
 
@@ -61,6 +63,7 @@ This heterogeneity score is then maximized over $\alpha$ to evaluate the evidenc
 $$HFLOD(m)=max_{\alpha}(HFLOD(m,\alpha))$$ 
 
 ##1. Getting started
+
 The first thing you should know is that the package Fantasio depends on several other packages to work, here is the following packages you will need to have in order to have a functionnal Fantasio package: 
 
 * gaston
@@ -76,7 +79,8 @@ Please refer to the vignette of those packages for help and especially the one o
 
 Since we explained the concept behind the package let's make an usage example of it. For this we will use the data furnish by the package HGDP. 
 
-### Installation
+###1.1 Installation
+
 First and faremost install the package with the following command : 
 
 ```{r eval=FALSE}
@@ -90,14 +94,14 @@ require(Fantasio)
 require(HGDP.CEPH)
 ```
 
-### Input data file
+###1.2 Input data file
 From now on, we can use the package. Let us first create our bed.matrix object using the data file we load with the package HGDP.CEPH.
 
 ```{r}
 filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
 ```
 
-### Creation of the bed matrix
+###1.3 Creation of the bed matrix
 First create your bed.matrix object with this command :
 
 ```{r}
@@ -425,6 +429,7 @@ submaps3 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=100,
 ```
 
 ###3.3 By Distance
+
 ```{r eval=FALSE}
 submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
 ```
@@ -468,10 +473,16 @@ HBD.plot.id(submaps, individual.id = "HGDP00649", family.id = "HGDP00649")
 ```{r fig3, fig.height = 5, fig.width = 10}
 HFLOD.manhattan.plot(submaps)
 ```
+The red lines that you see is the value of alpha for the markers.
 
 ###5.4 HFLOD for a chromosome
 ```{r fig4, fig.height = 5, fig.width = 8}
 HFLOD.plot.chr(submaps, chr=20)
 ```
+As you can see you have a red line plotted, it gives the moving average of the HFLOD, calculated
+on moving windows of 50 markers with the rollmean function of the R package zoo. This
+allows checking the consistency of HFLOD calculations (i.e. checking the fact that a high FLOD
+score is not due to one submap only). A moving average is computed to remove the impact of a submap with a false positive signal.
+
 
 

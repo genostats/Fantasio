@@ -5,7 +5,7 @@
 \title{plot of HBD segment}
 \usage{
 HBD.plot.id(Submaps, ROHfile, unit = "cM", individual.id, family.id, regions,
-  outfile)
+  outfile, build = 37)
 }
 \arguments{
 \item{Submaps}{a list.submap object}
@@ -21,6 +21,8 @@ HBD.plot.id(Submaps, ROHfile, unit = "cM", individual.id, family.id, regions,
 \item{regions}{a specific region to be enlighted in the plot (optional)}
 
 \item{outfile}{a name for the plot (optional)}
+
+\item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
 return a plot of the individual's HBD segments.

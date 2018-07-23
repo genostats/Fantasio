@@ -1,4 +1,4 @@
-plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, list_id, regions, color2="green4")
+plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, list_id, regions, color2="green4", build=37)
 {
   if(length(list_id) > 20 )
     list_id <- list_id[1:20]
@@ -19,7 +19,7 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
     }
   } 
   
-  end <- quantsmooth::lengthChromosome(chr,unit)/coeff
+  end <- lengthChromosome(chr,unit, build)/coeff
   
   
   #creer un plot vide 
@@ -44,11 +44,10 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   }
   
   #dessiner le chromosome
-  quantsmooth::paintCytobands(chr,units=unit,pos=c(0,0.5),
-                              orientation="h",legend = FALSE, length.out = end)
+  paintCytobands(chr,units=unit,pos=c(0,0.5), build=build, orientation="h",legend = FALSE, length.out = end)
   
   #dessiner les segments HBD
-  tmp <- strsplit(list_id, " _ ")
+  tmp <- strsplit(list_id, "_")
   list_id <- sapply(tmp, function(i) i[2])
   
   for (j in 1:length(list_id)){

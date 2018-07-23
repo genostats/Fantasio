@@ -12,7 +12,7 @@
 #*** return a plot                                                               #
 ##################################################################################
 
-plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, family.id, individual.id)
+plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, family.id, individual.id, build)
 {
   ROH <- read.table(ROHfile,header=TRUE)
   ROH <- subset(ROH,ROH$FID==family.id & ROH$IID==individual.id)
@@ -35,5 +35,5 @@ plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, 
     outfile <- paste(outfile,".png",sep="") 
   }
   
-  plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, individual.id=individual.id, unit=unit, regions=myreg, main=paste("ROHs of ",family.id,"_",individual.id,sep=""))
+  plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, individual.id=individual.id, unit=unit, regions=myreg, main=paste("ROHs of ",family.id,"_",individual.id,sep=""), build=build)
 }

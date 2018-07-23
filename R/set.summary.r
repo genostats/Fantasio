@@ -59,7 +59,7 @@ setSummary <- function (submaps, list.id, run_a_f = TRUE, probs = TRUE, recap.by
     submaps@likelihood_summary <- submapLikelihood(submaps@atlas)
     submaps@estimation_summary <- submapEstim(submaps@atlas)
     submaps@marker_summary <- summaryMarker(submaps@atlas, submaps@bedmatrix)
-    submaps@submap_summary <- submapSummary(submaps@atlas)
+    submaps@submap_summary <- suppressWarnings(submapSummary(submaps@atlas))
   }
   
   test <- which(submaps@bedmatrix@ped$pheno == 2)
