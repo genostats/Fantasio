@@ -72,7 +72,6 @@ The first thing you should know is that the package Fantasio depends on several 
 * methods
 * Rcpp
 * parallel
-* quantsmooth
 * zoo
 
 Please refer to the vignette of those packages for help and especially the one of gaston package.
@@ -124,7 +123,7 @@ Please refer to the manual function of read.bed.matrix, set.stats and select.ind
 
 As Fantasio computes only for people affected by a disease, we change the STAUS of every individuals from 0 (=unknown) to 2 (=affected) : 
 ```{r}
-x.me@ped$pheno <- rep(2,48)
+x.me@ped$pheno <- rep(2,48)## change to set.status once implemented
 ```
 
 You can insure that your bed.matrix object is created and have the data needed with :
@@ -138,9 +137,44 @@ This object contains two slots :
 * ped  : which gives you informations about all the individuals in the chipset 
 * snps : which gives you informations about the snps itself
 
-More information in the vignette of the gaston package. 
+More information in the vignette of the gaston package.
 
-##2. Step by step usage of the package Fantasio
+##2. Wrapper
+
+We created a wrapper to make it easy to use the package.
+
+The function calls two differents functions : `createSegmentsListBySnps`  and `createSegmentsListBySnps`. The first function `createSegmentsListBySnps` is used to create a list of segments though the genome. The second function `makeAllSubmapsBySnps` or `makeAllSubsmapsbyHotspots` is used to create submaps.
+
+The segments arguments accept only two options : Hotspots or Distance.
+
+###2.1 By Hotspots
+```{r eval=FALSE}
+submaps2 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
+```
+
+###2.2 By Hotspots by Segments
+
+```{r eval=FALSE}
+submaps3 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=100, n.cores=20, recap.by.segments=TRUE, n.consecutive.marker=1)
+```
+
+###2.3 By Distance
+
+```{r eval=FALSE}
+submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
+```
+
+###2.4 How to use the segment.option argument
+
+In order to use the `segment.option` argument you need to pass a list of arguments, each variable names in the list are an argument in the function. The function that will be called is either `createsSegmentsListBySnps` if `segments` argument is equal to "Distance" or `createSegmentsListByHotspots`if `segments` argument is equal to "Hotspots"  and the arguments list will be pass to it.
+
+```{r eval=FALSE}
+l <- list(number_of_marker=50) #default is 0
+submaps5 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=5, recap.by.segments=TRUE)
+```
+
+
+##3. Step by step usage of the package Fantasio
 
 We implemented in the package Fantasio two differents methods in order to create the submaps : 
 
@@ -156,9 +190,9 @@ We implemented in the package Fantasio two differents methods in order to create
      After this process is done, we loop over the mini-segments, pick a random marker and go through the mini-segments by picking the nearest      marker after taking a step (default is 0,5 cM) downstream and upstream the mini-segments. 
   
 
-### 2.1 "By hotspots" method
+### 3.1 "By hotspots" method
 
-#### 2.1.1 Creation of the segments list
+#### 3.1.1 Creation of the segments list
 
 We will now create segments, which will be use to create the submaps later, further explication below, for now use this command :
  
@@ -195,7 +229,7 @@ We normally repeat this process aroung a hundred times to make sure that we have
 
 Only thing left to do is to compute some probabilities about those submaps (HBD, FLOD score, HFLOD score ...).
 
-#### 2.1.2 Creation of the submaps and computation
+#### 3.1.2 Creation of the submaps and computation
 
 After those explanations we will now head toward the creation of submaps using the following commands : 
 
@@ -212,7 +246,7 @@ The variable submaps becomes an list.submaps object, you can watch the different
 str(submaps) #careful it can become huge depending on your data sizes
 ```
 
-#### 2.1.3 Descrition of the object submaps
+#### 3.1.3 Descrition of the object submaps
 This object contains all the results of the different computation executed during the process of creating n submaps. 
 Here is a complete description of each structure in this object : 
 
@@ -278,7 +312,7 @@ str(submaps@marker_summary)
   * INBRED: a flag indicating if the individual is inbred (pLRT_MEDIAN < 0.05) or not
   * pLRT_<0.05: number of valid submaps with a LRT having a p-value below 0.05
 
-```{r eval=FALSE}
+```{r figSubmapsSummary, fig.height = 5, fig.width = 8}
 str(submaps@submap_summary)
 ```
 
@@ -320,12 +354,7 @@ str(submaps@bedmatrix)
 
 * gap  :  the value of the gap used to pick marker when doing submaps by SNPS. 
 
-if you want to see a summary of the value for A an F use this : 
-```{r}
-submaps@submap_summary
-```
-
-### 2.2 "By Hotspot" "by segments" method
+### 3.2 "By Hotspot" "by segments" method
 
 We implemanted a second inner method of the "By Hotspots" method. The only paramater that changes is 
 `recap.by.segments`, it is put to TRUE. In the default "Hotspot" method the HBD probabilities and FLOD scores 
@@ -334,11 +363,11 @@ method HBD probabilities and FLOD scores correspond to the mean of HBD probabili
 marker randomly selected on a segment for the n submaps in such a way that there is only one value for a 
 segment. 
 
-#### 2.2.1 Creation of the segments list
+#### 3.2.1 Creation of the segments list
 
 We use the same segment list that is used before (s). 
 
-#### 2.2.2 Creation of the submaps and computation
+#### 3.2.2 Creation of the submaps and computation
 
 As already said below the only paramater that changes is "recap.by.segments", it is put to TRUE.
 
@@ -352,15 +381,15 @@ The variable submaps0 becomes an list.submaps obejct, you can watch the differen
 str(submaps0) #careful it can become huge depending on your data sizes
 ```
 
-#### 2.2.3 Description of the object submaps
+#### 3.2.3 Description of the object submaps
 
 This object contains all the results of the different computations executed during the process of creating n submaps. 
 If you are looking for a complete description of each structure in this object please refer to the  
 2.1.3 part. 
 
-### 2.3 "By Distance" method
+### 3.3 "By Distance" method
 
-#### 2.3.1 Creation of the segments list
+#### 3.3.1 Creation of the segments list
 
 We will now create segments, which will be use to create the submaps later :
   
@@ -387,7 +416,7 @@ This function creates a dataframe with three colums :
 * number_of_marker
 
 
-#### 2.3.2 Creation of the submaps and computation
+#### 3.3.2 Creation of the submaps and computation
 
 We will now head toward the creation of submaps using the following commands : 
   
@@ -404,44 +433,11 @@ The variable submaps becomes an list.submaps object, you can watch the different
 str(submaps1) #careful it can become huge depending on your data sizes
 ```
 
-#### 2.3.3 Descrition of the object submaps
+#### 3.3.3 Descrition of the object submaps
 This object contains all the results of the different computations executed during the process of creating n submaps. 
 If you are looking for a complete description of each structure in this object please refer to the  
 2.1.3 part. 
 
-##3. Wrapper
-
-We just saw how to use the Fantasio package step by step. We created a wrapper to make it easy to use the package.
-
-The function calls two differents functions : `createSegmentsListBySnps`  and `createSegmentsListBySnps`. The first function `createSegmentsListBySnps` is used to create a list of segments though the genome. The second function `makeAllSubmapsBySnps` or `makeAllSubsmapsbyHotspots` is used to create submaps.
-
-The segments arguments accept only two options : Hotspots or Distance.
-
-###3.1 By Hotspots
-```{r eval=FALSE}
-submaps2 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
-```
-
-###3.2 By Hotspots by Segments
-
-```{r eval=FALSE}
-submaps3 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=100, n.cores=20, recap.by.segments=TRUE, n.consecutive.marker=1)
-```
-
-###3.3 By Distance
-
-```{r eval=FALSE}
-submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
-```
-
-###3.4 How to use the segment.option argument
-
-In order to use the `segment.option` argument you need to pass a list of arguments, each variable names in the list are an argument in the function. The function that will be called is either `createsSegmentsListBySnps` if `segments` argument is equal to "Distance" or `createSegmentsListByHotspots`if `segments` argument is equal to "Hotspots"  and the arguments list will be pass to it.
-
-```{r eval=FALSE}
-l <- list(number_of_marker=50) #default is 0
-submaps5 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=5, recap.by.segments=TRUE)
-```
 
 ##4. Parallelism with the package
 
