@@ -22,7 +22,6 @@ Depends: R (>= 2.10)
 Imports: RcppParallel,
 		 methods,
 		 parallel,
-		 quantsmooth,
 		 zoo,
 		 gaston
 NeedsCompilation: yes
