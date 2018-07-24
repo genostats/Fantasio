@@ -14,13 +14,16 @@
 #' @seealso set.HBD.prob
 #' @seealso set.HFLOD
 #' 
-#' @import gaston 
+#' @import gaston
+#' @import methods
+#' @import parallel
 #' 
 #' @importFrom graphics abline axis lines par plot points polygon text 
 #' @importFrom grDevices dev.off png 
 #' @importFrom methods callNextMethod new
 #' @importFrom stats median optim optimize pchisq 
 #' @importFrom utils data read.table
+#' @importFrom zoo rollmean
 #' 
 #' @useDynLib Fantasio
 #' 
