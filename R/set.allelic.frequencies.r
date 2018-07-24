@@ -8,8 +8,8 @@
 #' @export
 set.allelic.frequencies <- function(x, freq)
 {
-  if(length(freq) != length(x@p))
-    stop("length of the replacement vector for slot p mismatch")
+  if(length(freq) != ncol(x))
+    stop("Length of 'freq' and number of SNPs in 'x' mismatch")
   
   x@p <- as.numeric(freq)
   x
