@@ -5,7 +5,7 @@
 \title{Creation of plot using ROH file}
 \usage{
 ROH.plot.id(ROHfile, submaps, unit = "cM", regions, outfile, family_id,
-  individual_id, save_file = F)
+  individual_id, save_file = F, build = 37)
 }
 \arguments{
 \item{ROHfile}{an ROH file}

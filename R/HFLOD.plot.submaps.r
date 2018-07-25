@@ -34,10 +34,10 @@
 HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", nbSNP_MA = 50) 
 {
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix.")
   
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.")
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.")
   
   if(is.null(submaps@HFLOD))
     stop("HFLOD slots in the object is empty, cannot plot")

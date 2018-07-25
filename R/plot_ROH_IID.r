@@ -3,7 +3,8 @@ plot_ROH_IID <-
             unit,
             regions,
             color2 = "green4",
-            main = "") {
+            main = "", 
+            build) {
     if (unit == "cM") {
       ecart <- 25
       larg  <- 2
@@ -29,9 +30,8 @@ plot_ROH_IID <-
       x = c(larg * 0.5, larg * 11.5),
       y = c(
         0,
-        quantsmooth::lengthChromosome(1, unit)  +
-          quantsmooth::lengthChromosome(12, unit) + 1.25 * ecart
-      ),
+        lengthChromosome(1, unit, build=build)  +
+          lengthChromosome(12, unit) + 1.25 * ecart, build=build),
       type = "n",
       xaxt = "n",
       yaxt = "n",
@@ -43,20 +43,19 @@ plot_ROH_IID <-
     
     #11 premiers chromosomes
     for (i in 1:11) {
-      quantsmooth::paintCytobands(
+      paintCytobands(
         i,
         units = unit,
         pos = c(
           larg * i,
-          quantsmooth::lengthChromosome(12, unit) + quantsmooth::lengthChromosome(i, unit) + 1.25 * ecart
-        ),
+          lengthChromosome(12, unit, build=build) + lengthChromosome(i, unit, build=build) + 1.25 * ecart),
         orientation = "v",
-        legend = FALSE
+        legend = FALSE, 
+        build=build
       )
       
       text(larg * i,
-           quantsmooth::lengthChromosome(12, unit) + 0.75 * ecart,
-           i)
+           lengthChromosome(12, unit, build=build) + 0.75 * ecart,i)
       seg_chr <- ROH[ROH$CHR == i, ]
       
       if (nrow(seg_chr) > 0)
@@ -66,11 +65,11 @@ plot_ROH_IID <-
           
           yy <-
             c(
-              quantsmooth::lengthChromosome(12, unit) + 1.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos1], seg_chr[k, pos2])
+              lengthChromosome(12, unit, build=build) + 1.25 * ecart + abs(
+                lengthChromosome(i, unit, build=build) - c(seg_chr[k, pos1], seg_chr[k, pos2])
               ),
-              quantsmooth::lengthChromosome(12, unit) + 1.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos2], seg_chr[k, pos1])
+              lengthChromosome(12, unit, build=build) + 1.25 * ecart + abs(
+                lengthChromosome(i, unit, build=build) - c(seg_chr[k, pos2], seg_chr[k, pos1])
               )
             )
           polygon(
@@ -89,11 +88,11 @@ plot_ROH_IID <-
             xx <- c(rep(larg * (i + 0.00), 2), rep(larg * (i + 0.5), 2))
             yy <-
               c(
-                quantsmooth::lengthChromosome(12, unit) + 1.25 * ecart + abs(
-                  quantsmooth::lengthChromosome(i, unit) - c(reg_chr[k, 2], reg_chr[k, 3])
+                lengthChromosome(12, unit, build=build) + 1.25 * ecart + abs(
+                  lengthChromosome(i, unit, build=build) - c(reg_chr[k, 2], reg_chr[k, 3])
                 ),
-                quantsmooth::lengthChromosome(12, unit) + 1.25 * ecart + abs(
-                  quantsmooth::lengthChromosome(i, unit) - c(reg_chr[k, 3], reg_chr[k, 2])
+                lengthChromosome(12, unit, build=build) + 1.25 * ecart + abs(
+                  lengthChromosome(i, unit, build=build) - c(reg_chr[k, 3], reg_chr[k, 2])
                 )
               )
             polygon(
@@ -110,13 +109,14 @@ plot_ROH_IID <-
     
     #11 derniers chromosomes
     for (i in 12:22) {
-      quantsmooth::paintCytobands(
+      paintCytobands(
         i,
         units = unit,
-        pos   = c(larg * (i - 11), lengthChromosome(i, unit) +
+        pos   = c(larg * (i - 11), lengthChromosome(i, unit, build=build) +
                     ecart / 4),
         orientation = "v",
-        legend = FALSE
+        legend = FALSE, 
+        build=build
       )
       
       text(larg * (i - 11), -0.25 * ecart, i)
@@ -130,10 +130,10 @@ plot_ROH_IID <-
           yy <-
             c(
               0.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos1], seg_chr[k, pos2])
+                lengthChromosome(i, unit, build=build) - c(seg_chr[k, pos1], seg_chr[k, pos2])
               ),
               0.25 * ecart + abs(
-                quantsmooth::lengthChromosome(i, unit) - c(seg_chr[k, pos2], seg_chr[k, pos1])
+                lengthChromosome(i, unit, build=build) - c(seg_chr[k, pos2], seg_chr[k, pos1])
               )
             )
           polygon(
@@ -152,10 +152,10 @@ plot_ROH_IID <-
               yy <-
                 c(
                   0.25 * ecart + abs(
-                    quantsmooth::lengthChromosome(i, unit) - c(reg_chr[k, 2], reg_chr[k, 3])
+                    lengthChromosome(i, unit, build=build) - c(reg_chr[k, 2], reg_chr[k, 3])
                   ),
                   0.25 * ecart + abs(
-                    quantsmooth::lengthChromosome(i, unit) - c(reg_chr[k, 3], reg_chr[k, 2])
+                    lengthChromosome(i, unit, build=build) - c(reg_chr[k, 3], reg_chr[k, 2])
                   )
                 )
               polygon(

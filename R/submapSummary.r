@@ -29,7 +29,7 @@
 submapSummary <- function(submaps, a.threshold = 1)
 {  
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   
   f <-  sapply(submaps, function(x) x@f) 
   a <-  sapply(submaps, function(x) x@a)
@@ -42,10 +42,10 @@ submapSummary <- function(submaps, a.threshold = 1)
   
   l <- p < 0.05
   
-  nValidSubmap <- c()
+  nValidSubmap <- numeric(nrow(l))
   for (i in 1:nrow(l))
   {
-    nValidSubmap <- c(nValidSubmap, sum(l[i,], na.rm = TRUE ))
+    nValidSubmap[i] <- sum(l[i,], na.rm = TRUE)
   }
   
   #treat the case when quality is equal to NA

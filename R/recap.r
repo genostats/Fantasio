@@ -27,9 +27,9 @@ recap <- function(submaps, recap.by.segments=FALSE, list.id)
 {
   
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix.")
     
   if(!missing(list.id))
   {

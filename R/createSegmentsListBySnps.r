@@ -43,7 +43,7 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
 {
   if(class(bedmatrix)[1] != "bed.matrix" )
   {
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix")
   }
   
   

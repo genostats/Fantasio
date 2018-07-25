@@ -4,7 +4,8 @@
 \alias{ROH.plot.chr}
 \title{Creation of plot using ROH file}
 \usage{
-ROH.plot.chr(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
+ROH.plot.chr(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions,
+  build = 37)
 }
 \arguments{
 \item{ROHfile}{an ROH file}

@@ -1,5 +1,5 @@
 plot_ROH_CHR <-
-  function (ROH, unit, chr, list_id, regions, color2 = "green4") {
+  function (ROH, unit, chr, list_id, regions, color2 = "green4", build) {
     if (unit == "cM") {
       pos1 <- which(colnames(ROH) == "POS1_cM")
       pos2 <- which(colnames(ROH) == "POS2_cM")
@@ -29,7 +29,7 @@ plot_ROH_CHR <-
     }
     
     
-    end <- quantsmooth::lengthChromosome(chr, unit) / coeff
+    end <- lengthChromosome(chr, unit, build=build) / coeff
     
     #plot vide
     y_max <- length(list_id) + 1
@@ -71,13 +71,14 @@ plot_ROH_CHR <-
     }
     
     #dessiner le chromosome
-    quantsmooth::paintCytobands(
+    paintCytobands(
       chr,
       units = unit,
       pos = c(0, 0.5),
       orientation = "h",
       legend = FALSE,
-      length.out = end
+      length.out = end, 
+      build=build
     )
     
     for (j in 1:length(list_id)) {
@@ -90,7 +91,6 @@ plot_ROH_CHR <-
               coeff,
             y = c(j, j, j + 0.5, j + 0.5),
             col = color(toplot$PHE[k]),
-            ### CHANEG !!!!
             lwd = 1
           )
         }

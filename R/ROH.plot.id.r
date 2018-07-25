@@ -22,7 +22,7 @@
 #' @return This function returns a plot of the HBD segments for a specific individual
 #' 
 #' @export
-ROH.plot.id <- function(ROHfile, submaps, unit="cM", regions, outfile, family_id, individual_id, save_file=F  )
+ROH.plot.id <- function(ROHfile, submaps, unit="cM", regions, outfile, family_id, individual_id, save_file=F, build=37)
 {
   ROH <- read.table(ROHfile, header=TRUE)
   ROH <- subset(ROH,ROH$FID==family_id & ROH$IID==individual_id)
@@ -48,10 +48,10 @@ ROH.plot.id <- function(ROHfile, submaps, unit="cM", regions, outfile, family_id
   if(save_file)
   {
     png(filename = outfile, width = 1000, height = 1000,pointsize=24)
-    plot_ROH_IID(ROH,unit, myreg, main=paste("ROHs of ",family_id,"_",individual_id,sep=""))
+    plot_ROH_IID(ROH,unit, myreg, main=paste("ROHs of ",family_id,"_",individual_id,sep=""), build=build)
     dev.off()
   }
   
-  plot_ROH_IID(ROH, unit, myreg, main=paste("ROHs of ",family_id,"_",individual_id,sep=""))
+  plot_ROH_IID(ROH, unit, myreg, main=paste("ROHs of ",family_id,"_",individual_id,sep=""), build=build)
   
 }

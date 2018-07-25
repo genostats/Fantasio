@@ -53,7 +53,7 @@ setSummary <- function (submaps, list.id, run_a_f = TRUE, probs = TRUE, recap.by
     q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.marker = 5)
 {
   if(class(submaps)[1] != "list.submaps")
-    stop("Need a list.submaps matrix to eat")
+    stop("Need a list.submaps matrix.")
   
   if(run_a_f) {
     submaps@likelihood_summary <- submapLikelihood(submaps@atlas)

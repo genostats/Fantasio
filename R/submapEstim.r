@@ -16,7 +16,7 @@
 submapEstim <- function(submaps)
 {
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   
   estimation <- list()
   dfA <- data.frame("estimation of a.submap" = sapply(submaps, function(x) x@a))

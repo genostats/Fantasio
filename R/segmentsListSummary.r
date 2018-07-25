@@ -24,32 +24,33 @@ segmentsListSummary <- function(segmentList)
     segmentList <- segmentList@snps.segments
     
   #number of segments
-  n_seg <- c()
+  n_seg <- numeric(length(segmentList))
+
   for(i in 1:length(segmentList))
   {
-    n_seg <- c(n_seg, length(segmentList[[i]]))
+    n_seg[i] <- length(segmentList[[i]])
   }
   #n_seg[23] <- NA
   #n_seg <- n_seg[!is.na(n_seg)]
   
   
   #number of markers 
-  n_mark <- c()
+  n_mark <- numeric(length(segmentList))
   for(i in 1:length(segmentList))
   {
-    res <- c()
+    res <- numeric(length(segmentList[[i]]))
     for(j in 1:length(segmentList[[i]]))
     {
-      res <- c(res, length(segmentList[[i]][[j]]))
+      res[j] <- length(segmentList[[i]][[j]])
     }
     res <- sum(res)
-    n_mark <- c(n_mark, res)
+    n_mark[i] <- res
   }
   
   
   #dataframe
   df <- data.frame(
-    chromosome = 1:length(segmentList),
+    chromosome = if(class(segmentList)[1] == "hotspot.segments") 1:length(segmentList) else getOption("gaston.autosomes"),
     number_of_segments = n_seg, 
     number_of_markers= n_mark
   )

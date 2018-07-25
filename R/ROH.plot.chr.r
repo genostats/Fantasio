@@ -20,7 +20,7 @@
 #' @return This function returns a plot of the HBD segments for a specific chromosome
 #' 
 #' @export
-ROH.plot.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions)
+ROH.plot.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions, build=37)
 {
   ROH <- read.table(ROHfile, header=TRUE)
   
@@ -49,5 +49,5 @@ ROH.plot.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, re
   }
 
   
-  plot_ROH_CHR(ROH = ROH, unit = unit, chr = chr, list_id = list_id, regions = myreg)
+  plot_ROH_CHR(ROH = ROH, unit = unit, chr = chr, list_id = list_id, regions = myreg, build=build)
 }

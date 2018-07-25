@@ -31,12 +31,12 @@
 HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
 {
   if (class(submaps@bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix.")
   
   if (class(submaps@atlas[[1]])[1] != "snps.matrix" &
       class(submaps@atlas[[1]])[1] != "hotspots.matrix")
     stop(
-      "need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat."
+      "need either an hotspots.segments list of submaps or a snps.segments list of submaps."
     )
   
   if (is.null(submaps@HFLOD))
@@ -107,7 +107,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
   mycol <- rep(c("cadetblue2", 8), 11)
   
   
-  for (i in 1:22)
+  for (i in unique(chromosome))
   {
     pos_chr <- pos[chromosome == i]
     chr_pos <- c(chr_pos, pos_chr[length(pos_chr)])

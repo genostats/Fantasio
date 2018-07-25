@@ -17,22 +17,22 @@
 summaryMarker <- function(submaps, bedmatrix)
 {
   if(class(submaps[[1]])[1] != "snps.matrix" & class(submaps[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   if(class(bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix")
   
   
   b <- summaryMap(submaps)
-  res <- c()
+
+  res <- numeric(length(submaps))
+
   for(i in 1:length(submaps))
   {
     taille <- length(which(b$Freq == i))
     if(taille == 0)
       break()
     
-    res <- c(res, taille)
-      
-    
+    res[i] <- taille   
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
   

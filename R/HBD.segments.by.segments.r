@@ -34,38 +34,46 @@ HBD.segments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, t
   chromosome <- submaps@bedmatrix@snps$chr[correspondance]
   
   #find the positions and distances of all the segmetn
+  segmentSummary <- segmentsListSummary(submaps@segments_list)
+
+  shift <- cumsum(segmentSummary$number_of_segments)
+  shift <- append(0, shift)#0 because I add one after
+  max   <- shift[length(shift)]
+
+  start_dist <- numeric(max)
+  end_dist <- numeric(max)
   
-  start_dist <- c()
-  end_dist <- c()
+  start_pos <- numeric(max)
+  end_pos <- numeric(max)
   
-  start_pos <- c() 
-  end_pos <- c()
-  
-  for(i in 1:22)
+
+  for(i in 1:length(submaps@segments_list))
   {
     segment_chr <- submaps@segments_list[[i]]#get the list of segments in the chromosome i
     
+    start <- numeric(length(segment_chr))#a vector with the number of segments for the chr i 
+    end <- numeric(length(segment_chr))  #a vector with the number of segments for the chr i 
+
     for(j in 1:length(segment_chr))#loop over the segments
     {
       if(length(segment_chr[[j]])== 0) next()
       
-      start <- segment_chr[[ j ]][ 1 ]# first marker
-      end <- segment_chr[[ j ]][ length( segment_chr[[ j ]] ) ]# last marker
-      
+      start[j] <- segment_chr[[ j ]][ 1 ]# first marker of the segment j
+      end[j]   <- segment_chr[[ j ]][ length( segment_chr[[ j ]] ) ]# last marker of the segment j
+    }
+
+
       #segment start
-      start_dist <- c(start_dist, submaps@bedmatrix@snps$dist[ start ])
+    start_dist[(shift[i]+1):shift[i+1]] <- submaps@bedmatrix@snps$dist[ start ]
       
       #segment end -> last marker
-      end_dist   <- c(end_dist, submaps@bedmatrix@snps$dist[ end ] )
+    end_dist[(shift[i]+1):shift[i+1]]   <- submaps@bedmatrix@snps$dist[ end ]
       
       #segment start
-      start_pos  <- c(start_pos, submaps@bedmatrix@snps$pos[ start ])
+    start_pos[(shift[i]+1):shift[i+1]]  <- submaps@bedmatrix@snps$pos[ start ]
       
       #segment end-> last marker
-      end_pos    <- c(end_pos, submaps@bedmatrix@snps$pos[ end ])
-      
-      
-    }
+    end_pos[(shift[i]+1):shift[i+1]]    <- submaps@bedmatrix@snps$pos[ end ]
   }
   
   

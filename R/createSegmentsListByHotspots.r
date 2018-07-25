@@ -34,7 +34,7 @@
 createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 0)
 {
   if(class(bedmatrix)[1] != "bed.matrix" )
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix")
   
   
   if(verbose) 

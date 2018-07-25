@@ -16,11 +16,11 @@
 set.HFLOD <- function(submaps)
 {
   if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
   {
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix.")
   }
   
 
@@ -31,8 +31,8 @@ set.HFLOD <- function(submaps)
     poscM <- matrix(0.0, nrow = nrow(index), ncol = ncol(index))
     posBp <- matrix(0.0, nrow = nrow(index), ncol = ncol(index))
     
-    poscM_mean <- c()
-    posBp_mean <- c()
+    poscM_mean <- numeric(nrow(index))
+    posBp_mean <- numeric(nrow(index))
     
     for(i in 1:nrow(index))
     {
@@ -42,8 +42,8 @@ set.HFLOD <- function(submaps)
         posBp[i, j] <- submaps@bedmatrix@snps$pos[index[i,j]]
       }
       #calculate mean value
-      poscM_mean <- c(poscM_mean, mean(poscM[i,]))
-      posBp_mean <- c(posBp_mean, mean(posBp[i,]))
+      poscM_mean[i] <- mean(poscM[i,])
+      posBp_mean[i] <- mean(posBp[i,])
     }
     
     

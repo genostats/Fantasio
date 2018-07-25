@@ -46,10 +46,10 @@ HBD.plot.chr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, ou
   }
   
   if(class(Submaps@atlas[[1]])[1] != "snps.matrix" & class(Submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps to eat.") 
+    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
   
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix to eat")
+    stop("Need a bed.matrix")
   
   if(is.null(Submaps@HBD_recap))
     stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered INBRED.")

@@ -64,17 +64,9 @@ $$HFLOD(m)=max_{\alpha}(HFLOD(m,\alpha))$$
 
 ##1. Getting started
 
-The first thing you should know is that the package Fantasio depends on several other packages to work, here is the following packages you will need to have in order to have a functionnal Fantasio package: 
+The first thing you should know is that the package Fantasio depends on package gaston, please make sure to have it installed. 
 
-* gaston
-* RcppParallel
-* RcppEigen
-* methods
-* Rcpp
-* parallel
-* zoo
-
-Please refer to the vignette of those packages for help and especially the one of gaston package.
+Please refer to the vignette of this package for more information.
 
 Since we explained the concept behind the package let's make an usage example of it. For this we will use the data furnish by the package HGDP. 
 
@@ -83,13 +75,16 @@ Since we explained the concept behind the package let's make an usage example of
 First and faremost install the package with the following command : 
 
 ```{r eval=FALSE}
-install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/")
+install.packages("Fantasio")
 ```
 
 After doing that we will need to run the following commands :
 
 ```{r}
 require(Fantasio) 
+
+install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") #in order to download the dataset from which will work on.
+
 require(HGDP.CEPH)
 ```
 
@@ -121,9 +116,9 @@ x.me <- select.inds(x, population == "Bedouin")
 
 Please refer to the manual function of read.bed.matrix, set.stats and select.inds if needed (package gaston).
 
-As Fantasio computes only for people affected by a disease, we change the STAUS of every individuals from 0 (=unknown) to 2 (=affected) : 
+As Fantasio computes only for people affected by a disease, we change the STATUS of every individuals from 0 (=unknown) to 2 (=affected) : 
 ```{r}
-x.me@ped$pheno <- rep(2,48)## change to set.status once implemented
+x.me <- set.status(x.me, 2)
 ```
 
 You can insure that your bed.matrix object is created and have the data needed with :
@@ -312,8 +307,8 @@ str(submaps@marker_summary)
   * INBRED: a flag indicating if the individual is inbred (pLRT_MEDIAN < 0.05) or not
   * pLRT_<0.05: number of valid submaps with a LRT having a p-value below 0.05
 
-```{r figSubmapsSummary, fig.height = 5, fig.width = 8}
-str(submaps@submap_summary)
+```{r}
+submaps@submap_summary
 ```
 
 
@@ -356,7 +351,7 @@ str(submaps@bedmatrix)
 
 ### 3.2 "By Hotspot" "by segments" method
 
-We implemanted a second inner method of the "By Hotspots" method. The only paramater that changes is 
+We implemented a second inner method of the "By Hotspots" method. The only paramater that changes is 
 `recap.by.segments`, it is put to TRUE. In the default "Hotspot" method the HBD probabilities and FLOD scores 
 are computed for each marker randomly selected on each segment for the n submaps. With the "Hotspot by segment" 
 method HBD probabilities and FLOD scores correspond to the mean of HBD probabilities and FLOD score of each 
@@ -469,12 +464,14 @@ HBD.plot.id(submaps, individual.id = "HGDP00649", family.id = "HGDP00649")
 ```{r fig3, fig.height = 5, fig.width = 10}
 HFLOD.manhattan.plot(submaps)
 ```
+
 The red lines that you see is the value of alpha for the markers.
 
 ###5.4 HFLOD for a chromosome
 ```{r fig4, fig.height = 5, fig.width = 8}
 HFLOD.plot.chr(submaps, chr=20)
 ```
+
 As you can see you have a red line plotted, it gives the moving average of the HFLOD, calculated
 on moving windows of 50 markers with the rollmean function of the R package zoo. This
 allows checking the consistency of HFLOD calculations (i.e. checking the fact that a high FLOD
