@@ -9,6 +9,7 @@
 #' @param outfile the name of the plot
 #' @param listid a vector containing the family id follow by the individual id 
 #' @param regions a matrix containing the value to ve highlighted in the plot
+#' @param build the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)
 #' 
 #' @details Use this function when you want to use an ROH file to plot your HBD segments for a specific chromosome.
 #' @details Two unit are accepted : "Bases" or "cM".

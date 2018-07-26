@@ -10,7 +10,7 @@
 #' @param family_id the individual id of the individual wanted
 #' @param individual_id the family id of the individual wanted
 #' @param save_file whether you want or not to save the plot
-
+#' @param build the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)
 #' 
 #' @details Use this function when you want to use an ROH file to plot your HBD segments for a specific individual.
 #' @details Two unit are accepted : "Bases" or "cM".

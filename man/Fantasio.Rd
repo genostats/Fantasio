@@ -69,7 +69,7 @@ Or the segments are made by using the gaps between markers (option Distance), th
 
 every segments and going through each segment from left to right using a supply step (by default it is 0.5 cM).
 
-To see which arguments can be passed in the list of args in the segment.options please go check the createSegmentListBySnps/Hotspots functions manual.
+To see which arguments can be passed in the list of args in the segment.options please go check the `createSegmentsListBySnps` or `createSegmentsListByHotspots` functions manual.
 
 When doing a number N of submaps using the options recap.by.segments,
 

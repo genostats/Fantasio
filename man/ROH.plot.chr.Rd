@@ -21,6 +21,8 @@ ROH.plot.chr(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions,
 \item{listid}{a vector containing the family id follow by the individual id}
 
 \item{regions}{a matrix containing the value to ve highlighted in the plot}
+
+\item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
 This function returns a plot of the HBD segments for a specific chromosome

@@ -29,7 +29,7 @@
 #' @details in the genome thanks to hotspots file, then the submaps are made by Hotspots by picking randomly a maker in every segments created before.
 #' @details Or the segments are made by using the gaps between markers (option Distance), then the submaps are made by picking a random marker in
 #' @details every segments and going through each segment from left to right using a supply step (by default it is 0.5 cM).
-#' @details To see which arguments can be passed in the list of args in the segment.options please go check the createSegmentListBySnps/Hotspots functions manual.
+#' @details To see which arguments can be passed in the list of args in the segment.options please go check the `createSegmentsListBySnps` or `createSegmentsListByHotspots` functions manual.
 #' @details When doing a number N of submaps using the options recap.by.segments, 
 #' @details the different values computed from the 
 #' @details snps picked randomly (a, f, p.lrt, ...) in a segments is considered different values 

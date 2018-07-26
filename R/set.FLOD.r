@@ -17,13 +17,13 @@
 #' @import gaston
 #' @import methods
 #' @import parallel
+#' @import zoo
 #' 
 #' @importFrom graphics abline axis lines par plot points polygon text 
 #' @importFrom grDevices dev.off png 
 #' @importFrom methods callNextMethod new
 #' @importFrom stats median optim optimize pchisq 
 #' @importFrom utils data read.table
-#' @importFrom zoo rollmean
 #' 
 #' @useDynLib Fantasio
 #' 

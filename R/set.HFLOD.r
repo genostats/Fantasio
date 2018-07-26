@@ -56,7 +56,7 @@ set.HFLOD <- function(submaps)
     index       <- match(names, submaps@bedmatrix@snps$id)
     distance_cM <- submaps@bedmatrix@snps$dist[index]
     distance_bP <- submaps@bedmatrix@snps$pos[index]
-    chr <- x@snps$chr[index]
+    chr         <- submaps@bedmatrix@snps$chr[index]
     
     HFLOD <- data.frame(CHR    = chr, 
                         SNPS   = names, 

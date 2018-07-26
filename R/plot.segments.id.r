@@ -37,19 +37,8 @@ function (byROHfile = FALSE,
     
     
     #boucle sur les chr
-
-    if (byROHfile)
-    {
-      loop_condition <- unique(fileOrSubmaps$CHR)
-    }else{
-        loop_condition <- unique(fileOrSubmaps$chromosome)
-    }
-
-      for (i in loop_condition) {
-        if(i > 22)
-          break()
-          
-        if (i < 12) {
+    for (i in 1:22) {
+      if (i < 12) {
           i2 <- i
           offset_y <- lengthChromosome(12, unit, build) + ecart
           } else {

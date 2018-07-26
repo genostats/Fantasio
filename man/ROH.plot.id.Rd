@@ -23,6 +23,8 @@ ROH.plot.id(ROHfile, submaps, unit = "cM", regions, outfile, family_id,
 \item{individual_id}{the family id of the individual wanted}
 
 \item{save_file}{whether you want or not to save the plot}
+
+\item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
 This function returns a plot of the HBD segments for a specific individual
