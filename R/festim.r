@@ -86,7 +86,7 @@ festim <- function(x, verbose=TRUE, debug=FALSE) {
     x@f[i] <- xx$par[2]
     x@likelihood1[i] <- xx$value
     x@likelihood0[i] <- likelihood0
-    x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 1, lower.tail = FALSE)
+    x@p.lrt[i] <- pchisq( 2*(xx$value - likelihood0), df = 2, lower.tail = FALSE)
   }
   x
 }
