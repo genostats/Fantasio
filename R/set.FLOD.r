@@ -17,7 +17,6 @@
 #' @import gaston
 #' @import methods
 #' @import parallel
-#' @import zoo
 #' 
 #' @importFrom graphics abline axis lines par plot points polygon text 
 #' @importFrom grDevices dev.off png 

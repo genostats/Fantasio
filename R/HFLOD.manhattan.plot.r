@@ -79,7 +79,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
   
   newout   <- NULL
   axis_mp  <- NULL
-  chr_pos  <- c(5)
+  chr_pos  <- numeric(length(unique(chromosome)+1)); chr_pos[1] <- 5
   myreg_mp <- NULL
   
   if (!missing(regions)) {
@@ -110,12 +110,12 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
   for (i in unique(chromosome))
   {
     pos_chr <- pos[chromosome == i]
-    chr_pos <- c(chr_pos, pos_chr[length(pos_chr)])
-    #chr_pos <- c(chr_pos, pos_chr[length(pos_chr)]+chr_pos[i-1])
-    axis_mp <-
-      c(axis_mp, max(c(0, axis_mp), na.rm = TRUE) + 10 + pos_chr)
+    chr_pos[i+1] <- pos_chr[length(pos_chr)]
+    axis_mp <- c(axis_mp, max(c(0, axis_mp), na.rm = TRUE) + 10 + pos_chr)
   }
-  chr_pos <- cumsum(chr_pos + 10)
+  chr_pos  <- cumsum(chr_pos + 10)
+  chr_axis <- sapply(1:length(chr_pos)-1, function(i) mean(c(chr_pos[i], chr_pos[i+1])))
+  chr_axis <- chr_axis[-1]
   
   plot (
     axis_mp,
@@ -152,12 +152,9 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
   
   for (i in 1:length(unique(chromosome))) {
     abline(v = chr_pos[i], col = "grey", lwd = 2)
-    axis(1,
-         at = chr_pos[i],
-         i,
-         col.ticks = 0,
-         cex.axis = 1.5)
+    axis(1, at = chr_axis[i], i, col.ticks = 0, cex.axis = 1.5)
   }
+  
   abline(v = chr_pos[23], col = "grey", lwd = 2)
   
   for (i in 1:3)

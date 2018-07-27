@@ -1,10 +1,13 @@
 ---
 title: "Fantasio"
 author: "Isuru HAUPE & Marie MICHEL"
+version: 0.1
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
+  %\VignetteDepends{Fantasio}
+  %\VignettePackage{Fantasio}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -82,9 +85,13 @@ After doing that we will need to run the following commands :
 
 ```{r}
 require(Fantasio) 
+```
 
+```{r eval=FALSE}
 install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") #in order to download the dataset from which will work on.
+```
 
+```{r}
 require(HGDP.CEPH)
 ```
 
