@@ -8,6 +8,8 @@
   outfile, family.id, individual.id, build)
 }
 \arguments{
+\item{Submaps}{a list.submaps object}
+
 \item{ROHfile}{an ROH file}
 
 \item{unit}{the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")}
@@ -16,15 +18,11 @@
 
 \item{outfile}{the name of the plot}
 
+\item{family.id}{the individual id of the individual wanted}
+
+\item{individual.id}{the family id of the individual wanted}
+
 \item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
-
-\item{submaps}{a list.submaps object}
-
-\item{family_id}{the individual id of the individual wanted}
-
-\item{individual_id}{the family id of the individual wanted}
-
-\item{save_file}{whether you want or not to save the plot}
 }
 \value{
 This function returns a plot of the HBD segments for a specific individual

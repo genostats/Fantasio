@@ -3,13 +3,12 @@
 #' This function is use to plot HBD segments for a specific infdividual using an ROH file
 #' 
 #' @param ROHfile an ROH file
-#' @param submaps a list.submaps object
+#' @param Submaps a list.submaps object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param regions a matrix containing the value to ve highlighted in the plot
 #' @param outfile the name of the plot
-#' @param family_id the individual id of the individual wanted
-#' @param individual_id the family id of the individual wanted
-#' @param save_file whether you want or not to save the plot
+#' @param family.id the individual id of the individual wanted
+#' @param individual.id the family id of the individual wanted
 #' @param build the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)
 #' 
 #' @details Use this function when you want to use an ROH file to plot your HBD segments for a specific individual.
