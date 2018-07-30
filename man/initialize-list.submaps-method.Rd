@@ -5,8 +5,8 @@
 \alias{initialize,list.submaps-method}
 \title{Constructor method of list.submaps.}
 \usage{
-\S4method{initialize}{list.submaps}(.Object, submaps, bedmatrix, segments_list,
-  bySegments, unit = NULL, gap = NULL)
+\S4method{initialize}{list.submaps}(.Object, submaps, bedmatrix,
+  segments_list, bySegments, unit = NULL, gap = NULL)
 }
 \arguments{
 \item{.Object}{the object type}

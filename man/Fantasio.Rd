@@ -3,14 +3,14 @@
 \docType{package}
 \name{Fantasio}
 \alias{Fantasio}
-\alias{Fantasio}
 \alias{Fantasio-package}
 \title{Wrapper for the package Fantasio}
 \usage{
-Fantasio(bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
-  n = 100, n.cores = 1, epsilon = 0.001, run.festim = TRUE, list.id,
-  run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
-  debug = FALSE, threshold = 0.5, q = 1e-04, quality = 95,
+Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
+  segment.options, n = 100, n.cores = 1, epsilon = 0.001,
+  run.festim = TRUE, list.id, run.proba = TRUE,
+  recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
+  threshold = 0.5, q = 1e-04, quality = 95,
   n.consecutive.marker = 5)
 }
 \arguments{
@@ -49,8 +49,6 @@ FLOD score and HFLOD score (see details for more informations)}
 }
 \description{
 This function is used as a wrapper for the package Fantasio to create segments list and submaps
-
-Fantasio.
 }
 \details{
 This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function :
