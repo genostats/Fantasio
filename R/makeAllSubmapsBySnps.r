@@ -60,16 +60,8 @@
 #' @seealso HBD.segments
 #' 
 #' @examples  
-#' ##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-#' require(Fantasio)
-#' require(HGDP.CEPH)
-#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-#' x <- read.bed.matrix(filepath)
-#' x <- set.stats(x)
-#' x.me <- select.inds(x, population == "Bedouin")
-#' x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
-#' segmentList <- createSegmentsListBySnps(x.me)
-#' submaps <- makeAllSubmapsBySnps(x.me, 5, segmentList)
+#' #Please refer to vignette 
+#'
 #' 
 #' @export
 makeAllSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = createSegmentsListBySnps(bedmatrix), n.cores = 1, epsilon = 1e-3,

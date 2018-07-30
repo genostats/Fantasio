@@ -19,16 +19,8 @@
 #' @return return a plot of the individual's HBD segments.
 #' 
 #' @examples  
-#' ##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-#' require(Fantasio)
-#' require(HGDP.CEPH)
-#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-#' x <- read.bed.matrix(filepath)
-#' x <- set.stats(x)
-#' x.me <- select.inds(x, population == "Bedouin")
-#' x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
-#' submaps <- Fantasio(x.me, "Hotspots", n=5)
-#' HBD.plot.id(submaps, individual.id="HGDP00623", family.id="HGDP00623")
+#' #Please refer to vignette 
+#'
 #' 
 #' @export
 HBD.plot.id <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, regions, outfile, build = 37)

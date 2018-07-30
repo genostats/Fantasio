@@ -1,3 +1,4 @@
+#' @useDynLib Fantasio
 #' @import gaston
 #' @import methods
 #' @import parallel
@@ -8,7 +9,6 @@
 #' @importFrom stats median optim optimize pchisq 
 #' @importFrom utils data read.table tail
 #' 
-#' @useDynLib Fantasio
 #' 
 #' @exportClass f.matrix
 #' @exportClass list.submaps
@@ -16,3 +16,4 @@
 #' @exportClass hotspot.segments
 #' @exportClass snps.matrix
 #' @exportClass snps.segments
+NULL

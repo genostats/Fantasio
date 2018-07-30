@@ -40,15 +40,8 @@ You can give your own hotspots file, be sure to respect the format of the hotpot
 }
 \examples{
  
-#install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-require(Fantasio)
-require(HGDP.CEPH)
-filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-x <- read.bed.matrix(filepath)
-x <- set.stats(x)
-x.me <- select.inds(x, population == "Bedouin")
-x.me@ped$pheno <- rep(2,48)
-segmentList <- createSegmentsListByHotspots(x.me)
+#Please refer to vignette
+
 }
 \seealso{
 read.bed.matrix

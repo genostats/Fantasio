@@ -14,6 +14,7 @@
 #' @seealso set.HBD.prob
 #' @seealso set.HFLOD
 #' 
+#' 
 #' @export
 set.FLOD <- function(submaps, condition, q = 1e-4)
 {

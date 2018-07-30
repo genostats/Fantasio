@@ -21,15 +21,8 @@
 #' @seealso Fantasio
 #' 
 #' @examples  
-#' #install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-#' require(Fantasio)
-#' require(HGDP.CEPH)
-#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-#' x <- read.bed.matrix(filepath)
-#' x <- set.stats(x)
-#' x.me <- select.inds(x, population == "Bedouin")
-#' x.me@ped$pheno <- rep(2,48)
-#' segmentList <- createSegmentsListByHotspots(x.me)
+#' #Please refer to vignette
+#'
 #' @export
 createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_version = "hg19", hotspot_file, verbose = TRUE, number_of_marker = 0)
 {

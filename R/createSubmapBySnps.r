@@ -17,16 +17,8 @@
 #' @seealso makeSubmapsBySnps
 #' 
 #' @examples  
-#' #install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-#' require(Fantasio)
-#' require(HGDP.CEPH)
-#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-#' x <- read.bed.matrix(filepath)
-#' x <- set.stats(x)
-#' x.me <- select.inds(x, population == "Bedouin")
-#' x.me@ped$pheno <- rep(2,48)
-#' segmentList <- createSegmentsListBySnps(x.me)
-#' submaps <- createSubmapBySnps(x.me, segmentList)
+#' #Please refer to vignette 
+#'
 #' 
 #' @export
 createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)

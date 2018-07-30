@@ -14,15 +14,7 @@ This function is uses to return the number of segments and number of marker in t
 `createSegmentsListByHotspots`
 }
 \examples{
-##install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-require(Fantasio)
-require(HGDP.CEPH)
-filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-x <- read.bed.matrix(filepath)
-x <- set.stats(x)
-x.me <- select.inds(x, population == "Bedouin")
-x.me@ped$pheno <- rep(2,48) #The package analyzes only individualw with a status of 2
-s <- createSegmentsListByHotspots(x.me)
-segmentsListSummary(s)
+#Please refer to vignette 
+
 
 }

@@ -31,16 +31,8 @@ If you are using a fileName, please make sure to have one marker per line
 }
 \examples{
  
-#install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-require(Fantasio)
-require(HGDP.CEPH)
-filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-x <- read.bed.matrix(filepath)
-x <- set.stats(x)
-x.me <- select.inds(x, population == "Bedouin")
-x.me@ped$pheno <- rep(2,48)
-segmentList <- createSegmentsListBySnps(x.me)
-submaps <- createSubmapBySnps(x.me, segmentList)
+#Please refer to vignette 
+
 
 }
 \seealso{

@@ -46,16 +46,8 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' @seealso makeSubmapsByHotspots
 #' 
 #' @examples  
-#' #install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") ## make this only one time
-#' require(Fantasio)
-#' require(HGDP.CEPH)
-#' filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-#' x <- read.bed.matrix(filepath)
-#' x <- set.stats(x)
-#' x.me <- select.inds(x, population == "Bedouin")
-#' x.me@ped$pheno <- rep(2,48)
-#' segmentList <- createSegmentsListByHotspots(x.me)
-#' submaps <- createSubmapByHotpots(x.me, segmentList)
+#' #Please refer to vignette 
+#'
 #' 
 #' @export
 createSubmapByHotpots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
