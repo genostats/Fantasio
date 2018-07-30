@@ -20,7 +20,7 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object, nc
   if(nrow(msat) != ncol | ncol(msat) != 2*nrow) stop("msat dimension mismatch")
   w <- is.na(msat)
   if(any(w)) {
-    warn('NA msats replaced by zeros')
+    warning('NA msats replaced by zeros')
     msat[w] <- 0
   }
   if(max(msat) > ncol(freq)) stop("allele exceeding number of columns of freq")

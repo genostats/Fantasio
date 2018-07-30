@@ -1,3 +1,4 @@
+
 lengthChromosome <- function (chr, units = c("bases", "cM"), build = 37) {
     units <- match.arg(units)
     if(!(build %in% 35:38))

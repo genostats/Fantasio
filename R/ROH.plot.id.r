@@ -33,7 +33,7 @@ ROH.plot.id <- function(ROHfile, submaps, unit="cM", regions, outfile, family_id
   if (missing(regions))
     myreg <- NULL
   else{
-    myreg <- regions[regions$chr == chr,]
+    myreg <- regions
   }
   
   if (unit=="cM")

@@ -3,7 +3,8 @@ title: "Fantasio"
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
+output: md_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteDepends{Fantasio}

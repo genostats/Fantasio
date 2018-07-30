@@ -23,7 +23,8 @@ plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, 
   if (missing(regions))
     myreg <- NULL
   else{
-    myreg <- regions[regions$chr == chr,]
+    #myreg <- regions[regions$chr == chr,]
+    myreg <- regions
   }
   
   if (unit=="cM")

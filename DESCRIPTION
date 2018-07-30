@@ -1,10 +1,10 @@
 Package: Fantasio
 Type: Package
-Title: Genectic Data Estimation On Inbreed Individual
+Title: Genetic Data Analyses in Presence of Inbreeding
 Version: 0.1
 Date: 2017-03-26
 Encoding: UTF-8
-Maintainer: Herve Perdry <herve.perdry@u-psud.fr>
+Maintainer: Isuru <isuru.haupe@inserm.fr>
 Author: Isuru Haupe, Mourad Sahbatou, Marie-Claude Babron, Hervé Perdry & Anne-Louise Leutenegger, Steven Gazal, Amaury Vaysse
 Description: Use this package to analyze microsatellite
     and/or SNP data of individuals, it goals are for : 

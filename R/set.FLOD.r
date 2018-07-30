@@ -14,25 +14,6 @@
 #' @seealso set.HBD.prob
 #' @seealso set.HFLOD
 #' 
-#' @import gaston
-#' @import methods
-#' @import parallel
-#' 
-#' @importFrom graphics abline axis lines par plot points polygon text 
-#' @importFrom grDevices dev.off png 
-#' @importFrom methods callNextMethod new
-#' @importFrom stats median optim optimize pchisq 
-#' @importFrom utils data read.table
-#' 
-#' @useDynLib Fantasio
-#' 
-#' @exportClass f.matrix
-#' @exportClass list.submaps
-#' @exportClass hotspots.matrix
-#' @exportClass hotspot.segments
-#' @exportClass snps.matrix
-#' @exportClass snps.segments
-#' 
 #' @export
 set.FLOD <- function(submaps, condition, q = 1e-4)
 {

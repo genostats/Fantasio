@@ -26,7 +26,6 @@
 #' 
 #' @export
 festim <- function(x, verbose=TRUE, debug=FALSE) {
-  if(is.null(x@epsilon)) x <- set.log.emiss(x)
   N <- nrow(x)
   x@a <- numeric(N)
   x@f <- numeric(N)
