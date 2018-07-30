@@ -147,7 +147,7 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
     axis(1, at = chr_axis[i], i, col.ticks = 0, cex.axis = 1.5)
   }
   
-  abline(v = chr_pos[23], col = "grey", lwd = 2)
+  abline(v = chr_pos[ length(chr_pos) ], col = "grey", lwd = 2)
   
   for (i in 1:3)
     abline(
