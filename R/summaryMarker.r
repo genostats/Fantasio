@@ -29,9 +29,6 @@ summaryMarker <- function(submaps, bedmatrix)
   for(i in 1:length(submaps))
   {
     taille <- length(which(b$Freq == i))
-    if(taille == 0)
-      break()
-    
     res[i] <- taille   
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
