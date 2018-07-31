@@ -3,33 +3,9 @@
 \docType{class}
 \name{hotspots.matrix-class}
 \alias{hotspots.matrix-class}
-\alias{hotspots.matrix-class}
 \title{Class hotspots.matrix}
-\usage{
-\S4method{initialize}{hotspots.matrix}(.Object, ncol, nrow, submap, ped, map,
-  log.emiss, epsilon = 0.001)
-}
-\arguments{
-\item{.Object}{the object type}
-
-\item{ncol}{number of loci}
-
-\item{nrow}{number of individual}
-
-\item{submap}{a list of submaps}
-
-\item{ped}{the first 6 columns of a .ped}
-
-\item{map}{id, chr, distance}
-
-\item{log.emiss}{matrix of log proba emission if statut = 0 or 1(2 nb inds x nb msats)}
-
-\item{epsilon}{value of epsilon = genotyping error rare, to use for computing log emission precalculated at initialisation}
-}
 \description{
 Class \code{hotspots.matrix} This class is use to create an object that will represent the submap created
-
-Constructor method of hotspots.matrix.
 }
 \section{Slots}{
 

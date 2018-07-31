@@ -47,8 +47,6 @@ setClass("list.submaps", representation(
 
 #' Constructor method of list.submaps.
 #'
-#' @name list.submaps-class
-#' @rdname list.submaps-class
 #' @param .Object the object type
 #' @param submaps a list of submaps
 #' @param bedmatrix a bed.matrix object
