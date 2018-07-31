@@ -12,7 +12,7 @@ getMarkerChromosomBySnps <- function(x, map, pas, unit="cM")
     
     for(j in 1:looping)                       #parcourt des mini segments du segment du chr
     {
-      if(length(map[[i]]) == 0)
+      if(length(map[[i]]) == 0)               #test whether the segment is empty
         next()
       
       if(isItAList)

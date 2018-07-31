@@ -2,7 +2,7 @@
 title: "Fantasio"
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-07-30"
+date: "2018-07-31"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -46,8 +46,8 @@ Fantasio is composed of several functions. Its goals are for:
     individuals without known genealogy, estimating the population
     proportion of mating types and the individual probability to be
     offspring of different mating types)
--   Rare disease studies (performing homozygosity mapping with
-    heterogeneity)
+-   Rare disease studies (performing homozygosity mapping
+    with heterogeneity)
 -   Multifactorial disease studies (HBD-GWAS strategy).
 
 Fantasio implements the creation of several random sparse submaps on
@@ -66,32 +66,33 @@ function for details.
 
 ### Principal concepts
 
-Fantasio is a maximum likelihood method that uses a hidden Markov chain
-to model the dependencies along the genome between the (observed) marker
-genotypes of an individual, and its (unobserved) homozygous by descent
-(HBD) status. The emission probabilities of this hidden Markov model
-(HMM) depend on the allele frequencies. The transition probabilities
-depend on the genetic distance between two adjacent markers. This model
-allows estimating the inbreeding coefficient *f* of an individual, and a
-parameter *a*, where *a**f* is the instantaneous rate of change per unit
-map length (here cM) from no HBD to HBD. Both HBD and non-HBD segment
-lengths are assumed to be distributed exponentially with mean lengths
-$\\frac{1}{a(1-f)}$ and $\\frac{1}{af}$, respectively.
+Fantasio implements a maximum likelihood method that uses a hidden
+Markov chain to model the dependencies along the genome between the
+(observed) marker genotypes of an individual, and its (unobserved)
+homozygous by descent (HBD) status. The emission probabilities of this
+hidden Markov model (HMM) depend on the allele frequencies. The
+transition probabilities depend on the genetic distance between two
+adjacent markers. This model allows estimating the inbreeding
+coefficient *f* of an individual, and a parameter *a*, where *a**f* is
+the instantaneous rate of change per unit map length (here cM) from no
+HBD to HBD. Both HBD and non-HBD segment lengths are assumed to be
+distributed exponentially with mean lengths $\\frac{1}{a(1-f)}$ and
+$\\frac{1}{af}$, respectively.
 
-Fantasio requires the markers to be in minimal linkage disequilibrium
+THe method requires the markers to be in minimal linkage disequilibrium
 (LD). Otherwise biased estimations of *f* are produced. A strategy
 consisting of generating multiple random sparse genome maps (submaps)
 has been proposed to avoid this bias (Leutenegger et al. 2011). When
-several submaps are considered, *f* is estimated as the median value of
-the estimates obtained on the different maps after removing submaps with
-*a* &gt; 1 (having an average HBD segment length of 1 cM is unlikely to
-be detected with a SNP density of 1 per 0.5 cM). This strategy has the
-advantage of not requiring any LD computation on the sample and of
-minimizing loss of information, as compared with a strategy that based
-on a single map of markers in minimal LD.
+several submaps are considered, *f* is estimated as the median value on
+all the f estimation obtained on the different maps after removing
+submaps with *a* &gt; 1 (having an average HBD segment length of 1 cM is
+unlikely to be detected with a SNP density of 1 per 0.5 cM). This
+strategy has the advantage of not requiring any LD computation on the
+sample and of minimizing loss of information, as compared with a
+strategy that based on a single map of markers in minimal LD.
 
-Fantasio compute the likelihood of a mating type. These likelihoods can
-be used for:
+Fantasio also computes the likelihood of a mating type. These
+likelihoods can be used for:
 
 -   Inferring an individual as inbred by comparing the maximized
     likelihood with the one to be outbred with a likelihood ratio test
@@ -110,14 +111,12 @@ genealogy of patients be known so that inbred patients can be identified
 and their respective *f* estimated. Leutenegger et al. (Leutenegger et
 al. 2006) proposed using the *f* estimated on genome-wide genetic data
 to compute a FLOD score, similar to Mortons LOD score (Morton 1955).
-This FLOD score can be computed on isolated cases or on nuclear
-families.
 
 Genin et al. (Genin et al. 2012) adapted the FLOD formula for multiple
 submaps. FLOD(i)(m,s) is computed for each individual *i*, each marker
 *m* on each submap *s*, using the equation:
 
-$$FLOD^{(i)}m,s = log\_{10}\\frac{P\\left(Y\_{m,s}^{(i)} | H\_{1}\\right)}{P\\left(Y\_{m,s}^{(i)} | H\_{0}\\right)} = log\_{10}\\frac{P\\left(X\_{m,s}^{(i)}=1 | Y\_{m,s}^{(i)}\\right) + q.P\\left(X\_{m,s}^{(i)}=1 | Y\_{m,s}^{(i)}\\right)}{\\hat{f}\_s^{(i)} + q.\\left(1-\\hat{f}\_s^{(i)}\\right)}$$
+$$FLOD^{(i)}(m,s) = log\_{10}\\frac{P\\left(Y\_{m,s}^{(i)} | H\_{1}\\right)}{P\\left(Y\_{m,s}^{(i)} | H\_{0}\\right)} = log\_{10}\\frac{P\\left(X\_{m,s}^{(i)}=1 | Y\_{m,s}^{(i)}\\right) + q.P\\left(X\_{m,s}^{(i)}=0 | Y\_{m,s}^{(i)}\\right)}{\\hat{f}\_s^{(i)} + q.\\left(1-\\hat{f}\_s^{(i)}\\right)}$$
 
 With the following parameters :
 
@@ -128,10 +127,9 @@ With the following parameters :
     *H*<sub>0</sub> the one where it is not
 -   *X*<sub>*m*, *s*</sub><sup>(*i*)</sup> the HBD status of individual
     *i* at marker *m* on submap *s* that is estimated together with the
-    inbreeding coefficient using the HMM of Fantasio
+    inbreeding coefficient using the HMM of the package
 -   $\\hat{f}\_s^{(i)}$ the estimated inbreeding coefficient of
-    individual *i* on submap *s* This heterogeneity score is then
-    maximized over α to evaluate the evidence of linkage at marker m
+    individual *i* on submap *s*
 -   *q* the assumed frequency of the mutation involved in the disease
     for this individual.
 
@@ -142,14 +140,15 @@ Genin et al. (Genin et al. 2012) proposed to detect fully penetrant rare
 recessive variants by performing homozygosity mapping on inbred cases
 from Genome-Wide Association Study (GWAS) data. Linkage evidence is then
 evaluated over the entire set I of inbred cases by computing a FLOD
-score, HFLOD(m,α), at each marker m, with a heterogeneity parameter α,
-that takes into account the possibility that only a fraction of the
+score, HFLOD(m,*α*), at each marker m, with a heterogeneity parameter
+*α*, that takes into account the possibility that only a fraction of the
 inbred affected individuals carry diseases causing mutations:
 
 $$HFLOD(m,\\alpha)=\\sum log\_{10} \\left\[\\alpha.\\frac{P\\left(Y\_{m,s}^{(i)} | H\_{1}\\right)}{P\\left(Y\_{m,s}^{(i)} | H\_{0}\\right)}+ (1 - \\alpha)\\right \]= \\sum log\_{10} \\left\[\\alpha . exp \\left(FLOD^{(i)}(m)\*log(10)\\right)+(1-\\alpha)\\right\] $$
  This heterogeneity score is then maximized over *α* to evaluate the
 evidence of linkage at marker *m* where *α* is the estimate of the
 proportion of cases linked to this locus:
+
 *H**F**L**O**D*(*m*)=*m**a**x*<sub>*α*</sub>(*H**F**L**O**D*(*m*, *α*))
 
 1. Getting started
@@ -193,7 +192,7 @@ After doing that we will need to run the following commands :
     ## 
     ##     LdFlags
 
-    ## Gaston set number of threads to 2. Use setThreadOptions() to modify this.
+    ## Gaston set number of threads to 8. Use setThreadOptions() to modify this.
 
     ## 
     ## Attaching package: 'gaston'
@@ -206,7 +205,7 @@ After doing that we will need to run the following commands :
     ## 
     ##     cbind, rbind
 
-    install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") #in order to download the dataset from which will work on.
+    install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") 
 
     require(HGDP.CEPH)
 
@@ -225,11 +224,11 @@ First create your bed.matrix object with this command :
 
     x <- read.bed.matrix(filepath)
 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /ext/home/haupe/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /ext/home/haupe/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
 
-Then return an updated 'bed.matrix' with new variables for several basic
-statistics :
+This command returns an updated 'bed.matrix' object (refer to gaston
+vignette for more informations and function documentation) :
 
     x <- set.stats(x)
 
@@ -237,18 +236,17 @@ statistics :
     ## 'p' has been set. 
     ## 'mu' and 'sigma' have been set.
 
-Here we only want to work on the Bedouin's data, so we selected this
-population with the following command :
+Here we only want to work on the Bedouin's population, so we selected
+this population with the following command :
 
     x.me <- select.inds(x, population == "Bedouin")
 
 Please refer to the manual function of read.bed.matrix, set.stats and
 select.inds if needed (package gaston).
 
-As Fantasio computes only for people affected by a disease, we change
-the STATUS of every individuals from 0 (=unknown) to 2 (=affected) :
-
-    x.me <- set.status(x.me, 2)
+Please make sure that you have atleast some individuals with a phenotype
+of 2 (sick), the package only computes HBD, FLOD scores and HFLOD scores
+with attained individuals :
 
 You can insure that your bed.matrix object is created and have the data
 needed with :
@@ -262,7 +260,7 @@ needed with :
     ##   .. ..$ father     : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
     ##   .. ..$ mother     : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
     ##   .. ..$ sex        : int [1:48] 2 1 1 1 1 2 2 2 2 1 ...
-    ##   .. ..$ pheno      : num [1:48] 2 2 2 2 2 2 2 2 2 2 ...
+    ##   .. ..$ pheno      : int [1:48] 1 1 1 1 1 1 1 1 1 1 ...
     ##   .. ..$ population : Factor w/ 57 levels "Adygei","Balochi",..: 10 10 10 10 10 10 10 10 10 10 ...
     ##   .. ..$ region     : Factor w/ 27 levels "Algeria (Mzab)",..: 12 12 12 12 12 12 12 12 12 12 ...
     ##   .. ..$ region7    : Factor w/ 7 levels "Africa","America",..: 6 6 6 6 6 6 6 6 6 6 ...
@@ -319,7 +317,7 @@ needed with :
 This object contains two slots :
 
 -   ped : which gives you informations about all the individuals in the
-    chipset
+    chip
 -   snps : which gives you informations about the snps itself
 
 More information in the vignette of the gaston package.
@@ -327,50 +325,24 @@ More information in the vignette of the gaston package.
 2. Wrapper
 ----------
 
-We created a wrapper to make it easy to use the package.
+We created a wrapper to make the usage of the package more simple.
 
-The function calls two differents functions : `createSegmentsListBySnps`
-and `createSegmentsListBySnps`. The first function
-`createSegmentsListBySnps` is used to create a list of segments though
-the genome. The second function `makeAllSubmapsBySnps` or
+The following function calls two different functions :
+`createSegmentsListBySnps` and `createSegmentsListBySnps`. The first
+function `createSegmentsListBySnps` is used to create a list of segments
+though the genome. The second function `makeAllSubmapsBySnps` or
 `makeAllSubsmapsbyHotspots` is used to create submaps.
 
-The segments arguments accept only two options : Hotspots or Distance.
-
-### 2.1 By Hotspots
-
-    submaps2 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
-
-### 2.2 By Hotspots by Segments
-
-    submaps3 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=100, n.cores=20, recap.by.segments=TRUE, n.consecutive.marker=1)
-
-### 2.3 By Distance
-
-    submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE) #for clarity sake we put verbose to FALSE
-
-### 2.4 How to use the segment.option argument
-
-In order to use the `segment.option` argument you need to pass a list of
-arguments, each variable names in the list are an argument in the
-function. The function that will be called is either
-`createsSegmentsListBySnps` if `segments` argument is equal to
-"Distance" or `createSegmentsListByHotspots`if `segments` argument is
-equal to "Hotspots" and the arguments list will be pass to it.
-
-    l <- list(number_of_marker=50) #default is 0
-    submaps5 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=5, recap.by.segments=TRUE)
-
-3. Step by step usage of the package Fantasio
----------------------------------------------
+The `segments` arguments accept only two options : Hotspots or Distance
+which correspond to the method implemented in the package.
 
 We implemented in the package Fantasio two differents methods in order
 to create the submaps :
 
--   By "Hotspots" : \*With this method we use hotspots files to segment
-    our data, each segment contains several markers. Once this step is
-    done we then loop over the segments and pick one marker randomly.
-    By  
+-   By "Hotspots" : \*With this method we use a hotspots files to
+    segment our genome, each segment contains several markers. Once this
+    step is done we then loop over the segments and pick one
+    marker randomly. By  
     doing this process we obtain a submap (a list of marker).
 
 -   By "Distance" : \*With this method we use the gaps between markers
@@ -382,6 +354,33 @@ to create the submaps :
     over the mini-segments, pick a random marker and go through the
     mini-segments by picking the nearest marker after taking a step
     (default is 0,5 cM) downstream and upstream the mini-segments.
+
+### 2.1 By Hotspots
+
+    submaps2 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE, list.id = "all") 
+
+### 2.2 By Hotspots by Segments
+
+    submaps3 <- Fantasio(bedmatrix=x, segments="Hotspots", n=100, n.cores=20, recap.by.segments=TRUE, n.consecutive.marker=1, list.id = "all")
+
+### 2.3 By Distance
+
+    submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE, list.id = "all")
+
+### 2.4 How to use the segment.option argument
+
+In order to use the `segment.option` argument you need to pass a list of
+arguments, each variable names in the list must be an argument name in
+the function. The function that will be called is either
+`createsSegmentsListBySnps` if `segments` argument is equal to
+"Distance" or `createSegmentsListByHotspots`if `segments` argument is
+equal to "Hotspots" and the arguments list will be pass to it.
+
+    l <- list(number_of_marker=50) #default is 0
+    submaps5 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=5, recap.by.segments=TRUE, list.id = "all")
+
+3. Step by step usage of the package Fantasio
+---------------------------------------------
 
 ### 3.1 "By hotspots" method
 
@@ -436,37 +435,14 @@ This function creates a dataframe with three colums :
 -   number\_of\_segments
 -   number\_of\_marker
 
-Now further explanations about why we did that.
-
-This package is mainly used to exploit inbreeding in dense SNPS chip and
-exome data.
-
-To do this we use a technique called submapping.
-
-Let's imagine that our current data is like a map, with all the
-informations about our individuals and our SNPS, we use this main "map"
-to create submap, each submap can be considered as a smaller, genome map
-about our data.
-
-We use this technique because we want to avoid linkage desequilibrium.
-(See introduction for more information.)
-
-Depending on the method you are using ("By Hotspots" or by "Distance"),
-we have a submap : a list of markers. We normally repeat this process
-aroung a hundred times to make sure that we have no linkage
-desequilibrium.
-
-Only thing left to do is to compute some probabilities about those
-submaps (HBD, FLOD score, HFLOD score ...).
-
 #### 3.1.2 Creation of the submaps and computation
 
-After those explanations we will now head toward the creation of submaps
-using the following commands :
+We will now head toward the creation of submaps using the following
+commands :
 
-    submaps <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE) #suppressing messages to avoid unnecesary warnings
+    submaps <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE, list.id = "all") 
 
-For the sake of clarity we had only created 5 submaps, but generally we
+For the sake of clarity we have only created 5 submaps, but generally we
 do 100.
 
 This function will creates 5 submaps, all the parameters can be modified
@@ -491,9 +467,11 @@ description of each structure in this object :
 
 -   atlas : the list of all the submaps created during the process. Each
     element of the list is an S4 object. Depending on the method you
-    used the object can be either an snsp.matrix or an hotspots.matrix
-    (here we use the hotspots method). Each submaps contains 14 slots :
--   submap : the index of each marker picked
+    used the object can be either an `snsp.matrix` or an
+    `hotspots.matrix` (here we use the hotspots method). Each submaps
+    contains 15 slots :
+-   submap : the index of each marker picked (index from the
+    bed.matrix object)
 -   ncol : the total number of marker picked
 -   nrow : the number of individuals
 -   ped : a dataframe with all the individuals genotype
@@ -506,6 +484,8 @@ description of each structure in this object :
 -   f : a matrix with all the f's estimation
 -   likelihood0 : a matrix with all the likehood under the null
     hypothesis (*f* = 0)
+-   likelihood1 : a matrix with all the likehood under the inbred
+    hypothesis (*f* = 1)
 -   p.lrt : p value of the likelihood ratio test
 -   HBD.prob : a matrix with all the HBD probabilities computed for each
     individual
@@ -554,130 +534,129 @@ description of each structure in this object :
 -   pLRT\_MEDIAN: median p-value of LRT tests on valid submaps
 -   INBRED: a flag indicating if the individual is inbred (pLRT\_MEDIAN
     &lt; 0.05) or not
--   pLRT\_&lt;0.05: number of valid submaps with a LRT having a p-value
-    below 0.05
+-   pLRT\_&lt;0.05: number of valid submaps with a LRT (likelihood
+    ratio test) having a p-value below 0.05
 
 <!-- -->
 
     submaps@submap_summary
 
     ##          FID       IID STATUS SUBMAPS QUALITY      F_MIN       F_MAX
-    ## 1  HGDP00607 HGDP00607      2   5 / 5     100 0.01734442 0.026233902
-    ## 2  HGDP00608 HGDP00608      2   5 / 5     100 0.03589919 0.039148147
-    ## 3  HGDP00609 HGDP00609      2   5 / 5     100 0.03920395 0.045378369
-    ## 4  HGDP00610 HGDP00610      2   5 / 5     100 0.04409342 0.057613223
-    ## 5  HGDP00611 HGDP00611      2   0 / 5      NA         NA          NA
-    ## 6  HGDP00612 HGDP00612      2   5 / 5     100 0.06017634 0.069107306
-    ## 7  HGDP00613 HGDP00613      2   5 / 5     100 0.00000000 0.000000000
-    ## 8  HGDP00614 HGDP00614      2   5 / 5     100 0.02950331 0.035364110
-    ## 9  HGDP00615 HGDP00615      2   5 / 5     100 0.08440724 0.093187563
-    ## 10 HGDP00616 HGDP00616      2   5 / 5     100 0.06648457 0.078285338
-    ## 11 HGDP00617 HGDP00617      2   3 / 5      60 0.00000000 0.005182942
-    ## 12 HGDP00618 HGDP00618      2   5 / 5     100 0.03045752 0.039531133
-    ## 13 HGDP00619 HGDP00619      2   4 / 5      80 0.00319645 0.022663434
-    ## 14 HGDP00620 HGDP00620      2   5 / 5     100 0.01260422 0.017263769
-    ## 15 HGDP00621 HGDP00621      2   0 / 5      NA         NA          NA
-    ## 16 HGDP00622 HGDP00622      2   5 / 5     100 0.06833566 0.074724038
-    ## 17 HGDP00623 HGDP00623      2   5 / 5     100 0.07421239 0.081121773
-    ## 18 HGDP00624 HGDP00624      2   5 / 5     100 0.02715964 0.039835659
-    ## 19 HGDP00625 HGDP00625      2   5 / 5     100 0.01174060 0.021925112
-    ## 20 HGDP00626 HGDP00626      2   5 / 5     100 0.08070869 0.092192702
-    ## 21 HGDP00627 HGDP00627      2   5 / 5     100 0.02337247 0.031417877
-    ## 22 HGDP00628 HGDP00628      2   5 / 5     100 0.09085895 0.103077862
-    ## 23 HGDP00629 HGDP00629      2   5 / 5     100 0.09439779 0.101994137
-    ## 24 HGDP00630 HGDP00630      2   5 / 5     100 0.06747646 0.076080910
-    ## 25 HGDP00631 HGDP00631      2   5 / 5     100 0.04583374 0.056349551
-    ## 26 HGDP00632 HGDP00632      2   5 / 5     100 0.00000000 0.000000000
-    ## 27 HGDP00633 HGDP00633      2   5 / 5     100 0.06346935 0.074893085
-    ## 28 HGDP00634 HGDP00634      2   5 / 5     100 0.07266147 0.088648581
-    ## 29 HGDP00635 HGDP00635      2   5 / 5     100 0.01768849 0.021134793
-    ## 30 HGDP00636 HGDP00636      2   5 / 5     100 0.02344232 0.036651471
-    ## 31 HGDP00637 HGDP00637      2   5 / 5     100 0.05830010 0.068544813
-    ## 32 HGDP00638 HGDP00638      2   5 / 5     100 0.06909179 0.080216278
-    ## 33 HGDP00639 HGDP00639      2   5 / 5     100 0.03024857 0.037685456
-    ## 34 HGDP00640 HGDP00640      2   5 / 5     100 0.00000000 0.000000000
-    ## 35 HGDP00641 HGDP00641      2   5 / 5     100 0.01923499 0.036512356
-    ## 36 HGDP00642 HGDP00642      2   5 / 5     100 0.01124748 0.020642040
-    ## 37 HGDP00643 HGDP00643      2   5 / 5     100 0.06320755 0.074762196
-    ## 38 HGDP00644 HGDP00644      2   5 / 5     100 0.03129387 0.039955778
-    ## 39 HGDP00645 HGDP00645      2   5 / 5     100 0.06631185 0.074540800
-    ## 40 HGDP00646 HGDP00646      2   4 / 5      80 0.00000000 0.000000000
-    ## 41 HGDP00647 HGDP00647      2   5 / 5     100 0.09844574 0.104681613
-    ## 42 HGDP00648 HGDP00648      2   2 / 5      40 0.00000000 0.022654439
-    ## 43 HGDP00649 HGDP00649      2   5 / 5     100 0.11731749 0.122519780
-    ## 44 HGDP00650 HGDP00650      2   5 / 5     100 0.02769209 0.039745033
-    ## 45 HGDP00651 HGDP00651      2   5 / 5     100 0.07695295 0.085705529
-    ## 46 HGDP00653 HGDP00653      2   5 / 5     100 0.05891699 0.069457921
-    ## 47 HGDP00654 HGDP00654      2   5 / 5     100 0.03061437 0.039904750
-    ## 48 HGDP00701 HGDP00701      2   5 / 5     100 0.03053003 0.039754526
-    ##         F_MEAN   F_MEDIAN   A_MEDIAN   pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1  0.022203844 0.02209675 0.13384126  6.665372e-27   TRUE             5
-    ## 2  0.037234209 0.03653628 0.06516447  2.383777e-58   TRUE             5
-    ## 3  0.042826356 0.04381394 0.13262078  3.457190e-50   TRUE             5
-    ## 4  0.052450908 0.05398949 0.16902776  2.761617e-61   TRUE             5
-    ## 5           NA         NA         NA            NA     NA            NA
-    ## 6  0.064297326 0.06279350 0.34194599  7.144577e-41   TRUE             5
-    ## 7  0.000000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
-    ## 8  0.032701897 0.03254336 0.15511945  1.236744e-30   TRUE             5
-    ## 9  0.089907573 0.09005968 0.09937613 5.626942e-123   TRUE             5
-    ## 10 0.071663526 0.07146953 0.15039998  4.859699e-80   TRUE             5
-    ## 11 0.001727647 0.00000000 0.01000000  1.000000e+00  FALSE             1
-    ## 12 0.034223849 0.03273723 0.15215296  1.072409e-34   TRUE             5
-    ## 13 0.011659219 0.01038850 0.38596319  1.393705e-04   TRUE             4
-    ## 14 0.014937535 0.01472321 0.11617868  2.285896e-21   TRUE             5
-    ## 15          NA         NA         NA            NA     NA            NA
-    ## 16 0.071383859 0.07061593 0.08709405 7.482050e-106   TRUE             5
-    ## 17 0.078599247 0.07976987 0.11978134 7.206892e-114   TRUE             5
-    ## 18 0.031852082 0.03063229 0.29841153  3.514920e-20   TRUE             5
-    ## 19 0.016902246 0.01662573 0.31634187  1.569212e-12   TRUE             5
-    ## 20 0.085158357 0.08450458 0.13202945 1.154382e-119   TRUE             5
-    ## 21 0.025726324 0.02430284 0.19643794  1.085885e-19   TRUE             5
-    ## 22 0.099999832 0.10180965 0.10278710 5.500042e-146   TRUE             5
-    ## 23 0.097065169 0.09646471 0.05491051 2.096553e-187   TRUE             5
-    ## 24 0.070959862 0.07098583 0.30062125  1.371410e-57   TRUE             5
-    ## 25 0.053496988 0.05495278 0.16125068  3.543833e-63   TRUE             5
-    ## 26 0.000000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
-    ## 27 0.067757160 0.06608674 0.19904178  6.136278e-61   TRUE             5
-    ## 28 0.078508952 0.07687431 0.09429114 2.341719e-135   TRUE             5
-    ## 29 0.019668236 0.02056357 0.07889434  7.618234e-34   TRUE             5
-    ## 30 0.031170755 0.03305812 0.49821830  1.158825e-11   TRUE             5
-    ## 31 0.064537366 0.06574525 0.16660026  5.743056e-70   TRUE             5
-    ## 32 0.074364693 0.07322958 0.12354282 1.675855e-101   TRUE             5
-    ## 33 0.032981914 0.03228508 0.11455892  5.405151e-51   TRUE             5
-    ## 34 0.000000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
-    ## 35 0.027654514 0.02942984 0.26767361  1.287046e-21   TRUE             5
-    ## 36 0.016905847 0.01824671 0.51172123  4.391633e-06   TRUE             5
-    ## 37 0.068588428 0.06693490 0.30327646  7.239962e-52   TRUE             5
-    ## 38 0.036975616 0.03740820 0.23020844  9.474691e-34   TRUE             5
-    ## 39 0.070574444 0.07014168 0.09658855 5.193573e-101   TRUE             5
-    ## 40 0.000000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
-    ## 41 0.102351524 0.10237586 0.11381704 5.040749e-150   TRUE             5
-    ## 42 0.011327220 0.01132722 0.43713352  5.000225e-01  FALSE             1
-    ## 43 0.119183715 0.11895010 0.11901066 1.156641e-172   TRUE             5
-    ## 44 0.033588494 0.03469402 0.54702276  1.416146e-13   TRUE             5
-    ## 45 0.080702233 0.08043682 0.12594191 1.588363e-100   TRUE             5
-    ## 46 0.065250448 0.06726199 0.18724790  1.502952e-83   TRUE             5
-    ## 47 0.033962075 0.03152074 0.06608335  1.490286e-50   TRUE             5
-    ## 48 0.035247689 0.03590237 0.47669666  2.037014e-16   TRUE             5
+    ## 1  HGDP00607 HGDP00607      1   5 / 5     100 0.02217434 0.026783528
+    ## 2  HGDP00608 HGDP00608      1   5 / 5     100 0.03630820 0.041568919
+    ## 3  HGDP00609 HGDP00609      1   5 / 5     100 0.04063685 0.048444085
+    ## 4  HGDP00610 HGDP00610      1   5 / 5     100 0.05041399 0.059019185
+    ## 5  HGDP00611 HGDP00611      1   0 / 5      NA         NA          NA
+    ## 6  HGDP00612 HGDP00612      1   5 / 5     100 0.05811649 0.066480714
+    ## 7  HGDP00613 HGDP00613      1   5 / 5     100 0.00000000 0.000000000
+    ## 8  HGDP00614 HGDP00614      1   5 / 5     100 0.02900716 0.035807349
+    ## 9  HGDP00615 HGDP00615      1   5 / 5     100 0.08487721 0.093418457
+    ## 10 HGDP00616 HGDP00616      1   5 / 5     100 0.06531927 0.069730236
+    ## 11 HGDP00617 HGDP00617      1   5 / 5     100 0.00000000 0.010007602
+    ## 12 HGDP00618 HGDP00618      1   5 / 5     100 0.03169770 0.045638130
+    ## 13 HGDP00619 HGDP00619      1   2 / 5      40 0.00000000 0.003538398
+    ## 14 HGDP00620 HGDP00620      1   5 / 5     100 0.01275512 0.031688703
+    ## 15 HGDP00621 HGDP00621      1   0 / 5      NA         NA          NA
+    ## 16 HGDP00622 HGDP00622      1   5 / 5     100 0.06955190 0.072162224
+    ## 17 HGDP00623 HGDP00623      1   5 / 5     100 0.07806345 0.084484330
+    ## 18 HGDP00624 HGDP00624      1   5 / 5     100 0.02448420 0.039666489
+    ## 19 HGDP00625 HGDP00625      1   5 / 5     100 0.01578130 0.021954252
+    ## 20 HGDP00626 HGDP00626      1   5 / 5     100 0.07702788 0.086855945
+    ## 21 HGDP00627 HGDP00627      1   5 / 5     100 0.01752099 0.028823878
+    ## 22 HGDP00628 HGDP00628      1   5 / 5     100 0.09721026 0.105266541
+    ## 23 HGDP00629 HGDP00629      1   5 / 5     100 0.09529805 0.105195194
+    ## 24 HGDP00630 HGDP00630      1   5 / 5     100 0.06015630 0.073957909
+    ## 25 HGDP00631 HGDP00631      1   5 / 5     100 0.05019264 0.064976083
+    ## 26 HGDP00632 HGDP00632      1   5 / 5     100 0.00000000 0.000000000
+    ## 27 HGDP00633 HGDP00633      1   5 / 5     100 0.06014028 0.070109491
+    ## 28 HGDP00634 HGDP00634      1   5 / 5     100 0.06990397 0.080944727
+    ## 29 HGDP00635 HGDP00635      1   5 / 5     100 0.01744161 0.023688990
+    ## 30 HGDP00636 HGDP00636      1   5 / 5     100 0.02677522 0.031773832
+    ## 31 HGDP00637 HGDP00637      1   5 / 5     100 0.06044965 0.064887847
+    ## 32 HGDP00638 HGDP00638      1   5 / 5     100 0.06914876 0.072411035
+    ## 33 HGDP00639 HGDP00639      1   5 / 5     100 0.02791115 0.035238653
+    ## 34 HGDP00640 HGDP00640      1   5 / 5     100 0.00000000 0.000000000
+    ## 35 HGDP00641 HGDP00641      1   5 / 5     100 0.02433131 0.036528549
+    ## 36 HGDP00642 HGDP00642      1   5 / 5     100 0.00000000 0.029818413
+    ## 37 HGDP00643 HGDP00643      1   5 / 5     100 0.05540583 0.069022496
+    ## 38 HGDP00644 HGDP00644      1   5 / 5     100 0.03039745 0.039108374
+    ## 39 HGDP00645 HGDP00645      1   5 / 5     100 0.06560496 0.072040330
+    ## 40 HGDP00646 HGDP00646      1   5 / 5     100 0.00000000 0.000000000
+    ## 41 HGDP00647 HGDP00647      1   5 / 5     100 0.10122072 0.105429703
+    ## 42 HGDP00648 HGDP00648      1   2 / 5      40 0.00000000 0.000000000
+    ## 43 HGDP00649 HGDP00649      1   5 / 5     100 0.12054715 0.133970599
+    ## 44 HGDP00650 HGDP00650      1   5 / 5     100 0.01903652 0.044456787
+    ## 45 HGDP00651 HGDP00651      1   5 / 5     100 0.07546304 0.079838309
+    ## 46 HGDP00653 HGDP00653      1   5 / 5     100 0.05426843 0.066434360
+    ## 47 HGDP00654 HGDP00654      1   5 / 5     100 0.02564080 0.038082741
+    ## 48 HGDP00701 HGDP00701      1   5 / 5     100 0.02520378 0.038930038
+    ##         F_MEAN    F_MEDIAN   A_MEDIAN   pLRT_MEDIAN INBRED pLRT_inf_0.05
+    ## 1  0.024732851 0.025125379 0.13860819  8.970390e-23   TRUE             5
+    ## 2  0.038799698 0.038319100 0.07002521  9.796751e-62   TRUE             5
+    ## 3  0.043713161 0.042819970 0.13356582  8.554636e-51   TRUE             5
+    ## 4  0.054344064 0.053796383 0.17480504  1.074017e-58   TRUE             5
+    ## 5           NA          NA         NA            NA     NA            NA
+    ## 6  0.062983221 0.063793073 0.33344814  2.111161e-41   TRUE             5
+    ## 7  0.000000000 0.000000000 0.01000000  1.000000e+00  FALSE             0
+    ## 8  0.032274766 0.031576789 0.12200382  2.628793e-35   TRUE             5
+    ## 9  0.087980418 0.086940509 0.09426359 8.816485e-123   TRUE             5
+    ## 10 0.067859653 0.067834422 0.14013756  6.657081e-76   TRUE             5
+    ## 11 0.002001520 0.000000000 0.01000000  1.000000e+00  FALSE             1
+    ## 12 0.038474054 0.039298478 0.19852494  2.736507e-33   TRUE             5
+    ## 13 0.001769199 0.001769199 0.12307950  5.727070e-01  FALSE             0
+    ## 14 0.018218788 0.016594294 0.09781455  9.107276e-20   TRUE             5
+    ## 15          NA          NA         NA            NA     NA            NA
+    ## 16 0.070297909 0.069828958 0.09931405  2.014392e-97   TRUE             5
+    ## 17 0.081041378 0.080088892 0.12590895 1.492757e-115   TRUE             5
+    ## 18 0.029851995 0.028571526 0.25476983  4.976076e-20   TRUE             5
+    ## 19 0.018260782 0.017562958 0.31892252  1.561889e-12   TRUE             5
+    ## 20 0.081517377 0.080074406 0.12708730 3.824930e-116   TRUE             5
+    ## 21 0.023790282 0.024851326 0.19489801  2.284856e-19   TRUE             5
+    ## 22 0.099837362 0.098861243 0.09676496 2.279878e-149   TRUE             5
+    ## 23 0.098832524 0.098337351 0.05503163 2.440861e-181   TRUE             5
+    ## 24 0.069852210 0.071480332 0.33118922  1.361360e-54   TRUE             5
+    ## 25 0.055852183 0.053816952 0.18241116  1.014205e-60   TRUE             5
+    ## 26 0.000000000 0.000000000 0.01000000  1.000000e+00  FALSE             0
+    ## 27 0.064161509 0.065038277 0.18888212  2.180508e-57   TRUE             5
+    ## 28 0.073634026 0.072450336 0.08694020 2.841278e-127   TRUE             5
+    ## 29 0.020085786 0.019114400 0.06553155  1.492400e-36   TRUE             5
+    ## 30 0.028302716 0.027812804 0.52757363  8.725242e-11   TRUE             5
+    ## 31 0.062546682 0.062845891 0.17173404  3.560369e-72   TRUE             5
+    ## 32 0.070620025 0.069881806 0.11377585 1.202016e-101   TRUE             5
+    ## 33 0.031044684 0.030308626 0.09977899  6.085584e-50   TRUE             5
+    ## 34 0.000000000 0.000000000 0.01000000  1.000000e+00  FALSE             0
+    ## 35 0.028455638 0.027518219 0.23767446  3.787011e-19   TRUE             5
+    ## 36 0.016756184 0.020338270 0.56994427  1.043977e-06   TRUE             4
+    ## 37 0.060887289 0.059562370 0.26222319  1.695353e-42   TRUE             5
+    ## 38 0.035861356 0.036539403 0.20948569  1.794739e-29   TRUE             5
+    ## 39 0.069606821 0.070730157 0.09705598  2.513898e-99   TRUE             5
+    ## 40 0.000000000 0.000000000 0.01000000  1.000000e+00  FALSE             0
+    ## 41 0.103522878 0.103010622 0.12794535 5.486010e-154   TRUE             5
+    ## 42 0.000000000 0.000000000 0.01000000  1.000000e+00  FALSE             0
+    ## 43 0.127141876 0.127669165 0.14018684 4.164600e-177   TRUE             5
+    ## 44 0.036069221 0.043187154 0.50469732  1.084187e-15   TRUE             5
+    ## 45 0.077748723 0.077751856 0.13058214  5.316098e-99   TRUE             5
+    ## 46 0.061317853 0.061881356 0.16073830  1.069967e-78   TRUE             5
+    ## 47 0.032340389 0.031696944 0.09734848  1.126590e-44   TRUE             5
+    ## 48 0.030287625 0.029109651 0.38079728  9.235135e-15   TRUE             5
 
--   HBD\_recap : a dataframe, which contains a mean of all the
-    probabilities HBD for an individual and a given marker.
+-   HBD\_recap : a dataframe, which contains a mean of all the HBD
+    inferences for an individual and a given marker.
 
 <!-- -->
 
     submaps@HBD_recap[1:10, 1:10] # an individual * marker matrix
 
 -   FLOD\_recap : a dataframe, which contains a mean of all the FLOD
-    score for an individual and a given marker.
+    scores for an individual and a given marker.
 
 <!-- -->
 
     submaps@FLOD_recap[1:10, 1:10] # an individual * marker matrix
 
--   HBD\_segments : a dataframe which contains a list of individuals,
-    and for each indivual a list of segments delimited by at least 5
-    consecutives markers with a threshold equal to 0.5 (you can modify
-    this value).
+-   HBD\_segments : a list of dataframe, each datafram is for an
+    individuals, each dataframe contain a list of segment which will be
+    used for plotting
 
 <!-- -->
 
@@ -697,12 +676,12 @@ description of each structure in this object :
     str(submaps@bedmatrix)
 
 -   bySegments : a boolean indicating wheater the creation of summary
-    statistics was made by segments
+    statistics was made by segments or not
 
 -   unit : the unit of the marker (cM or Bp).
 
--   gap : the value of the gap used to pick marker when doing submaps by
-    SNPS.
+-   gap : the value of the gap used to pick marker when doing submaps
+    by Distance.
 
 ### 3.2 "By Hotspot" "by segments" method
 
@@ -710,10 +689,12 @@ We implemented a second inner method of the "By Hotspots" method. The
 only paramater that changes is `recap.by.segments`, it is put to TRUE.
 In the default "Hotspot" method the HBD probabilities and FLOD scores
 are computed for each marker randomly selected on each segment for the n
-submaps. With the "Hotspot by segment" method HBD probabilities and FLOD
-scores correspond to the mean of HBD probabilities and FLOD score of
-each marker randomly selected on a segment for the n submaps in such a
-way that there is only one value for a segment.
+submaps.
+
+With the "Hotspot by segment" method HBD probabilities and FLOD scores
+correspond to the mean of HBD probabilities and FLOD score of each
+marker randomly selected on a segment for the n submaps in such a way
+that there is only one value for a segment.
 
 #### 3.2.1 Creation of the segments list
 
@@ -721,23 +702,10 @@ We use the same segment list that is used before (s).
 
 #### 3.2.2 Creation of the submaps and computation
 
-As already said below the only paramater that changes is
-"recap.by.segments", it is put to TRUE.
+As said before the only argument that changes is "recap.by.segments", it
+is put to TRUE.
 
-    submaps0 <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE, recap.by.segments = TRUE)
-
-The variable submaps0 becomes an list.submaps obejct, you can watch the
-different elements of it with :
-
-    str(submaps0) #careful it can become huge depending on your data sizes
-
-#### 3.2.3 Description of the object submaps
-
-This object contains all the results of the different computations
-executed during the process of creating n submaps. If you are looking
-for a complete description of each structure in this object please refer
-to the  
-2.1.3 part.
+    submaps0 <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE, recap.by.segments = TRUE, list.id = "all")
 
 ### 3.3 "By Distance" method
 
@@ -755,15 +723,15 @@ later :
 This function creates a list of chromosomes, in each, you have a list of
 several segments created thanks to the the gaps between markers, the
 value of the gap is given in argument, in each segments you have SNPS
-index. The function creates an object which will contain three slots :
+index. The function creates an object which will contains three slots :
 
 -   gap : the value of the gap
 -   unit : the unit of the markers ("cM" or "Bp")
--   snps.segments : the list of chromosomes
+-   snps.segments : the list of segments
 
 You can watch a summary of what was done with :
 
-    segmentsListSummary(s1@snps.segments)
+    segmentsListSummary(s1)
 
 This function creates a dataframe with three colums :
 
@@ -776,26 +744,12 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    submaps1 <- makeAllSubmapsBySnps(x.me, 5, s1, verbose=FALSE)
-
-For the sake of clarity we had only created 5 submaps, but generally we
-do 100.
-
-This function will creates 5 submaps, all the parameters can be modified
-(use args(makeAllSubmapsBySnps) for more informations).
+    submaps1 <- makeAllSubmapsBySnps(x.me, 5, s1, verbose=FALSE, list.id = "all")
 
 The variable submaps becomes an list.submaps object, you can watch the
 different elements of it with :
 
     str(submaps1) #careful it can become huge depending on your data sizes
-
-#### 3.3.3 Descrition of the object submaps
-
-This object contains all the results of the different computations
-executed during the process of creating n submaps. If you are looking
-for a complete description of each structure in this object please refer
-to the  
-2.1.3 part.
 
 4. Parallelism with the package
 -------------------------------
@@ -805,8 +759,9 @@ more efficient (we paralellised the creation of the submaps, that is to
 say, the selection of markers). Make sure to have a Linux environment or
 one that can support the usage of multiple CPU.
 
-In order to use it use the `n.cores` argument, the number of CPU that
-will be use to make the differents submaps in the following functions :
+In order to use it, use the `n.cores` argument, i.e : the number of CPU
+that will be used to make the differents submaps in the following
+functions :
 
 -   Fantasio
 -   makeAllSubmapsByHotspots
@@ -814,7 +769,7 @@ will be use to make the differents submaps in the following functions :
 
 <!-- -->
 
-    submaps6 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE, n.cores=10) #for clarity sake we put verbose to FALSE
+    submaps6 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE, n.cores=10, list.id = "all")
 
 5. Plotting
 -----------
@@ -837,7 +792,7 @@ will be use to make the differents submaps in the following functions :
 
 ![](Fantasio_files/figure-markdown_strict/fig3-1.png)
 
-The red lines that you see is the value of alpha for the markers.
+-   The red lines that you see is the value of alpha for the markers.
 
 ### 5.4 HFLOD for a chromosome
 
@@ -845,9 +800,10 @@ The red lines that you see is the value of alpha for the markers.
 
 ![](Fantasio_files/figure-markdown_strict/fig4-1.png)
 
-As you can see you have a red line plotted, it gives the moving average
-of the HFLOD, calculated on moving windows of 50 markers with the
-rollmean function of the R package zoo. This allows checking the
-consistency of HFLOD calculations (i.e. checking the fact that a high
-FLOD score is not due to one submap only). A moving average is computed
-to remove the impact of a submap with a false positive signal.
+-   As you can see you have a red line plotted, it gives the moving
+    average of the HFLOD, calculated on moving windows of 50 markers
+    with the rollmean function of the R package zoo. This allows
+    checking the consistency of HFLOD calculations (i.e. checking the
+    fact that a high FLOD score is not due to one submap only). A moving
+    average is computed to remove the impact of a submap with a false
+    positive signal.
