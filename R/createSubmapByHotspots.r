@@ -50,7 +50,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #'
 #' 
 #' @export
-createSubmapByHotpots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
+createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
   if(class(segmentsList)[1] != "hotspot.segments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")

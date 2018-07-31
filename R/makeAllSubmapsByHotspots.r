@@ -72,7 +72,7 @@ makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSe
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")
   
   ff <- function(i, run.festim) {
-    spider <- createSubmapByHotpots(bedmatrix, segmentsList, epsilon=epsilon) 
+    spider <- createSubmapByHotspots(bedmatrix, segmentsList, epsilon=epsilon) 
     if(run.festim) 
       spider <- festim(spider, verbose=verbose, debug=debug)
     spider

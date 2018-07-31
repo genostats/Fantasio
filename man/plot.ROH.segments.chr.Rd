@@ -4,8 +4,8 @@
 \alias{plot.ROH.segments.chr}
 \title{Creation of plot using ROH file}
 \usage{
-\method{plot}{ROH.segments.chr}(ROHfile, submaps, unit = "cM", chr,
-  outfile, listid, regions, build)
+\method{plot}{ROH.segments.chr}(ROHfile, submaps, unit = "cM", chr, outfile,
+  listid, regions, build)
 }
 \arguments{
 \item{ROHfile}{an ROH file}

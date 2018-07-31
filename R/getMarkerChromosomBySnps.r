@@ -1,14 +1,26 @@
 getMarkerChromosomBySnps <- function(x, map, pas, unit="cM")
 {
   submap <- c()
-  for(i in 1:length(map))                      #parcourt des segments du chr
+  for(i in 1:length(map))                    #parcourt des segments du chr
   {
-    for(j in 1:length(map[[i]]))               #parcourt des mini segments du segment du chr
+    isItAList <- is.list(map[[i]])
+    
+    if(isItAList)
+      looping <- length(map[[i]])
+    else
+      looping <- 1
+    
+    for(j in 1:looping)                       #parcourt des mini segments du segment du chr
     {
       if(length(map[[i]]) == 0)
         next()
-      mini_segments <- map[[i]][[j]]           # vecteur d'indice du segment i mini segment j
-      if(length(mini_segments) == 0) next      #mini_segment vide
+      
+      if(isItAList)
+        mini_segments <- map[[i]][[j]]        # vecteur d'indice du segment i mini segment j
+      else
+        mini_segments <- map[[i]]
+      
+      if(length(mini_segments) == 0) next     #mini_segment vide
       if(length(mini_segments) == 1) 
       {
         res <- mini_segments
