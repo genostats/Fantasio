@@ -22,7 +22,7 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   end <- lengthChromosome(chr,unit, build)/coeff
   
   
-  #creer un plot vide 
+  #empty plot
   y_max <- length(list_id)+1
   mar.default <- c(5,4,4,2) + 0.1
   par(mar = mar.default + c(0, y_max/2.5, 0, 0)) 
@@ -33,9 +33,9 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
 
   axis(2, at = (1:length(list_id))+0.25, list_id, col.ticks=0, las=2) 
   
-  #traitement de l'option regions
+  #treating regions option
   if(!is.null(regions)){
-    if (nrow(regions)>0) {         #dessiner les regions
+    if (nrow(regions)>0) {       
       for (i in 1:nrow(regions)) {
         polygon(x = regions[i,c("start","end","end","start")]/coeff,
                 y = c(0.75,0.75,y_max,y_max), col=color2, border=color2, lwd=2)
@@ -43,10 +43,10 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
     }
   }
   
-  #dessiner le chromosome
+  #paint the chromosome
   paintCytobands(chr,units=unit,pos=c(0,0.5), build=build, orientation="h",legend = FALSE, length.out = end)
   
-  #dessiner les segments HBD
+  #draw the HBD segments
   tmp <- strsplit(list_id, "_")
   list_id <- sapply(tmp, function(i) i[2])
   

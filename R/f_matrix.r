@@ -70,7 +70,7 @@ setMethod('initialize', signature='f.matrix', definition=function(.Object, ncol,
 setGeneric('dim')
 
 #' The generic dim method for f.matrix class
-# 
+#'
 #' @param x a bed.matrix object
 setMethod("dim", signature = "f.matrix", function(x) c(x@nrow, x@ncol) )
 

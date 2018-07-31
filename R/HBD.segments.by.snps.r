@@ -28,8 +28,8 @@ HBD.segments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thres
   marker <- colnames(HBD_recap)#save the marker
   
   correspondance <- match(colnames(HBD_recap), submaps@bedmatrix@snps$id)#match between marker's name in HBD_recap and the bedmatrix
-  chr <- submaps@bedmatrix@snps$chr[correspondance]#chromosome on which we have the marker
-  min_segment_size <- n.consecutive.marker#minimum size of the marker
+  chr <- submaps@bedmatrix@snps$chr[correspondance]                      #chromosome on which we have the marker
+  min_segment_size <- n.consecutive.marker                               #minimum size of the marker
   
   for(i in 1:nrow(HBD_recap))
   {

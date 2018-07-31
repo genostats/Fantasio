@@ -25,8 +25,8 @@ setClass("hotspots.matrix", representation(
 
 #' Constructor method of hotspots.matrix.
 #'
-# @name hotspots.matrix-class
-# @rdname hotspots.matrix-class
+#' @name hotspots.matrix-class
+#' @rdname hotspots.matrix-class
 #' @param .Object the object type
 #' @param ncol number of loci
 #' @param nrow number of individual

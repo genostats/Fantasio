@@ -56,7 +56,7 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName
         else{
           tmp_dist <- bedmatrix@snps$dist[v]
         }
-        #test pour verifier l'ecart entre les snps aux bornes entre deux mini segments
+        #check the distance between markers in the end of two mini segments
         tmp <- diff(tmp_dist)
         v <- v[which(tmp >= step)]
         submap <- c(submap, v)

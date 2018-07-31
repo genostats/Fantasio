@@ -32,14 +32,15 @@ plot.HBD.segments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile
   else { 
     myreg <- regions[regions$chr == chr,]
   }
-  #Partie pour recuperer les lignes pour le chromosome voulue dans le dataframe HBD.segments
-  HBD_segments_rbind <- do.call(rbind, HBD.segments) #coller toutes les lignes entres elles
+
+  #Get the lines for the wanted chromosome in the HBD_segments dataframe
+  HBD_segments_rbind <- do.call(rbind, HBD.segments) #bniding lines
   
-  HBD <- subset(HBD_segments_rbind, HBD_segments_rbind$chromosome==chr)#recuperer seulement les lignes pour le chromosome voulut
+  HBD <- subset(HBD_segments_rbind, HBD_segments_rbind$chromosome==chr)#only the wanted lines
   
-  HBD$individual <- as.character(HBD$individual) #si cette etape n'est pas faite les nom des individus sont des factors
+  HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
   
-  #donner un nom au fichier creer
+  #name the file
   if (missing(outfile) )
     outfile <- paste("HBD_chr_",chr,"_",unit,".png",sep="") 
   else 

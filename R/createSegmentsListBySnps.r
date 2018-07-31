@@ -118,7 +118,7 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
         #si T est un entier, la taille du mini-segment est exactement T
         #si T n'est pas un entier, la taille est round(T) ou round(T)+1 en fonction des resultats de ceiling(...)
         #La proportion de mini-segments de taille round(T)+1 augmente lorsque T approche de round(T)+1
-        #Note: cette commande donne toujours exactement N (=number_of_segments) mini-segments
+        #Note: cette commande donne toujours exactement N (=number_of_segments) mini-segments (commentaire en section details egalement)
         l <- split(VIII[[i]][[j]], ceiling(seq_along(VIII[[i]][[j]])/(length(VIII[[i]][[j]])/number_of_segments))) 
         temp[[j]] <- l
       }else{

@@ -8,7 +8,7 @@ plot.segments.id <-
             main,
             build=37)
   {
-    #choisir dans quelle unite le plot sera fait
+    #chosse which unit to use for the plot
     l <-
       unit.plot.id(file = fileOrSubmaps, unit = unit, byROHfile, individual.id)
     ecart <- l$ecart
@@ -16,7 +16,7 @@ plot.segments.id <-
     pos1  <- l$pos1
     pos2  <- l$pos2
     
-    #creer un plot vide
+    #empty plot
     if (missing(main))
       main = NULL
     plot(
@@ -36,7 +36,7 @@ plot.segments.id <-
     )
     
     
-    #boucle sur les chr
+    #chromosome loop
     for (i in 1:22) {
       if (i < 12) {
         i2 <- i

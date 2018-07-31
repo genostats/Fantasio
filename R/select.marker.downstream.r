@@ -1,15 +1,15 @@
 select.marker.downstream <- function(x, vector, pas, random, unit)
 {
   random_snp <- random
-  if(unit=="Bases")                                     #recuperer les distances pour pouvoir trouver le marqueur le plus proche a chaque saut
+  if(unit=="Bases")                                     #get the distance to find which are the nearest markers
     dist <- x@snps$pos[vector]
   else
     dist <- x@snps$dist[vector] 
   
   seg <- c(vector[random_snp])                               
-  random_snp <- dist[random_snp]                        #recuperer la distance du marqueur choisit de maniere aleatoire
+  random_snp <- dist[random_snp]                        #get the dist of the random marker
   
-  marker <- which.min(abs(dist-(random_snp-pas)))       #trouver la position dans vector du marqueur le plus proche en amont
+  marker <- which.min(abs(dist-(random_snp-pas)))       #find the nearest marker upstream
   
   if((random_snp - dist[marker]) < pas)
   {
@@ -19,13 +19,13 @@ select.marker.downstream <- function(x, vector, pas, random, unit)
     }
     marker <- marker - 1
   }
-  seg <- c(vector[marker], seg)                          #touver la position du marqueur dans le vector 
+  seg <- c(vector[marker], seg)                          #find the position in the vector
   
   while(marker > 1)
   {
     marker <- which.min(abs(dist-(dist[marker]-pas)))
     #distance diff
-    if((dist[which(vector == seg[1])] - dist[marker]) < pas) # the first element in the vector is the last entered
+    if((dist[which(vector == seg[1])] - dist[marker]) < pas) #the first element in the vector is the last entered
     {
       if(marker == 1)
       {
@@ -33,7 +33,7 @@ select.marker.downstream <- function(x, vector, pas, random, unit)
       }
       marker <- marker - 1
     }
-    #distance non diff
+    #same distance
     if(vector[marker] %in% seg)
     {
       return(seg)

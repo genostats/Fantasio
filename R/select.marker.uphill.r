@@ -1,14 +1,14 @@
 select.marker.uphill <- function(x, vector, pas, random, unit)
 {
   random_snp <- random
-  if(unit=="Bases")                                  #recuperer les distances pour pouvoir trouver le marqueur le plus proche a chaque saut
+  if(unit=="Bases")                                  #get the distance to find the nearest markers
     dist <- x@snps$pos[vector]
   else
     dist <- x@snps$dist[vector]
   
   random_snp <- dist[random_snp]
   seg <- c()
-  marker  <- which.min(abs(dist-(random_snp+pas)))   #trouver la position dans vector du marqueur le plus proche en aval
+  marker  <- which.min(abs(dist-(random_snp+pas)))   #find the nearest marker downstream
   
   if((dist[marker] - random_snp) < pas)
   {
@@ -23,7 +23,7 @@ select.marker.uphill <- function(x, vector, pas, random, unit)
   while(marker < length(vector))
   {
     marker <- which.min(abs(dist-(dist[marker]+pas)))
-    #distance inferieur
+    #lower distance
     if((dist[marker] - dist[which(vector == seg[length(seg)])]) < pas)
     {
       if(marker == length(vector))

@@ -3,9 +3,31 @@
 \docType{class}
 \name{list.submaps-class}
 \alias{list.submaps-class}
+\alias{list.submaps-class}
 \title{Class list.submaps}
+\usage{
+\S4method{initialize}{list.submaps}(.Object, submaps, bedmatrix, segments_list,
+  bySegments, unit = NULL, gap = NULL)
+}
+\arguments{
+\item{.Object}{the object type}
+
+\item{submaps}{a list of submaps}
+
+\item{bedmatrix}{a bed.matrix object}
+
+\item{segments_list}{a list of segments object}
+
+\item{bySegments}{a boolean}
+
+\item{unit}{the unit in which are markers (cM or Bp)}
+
+\item{gap}{the gap used to create segments in the By Distance method}
+}
 \description{
 Class \code{list.submaps} This is the class used to create an object which will contains every dataframe and list created when creating submaps.
+
+Constructor method of list.submaps.
 }
 \section{Slots}{
 

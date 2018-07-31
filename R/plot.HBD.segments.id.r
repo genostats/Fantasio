@@ -31,19 +31,19 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
   if(length(id) == 0)
     stop("No individual founded, please make sure that typo is correct.")
   
-  HBD_segments_rbind <- do.call(rbind, HBD.segments) #coller toutes les lignes entres elles
+  HBD_segments_rbind <- do.call(rbind, HBD.segments) #binding lines 
   
   HBD <- subset(HBD_segments_rbind, HBD_segments_rbind$individual==individual.id & HBD_segments_rbind$family==family.id)
   if(nrow(HBD) == 0)
     stop("No individual founded, please make sure that typo is correct for individual.id and family.id arguments and in character.")
   
-  #traitement de l'options regions
+  #regions options
   if (missing(regions)) 
     myreg <- NULL
   else
     myreg <- regions
   
-  #donner un nom au fichier creer
+  #name the file
   if (missing(outfile)) 
     outfile <- paste("HBD_", individuals_name[id],"_",unit,".png",sep="")
   else {

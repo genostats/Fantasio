@@ -52,7 +52,7 @@ recap <- function(submaps, recap.by.segments=FALSE, list.id)
   	return(l)	
   }
   
-  #recuperer les probas HBD pour chaque sous cartes sous forme d'une liste
+  #list form for HBD probabilities and FLOD scores
   proba_HBD  <- submap.HBD(submaps)
   proba_FLOD <- submap.FLOD(submaps)
   

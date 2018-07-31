@@ -20,9 +20,8 @@ unit.plot.chr <- function(file, unit, byROHfile)
       stop("units parameter accepts 'cM' and 'bases' only")
     }
   }else{
-    #choisir dans quelle unite le plot sera fait
+    #choose which unit will be use for plot
     
-    #numero de colonne debut segment numero de colonne fin du segment dans le dataframe HBD_segments
     if (unit=="cM") {
       pos1 <- which(colnames(file)=="start_dist"); 
       pos2 <- which(colnames(file)=="end_dist");

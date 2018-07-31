@@ -90,7 +90,7 @@ makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSe
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
       s <- rbind(s, nextRNGStream(s[i-1,]))
-    cl <- makeForkCluster(n.cores) #create slaves
+    cl <- makeForkCluster(n.cores) #creation of slaves
     parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) #use of paralelisation
     submap <- parLapply(cl, 1:n, ff, run.festim = run.festim)
     stopCluster(cl)

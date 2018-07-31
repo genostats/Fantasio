@@ -12,7 +12,7 @@ setClass("msat.matrix", representation(
            msat = 'matrix',             # genotype matrix (nb msats x 2 nb inds)
            freq = 'matrix',             # allelic frequencies matrix (nb msat x max allele)
            # output slots
-       log.freq = 'matrix'              # previous log (il est utile qu'elle soit precalculee)
+       log.freq = 'matrix'              # previous log 
 ), contains = "f.matrix" )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object, ncol, nrow, ped, msat, map, freq, epsilon = 1e-3) {
