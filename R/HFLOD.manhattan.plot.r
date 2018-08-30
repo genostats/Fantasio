@@ -5,6 +5,7 @@
 #' @param submaps a list.submaps object
 #' @param regions a matrix containing the value to be highlighted in the plot
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
+#' @param MA a boolean indicating whether a red line has to be drawn for the moving average
 #'
 #' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line :
 #' @details - the chromosome number
@@ -20,7 +21,7 @@
 #' #Please refer to vignette 
 #'
 #' @export
-HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
+HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM", MA = TRUE)
 {
   if (class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
@@ -140,7 +141,8 @@ HFLOD.manhattan.plot <- function(submaps, regions, unit = "cM")
            cex = 0.75)
   }
   
-  lines(axis_mp, HFLOD$ALPHA, col = 2, lwd = 2)
+  if(MA)
+    lines(axis_mp, HFLOD$ALPHA, col = 2, lwd = 2)
   
   for (i in 1:length(unique(chromosome))) {
     abline(v = chr_pos[i], col = "grey", lwd = 2)

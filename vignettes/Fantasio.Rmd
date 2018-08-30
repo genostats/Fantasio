@@ -1,8 +1,9 @@
 ---
 title: "Fantasio"
+subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-08-01"
+date: "2018-08-30"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -13,9 +14,10 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-08-01
-meta-json: {"date":"2018-08-01","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
+date: 2018-08-30
+meta-json: {"date":"2018-08-30","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
 output: rmarkdown::html\_vignette
+subtitle: Version 0.1
 title: Fantasio
 version: 0.1
 vignette: %\VignetteIndexEntry{Vignette Title} %\VignetteDepends{Fantasio}
@@ -29,23 +31,22 @@ vignette: %\VignetteIndexEntry{Vignette Title} %\VignetteDepends{Fantasio}
     -   [1.2 Input HGDP-CEPH data file](#input-hgdp-ceph-data-file)
     -   [1.3 Creation of the bed matrix](#creation-of-the-bed-matrix)
 -   [2. Running Fantasio](#running-fantasio)
-    -   [2.1 By Hotspots (Default)](#by-hotspots-default)
-    -   [2.2 By Hotspots by Segments](#by-hotspots-by-segments)
-    -   [2.3 By Distance](#by-distance)
+    -   [2.1 Hotspots (Default)](#hotspots-default)
+    -   [2.2 Hotspots by Segments](#hotspots-by-segments)
+    -   [2.3 Distance](#distance)
     -   [2.4 How to use the segment.option
         argument](#how-to-use-the-segment.option-argument)
 -   [3. Step by step usage of the package
     Fantasio](#step-by-step-usage-of-the-package-fantasio)
-    -   [3.1 "By hotspots" method](#by-hotspots-method)
-    -   [3.2 "By Hotspot" "by segments"
-        method](#by-hotspot-by-segments-method)
-    -   [3.3 "By Distance" method](#by-distance-method)
+    -   [3.1 Hotspots](#hotspots)
+    -   [3.2 Hotspots by segments](#hotspots-by-segments-1)
+    -   [3.3 Distance](#distance-1)
 -   [4. Parallelism with the package](#parallelism-with-the-package)
 -   [5. Plotting](#plotting)
-    -   [5.1 HBD plot for a chromosome](#hbd-plot-for-a-chromosome)
-    -   [5.2 HBD plot for an individual](#hbd-plot-for-an-individual)
-    -   [5.3 HFLOD manhattan plot](#hflod-manhattan-plot)
-    -   [5.4 HFLOD for a chromosome](#hflod-for-a-chromosome)
+    -   [5.1 HFLOD manhattan plot](#hflod-manhattan-plot)
+    -   [5.2 HFLOD for a chromosome](#hflod-for-a-chromosome)
+    -   [5.3 HBD plot for a chromosome](#hbd-plot-for-a-chromosome)
+    -   [5.4 HBD plot for an individual](#hbd-plot-for-an-individual)
 
 Introduction
 ------------
@@ -120,12 +121,12 @@ shared homozygosity. Original homozygosity mapping requires that the
 genealogy of patients be known so that inbred patients can be identified
 and their respective \\(f\\) estimated. Leutenegger et al. (Leutenegger
 et al. 2006) proposed using the \\(f\\) estimated on genome-wide genetic
-data to compute a FLOD score, similar to Mortons LOD score (Morton
+data to compute a FLOD score, similar to Morton's LOD score (Morton
 1955).
 
 Genin et al. (Genin et al. 2012) adapted the FLOD formula for multiple
 submaps. FLOD(i)(m,s) is computed for each individual \\(i\\), each
-marker \\(m\\) on each submap \\(s\\), using the equation:
+marker \\(m\\) on each submap \\(s\\), using the equation (1):
 
 \\[FLOD^{(i)}(m,s) = log_{10}\frac{P\left(Y_{m,s}^{(i)} | H_{1}\right)}{P\left(Y_{m,s}^{(i)} | H_{0}\right)} = log_{10}\frac{P\left(X_{m,s}^{(i)}=1 | Y_{m,s}^{(i)}\right) + q.P\left(X_{m,s}^{(i)}=0 | Y_{m,s}^{(i)}\right)}{\hat{f}_s^{(i)} + q.\left(1-\hat{f}_s^{(i)}\right)}\\]
 
@@ -150,15 +151,13 @@ Genin et al. (Genin et al. 2012) proposed to detect fully penetrant rare
 recessive variants by performing homozygosity mapping on inbred cases
 from Genome-Wide Association Study (GWAS) data. Linkage evidence is then
 evaluated over the entire set I of inbred cases by computing a FLOD
-score, HFLOD(m,\\(\alpha\\)), at each marker m, with a heterogeneity
-parameter \\(\alpha\\), that takes into account the possibility that
-only a fraction of the inbred affected individuals carry diseases
-causing mutations:
+score, HFLOD(m,\\(\alpha\\)), at each marker *m*, in presence of genetic
+heterogeneity using a parameter \\(\alpha\\) (2):
 
 \\[HFLOD(m,\alpha)=\sum log_{10} \left[\alpha.\frac{P\left(Y_{m,s}^{(i)} | H_{1}\right)}{P\left(Y_{m,s}^{(i)} | H_{0}\right)}+ (1 - \alpha)\right ]= \sum log_{10} \left[\alpha . exp \left(FLOD^{(i)}(m)*log(10)\right)+(1-\alpha)\right] \\]
 This heterogeneity score is then maximized over \\(\alpha\\) to evaluate
 the evidence of linkage at marker *m* where \\(\alpha\\) is the estimate
-of the proportion of cases linked to this locus:
+of the proportion of cases linked to this locus (3):
 
 \\[HFLOD(m)=max_{\alpha}(HFLOD(m,\alpha))\\]
 
@@ -256,9 +255,11 @@ this population with the following command :
 Please refer to the manual function of read.bed.matrix, set.stats and
 select.inds if needed (package gaston).
 
-Please make sure that you have atleast some individuals with a phenotype
-of 2 (sick), the package only computes HBD, FLOD scores and HFLOD scores
-with attained individuals :
+By default, the package only computes HBD, FLOD scores and HFLOD scores
+for affected individuals (phenotype = 2). So make sure that affected
+individuals have status 2. In the case of the HGDP-CEPH data, there is
+no information on phenotypes so phenotype is 1. We show below how deal
+with this situation.
 
 You can insure that your bed.matrix object is created and have the data
 needed with :
@@ -370,60 +371,62 @@ and `createSegmentsListBySnps`. The first function
 the genome. The second function `makeAllSubmapsBySnps` or
 `makeAllSubsmapsbyHotspots` is used to create the submaps.
 
-### 2.1 By Hotspots (Default)
+### 2.1 Hotspots (Default)
 
 By default, the submaps are created using the file of recombination
-hotspots and summarizing the results for each snp.
+hotspots and summarizing the results for each snp that appears in a
+submap.
 
-    submaps2 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, verbose=FALSE, list.id = "all") 
+    F1 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, list.id = "all") 
 
 We require that at least n.consecutive.marker markers are HBD before
 calling a HBD segment. Default value for n.consecutive.marker=5.
 
 Here we need to use argument list.id = "all" because we do not have
 phenotype information for the HGDP-CEPH individuals. By default,
-Fantasio focuses on affected individuals only (status = 2).
+Fantasio focuses on affected individuals only (pheno = 2).
 
-### 2.2 By Hotspots by Segments
+### 2.2 Hotspots by Segments
 
-For the hotspots option, results can be summarized globally for each
-segment (recap.by.segments=TRUE). For this reason, n.consecutive.marker
-should be set to 1.
+For the "Hotspots" method, the results can also be summarized globally
+for each segment using option recap.by.segments=TRUE. In that case,
+n.consecutive.marker should be set to 1.
 
-    submaps3 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, recap.by.segments=TRUE, verbose=FALSE, n.consecutive.marker=1, list.id = "all")
+    F2 <- Fantasio(bedmatrix=x.me, segments="Hotspots", recap.by.segments=TRUE, n.consecutive.marker=1, n=5, list.id = "all")
 
-### 2.3 By Distance
+### 2.3 Distance
 
-    submaps4 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, verbose=FALSE, list.id = "all")
+    F3 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, list.id = "all")
 
 ### 2.4 How to use the segment.option argument
 
 In order to use the `segment.option` argument you need to pass a list of
-arguments, each variable names in the list must be an argument name in
+arguments, each variable name in the list must be an argument name in
 the function. The function that will be called is either
 `createsSegmentsListBySnps` if `segments` argument is equal to
 "Distance" or `createSegmentsListByHotspots` if `segments` argument is
-equal to "Hotspots" and the arguments list will be passed to it.
+equal to "Hotspots" and the arguments list will be passed to it. So
+refer to these functions for possible arguments.
 
     l <- list(number_of_marker=50) #default is 0
-    submaps5 <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, n=5, recap.by.segments=TRUE, list.id = "all")
+    F1.l <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, list.id = "all")
 
 In the case of "Hotspots", by default, we do not require to have a
-minimum number of markers in each hotspots segments (number\_of\_marker
-= 0). With the above command line, we impose to have at least 50 markers
-in each segment.
+minimum number of markers in each segment (number\_of\_marker = 0). With
+the above command line, we impose to have at least 50 markers in a
+segment. Otherwise it is merged with the previous segment.
 
 3. Step by step usage of the package Fantasio
 ---------------------------------------------
 
-### 3.1 "By hotspots" method
+### 3.1 Hotspots
 
 #### 3.1.1 Creation of the segments list
 
 We will now create segments, which will be use to create the submaps
 later, further explication below, for now use this command :
 
-    s <- createSegmentsListByHotspots(x.me)
+    s1 <- createSegmentsListByHotspots(x.me)
 
     ## You are currently using version hg19 of hotspot
     ## Gathering all hotspots for the genome : ......................
@@ -437,7 +440,7 @@ index.
 
 You can watch a summary of what was done with :
 
-    segmentsListSummary(s)
+    segmentsListSummary(s1)
 
     ##    chromosome number_of_segments number_of_markers
     ## 1           1                904             48532
@@ -474,7 +477,7 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    submaps <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE, list.id = "all") 
+    F1 <- makeAllSubmapsByHotspots(x.me, 5, s1, verbose=FALSE, list.id = "all") 
 
 For the sake of clarity we have only created 5 submaps, but generally we
 do 100.
@@ -485,203 +488,216 @@ This function will creates 5 submaps, all the parameters can be modified
 The variable submaps becomes an list.submaps object, you can watch the
 different elements of it with :
 
-    str(submaps) #careful it can become huge depending on your data sizes
+    str(F1) #careful it can become huge depending on your data sizes
 
-#### 3.1.3 Descrition of the object submaps
+#### 3.1.3 Descrition of the object F1
 
-This object contains all the results of the different computation
+This object contains all the results of the different computations
 executed during the process of creating n submaps. Here is a complete
 description of each structure in this object :
 
--   segments\_list : the object Segments created previously
+-   segments\_list : the object Segments created previously (s1)
 
 <!-- -->
 
-    str(submaps@segments_list) #careful it can become huge depending on your data sizes
+    str(F1@segments_list) #careful it can become huge depending on your data sizes
 
 -   atlas : the list of all the submaps created during the process. Each
-    element of the list is an S4 object. Depending on the method you
-    used the object can be either an `snsp.matrix` or an
-    `hotspots.matrix` (here we use the hotspots method). Each submaps
-    contains 15 slots :
--   submap : the index of each marker picked (index from the
-    bed.matrix object)
--   ncol : the total number of marker picked
--   nrow : the number of individuals
--   ped : a dataframe with all the individuals genotype
--   map : a dataframe with all the SNPS informations
--   epsilon : genotyping error rate
--   delta.dist : distance between each marker in cM/bp
--   log.emiss : log of all the emission probabilities of the hidden
-    Markov model
--   a : a matrix with all the a's estimation
--   f : a matrix with all the f's estimation
--   likelihood0 : a matrix with all the likehood under the null
-    hypothesis (\\(f=0\\))
--   likelihood1 : a matrix with all the likehood under the inbred
-    hypothesis (\\(f=1\\))
--   p.lrt : p value of the likelihood ratio test
--   HBD.prob : a matrix with all the HBD probabilities computed for each
-    individual
--   FLOD : a matrix with all the FLOD score computed
+    element of the list is a S4 object. Depending on the method you used
+    the object can be either a `snsp.matrix` or a `hotspots.matrix`
+    (here we use the hotspots method). Each submaps contains 15 slots :
+    -   submap : the index of each marker picked (index from the
+        bed.matrix object)
+    -   ncol : the total number of marker picked
+    -   nrow : the number of individuals
+    -   ped : a dataframe with all the individuals' genotypes
+    -   map : a dataframe with all the SNP information
+    -   epsilon : genotyping error rate
+    -   delta.dist : distance between each marker in cM/bp
+    -   log.emiss : log of all the emission probabilities of the hidden
+        Markov model
+    -   a : a matrix with all the a's estimation
+    -   f : a matrix with all the f's estimation
+    -   likelihood0 : a matrix with all the likehood under the null
+        hypothesis (\\(f=0\\))
+    -   likelihood1 : a matrix with all the likehood under the inbred
+        hypothesis (\\(f=1\\))
+    -   p.lrt : p value of the likelihood ratio test
+    -   HBD.prob : a matrix with all the HBD probabilities computed for
+        each individual
+    -   FLOD : a matrix with all the FLOD score computed
 
 <!-- -->
 
-    str(submaps@atlas)
+    str(F1@atlas)
 
 -   likelihood\_summary : a dataframe with all the likelihood0 and
     likelihood1 computed over the submaps.
 
 <!-- -->
 
-    str(submaps@likelihood_summary)
+    str(F1@likelihood_summary)
 
 -   estimation\_summary : a dataframe with all the a and f computed over
     the submaps
 
 <!-- -->
 
-    str(submaps@estimation_summary)
+    str(F1@estimation_summary)
 
--   marker\_summary : a dataframe, which gives the number of marker and
+-   marker\_summary : a dataframe, which gives the number of markers and
     the number of times it has been picked,
     -   number\_of\_time\_picked
     -   number\_of\_marker
 
 <!-- -->
 
-    str(submaps@marker_summary)
+    str(F1@marker_summary)
 
 -   submaps\_summary : a dataframe which gives several informations
     about the a and f computed over the submaps. The dataframe contains
     13 columns:
--   FID: family identifier
--   IID: individual identifier
--   STATUS: status (1 non-affected, 2 affected, 0 unknown)
--   SUBMAPS: number of submaps used
--   QUALITY: percentage of valid submaps (i.e. submaps with a &lt; 1)
--   F\_MIN: minimum f on valid submaps
--   F\_MAX: maximum f on valid submaps
--   F\_MEAN: mean f on valid submaps
--   F\_MEDIAN: median f on valid submaps (recommended to estimate f)
--   A\_MEDIAN: median a on valid submaps (recommended to estimate a)
--   pLRT\_MEDIAN: median p-value of LRT tests on valid submaps
--   INBRED: a flag indicating if the individual is inbred (pLRT\_MEDIAN
-    &lt; 0.05) or not
--   pLRT\_&lt;0.05: number of valid submaps with a LRT (likelihood
-    ratio test) having a p-value below 0.05
+    -   FID: family identifier
+    -   IID: individual identifier
+    -   STATUS: status (1 non-affected, 2 affected, 0 unknown)
+    -   SUBMAPS: number of submaps used
+    -   QUALITY: percentage of valid submaps (i.e. submaps with a
+        &lt; 1)
+    -   F\_MIN: minimum f on valid submaps
+    -   F\_MAX: maximum f on valid submaps
+    -   F\_MEAN: mean f on valid submaps
+    -   F\_MEDIAN: median f on valid submaps (recommended to estimate f)
+    -   A\_MEDIAN: median a on valid submaps (recommended to estimate a)
+    -   pLRT\_MEDIAN: median p-value of LRT tests on valid submaps
+    -   INBRED: a flag indicating if the individual is inbred
+        (pLRT\_MEDIAN &lt; 0.05) or not
+    -   pLRT\_&lt;0.05: number of valid submaps with a LRT (likelihood
+        ratio test) having a p-value below 0.05
 
 <!-- -->
 
-    head(submaps@submap_summary)
+    head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.01993197 0.02706728
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03763491 0.03905816
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03884944 0.04655960
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04836224 0.05451063
-    ## 5 HGDP00611 HGDP00611      1   1 / 5      20 0.00000000 0.00000000
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05192440 0.07965833
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02012532 0.02630424
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03742765 0.04005922
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03962259 0.04983545
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04832146 0.05742419
+    ## 5 HGDP00611 HGDP00611      1   1 / 5      20 0.01927667 0.01927667
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05703466 0.06644029
     ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02334382 0.02274882 0.13579408 2.017887e-26   TRUE             5
-    ## 2 0.03828485 0.03799225 0.06972208 4.837834e-58   TRUE             5
-    ## 3 0.04203845 0.04074831 0.10946784 2.858210e-47   TRUE             5
-    ## 4 0.05064581 0.04966111 0.16831656 8.994693e-64   TRUE             5
-    ## 5 0.00000000 0.00000000 0.01000000 1.000000e+00  FALSE             0
-    ## 6 0.06025320 0.05349119 0.34506197 7.611191e-40   TRUE             5
+    ## 1 0.02400508 0.02407550 0.13740382 1.540307e-25   TRUE             5
+    ## 2 0.03869280 0.03866159 0.07220007 1.332500e-60   TRUE             5
+    ## 3 0.04323533 0.04261130 0.11582650 1.019329e-52   TRUE             5
+    ## 4 0.05118390 0.04997174 0.15626069 3.931329e-61   TRUE             5
+    ## 5 0.01927667 0.01927667 0.90657301 2.841286e-07   TRUE             1
+    ## 6 0.06101142 0.06057668 0.33247146 7.416302e-46   TRUE             5
 
--   HBD\_recap : a dataframe, which contains a mean of all the HBD
-    inferences for an individual and a given marker.
+-   bySegments : a boolean indicating whether the creation of summary
+    statistics for HBD and FLOD has to be made by segments or not. By
+    default, it is FALSE. The description below of HBD\_recap and
+    FLOD\_recap depends on this choice.
+
+-   HBD\_recap : a dataframe with individuals in row and marker
+    positions in column. It contains the mean of the HBD probability at
+    a marker over the submaps for each individual. If the marker only
+    appears in one submap (no mean needed), then it is just the HBD
+    proba for that marker in that submap.
 
 <!-- -->
 
-    submaps@HBD_recap[1:10, 1:10] # an individual * marker matrix
+    F1@HBD_recap[1:10, 1:10] # an individual * marker matrix
 
--   FLOD\_recap : a dataframe, which contains a mean of all the FLOD
-    scores for an individual and a given marker.
+-   FLOD\_recap : a dataframe like above. It contains the mean of the
+    FLOD score at a marker over the submaps for each individual. Again
+    if a marker only appears in one submap, no mean is needed.
 
 <!-- -->
 
-    submaps@FLOD_recap[1:10, 1:10] # an individual * marker matrix
+    F1@FLOD_recap[1:10, 1:10] # an individual * marker matrix
 
 -   HBD\_segments : a list of dataframe, each datafram is for an
-    individuals, each dataframe contain a list of segment which will be
-    used for plotting
+    individual and it contains a list of HBD segments (start and
+    end positions). By default, a region is HBD if it contains at least
+    5 markers (n.consecutive.marker=5) with a HBD probability larger
+    than 0.5 (threshold=0.5).
 
 <!-- -->
 
-    str(submaps@HBD_segments[[1]])
+    str(F1@HBD_segments[[1]])
 
 -   HFLOD : a dataframe with the value of HFLOD scores for every markers
-    through all submaps.
+    that appeared at least once in a submap. It uses the formula (2)
+    with FLOD\_recap to obtain HFLOD.
 
 <!-- -->
 
-    str(submaps@HFLOD)
+    str(F1@HFLOD)
 
 -   bedmatrix : the bedmatrix object
 
 <!-- -->
 
-    str(submaps@bedmatrix)
-
--   bySegments : a boolean indicating wheater the creation of summary
-    statistics was made by segments or not
+    str(F1@bedmatrix)
 
 -   unit : the unit of the marker (cM or Bp).
 
--   gap : the value of the gap used to pick marker when doing submaps
-    by Distance.
+### 3.2 Hotspots by segments
 
-### 3.2 "By Hotspot" "by segments" method
+We implemented a second inner method for the "Hotspots" method. The only
+paramater that changes is `recap.by.segments`, it is put to TRUE.
 
-We implemented a second inner method of the "By Hotspots" method. The
-only paramater that changes is `recap.by.segments`, it is put to TRUE.
-In the default "Hotspot" method the HBD probabilities and FLOD scores
-are computed for each marker randomly selected on each segment for the n
-submaps.
+In the default "Hotspots" method the HBD probabilities and FLOD scores
+are computed for each marker (see above).
 
-With the "Hotspot by segment" method HBD probabilities and FLOD scores
-correspond to the mean of HBD probabilities and FLOD score of each
-marker randomly selected on a segment for the n submaps in such a way
-that there is only one value for a segment.
+With the "Hotspots by segment" method, HBD probabilities and FLOD scores
+correspond to the mean of HBD probabilities and FLOD score of all the
+markers of a segment that have been selected in one of the sumaps. There
+is hence only one value for a segment delimited by hotspots. So we also
+recommend to set n.consecutive.marker to 1. Since results over multiple
+markers have already been averaged.
 
 #### 3.2.1 Creation of the segments list
 
-We use the same segment list that is used before (s).
+We use the same segment list that is used before (s1).
 
 #### 3.2.2 Creation of the submaps and computation
 
 As said before the only argument that changes is "recap.by.segments", it
-is put to TRUE.
+is put to TRUE. And we recommend to adjust "n.consecutive.marker".
 
-    submaps0 <- makeAllSubmapsByHotspots(x.me, 5, s, verbose=FALSE, recap.by.segments = TRUE, list.id = "all")
+    F2 <- makeAllSubmapsByHotspots(x.me, 5, s1, verbose=FALSE, recap.by.segments = TRUE, n.consecutive.marker=1, list.id = "all")
 
-### 3.3 "By Distance" method
+### 3.3 Distance
 
 #### 3.3.1 Creation of the segments list
 
-We will now create segments, which will be use to create the submaps
+We will now create segments, which will be used to create the submaps
 later :
 
-    s1 <- createSegmentsListBySnps(x.me)
+    s3 <- createSegmentsListBySnps(x.me)
 
     ## Finding segments for the genome : .......................
     ## Finding which markers are between two segments: .......................
     ## Finding mini segments .......................
 
-This function creates a list of chromosomes, in each, you have a list of
-several segments created thanks to the the gaps between markers, the
-value of the gap is given in argument, in each segments you have SNPS
-index. The function creates an object which will contains three slots :
+This function creates segments based on the markers available in the
+data and the gaps between them. The value of the gap is imposed by the
+minimun step required between markers. If 2 adjacent markers have an
+inter-distance larger than the step, then there is a gap between them.
+The first marker of the pair is the end of a segment and the second
+marker is the start of a new segment. The function creates an object
+which will contain three slots :
 
--   gap : the value of the gap
+-   gap : the value of the minimal fix step required between sampled
+    markers of a submap
 -   unit : the unit of the markers ("cM" or "Bp")
--   snps.segments : the list of segments
+-   snps.segments : for each chromosome, the list of segments; each
+    segment being a list of SNP indexes
 
 You can watch a summary of what was done with :
 
-    segmentsListSummary(s1)
+    segmentsListSummary(s3)
 
 This function creates a dataframe with three colums :
 
@@ -694,24 +710,23 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    submaps1 <- makeAllSubmapsBySnps(x.me, 5, s1, verbose=FALSE, list.id = "all")
+    F3 <- makeAllSubmapsBySnps(x.me, 5, s3, verbose=FALSE, list.id = "all")
 
 The variable submaps becomes an list.submaps object, you can watch the
 different elements of it with :
 
-    str(submaps1) #careful it can become huge depending on your data sizes
+    str(F3) #careful it can become huge depending on your data sizes
 
 4. Parallelism with the package
 -------------------------------
 
 We implemented a paralellism method to make the creation of the submaps
-more efficient (we paralellised the creation of the submaps, that is to
-say, the selection of markers). Make sure to have a Linux environment or
-one that can support the usage of multiple CPU.
+more efficient. We paralellized the creation of the submaps, that is to
+say, the selection of markers. Make sure to have an environment that can
+support the usage of multiple CPU.
 
-In order to use it, use the `n.cores` argument, i.e : the number of CPU
-that will be used to make the differents submaps in the following
-functions :
+Use the `n.cores` argument, i.e the number of CPU that will be used to
+make the differents submaps in the following functions :
 
 -   Fantasio
 -   makeAllSubmapsByHotspots
@@ -719,41 +734,45 @@ functions :
 
 <!-- -->
 
-    submaps6 <- Fantasio(bedmatrix=x.me, segments="Hotspot", n=5, verbose=FALSE, n.cores=10, list.id = "all")
+    F6 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, verbose=FALSE, n.cores=10, list.id = "all")
 
 5. Plotting
 -----------
 
-### 5.1 HBD plot for a chromosome
+### 5.1 HFLOD manhattan plot
 
-    HBD.plot.chr(submaps, chr=20)
+    HFLOD.manhattan.plot(F1)
 
-![](Fantasio_files/figure-markdown_mmd/fig1-1.png)
+![](Fantasio_files/figure-markdown_mmd/fig3-1.png) The red lines that
+you see is the value of alpha for the markers.
 
-### 5.2 HBD plot for an individual
+### 5.2 HFLOD for a chromosome
 
-    HBD.plot.id(submaps, individual.id = "HGDP00649", family.id = "HGDP00649")
-
-![](Fantasio_files/figure-markdown_mmd/fig2-1.png)
-
-### 5.3 HFLOD manhattan plot
-
-    HFLOD.manhattan.plot(submaps)
-
-![](Fantasio_files/figure-markdown_mmd/fig3-1.png)
-
--   The red lines that you see is the value of alpha for the markers.
-
-### 5.4 HFLOD for a chromosome
-
-    HFLOD.plot.chr(submaps, chr=20)
+    HFLOD.plot.chr(F1, chr=15)
 
 ![](Fantasio_files/figure-markdown_mmd/fig4-1.png)
 
--   As you can see you have a red line plotted, it gives the moving
-    average of the HFLOD, calculated on moving windows of 50 markers
-    with the rollmean function of the R package zoo. This allows
-    checking the consistency of HFLOD calculations (i.e. checking the
-    fact that a high FLOD score is not due to one submap only). A moving
-    average is computed to remove the impact of a submap with a false
+-   As you can see you have a red line plotted, it is the moving average
+    of the HFLOD, calculated on moving windows of 50 markers with the
+    rollmean function of the R package zoo. This allows checking the
+    consistency of HFLOD calculations (i.e. checking the fact that a
+    high HFLOD score is not due to one submap only). A moving average is
+    computed to remove the impact of a submap with a false
     positive signal.
+
+-   For method "Hotspots by segments", the use of the moving average
+    does not make much sense as results are already average over the
+    snps of a segment between hospots regions. We recommend
+    using MA=FALSE.
+
+### 5.3 HBD plot for a chromosome
+
+    HBD.plot.chr(F1, chr=15)
+
+![](Fantasio_files/figure-markdown_mmd/fig1-1.png)
+
+### 5.4 HBD plot for an individual
+
+    HBD.plot.id(F1, individual.id = "HGDP00649", family.id = "HGDP00649")
+
+![](Fantasio_files/figure-markdown_mmd/fig2-1.png)

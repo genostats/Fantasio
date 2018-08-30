@@ -7,6 +7,7 @@
 #' @param chr the chromosome number from which to plot HFLOD score
 #' @param regions a matrix containing the value to ve highlighted in the plot
 #' @param color2 the color of the regions highlighted (default is "green4")
+#' @param MA a boolean indicating whether a red line has to be drawn for the moving average
 #' @param nbSNP_MA number of SNP for the moving average (default is 50)
 #' 
 #' @details If you use the regions options make sure to pass a matrix containing one line per region to be highlighted with in each line : 
@@ -23,7 +24,7 @@
 #' #Please refer to vignette 
 #'
 #' @export
-HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", nbSNP_MA = 50) 
+HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA = TRUE, nbSNP_MA = 50) 
 {
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
@@ -114,7 +115,8 @@ HFLOD.plot.chr <- function(submaps, unit = "cM", chr, regions, color2="green4", 
   
   abline(h=3.3,col="grey",lwd=2)
   
-  lines(toplot_pos, zoo::rollmean(toplot_HFLOD, as.numeric(nbSNP_MA), fill = "extend"), col="red", lwd=2)
+  if(MA)
+    lines(toplot_pos, zoo::rollmean(toplot_HFLOD, as.numeric(nbSNP_MA), fill = "extend"), col="red", lwd=2)
   
   axis_mp <- c(axis_mp, max(c(0,axis_mp))+10+toplot_pos)
   chr_pos <- c(chr_pos, max(c(0,axis_mp))+5)
