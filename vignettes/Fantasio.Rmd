@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-08-30"
+date: "2018-08-31"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,8 +14,8 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-08-30
-meta-json: {"date":"2018-08-30","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
+date: 2018-08-31
+meta-json: {"date":"2018-08-31","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
@@ -579,19 +579,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02012532 0.02630424
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03742765 0.04005922
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03962259 0.04983545
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04832146 0.05742419
-    ## 5 HGDP00611 HGDP00611      1   1 / 5      20 0.01927667 0.01927667
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05703466 0.06644029
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02246998 0.02993110
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03713321 0.04217869
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03899739 0.04834033
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04325620 0.05304397
+    ## 5 HGDP00611 HGDP00611      1   0 / 5      NA         NA         NA
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05636813 0.07462500
     ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02400508 0.02407550 0.13740382 1.540307e-25   TRUE             5
-    ## 2 0.03869280 0.03866159 0.07220007 1.332500e-60   TRUE             5
-    ## 3 0.04323533 0.04261130 0.11582650 1.019329e-52   TRUE             5
-    ## 4 0.05118390 0.04997174 0.15626069 3.931329e-61   TRUE             5
-    ## 5 0.01927667 0.01927667 0.90657301 2.841286e-07   TRUE             1
-    ## 6 0.06101142 0.06057668 0.33247146 7.416302e-46   TRUE             5
+    ## 1 0.02589707 0.02501591 0.15399326 5.441178e-26   TRUE             5
+    ## 2 0.03959575 0.03842216 0.07167646 5.398908e-59   TRUE             5
+    ## 3 0.04232175 0.04112992 0.12873482 1.085297e-49   TRUE             5
+    ## 4 0.04871487 0.04821686 0.14452957 3.625466e-58   TRUE             5
+    ## 5         NA         NA         NA           NA     NA            NA
+    ## 6 0.06219421 0.05900198 0.32598183 2.262699e-42   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -743,8 +743,10 @@ make the differents submaps in the following functions :
 
     HFLOD.manhattan.plot(F1)
 
-![](Fantasio_files/figure-markdown_mmd/fig3-1.png) The red lines that
-you see is the value of alpha for the markers.
+![](Fantasio_files/figure-markdown_mmd/fig3-1.png)
+
+-   The red lines that you see is the value of the moving average (more
+    information below).
 
 ### 5.2 HFLOD for a chromosome
 
