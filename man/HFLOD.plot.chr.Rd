@@ -5,7 +5,7 @@
 \title{Plot of the HFLOD}
 \usage{
 HFLOD.plot.chr(submaps, unit = "cM", chr, regions, color2 = "green4",
-  nbSNP_MA = 50)
+  MA = TRUE, nbSNP_MA = 50)
 }
 \arguments{
 \item{submaps}{a list.submaps object}
@@ -17,6 +17,8 @@ HFLOD.plot.chr(submaps, unit = "cM", chr, regions, color2 = "green4",
 \item{regions}{a matrix containing the value to ve highlighted in the plot}
 
 \item{color2}{the color of the regions highlighted (default is "green4")}
+
+\item{MA}{a boolean indicating whether a red line has to be drawn for the moving average}
 
 \item{nbSNP_MA}{number of SNP for the moving average (default is 50)}
 }

@@ -14,6 +14,8 @@ data(hotspot_hg17)
 \description{
 These datasets are data frames containing position and intensity of hotspots in the human genome,
 for releases hg17 (build 35), hg18 (build 36) and hg19 (build 37).
+The hotspot for hg17 were downloaded from the HapMap ftp repository. 
+They were converted to other builds (hg18, hg19) using hgLiftOver.
 }
 \details{
 The variables are:
@@ -26,5 +28,10 @@ The variables are:
   \item IntensitycMMb. Intensity in M / Mb
   \item TotaldistancecM. Total distance in cM
 }
+}
+\references{
+Hg17 hotspots: \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/recombination/2006-10_rel21_phaseI+II/hotspots/hotspots.txt.gz}
+
+hgLiftOver: \url{http://genome.ucsc.edu/cgi-bin/hgLiftOver}
 }
 \keyword{datasets}

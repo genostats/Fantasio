@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-08-31"
+date: "2018-09-07"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,15 +14,13 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-08-31
-meta-json: {"date":"2018-08-31","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
+date: 2018-09-07
+meta-json: {"date":"2018-09-07","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
 version: 0.1
-vignette: %\VignetteIndexEntry{Vignette Title} %\VignetteDepends{Fantasio}
-  %\VignettePackage{Fantasio} %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+vignette: % % % % %
 
 -   [Introduction](#introduction)
     -   [Principal concepts](#principal-concepts)
@@ -202,7 +200,7 @@ After doing that we will need to run the following commands :
     ## 
     ##     LdFlags
 
-    ## Gaston set number of threads to 8. Use setThreadOptions() to modify this.
+    ## Gaston set number of threads to 2. Use setThreadOptions() to modify this.
 
     ## 
     ## Attaching package: 'gaston'
@@ -235,8 +233,8 @@ for the data file we loaded from the package HGDP.CEPH with this command
 
     x <- read.bed.matrix(filepath)
 
-    ## Reading /ext/home/haupe/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /ext/home/haupe/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
 
 This command returns an updated 'bed.matrix' object (refer to gaston
 vignette for more informations and function documentation) :
@@ -356,14 +354,14 @@ n submaps :
 -   By "Distance" : with this method we use a fix step based on genetic
     or physiscal distance (0.5 cM by default) to pick a marker randomly
     along the genome. More technically, segments are created whenever
-    there is a gap larger than the step (0.5 cM) between
-    adjacent markers. Each segment is then subdivided in
-    several mini-segments. By default we create 20 mini-segments, each
-    containing at least 50 markers. If this is not possible (not enough
-    markers), we do not create mini-segments. After this process is
-    done, we loop over the mini-segments, pick a random marker and walk
-    through the mini-segments by picking the nearest marker after taking
-    a step (default 0.5 cM) downstream and upstream the mini-segments.
+    there is a gap larger than the step (0.5 cM) between adjacent
+    markers. Each segment is then subdivided in several mini-segments.
+    By default we create 20 mini-segments, each containing at least 50
+    markers. If this is not possible (not enough markers), we do not
+    create mini-segments. After this process is done, we loop over the
+    mini-segments, pick a random marker and walk through the
+    mini-segments by picking the nearest marker after taking a step
+    (default 0.5 cM) downstream and upstream the mini-segments.
 
 The wrapper calls two different functions : `createSegmentsListBySnps`
 and `createSegmentsListBySnps`. The first function
@@ -579,19 +577,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02246998 0.02993110
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03713321 0.04217869
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03899739 0.04834033
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04325620 0.05304397
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02208953 0.02730377
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03768399 0.04132857
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.04122937 0.04996380
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04647613 0.06416512
     ## 5 HGDP00611 HGDP00611      1   0 / 5      NA         NA         NA
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05636813 0.07462500
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05113056 0.06545883
     ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02589707 0.02501591 0.15399326 5.441178e-26   TRUE             5
-    ## 2 0.03959575 0.03842216 0.07167646 5.398908e-59   TRUE             5
-    ## 3 0.04232175 0.04112992 0.12873482 1.085297e-49   TRUE             5
-    ## 4 0.04871487 0.04821686 0.14452957 3.625466e-58   TRUE             5
+    ## 1 0.02496142 0.02507461 0.16061709 1.164785e-24   TRUE             5
+    ## 2 0.03968269 0.03972643 0.08127949 1.178367e-57   TRUE             5
+    ## 3 0.04356668 0.04202954 0.13969001 1.077575e-48   TRUE             5
+    ## 4 0.05373801 0.05315867 0.15775183 1.269820e-62   TRUE             5
     ## 5         NA         NA         NA           NA     NA            NA
-    ## 6 0.06219421 0.05900198 0.32598183 2.262699e-42   TRUE             5
+    ## 6 0.05794565 0.05821704 0.31277868 9.058294e-37   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -617,10 +615,10 @@ description of each structure in this object :
     F1@FLOD_recap[1:10, 1:10] # an individual * marker matrix
 
 -   HBD\_segments : a list of dataframe, each datafram is for an
-    individual and it contains a list of HBD segments (start and
-    end positions). By default, a region is HBD if it contains at least
-    5 markers (n.consecutive.marker=5) with a HBD probability larger
-    than 0.5 (threshold=0.5).
+    individual and it contains a list of HBD segments (start and end
+    positions). By default, a region is HBD if it contains at least 5
+    markers (n.consecutive.marker=5) with a HBD probability larger than
+    0.5 (threshold=0.5).
 
 <!-- -->
 
@@ -759,13 +757,13 @@ make the differents submaps in the following functions :
     rollmean function of the R package zoo. This allows checking the
     consistency of HFLOD calculations (i.e. checking the fact that a
     high HFLOD score is not due to one submap only). A moving average is
-    computed to remove the impact of a submap with a false
-    positive signal.
+    computed to remove the impact of a submap with a false positive
+    signal.
 
 -   For method "Hotspots by segments", the use of the moving average
     does not make much sense as results are already average over the
-    snps of a segment between hospots regions. We recommend
-    using MA=FALSE.
+    snps of a segment between hospots regions. We recommend using
+    MA=FALSE.
 
 ### 5.3 HBD plot for a chromosome
 

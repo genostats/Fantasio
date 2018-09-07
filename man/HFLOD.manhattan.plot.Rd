@@ -4,7 +4,8 @@
 \alias{HFLOD.manhattan.plot}
 \title{Creation of an manhattan plot of the HFLOD}
 \usage{
-HFLOD.manhattan.plot(submaps, regions, unit = "cM")
+HFLOD.manhattan.plot(submaps, regions, unit = "cM", MA = TRUE,
+  nbSNP_MA = 50)
 }
 \arguments{
 \item{submaps}{a list.submaps object}
@@ -12,6 +13,10 @@ HFLOD.manhattan.plot(submaps, regions, unit = "cM")
 \item{regions}{a matrix containing the value to be highlighted in the plot}
 
 \item{unit}{the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")}
+
+\item{MA}{a boolean indicating whether a red line has to be drawn for the moving average}
+
+\item{nbSNP_MA}{number of SNP for the moving average (default is 50)}
 }
 \value{
 This function returns a manhattan plot of all the HFLOD score over all the chromosome

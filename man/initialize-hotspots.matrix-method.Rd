@@ -5,8 +5,8 @@
 \alias{initialize,hotspots.matrix-method}
 \title{Constructor method of hotspots.matrix.}
 \usage{
-\S4method{initialize}{hotspots.matrix}(.Object, ncol, nrow, submap, ped, map,
-  log.emiss, epsilon = 0.001)
+\S4method{initialize}{hotspots.matrix}(.Object, ncol, nrow, submap, ped,
+  map, log.emiss, epsilon = 0.001)
 }
 \arguments{
 \item{.Object}{the object type}
