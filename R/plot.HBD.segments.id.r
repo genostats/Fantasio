@@ -11,7 +11,7 @@
 #*** return a plot                                                               #
 ##################################################################################
 
-plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, regions, outfile, build)
+plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, regions, outfile, build)
 {
   if(!is.character(individual.id))
     return("Need individual id as character")
@@ -19,7 +19,7 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
     return("Need family id as character")
   
   HBD.recap <- Submaps@HBD_recap
-  HBD.segments <- Submaps@HBD_segments
+  HBDsegments <- Submaps@HBDsegments
 
   individuals_name <- rownames(HBD.recap)#get the name of the individual
   individuals_name <- strsplit(individuals_name, "_")
@@ -31,9 +31,9 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
   if(length(id) == 0)
     stop("No individual founded, please make sure that typo is correct.")
   
-  HBD_segments_rbind <- do.call(rbind, HBD.segments) #binding lines 
+  HBDsegments_rbind <- do.call(rbind, HBDsegments) #binding lines 
   
-  HBD <- subset(HBD_segments_rbind, HBD_segments_rbind$individual==individual.id & HBD_segments_rbind$family==family.id)
+  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$individual==individual.id & HBDsegments_rbind$family==family.id)
   if(nrow(HBD) == 0)
     stop("No individual founded, please make sure that typo is correct for individual.id and family.id arguments and in character.")
   
@@ -50,6 +50,6 @@ plot.HBD.segments.id <- function(Submaps, unit= "cM", individual.id, family.id, 
     outfile <- paste(outfile,".png",sep="") 
   }
 
-  plot.segments.id(fileOrSubmaps=HBD, individual.id=id, unit = unit, regions = myreg, main=paste("HBD segments of ",family.id, "_", individual.id, sep = ""), build=build)
+  plot.segments.id(fileOrSubmaps=HBD, individual.id=id, unit = unit, regions = myreg, main=paste("HBDsegments of ",family.id, "_", individual.id, sep = ""), build=build)
 }
 

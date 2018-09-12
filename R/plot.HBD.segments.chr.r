@@ -12,10 +12,10 @@
 #*** return a new submap object                                                  #
 ##################################################################################
 
-plot.HBD.segments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile, build)
+plot.HBDsegments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile, build)
 {
   HBD.recap <- Submaps@HBD_recap
-  HBD.segments <- Submaps@HBD_segments
+  HBDsegments <- Submaps@HBDsegments
   
   if(missing(list.ids)) 
   {
@@ -33,10 +33,10 @@ plot.HBD.segments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile
     myreg <- regions[regions$chr == chr,]
   }
 
-  #Get the lines for the wanted chromosome in the HBD_segments dataframe
-  HBD_segments_rbind <- do.call(rbind, HBD.segments) #bniding lines
+  #Get the lines for the wanted chromosome in the HBDsegments dataframe
+  HBDsegments_rbind <- do.call(rbind, HBDsegments) #bniding lines
   
-  HBD <- subset(HBD_segments_rbind, HBD_segments_rbind$chromosome==chr)#only the wanted lines
+  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$chromosome==chr)#only the wanted lines
   
   HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
   

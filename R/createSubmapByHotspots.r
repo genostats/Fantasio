@@ -41,7 +41,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' @details If you are using a fileName, please make sure to have one marker per line.
 #' @details This function is used internally in the package by the function makeAllSubmapsByHotspots
 #' 
-#' @return return an hotspots.matrix object with some of his slots filled.
+#' @return return an HostspotsMatrix object with some of his slots filled.
 #' 
 #' @seealso makeSubmapsByHotspots
 #' 
@@ -52,7 +52,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' @export
 createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
-  if(class(segmentsList)[1] != "hotspot.segments")
+  if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")
   
   if(!missing(fileName))
@@ -88,7 +88,7 @@ createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, file
   
   log.emiss <- bed.logEmiss(bedmatrix, submap, epsilon)
 
-  new("hotspots.matrix", length(submap), nrow(bedmatrix), submap, 
+  new("HostspotsMatrix", length(submap), nrow(bedmatrix), submap, 
       bedmatrix@ped[,c("famid", "id", "father", "mother", "sex", "pheno")],
       map, log.emiss, epsilon)
 

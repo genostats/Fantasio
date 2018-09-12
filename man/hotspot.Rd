@@ -25,7 +25,7 @@ The variables are:
   \item Start. Start of the hotspot
   \item End.  End of the hotspot
   \item Widthkb. Width of the hotposts in kb
-  \item IntensitycMMb. Intensity in M / Mb
+  \item IntensitycMMb. Intensity in cM / Mb
   \item TotaldistancecM. Total distance in cM
 }
 }

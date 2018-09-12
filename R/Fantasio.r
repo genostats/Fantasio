@@ -18,7 +18,7 @@
 #' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
 #' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments
+#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments
 #' 
 #' 
 #' @details This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function : 

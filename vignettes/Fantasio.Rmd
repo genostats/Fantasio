@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-09-07"
+date: "2018-09-12"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,20 +14,21 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-09-07
-meta-json: {"date":"2018-09-07","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
+date: 2018-09-12
+meta-json: {"date":"2018-09-12","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
 version: 0.1
-vignette: % % % % %
+vignette: %\VignetteIndexEntry{Vignette Title} %\VignetteDepends{Fantasio}
+  %\VignettePackage{Fantasio} %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 
 -   [Introduction](#introduction)
     -   [Principal concepts](#principal-concepts)
 -   [1. Getting started](#getting-started)
     -   [1.1 Installation](#installation)
-    -   [1.2 Input HGDP-CEPH data file](#input-hgdp-ceph-data-file)
-    -   [1.3 Creation of the bed matrix](#creation-of-the-bed-matrix)
+    -   [1.2 Example data: HGDP-CEPH](#example-data-hgdp-ceph)
 -   [2. Running Fantasio](#running-fantasio)
     -   [2.1 Hotspots (Default)](#hotspots-default)
     -   [2.2 Hotspots by Segments](#hotspots-by-segments)
@@ -41,7 +42,7 @@ vignette: % % % % %
     -   [3.3 Distance](#distance-1)
 -   [4. Parallelism with the package](#parallelism-with-the-package)
 -   [5. Plotting](#plotting)
-    -   [5.1 HFLOD manhattan plot](#hflod-manhattan-plot)
+    -   [5.1 HFLODManhattanPlot](#hflodmanhattanplot)
     -   [5.2 HFLOD for a chromosome](#hflod-for-a-chromosome)
     -   [5.3 HBD plot for a chromosome](#hbd-plot-for-a-chromosome)
     -   [5.4 HBD plot for an individual](#hbd-plot-for-an-individual)
@@ -162,22 +163,18 @@ of the proportion of cases linked to this locus (3):
 1. Getting started
 ------------------
 
-The first thing you should know is that the package Fantasio depends on
-package gaston, please make sure to have it installed.
-
-Please refer to the vignette of this package for more information.
-
-Since we explained the concept behind the package let's make a usage
-example of it. For this we will use the data provided in the package
-HGDP-CEPH.
+The package `Fantasio` depends on `gaston`. Hereafter the functions of
+this package are used for data manipulation. If you are not familiar
+with `gaston`, please refer to the vignette of this package for more
+information.
 
 ### 1.1 Installation
 
-First and faremost install the package with the following command :
+First and foremost install the package with the following command:
 
     install.packages("Fantasio")
 
-After doing that we will need to run the following commands :
+After that we can load the package.
 
     require(Fantasio) 
 
@@ -200,7 +197,7 @@ After doing that we will need to run the following commands :
     ## 
     ##     LdFlags
 
-    ## Gaston set number of threads to 2. Use setThreadOptions() to modify this.
+    ## Gaston set number of threads to 4. Use setThreadOptions() to modify this.
 
     ## 
     ## Attaching package: 'gaston'
@@ -213,31 +210,29 @@ After doing that we will need to run the following commands :
     ## 
     ##     cbind, rbind
 
-### 1.2 Input HGDP-CEPH data file
+### 1.2 Example data: HGDP-CEPH
+
+We illustrate the usage of the package with the data provided in the
+data package HGDP-CEPH. First, we need to install it:
 
     install.packages("HGDP.CEPH", repos="https://genostats.github.io/R/") 
+
+We can load the HGDP-CEPH data as follows:
 
     require(HGDP.CEPH)
 
     ## Loading required package: HGDP.CEPH
 
-From now on, we can use the package.
-
     filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
-
-### 1.3 Creation of the bed matrix
-
-Let us first create a bed.matrix object (see gaston package for details)
-for the data file we loaded from the package HGDP.CEPH with this command
-:
-
     x <- read.bed.matrix(filepath)
 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /home/rv/R/R-3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /home/rv/R/R-3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
 
-This command returns an updated 'bed.matrix' object (refer to gaston
-vignette for more informations and function documentation) :
+The object`x` is a bed.matrix object (see gaston package for details).
+
+We are going to work on the Bedouin population, so after updating the
+stats in `x`, we select this population:
 
     x <- set.stats(x)
 
@@ -245,123 +240,35 @@ vignette for more informations and function documentation) :
     ## 'p' has been set. 
     ## 'mu' and 'sigma' have been set.
 
-Here we only want to work on the Bedouin's population, so we selected
-this population with the following command :
-
-    x.me <- select.inds(x, population == "Bedouin")
-
-Please refer to the manual function of read.bed.matrix, set.stats and
-select.inds if needed (package gaston).
-
-By default, the package only computes HBD, FLOD scores and HFLOD scores
-for affected individuals (phenotype = 2). So make sure that affected
-individuals have status 2. In the case of the HGDP-CEPH data, there is
-no information on phenotypes so phenotype is 1. We show below how deal
-with this situation.
-
-You can insure that your bed.matrix object is created and have the data
-needed with :
-
-    str(x.me)
-
-    ## Formal class 'bed.matrix' [package "gaston"] with 8 slots
-    ##   ..@ ped                 :'data.frame': 48 obs. of  34 variables:
-    ##   .. ..$ famid      : chr [1:48] "HGDP00607" "HGDP00608" "HGDP00609" "HGDP00610" ...
-    ##   .. ..$ id         : chr [1:48] "HGDP00607" "HGDP00608" "HGDP00609" "HGDP00610" ...
-    ##   .. ..$ father     : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ mother     : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ sex        : int [1:48] 2 1 1 1 1 2 2 2 2 1 ...
-    ##   .. ..$ pheno      : int [1:48] 1 1 1 1 1 1 1 1 1 1 ...
-    ##   .. ..$ population : Factor w/ 57 levels "Adygei","Balochi",..: 10 10 10 10 10 10 10 10 10 10 ...
-    ##   .. ..$ region     : Factor w/ 27 levels "Algeria (Mzab)",..: 12 12 12 12 12 12 12 12 12 12 ...
-    ##   .. ..$ region7    : Factor w/ 7 levels "Africa","America",..: 6 6 6 6 6 6 6 6 6 6 ...
-    ##   .. ..$ H952       : logi [1:48] TRUE TRUE TRUE TRUE TRUE TRUE ...
-    ##   .. ..$ N0         : int [1:48] 56890 58576 58375 60261 53403 61180 54121 55903 61857 62151 ...
-    ##   .. ..$ N1         : int [1:48] 192705 189349 190265 186828 203585 183119 199168 196327 183012 180747 ...
-    ##   .. ..$ N2         : int [1:48] 394377 395838 394286 396726 386823 399508 390610 391298 398496 401153 ...
-    ##   .. ..$ NAs        : int [1:48] 301 510 1347 458 462 466 374 745 908 222 ...
-    ##   .. ..$ N0.x       : int [1:48] 1514 3766 4313 4160 4434 1476 1491 1540 2261 4107 ...
-    ##   .. ..$ N1.x       : int [1:48] 4936 0 0 0 0 4847 5354 5112 3243 0 ...
-    ##   .. ..$ N2.x       : int [1:48] 10017 12688 12136 12289 12008 10140 9599 9810 10953 12361 ...
-    ##   .. ..$ NAs.x      : int [1:48] 5 18 23 23 30 9 28 10 15 4 ...
-    ##   .. ..$ N0.y       : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ N1.y       : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ N2.y       : int [1:48] 0 10 10 10 10 0 0 0 0 10 ...
-    ##   .. ..$ NAs.y      : int [1:48] 10 0 0 0 0 10 10 10 10 0 ...
-    ##   .. ..$ N0.mt      : int [1:48] 4 9 19 5 9 9 4 5 19 1 ...
-    ##   .. ..$ N1.mt      : int [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ N2.mt      : int [1:48] 157 143 141 157 153 151 157 153 140 161 ...
-    ##   .. ..$ NAs.mt     : int [1:48] 2 11 3 1 1 3 2 5 4 1 ...
-    ##   .. ..$ callrate   : num [1:48] 1 0.999 0.998 0.999 0.999 ...
-    ##   .. ..$ hz         : num [1:48] 0.299 0.294 0.296 0.29 0.316 ...
-    ##   .. ..$ callrate.x : num [1:48] 1 0.999 0.999 0.999 0.998 ...
-    ##   .. ..$ hz.x       : num [1:48] 0.3 0 0 0 0 ...
-    ##   .. ..$ callrate.y : num [1:48] 0 1 1 1 1 0 0 0 0 1 ...
-    ##   .. ..$ hz.y       : num [1:48] NaN 0 0 0 0 NaN NaN NaN NaN 0 ...
-    ##   .. ..$ callrate.mt: num [1:48] 0.988 0.933 0.982 0.994 0.994 ...
-    ##   .. ..$ hz.mt      : num [1:48] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   ..@ snps                :'data.frame': 660918 obs. of  17 variables:
-    ##   .. ..$ chr     : int [1:660918] 1 1 1 1 1 1 1 1 1 1 ...
-    ##   .. ..$ id      : chr [1:660918] "rs3094315" "rs12562034" "rs3934834" "rs9442372" ...
-    ##   .. ..$ dist    : num [1:660918] 0.0916 0.0992 0.4963 0.5039 0.508 ...
-    ##   .. ..$ pos     : int [1:660918] 742429 758311 995669 1008567 1011278 1011521 1011558 1020428 1021403 1038818 ...
-    ##   .. ..$ A1      : chr [1:660918] "C" "A" "T" "A" ...
-    ##   .. ..$ A2      : chr [1:660918] "T" "G" "C" "G" ...
-    ##   .. ..$ N0      : int [1:660918] 3 4 6 16 3 0 3 5 8 3 ...
-    ##   .. ..$ N1      : int [1:660918] 23 15 15 21 16 1 21 13 18 10 ...
-    ##   .. ..$ N2      : int [1:660918] 22 29 27 11 29 47 24 30 22 35 ...
-    ##   .. ..$ NAs     : int [1:660918] 0 0 0 0 0 0 0 0 0 0 ...
-    ##   .. ..$ N0.f    : int [1:660918] NA NA NA NA NA NA NA NA NA NA ...
-    ##   .. ..$ N1.f    : int [1:660918] NA NA NA NA NA NA NA NA NA NA ...
-    ##   .. ..$ N2.f    : int [1:660918] NA NA NA NA NA NA NA NA NA NA ...
-    ##   .. ..$ NAs.f   : int [1:660918] NA NA NA NA NA NA NA NA NA NA ...
-    ##   .. ..$ callrate: num [1:660918] 1 1 1 1 1 1 1 1 1 1 ...
-    ##   .. ..$ maf     : num [1:660918] 0.302 0.24 0.281 0.448 0.229 ...
-    ##   .. ..$ hz      : num [1:660918] 0.479 0.312 0.312 0.438 0.333 ...
-    ##   ..@ bed                 :<externalptr> 
-    ##   ..@ p                   : num [1:660918] 0.698 0.76 0.719 0.448 0.771 ...
-    ##   ..@ mu                  : num [1:660918] 1.396 1.521 1.438 0.896 1.542 ...
-    ##   ..@ sigma               : num [1:660918] 0.61 0.652 0.712 0.751 0.617 ...
-    ##   ..@ standardize_p       : logi FALSE
-    ##   ..@ standardize_mu_sigma: logi FALSE
-
-This object contains two slots :
-
--   ped : which gives you information about all the individuals in the
-    data
--   snps : which gives you information about the snps themselves
-
-More information in the vignette of the gaston package.
+    x.be <- select.inds(x, population == "Bedouin")
 
 2. Running Fantasio
 -------------------
 
-We created a wrapper to make the usage of the package more simple.
+Two differents methods for submaps creation are implemented in the
+package:
 
-We implemented in the package two differents methods in order to create
-n submaps :
+-   By "Hotspots" : with this method we use recombination hotspots to
+    segment the genome. The package contains recombination hotspots for
+    the Human Genome in builds 35 (hg17), 36 (hg18) and 37 (hg19) in
+    datasets `hotspots_hg17`, `hotspots_hg18`,`hotspots_hg19`. The
+    default recombination hotspots dataset used is `hotspots_hg19`.
+    Segments should contain at least a user defined number of markers.
+    Markers are then randomly selected within each segment along
+    the genome. By doing this process we obtain a submap (a list
+    of marker).
 
--   By "Hotspots" : with this method we use a file of recombination
-    hotspots (downloaded from the HapMap website in hg17 (\*)) to
-    segment the genome. Segments should contain at least
-    number\_of\_marker markers. Markers are then randomly selected
-    within each segment along the genome. By doing this process we
-    obtain a submap (a list of marker). The recombination hotspots have
-    been converted to other buid (hg18, hg19) using hgLiftOver. The
-    default recombination hotspots file used is in hg19. (\*)
-    <http://hapmap.ncbi.nlm.nih.gov/downloads/recombination/2006-10_rel21_phaseI+II/hotspots>
-
--   By "Distance" : with this method we use a fix step based on genetic
-    or physiscal distance (0.5 cM by default) to pick a marker randomly
-    along the genome. More technically, segments are created whenever
-    there is a gap larger than the step (0.5 cM) between adjacent
-    markers. Each segment is then subdivided in several mini-segments.
-    By default we create 20 mini-segments, each containing at least 50
-    markers. If this is not possible (not enough markers), we do not
-    create mini-segments. After this process is done, we loop over the
-    mini-segments, pick a random marker and walk through the
-    mini-segments by picking the nearest marker after taking a step
-    (default 0.5 cM) downstream and upstream the mini-segments.
+-   By "Distance" : with this method we use a fixed step based on
+    genetic or physiscal distance (0.5 cM by default) to pick a marker
+    randomly along the genome. More technically, segments are created
+    whenever there is a gap larger than the step (0.5 cM) between
+    adjacent markers. Each segment is then subdivided in
+    several mini-segments. By default we create 20 mini-segments, each
+    containing at least 50 markers. If this is not possible (not enough
+    markers), we do not create mini-segments. After this process is
+    done, we loop over the mini-segments, pick a random marker and walk
+    through the mini-segments by picking the nearest marker after taking
+    a step (default 0.5 cM) downstream and upstream the mini-segments.
 
 The wrapper calls two different functions : `createSegmentsListBySnps`
 and `createSegmentsListBySnps`. The first function
@@ -375,10 +282,16 @@ By default, the submaps are created using the file of recombination
 hotspots and summarizing the results for each snp that appears in a
 submap.
 
-    F1 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, list.id = "all") 
+    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, list.id = "all") 
 
 We require that at least n.consecutive.marker markers are HBD before
 calling a HBD segment. Default value for n.consecutive.marker=5.
+
+By default, the package only computes HBD, FLOD scores and HFLOD scores
+for affected individuals (phenotype = 2). So make sure that affected
+individuals have status 2. In the case of the HGDP-CEPH data, there is
+no information on phenotypes so phenotype is 1. We show below how deal
+with this situation.
 
 Here we need to use argument list.id = "all" because we do not have
 phenotype information for the HGDP-CEPH individuals. By default,
@@ -390,11 +303,11 @@ For the "Hotspots" method, the results can also be summarized globally
 for each segment using option recap.by.segments=TRUE. In that case,
 n.consecutive.marker should be set to 1.
 
-    F2 <- Fantasio(bedmatrix=x.me, segments="Hotspots", recap.by.segments=TRUE, n.consecutive.marker=1, n=5, list.id = "all")
+    F2 <- Fantasio(bedmatrix=x.be, segments="Hotspots", recap.by.segments=TRUE, n.consecutive.marker=1, n=5, list.id = "all")
 
 ### 2.3 Distance
 
-    F3 <- Fantasio(bedmatrix=x.me, segments="Distance", n=5, list.id = "all")
+    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5, list.id = "all")
 
 ### 2.4 How to use the segment.option argument
 
@@ -424,7 +337,7 @@ segment. Otherwise it is merged with the previous segment.
 We will now create segments, which will be use to create the submaps
 later, further explication below, for now use this command :
 
-    s1 <- createSegmentsListByHotspots(x.me)
+    s1 <- createSegmentsListByHotspots(x.be)
 
     ## You are currently using version hg19 of hotspot
     ## Gathering all hotspots for the genome : ......................
@@ -475,7 +388,7 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    F1 <- makeAllSubmapsByHotspots(x.me, 5, s1, verbose=FALSE, list.id = "all") 
+    F1 <- makeAllSubmapsByHotspots(x.be, 5, s1, verbose=FALSE, list.id = "all") 
 
 For the sake of clarity we have only created 5 submaps, but generally we
 do 100.
@@ -483,7 +396,7 @@ do 100.
 This function will creates 5 submaps, all the parameters can be modified
 (use args(makeAllSubmapsByHotspots) for more informations).
 
-The variable submaps becomes an list.submaps object, you can watch the
+The variable submaps becomes an submapsList object, you can watch the
 different elements of it with :
 
     str(F1) #careful it can become huge depending on your data sizes
@@ -502,7 +415,7 @@ description of each structure in this object :
 
 -   atlas : the list of all the submaps created during the process. Each
     element of the list is a S4 object. Depending on the method you used
-    the object can be either a `snsp.matrix` or a `hotspots.matrix`
+    the object can be either a `snsp.matrix` or a `HostspotsMatrix`
     (here we use the hotspots method). Each submaps contains 15 slots :
     -   submap : the index of each marker picked (index from the
         bed.matrix object)
@@ -577,19 +490,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02208953 0.02730377
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03768399 0.04132857
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.04122937 0.04996380
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04647613 0.06416512
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02003113 0.03288352
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03713675 0.04073148
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03801298 0.04685599
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04686362 0.05199458
     ## 5 HGDP00611 HGDP00611      1   0 / 5      NA         NA         NA
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05113056 0.06545883
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05183701 0.07092354
     ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02496142 0.02507461 0.16061709 1.164785e-24   TRUE             5
-    ## 2 0.03968269 0.03972643 0.08127949 1.178367e-57   TRUE             5
-    ## 3 0.04356668 0.04202954 0.13969001 1.077575e-48   TRUE             5
-    ## 4 0.05373801 0.05315867 0.15775183 1.269820e-62   TRUE             5
+    ## 1 0.02490477 0.02202143 0.14172686 1.617130e-25   TRUE             5
+    ## 2 0.03931884 0.03943023 0.07900239 3.458234e-56   TRUE             5
+    ## 3 0.04239332 0.04084947 0.12635718 5.583410e-49   TRUE             5
+    ## 4 0.05026514 0.05041279 0.16769022 2.483917e-61   TRUE             5
     ## 5         NA         NA         NA           NA     NA            NA
-    ## 6 0.05794565 0.05821704 0.31277868 9.058294e-37   TRUE             5
+    ## 6 0.05829826 0.05600072 0.31084696 5.941254e-38   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -614,15 +527,15 @@ description of each structure in this object :
 
     F1@FLOD_recap[1:10, 1:10] # an individual * marker matrix
 
--   HBD\_segments : a list of dataframe, each datafram is for an
-    individual and it contains a list of HBD segments (start and end
-    positions). By default, a region is HBD if it contains at least 5
-    markers (n.consecutive.marker=5) with a HBD probability larger than
-    0.5 (threshold=0.5).
+-   HBDsegments : a list of dataframe, each datafram is for an
+    individual and it contains a list of HBDsegments (start and
+    end positions). By default, a region is HBD if it contains at least
+    5 markers (n.consecutive.marker=5) with a HBD probability larger
+    than 0.5 (threshold=0.5).
 
 <!-- -->
 
-    str(F1@HBD_segments[[1]])
+    str(F1@HBDsegments[[1]])
 
 -   HFLOD : a dataframe with the value of HFLOD scores for every markers
     that appeared at least once in a submap. It uses the formula (2)
@@ -664,7 +577,7 @@ We use the same segment list that is used before (s1).
 As said before the only argument that changes is "recap.by.segments", it
 is put to TRUE. And we recommend to adjust "n.consecutive.marker".
 
-    F2 <- makeAllSubmapsByHotspots(x.me, 5, s1, verbose=FALSE, recap.by.segments = TRUE, n.consecutive.marker=1, list.id = "all")
+    F2 <- makeAllSubmapsByHotspots(x.be, 5, s1, verbose=FALSE, recap.by.segments = TRUE, n.consecutive.marker=1, list.id = "all")
 
 ### 3.3 Distance
 
@@ -673,7 +586,7 @@ is put to TRUE. And we recommend to adjust "n.consecutive.marker".
 We will now create segments, which will be used to create the submaps
 later :
 
-    s3 <- createSegmentsListBySnps(x.me)
+    s3 <- createSegmentsListBySnps(x.be)
 
     ## Finding segments for the genome : .......................
     ## Finding which markers are between two segments: .......................
@@ -690,7 +603,7 @@ which will contain three slots :
 -   gap : the value of the minimal fix step required between sampled
     markers of a submap
 -   unit : the unit of the markers ("cM" or "Bp")
--   snps.segments : for each chromosome, the list of segments; each
+-   snpsSegments : for each chromosome, the list of segments; each
     segment being a list of SNP indexes
 
 You can watch a summary of what was done with :
@@ -708,9 +621,9 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    F3 <- makeAllSubmapsBySnps(x.me, 5, s3, verbose=FALSE, list.id = "all")
+    F3 <- makeAllSubmapsBySnps(x.be, 5, s3, verbose=FALSE, list.id = "all")
 
-The variable submaps becomes an list.submaps object, you can watch the
+The variable submaps becomes an submapsList object, you can watch the
 different elements of it with :
 
     str(F3) #careful it can become huge depending on your data sizes
@@ -732,14 +645,14 @@ make the differents submaps in the following functions :
 
 <!-- -->
 
-    F6 <- Fantasio(bedmatrix=x.me, segments="Hotspots", n=5, verbose=FALSE, n.cores=10, list.id = "all")
+    F6 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose=FALSE, n.cores=10, list.id = "all")
 
 5. Plotting
 -----------
 
-### 5.1 HFLOD manhattan plot
+### 5.1 HFLODManhattanPlot
 
-    HFLOD.manhattan.plot(F1)
+    HFLODManhattanPlot(F1)
 
 ![](Fantasio_files/figure-markdown_mmd/fig3-1.png)
 
@@ -748,7 +661,7 @@ make the differents submaps in the following functions :
 
 ### 5.2 HFLOD for a chromosome
 
-    HFLOD.plot.chr(F1, chr=15)
+    HFLODplotChr(F1, chr=15)
 
 ![](Fantasio_files/figure-markdown_mmd/fig4-1.png)
 
@@ -757,22 +670,22 @@ make the differents submaps in the following functions :
     rollmean function of the R package zoo. This allows checking the
     consistency of HFLOD calculations (i.e. checking the fact that a
     high HFLOD score is not due to one submap only). A moving average is
-    computed to remove the impact of a submap with a false positive
-    signal.
+    computed to remove the impact of a submap with a false
+    positive signal.
 
 -   For method "Hotspots by segments", the use of the moving average
     does not make much sense as results are already average over the
-    snps of a segment between hospots regions. We recommend using
-    MA=FALSE.
+    snps of a segment between hospots regions. We recommend
+    using MA=FALSE.
 
 ### 5.3 HBD plot for a chromosome
 
-    HBD.plot.chr(F1, chr=15)
+    HBDplotChr(F1, chr=15)
 
 ![](Fantasio_files/figure-markdown_mmd/fig1-1.png)
 
 ### 5.4 HBD plot for an individual
 
-    HBD.plot.id(F1, individual.id = "HGDP00649", family.id = "HGDP00649")
+    HBDplotId(F1, individual.id = "HGDP00649", family.id = "HGDP00649")
 
 ![](Fantasio_files/figure-markdown_mmd/fig2-1.png)

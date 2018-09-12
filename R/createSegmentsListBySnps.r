@@ -10,7 +10,7 @@
 #' @param verbose whether you want informations about the computation process (default is TRUE)
 #' 
 #' @details This function is used to create a list of chromosome list, which contains segments delimited by using the gap between marker.
-#' @details The list is then wrap under an object of class snps.segments, which contains two slots, the first slot is the value of the gap used to 
+#' @details The list is then wrap under an object of class snpsSegments, which contains two slots, the first slot is the value of the gap used to 
 #' create the segment, the second is the list of mini segment and marker in it.
 #' @details In each mini segment you have the index of all the makers in it, these index correpond to markers in the bedmatrix object.
 #' @details The list structure can be analyze using `str()` function on the object (! careful the result can look messy if not handle properly)
@@ -23,7 +23,7 @@
 #' @details If (length of the segment/number of mini segment) is equal or greater than the number in the variable number_of_marker, will always have the exact number of 
 #' mini segments in the variable number_of_segment.#' 
 #' 
-#' @return an snps.segments object
+#' @return an snpsSegments object
 #' 
 #' @seealso read.bed.matrix
 #' @seealso Fantasio
@@ -130,5 +130,5 @@ createSegmentsListBySnps <- function(bedmatrix, gap=0.5, number_of_marker=50, nu
   }
   if(verbose) cat("\n")
   
-  new("snps.segments", gap, unit, VIV)
+  new("snpsSegments", gap, unit, VIV)
 }

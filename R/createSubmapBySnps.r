@@ -12,7 +12,7 @@
 #' @details Once the iteration over the list is over, the function will create an object and filled some of his slot.
 #' @details If you are using a fileName, please make sure to have one marker per line
 #' 
-#' @return return an snps.matrix object with some of his slots filled.
+#' @return return an snpsMatrix object with some of his slots filled.
 #' 
 #' @seealso makeSubmapsBySnps
 #' 
@@ -23,7 +23,7 @@
 #' @export
 createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
-  if(class(segmentsList)[1] != "snps.segments")
+  if(class(segmentsList)[1] != "snpsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")
   
   unit <- segmentsList@unit
@@ -42,9 +42,9 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName
     submap <- match(res, bedmatrix@snps$id)
   }else{
     submap <- c()
-    for(chr in 1:length(segmentsList@snps.segments))
+    for(chr in 1:length(segmentsList@snpsSegments))
     {
-      map <- segmentsList@snps.segments[[chr]]
+      map <- segmentsList@snpsSegments[[chr]]
       if(length(map) > 0)
       {
         v <- getMarkerChromosomBySnps(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
@@ -86,7 +86,7 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName
   
   log.emiss <- bed.logEmiss(bedmatrix, map=submap, epsilon=epsilon)
   
-  new("snps.matrix", step, length(submap), nrow(bedmatrix), submap, 
+  new("snpsMatrix", step, length(submap), nrow(bedmatrix), submap, 
       bedmatrix@ped[,c("famid", "id", "father", "mother", "sex", "pheno")],
       map, log.emiss, epsilon)
 }

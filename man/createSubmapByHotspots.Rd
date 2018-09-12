@@ -4,8 +4,7 @@
 \alias{createSubmapByHotspots}
 \title{Creation of a submaps}
 \usage{
-createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001,
-  fileName)
+createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001, fileName)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -17,7 +16,7 @@ createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001,
 \item{fileName}{a fileName with the list of markers wanted for the submap}
 }
 \value{
-return an hotspots.matrix object with some of his slots filled.
+return an HostspotsMatrix object with some of his slots filled.
 }
 \description{
 This function creates a submaps using the list segments created by using the hotspots in the genome

@@ -8,7 +8,7 @@
   outfile, family.id, individual.id, build)
 }
 \arguments{
-\item{Submaps}{a list.submaps object}
+\item{Submaps}{a submapsList object}
 
 \item{ROHfile}{an ROH file}
 
@@ -25,13 +25,13 @@
 \item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
-This function returns a plot of the HBD segments for a specific individual
+This function returns a plot of the HBDsegments for a specific individual
 }
 \description{
-This function is use to plot HBD segments for a specific infdividual using an ROH file
+This function is use to plot HBDsegments for a specific infdividual using an ROH file
 }
 \details{
-Use this function when you want to use an ROH file to plot your HBD segments for a specific individual.
+Use this function when you want to use an ROH file to plot your HBDsegments for a specific individual.
 
 Two unit are accepted : "Bases" or "cM".
 

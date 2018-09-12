@@ -13,7 +13,7 @@ setClass("msat.matrix", representation(
            freq = 'matrix',             # allelic frequencies matrix (nb msat x max allele)
            # output slots
        log.freq = 'matrix'              # previous log 
-), contains = "f.matrix" )
+), contains = "fMatrix" )
 
 setMethod('initialize', signature='msat.matrix', definition=function(.Object, ncol, nrow, ped, msat, map, freq, epsilon = 1e-3) {
   if(nrow(freq) != ncol) stop("freq dimension mismatch")

@@ -7,7 +7,7 @@
 recap(submaps, recap.by.segments = FALSE, list.id)
 }
 \arguments{
-\item{submaps}{a list.submaps object}
+\item{submaps}{a submapsList object}
 
 \item{recap.by.segments}{: whether you want the recap by segments or snps}
 
@@ -37,11 +37,11 @@ createSegmentsListByHotspots
 
 festim
 
-set.HBD.prob
+setHBDprob
 
-set.FLOD
+setFLOD
 
-set.HFLOD
+setHFLOD
 
-HBD.segments
+HBDsegments
 }

@@ -21,7 +21,7 @@ createSegmentsListBySnps(bedmatrix, gap = 0.5, number_of_marker = 50,
 \item{verbose}{whether you want informations about the computation process (default is TRUE)}
 }
 \value{
-an snps.segments object
+an snpsSegments object
 }
 \description{
 This function is used to create a list of segments delimited by using gaps in the genome.
@@ -29,7 +29,7 @@ This function is used to create a list of segments delimited by using gaps in th
 \details{
 This function is used to create a list of chromosome list, which contains segments delimited by using the gap between marker.
 
-The list is then wrap under an object of class snps.segments, which contains two slots, the first slot is the value of the gap used to 
+The list is then wrap under an object of class snpsSegments, which contains two slots, the first slot is the value of the gap used to 
 create the segment, the second is the list of mini segment and marker in it.
 
 In each mini segment you have the index of all the makers in it, these index correpond to markers in the bedmatrix object.

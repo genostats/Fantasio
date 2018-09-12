@@ -2,7 +2,7 @@
 #' 
 #' This function gives for each submap the number of marker selected. 
 #' 
-#' @param submaps a list.submaps object
+#' @param submaps a submapsList object
 #' 
 #' @details the dataframe contains the following elements :
 #' @details - by columns is the number of markers used

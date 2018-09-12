@@ -16,7 +16,7 @@ createSubmapBySnps(bedmatrix, segmentsList, epsilon = 0.001, fileName)
 \item{fileName}{You have the possibility to pass your own list of marker, that is to say, your own submaps}
 }
 \value{
-return an snps.matrix object with some of his slots filled.
+return an snpsMatrix object with some of his slots filled.
 }
 \description{
 This function creates a submaps using the list segments created by using gap between markers

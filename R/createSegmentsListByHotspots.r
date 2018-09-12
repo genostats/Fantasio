@@ -106,6 +106,6 @@ createSegmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspot_ver
   if(verbose) cat("\n")
   
    
-  new("hotspot.segments", VIII)
+  new("HostspotsSegments", VIII)
 } 
 

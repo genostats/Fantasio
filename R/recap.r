@@ -2,7 +2,7 @@
 #' 
 #' This function creates HBD and FLOD recap dataframe.
 #' 
-#' @param submaps a list.submaps object
+#' @param submaps a submapsList object
 #' @param recap.by.segments : whether you want the recap by segments or snps
 #' @param list.id : a list individual 
 #' 
@@ -15,10 +15,10 @@
 #' @seealso makeSubmapsBySnps
 #' @seealso createSegmentsListByHotspots
 #' @seealso festim
-#' @seealso set.HBD.prob
-#' @seealso set.FLOD
-#' @seealso set.HFLOD
-#' @seealso HBD.segments
+#' @seealso setHBDprob
+#' @seealso setFLOD
+#' @seealso setHFLOD
+#' @seealso HBDsegments
 #'
 #' @return This function returns a list of dataframes. 
 #'
@@ -26,8 +26,8 @@
 recap <- function(submaps, recap.by.segments=FALSE, list.id)
 {
   
-  if(class(submaps@atlas[[1]])[1] != "snps.matrix" & class(submaps@atlas[[1]])[1] != "hotspots.matrix")
-    stop("need either an hotspots.segments list of submaps or a snps.segments list of submaps.") 
+  if(class(submaps@atlas[[1]])[1] != "snpsMatrix" & class(submaps@atlas[[1]])[1] != "HostspotsMatrix")
+    stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
     

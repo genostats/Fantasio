@@ -12,8 +12,8 @@
 #' @export
 segmentsListSummary <- function(segmentList)
 {
-  if(class(segmentList)[1] != "hotspot.segments")
-    segmentList <- segmentList@snps.segments
+  if(class(segmentList)[1] != "HostspotsSegments")
+    segmentList <- segmentList@snpsSegments
     
   #number of segments
   n_seg <- numeric(length(segmentList))
@@ -42,7 +42,7 @@ segmentsListSummary <- function(segmentList)
   
   #dataframe
   df <- data.frame(
-    chromosome = if(class(segmentList)[1] == "hotspot.segments") 1:length(segmentList) else getOption("gaston.autosomes"),
+    chromosome = if(class(segmentList)[1] == "HostspotsSegments") 1:length(segmentList) else getOption("gaston.autosomes"),
     number_of_segments = n_seg, 
     number_of_markers= n_mark
   )

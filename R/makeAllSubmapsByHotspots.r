@@ -16,7 +16,7 @@
 #' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
 #' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments
+#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments
 #' 
 #' 
 #' @details This function is used to create submaps by randomly picking a marker
@@ -48,16 +48,16 @@
 #' @seealso makeSubmapsBySnps
 #' @seealso createSegmentsListByHotspots
 #' @seealso festim
-#' @seealso set.HBD.prob
-#' @seealso set.FLOD
-#' @seealso set.HFLOD
+#' @seealso setHBDprob
+#' @seealso setFLOD
+#' @seealso setHFLOD
 #' @seealso recap
 #' @seealso setSummary
 #' @seealso submapLikelihood
 #' @seealso submapEstim
 #' @seealso summaryMarker
 #' @seealso submapSummary
-#' @seealso HBD.segments
+#' @seealso HBDsegments
 #' 
 #' @examples  
 #' #Please refer to vignette 
@@ -68,7 +68,7 @@ makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSe
                                      threshold=0.5, q = 1e-04, quality=95, n.consecutive.marker=5)
 {
 
-  if(class(segmentsList)[1] != "hotspot.segments")
+  if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")
   
   ff <- function(i, run.festim) {
@@ -97,7 +97,7 @@ makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSe
     gc()
   }
   
-  submaps <- new("list.submaps", submap, bedmatrix, segmentsList, recap.by.segments)
+  submaps <- new("submapsList", submap, bedmatrix, segmentsList, recap.by.segments)
   
   submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
   if(verbose) cat("Creation of all the Submaps by hotspots over ! \n")

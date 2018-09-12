@@ -3,14 +3,14 @@
 \docType{package}
 \name{Fantasio}
 \alias{Fantasio}
+\alias{Fantasio}
 \alias{Fantasio-package}
 \title{Wrapper for the package Fantasio}
 \usage{
-Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
-  segment.options, n = 100, n.cores = 1, epsilon = 0.001,
-  run.festim = TRUE, list.id, run.proba = TRUE,
-  recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
-  threshold = 0.5, q = 1e-04, quality = 95,
+Fantasio(bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
+  n = 100, n.cores = 1, epsilon = 0.001, run.festim = TRUE, list.id,
+  run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
+  debug = FALSE, threshold = 0.5, q = 1e-04, quality = 95,
   n.consecutive.marker = 5)
 }
 \arguments{
@@ -45,10 +45,12 @@ FLOD score and HFLOD score (see details for more informations)}
 
 \item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments}
+\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
 }
 \description{
 This function is used as a wrapper for the package Fantasio to create segments list and submaps
+
+Fantasio.
 }
 \details{
 This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function :

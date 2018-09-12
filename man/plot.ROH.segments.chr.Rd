@@ -4,13 +4,13 @@
 \alias{plot.ROH.segments.chr}
 \title{Creation of plot using ROH file}
 \usage{
-\method{plot}{ROH.segments.chr}(ROHfile, submaps, unit = "cM", chr,
-  outfile, listid, regions, build)
+\method{plot}{ROH.segments.chr}(ROHfile, submaps, unit = "cM", chr, outfile,
+  listid, regions, build)
 }
 \arguments{
 \item{ROHfile}{an ROH file}
 
-\item{submaps}{a list.submaps object}
+\item{submaps}{a submapsList object}
 
 \item{unit}{the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")}
 
@@ -25,13 +25,13 @@
 \item{build}{the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)}
 }
 \value{
-This function returns a plot of the HBD segments for a specific chromosome
+This function returns a plot of the HBDsegments for a specific chromosome
 }
 \description{
-This function is use to plot HBD segments for a chromosome using an ROH file
+This function is use to plot HBDsegments for a chromosome using an ROH file
 }
 \details{
-Use this function when you want to use an ROH file to plot your HBD segments for a specific chromosome.
+Use this function when you want to use an ROH file to plot your HBDsegments for a specific chromosome.
 
 Two unit are accepted : "Bases" or "cM".
 

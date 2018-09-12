@@ -8,8 +8,7 @@ makeAllSubmapsByHotspots(bedmatrix, n = 100,
   segmentsList = createSegmentsListByHotspots(bedmatrix), n.cores = 1,
   epsilon = 0.001, run.festim = TRUE, list.id, run.proba = TRUE,
   recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
-  threshold = 0.5, q = 1e-04, quality = 95,
-  n.consecutive.marker = 5)
+  threshold = 0.5, q = 1e-04, quality = 95, n.consecutive.marker = 5)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -40,7 +39,7 @@ makeAllSubmapsByHotspots(bedmatrix, n = 100,
 
 \item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBD segments}
+\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
 }
 \value{
 return a new list object containing every dataframe and object created
@@ -96,11 +95,11 @@ createSegmentsListByHotspots
 
 festim
 
-set.HBD.prob
+setHBDprob
 
-set.FLOD
+setFLOD
 
-set.HFLOD
+setHFLOD
 
 recap
 
@@ -114,5 +113,5 @@ summaryMarker
 
 submapSummary
 
-HBD.segments
+HBDsegments
 }

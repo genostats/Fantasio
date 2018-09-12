@@ -10,10 +10,10 @@
 #' @importFrom utils data read.table tail
 #' 
 #' 
-#' @exportClass f.matrix
-#' @exportClass list.submaps
-#' @exportClass hotspots.matrix
-#' @exportClass hotspot.segments
-#' @exportClass snps.matrix
-#' @exportClass snps.segments
+#' @exportClass fMatrix
+#' @exportClass submapsList
+#' @exportClass HostspotsMatrix
+#' @exportClass HostspotsSegments
+#' @exportClass snpsMatrix
+#' @exportClass snpsSegments
 NULL

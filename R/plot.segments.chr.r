@@ -29,7 +29,7 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   
   plot(x <- c(start,end), y <- c(0,y_max), 
        type="n", yaxt="n", ylab="", xlab=myxlab, 
-       main=paste("HBD segments on chromosome ",chr,sep=""))
+       main=paste("HBDsegments on chromosome ",chr,sep=""))
 
   axis(2, at = (1:length(list_id))+0.25, list_id, col.ticks=0, las=2) 
   
@@ -46,7 +46,7 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   #paint the chromosome
   paintCytobands(chr,units=unit,pos=c(0,0.5), build=build, orientation="h",legend = FALSE, length.out = end)
   
-  #draw the HBD segments
+  #draw the HBDsegments
   tmp <- strsplit(list_id, "_")
   list_id <- sapply(tmp, function(i) i[2])
   
