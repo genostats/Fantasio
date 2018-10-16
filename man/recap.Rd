@@ -33,7 +33,7 @@ Fantasio
 
 makeSubmapsBySnps
 
-createSegmentsListByHotspots
+segmentsListByHotspots
 
 festim
 

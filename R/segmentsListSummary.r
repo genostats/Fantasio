@@ -1,7 +1,7 @@
 #' Summary of marker picked
 #'
 #' This function is uses to return the number of segments and number of marker in the list of segments outputed by the function 
-#' `createSegmentsListByHotspots`
+#' `segmentsListByHotspots`
 #'
 #' @param segmentList A list of segments
 #'

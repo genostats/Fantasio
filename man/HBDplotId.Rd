@@ -4,8 +4,8 @@
 \alias{HBDplotId}
 \title{plot of HBD segment}
 \usage{
-HBDplotId(Submaps, ROHfile, unit = "cM", individual.id, family.id, regions,
-  outfile, build = 37)
+HBDplotId(Submaps, ROHfile, unit = "cM", individual.id, family.id,
+  regions, outfile, build = 37)
 }
 \arguments{
 \item{Submaps}{a list.submap object}

@@ -4,8 +4,8 @@
 \alias{HBDplotChr}
 \title{plot of HBD segment}
 \usage{
-HBDplotChr(Submaps, ROHfile, unit = "cM", chr, list.ids, regions, outfile,
-  inbred = FALSE, build = 37)
+HBDplotChr(Submaps, ROHfile, unit = "cM", chr, list.ids, regions,
+  outfile, inbred = FALSE, build = 37)
 }
 \arguments{
 \item{Submaps}{a list.submap object}

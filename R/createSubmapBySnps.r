@@ -24,7 +24,7 @@
 createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
 {
   if(class(segmentsList)[1] != "snpsSegments")
-    stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListBySnps' ")
+    stop("mismatch segments list, need a list of segments created by the function 'segmentsListBySnps' ")
   
   unit <- segmentsList@unit
   step <- segmentsList@gap 

@@ -46,7 +46,7 @@
 #' 
 #' @seealso Fantasio
 #' @seealso makeSubmapsBySnps
-#' @seealso createSegmentsListByHotspots
+#' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
 #' @seealso setFLOD
@@ -63,13 +63,13 @@
 #' #Please refer to vignette 
 #'
 #' @export
-makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = createSegmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3,
+makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3,
                                      run.festim=TRUE, list.id, run.proba=TRUE, recap.by.segments = FALSE, verbose=TRUE, debug=FALSE,
                                      threshold=0.5, q = 1e-04, quality=95, n.consecutive.marker=5)
 {
 
   if(class(segmentsList)[1] != "HostspotsSegments")
-    stop("mismatch segments list, need a list of segments created by the function 'createSegmentsListByHotspots' ")
+    stop("mismatch segments list, need a list of segments created by the function 'segmentsListByHotspots' ")
   
   ff <- function(i, run.festim) {
     spider <- createSubmapByHotspots(bedmatrix, segmentsList, epsilon=epsilon) 

@@ -5,8 +5,8 @@
 \alias{initialize,snpsMatrix-method}
 \title{Constructor method of snpsMatrix.}
 \usage{
-\S4method{initialize}{snpsMatrix}(.Object, step, ncol, nrow, submap, ped, map,
-  log.emiss, epsilon = 0.001)
+\S4method{initialize}{snpsMatrix}(.Object, step, ncol, nrow, submap, ped,
+  map, log.emiss, epsilon = 0.001)
 }
 \arguments{
 \item{.Object}{the object type}

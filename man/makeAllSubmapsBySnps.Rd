@@ -5,10 +5,11 @@
 \title{Creation of submaps using gap between markers}
 \usage{
 makeAllSubmapsBySnps(bedmatrix, n = 100,
-  segmentsList = createSegmentsListBySnps(bedmatrix), n.cores = 1,
+  segmentsList = segmentsListBySnps(bedmatrix), n.cores = 1,
   epsilon = 0.001, run.festim = TRUE, list.id, run.proba = TRUE,
   recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
-  threshold = 0.5, q = 1e-04, quality = 95, n.consecutive.marker = 5)
+  threshold = 0.5, q = 1e-04, quality = 95,
+  n.consecutive.marker = 5)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -92,7 +93,7 @@ Fantasio
 
 makeSubmapsBySnps
 
-createSegmentsListByHotspots
+segmentsListByHotspots
 
 festim
 

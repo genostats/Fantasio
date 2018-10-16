@@ -5,8 +5,8 @@
 \title{Creation summary statistic files}
 \usage{
 setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
-  recap.by.segments = FALSE, q = 1e-04, threshold = 0.5, quality = 95,
-  n.consecutive.marker = 5)
+  recap.by.segments = FALSE, q = 1e-04, threshold = 0.5,
+  quality = 95, n.consecutive.marker = 5)
 }
 \arguments{
 \item{submaps}{a submapsList object}
@@ -63,7 +63,7 @@ Fantasio
 
 makeSubmapsBySnps
 
-createSegmentsListByHotspots
+segmentsListByHotspots
 
 festim
 

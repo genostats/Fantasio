@@ -4,7 +4,8 @@
 \alias{createSubmapByHotspots}
 \title{Creation of a submaps}
 \usage{
-createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001, fileName)
+createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001,
+  fileName)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}

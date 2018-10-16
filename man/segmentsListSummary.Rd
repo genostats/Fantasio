@@ -11,7 +11,7 @@ segmentsListSummary(segmentList)
 }
 \description{
 This function is uses to return the number of segments and number of marker in the list of segments outputed by the function 
-`createSegmentsListByHotspots`
+`segmentsListByHotspots`
 }
 \examples{
 #Please refer to vignette 

@@ -34,7 +34,7 @@
 #' 
 #' @seealso Fantasio
 #' @seealso makeSubmapsBySnps
-#' @seealso createSegmentsListByHotspots
+#' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
 #' @seealso setFLOD
