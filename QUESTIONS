@@ -1,8 +1,0 @@
-
-dans (create)SegmentsListByHotspots valeur par défaut de minMarkers ??
-
-dans (create)SegmentsListBySnps, l'argument unit est utilisé pour faire ça :
-  if(unit =="Bases")
-    gap <- gap * 1e6
-
-et c'est tout (ce sont les distances en cM qui sont utilisées ?!)

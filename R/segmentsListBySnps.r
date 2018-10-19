@@ -5,15 +5,15 @@
 #' @param bedmatrix a bed.matrix object 
 #' @param gap the minimum gap after which a segment is created
 #' @param minMarkers the minimum number of markers in a mini-segment
-#' @param nbSegments the number of mini-segments which the segment will be splitted 
-#' @param unit the \code{gap} unit, "cM" or "Bases" "cM" 
+#' @param nbSegments the number of mini-segments which the segment will be split
+#' @param unit the \code{gap} unit, "cM" (centirmorgans) or "Mb" (million of bases)
 #' @param verbose if \code{TRUE}, displays information on the process
 #' 
 #' @details This function is used to create an object of class snpsSegments. It contains a list of segments 
-#' delimited by gaps between available markers. Each segment is splitted in nbSegments mini-segments.
-#' @details A segment is not splitted if it would result in mini-segments shorter that minMarkers.
-#' The indices in the mini-segemnts correspond to SNPs in bedmatrix.
-
+#' delimited by gaps between available markers. Each segment is split in \code{nbSegments} mini-segments.
+#' @details A segment is not split if it would result in mini-segments shorter that \code{minMarkers}.
+#' The indices in the mini-segments correspond to SNPs in \code{bedmatrix}.
+#'
 #' @return an snpsSegments object
 #' 
 #' @seealso \code{\link{Fantasio}}, \code{\link{segmentsListBySnps}}
@@ -24,24 +24,30 @@
 #' @export
 segmentsListBySnps <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments=20, unit="cM", verbose=TRUE)
 {
-  if(class(bedmatrix)[1] != "bed.matrix" )
-  {
+  if(class(bedmatrix)[1] != "bed.matrix" ) {
     stop("Need a bed.matrix")
   }
   
-  
-  if( unit != "Bases" & unit != "cM")
-    stop("Error only cM or Bases are accepted")
-  if(unit =="Bases")
+  if( unit != "Mb" & unit != "cM")
+    stop("'unit' should be 'cM' or 'Mb'")
+
+  if(unit == "Mb") {
     gap <- gap * 1e6
-  
+  }
+
   # start and end of a segments
   if(verbose) cat("Finding segments for the genome : ")
   VI <- list()
   for(i in getOption("gaston.autosomes"))
   {
-    cat(".")
-    chr_distances <- bedmatrix@snps$dist[which(bedmatrix@snps$chr==i)]
+    if(verbose) cat(".")
+    
+    if(unit == "cM") {
+      chr_distances <- bedmatrix@snps$dist[which(bedmatrix@snps$chr==i)]
+    } else {
+      chr_distances <- bedmatrix@snps$pos[which(bedmatrix@snps$chr==i)]
+    }
+
     if(length(chr_distances) == 0)
       next()
     

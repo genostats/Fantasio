@@ -9,7 +9,7 @@
 #' @param verbose if \code{TRUE}, displays information on the process
 #' 
 #' @details This function creates an object of class hotspots.segments, containing a list of segments delimited
-#' by hotspots, The object is a list of list of vectors indices of SNPs. There are as many sublist as
+#' by hotspots. The object is a list of list of vectors indices of SNPs. There are as many sublists as
 #' chromosomes. The indices correspond to SNPs in \code{bedmatrix}.
 #' @details The user can provide a hotspots data frame with a format similar to hotspot_hg19.
 #' 
@@ -21,14 +21,14 @@
 #' #Please refer to vignette
 #'
 #' @export
-segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = "hotspot_hg19", minMarkers = 50, verbose = TRUE)
+segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspot_hg19, minMarkers = 0, verbose = TRUE)
 {
   if(class(bedmatrix)[1] != "bed.matrix" )
     stop("Need a bed.matrix")
   
   
   if(verbose) 
-    cat( paste("You are currently using version", hotspot_version, "of hotspot\n") )
+    cat( paste("Using hotspots from ", deparse(substitute(hotspots)), "\n") )
   
   dataFrameColNames <- c("Chromosome", "Start", "End", "IntensitycMMb")
   if(!all(dataFrameColNames %in% colnames(hotspots)))
@@ -83,7 +83,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = "hotsp
     }
     VIII[[i]] <- chr
     VIII[[i]] <- null.remover(VIII[[i]])
-    VIII[[i]] <- cleanHotspots(VIII[[i]], number_of_marker)  
+    VIII[[i]] <- cleanHotspots(VIII[[i]], minMarkers)  
   }
   if(verbose) cat("\n")
   
