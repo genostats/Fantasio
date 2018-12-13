@@ -16,13 +16,13 @@
 #'
 #' @return an snpsSegments object
 #' 
-#' @seealso \code{\link{Fantasio}}, \code{\link{segmentsListBySnps}}
+#' @seealso \code{\link{Fantasio}}, \code{\link{segmentsListByDistance}}
 #' 
 #' @examples  
 #' #Please refer to vignette 
 #'
 #' @export
-segmentsListBySnps <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments=20, unit="cM", verbose=TRUE)
+segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments=20, unit="cM", verbose=TRUE)
 {
   if(class(bedmatrix)[1] != "bed.matrix" ) {
     stop("Need a bed.matrix")

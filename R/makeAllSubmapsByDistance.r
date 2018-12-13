@@ -1,4 +1,4 @@
-#' Creation of submaps using gap between markers
+#' Creation of submaps based on distance between markers
 #' 
 #' This function creates n submaps and allows the creation of summary files
 #' 
@@ -7,16 +7,6 @@
 #' @param segmentsList a list of segment for each chromosomes
 #' @param n.cores the number of cores to use if you want to compute submaps using parellelism (default is 1)
 #' @param epsilon genotype error rate (default is 0.001)
-#' @param run.festim whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)
-#' @param list.id a list of individuals (see details for more informations)
-#' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)  
-#' @param recap.by.segments if you want the summary of probabilities by snps or by segments (default is FALSE)
-#' @param verbose whether you want informations about computations (default is TRUE)
-#' @param debug whether you want advanced output for the computation process (default is FALSE)
-#' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
-#' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
-#' @param quality Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments
 #' 
 #' 
 #' @details This function is used to create submaps by randomly picking 
@@ -45,7 +35,7 @@
 #' @return return a new list object containing every dataframe and object created 
 #' 
 #' @seealso Fantasio
-#' @seealso makeSubmapsBySnps
+#' @seealso makeAllSubmapsByHotspots
 #' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
@@ -64,18 +54,13 @@
 #'
 #' 
 #' @export
-makeAllSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = segmentsListBySnps(bedmatrix), n.cores = 1, epsilon = 1e-3,
-                                 run.festim=TRUE, list.id, run.proba=TRUE, recap.by.segments = FALSE, verbose=TRUE, debug=FALSE,
-                                 threshold=0.5, q = 1e-04, quality=95, n.consecutive.marker=5)
-{
+makeAllSubmapsByDistance <- function(bedmatrix, n = 100, segmentsList = segmentsListByDistance(bedmatrix), n.cores = 1, epsilon = 1e-3) {
+
   if(class(segmentsList)[1] != "snpsSegments")
-    stop("mismatch segments list, need a list of segments created by the function 'segmentsListBySnps' ")
+    stop("mismatch segments list, need a list of segments created by the function 'segmentsListByDistance' ")
   
-  ff <- function(i, run.festim) {
-    spider <- createSubmapBySnps(bedmatrix, segmentsList, epsilon=epsilon) 
-    if(run.festim) 
-      spider <- festim(spider, verbose=verbose, debug=debug)
-    spider
+  ff <- function(i) {
+    createSubmapByDistance(bedmatrix, segmentsList, epsilon = epsilon) 
   }
   
   if(n.cores != 1 & .Platform$OS.type != "unix") {
@@ -84,22 +69,18 @@ makeAllSubmapsBySnps <- function(bedmatrix, n = 100, segmentsList = segmentsList
   }
   
   if(n.cores == 1) {
-    submap <- lapply(1:n, ff, run.festim = run.festim)
-  }else {
+    submap <- lapply(1:n, ff)
+  } else {
     RNGkind("L'Ecuyer-CMRG")
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
       s <- rbind(s, nextRNGStream(s[i-1,]))
-    cl <- makeForkCluster(n.cores) #creation of slaves
-    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) #use of paralelisation
-    submap <- parLapply(cl, 1:n, ff, run.festim = run.festim)
+    cl <- makeForkCluster(n.cores) 
+    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) 
+    submap <- parLapply(cl, 1:n, ff)
     stopCluster(cl)
     gc()
   }
 
-  submaps <- new("submapsList", submap, bedmatrix, segmentsList@snpsSegments, recap.by.segments, segmentsList@unit , segmentsList@gap)
-  
-  submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
-  if(verbose) cat("Creation of all the Submaps by distance over ! \n")
-  submaps
+  new("submapsList", submap, bedmatrix, segmentsList@snpsSegments, NA, segmentsList@unit , segmentsList@gap)
 }

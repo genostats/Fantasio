@@ -5,7 +5,6 @@
 #' @param submaps a submapsList object
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)
 #' @param threshold the minimum value of HBD probabilities given for a marker (default is 0.5)
-#' @param recap.by.segments if the summary files has to be computed considering segments or snps (defaut is FALSE) 
 #' 
 #' @details The threshold is the minimum value from which we consider the marker is HBD. From this marker we want a minumum number of consecutive markers to create a HBD segment.
 #' (argument : n.consecutive.marker)
@@ -28,10 +27,10 @@
 #' 
 #' 
 #' @export
-HBDsegments <- function(submaps, n.consecutive.marker = 5, threshold = 0.5, recap.by.segments=FALSE)
+HBDsegments <- function(submaps, n.consecutive.marker = 5, threshold = 0.5)
 {
-
-  if(recap.by.segments)
+  
+  if(submaps@bySegments)
   {
     HBDsegments.by.segments(submaps, submaps@HBD_recap, n.consecutive.marker, threshold)
   }

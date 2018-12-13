@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-09-12"
+date: "2018-12-13"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,21 +14,20 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-09-12
-meta-json: {"date":"2018-09-12","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"%\\VignetteIndexEntry{Vignette Title} %\\VignetteDepends{Fantasio}\n%\\VignettePackage{Fantasio} %\\VignetteEngine{knitr::rmarkdown}\n%\\VignetteEncoding{UTF-8}"}
+date: 2018-12-13
+meta-json: {"date":"2018-12-13","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
 version: 0.1
-vignette: %\VignetteIndexEntry{Vignette Title} %\VignetteDepends{Fantasio}
-  %\VignettePackage{Fantasio} %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+vignette: % % % % %
 
 -   [Introduction](#introduction)
     -   [Principal concepts](#principal-concepts)
 -   [1. Getting started](#getting-started)
-    -   [1.1 Installation](#installation)
-    -   [1.2 Example data: HGDP-CEPH](#example-data-hgdp-ceph)
+    -   [1.1 Installing Fantasio](#installing-fantasio)
+    -   [1.2 Installing example data:
+        HGDP-CEPH](#installing-example-data-hgdp-ceph)
 -   [2. Running Fantasio](#running-fantasio)
     -   [2.1 Hotspots (Default)](#hotspots-default)
     -   [2.2 Hotspots by Segments](#hotspots-by-segments)
@@ -168,7 +167,7 @@ this package are used for data manipulation. If you are not familiar
 with `gaston`, please refer to the vignette of this package for more
 information.
 
-### 1.1 Installation
+### 1.1 Installing Fantasio
 
 First and foremost install the package with the following command:
 
@@ -197,7 +196,7 @@ After that we can load the package.
     ## 
     ##     LdFlags
 
-    ## Gaston set number of threads to 4. Use setThreadOptions() to modify this.
+    ## Gaston set number of threads to 2. Use setThreadOptions() to modify this.
 
     ## 
     ## Attaching package: 'gaston'
@@ -210,7 +209,7 @@ After that we can load the package.
     ## 
     ##     cbind, rbind
 
-### 1.2 Example data: HGDP-CEPH
+### 1.2 Installing example data: HGDP-CEPH
 
 We illustrate the usage of the package with the data provided in the
 data package HGDP-CEPH. First, we need to install it:
@@ -223,16 +222,17 @@ We can load the HGDP-CEPH data as follows:
 
     ## Loading required package: HGDP.CEPH
 
-    filepath <-system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
+    filepath <- system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
     x <- read.bed.matrix(filepath)
 
-    ## Reading /home/rv/R/R-3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /home/rv/R/R-3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
 
-The object`x` is a bed.matrix object (see gaston package for details).
+The object `x` is a bed.matrix object (see gaston package for details).
 
 We are going to work on the Bedouin population, so after updating the
-stats in `x`, we select this population:
+stats in `x` (this adds several informations such as allele frequencies,
+etc), we select this population:
 
     x <- set.stats(x)
 
@@ -248,33 +248,33 @@ stats in `x`, we select this population:
 Two differents methods for submaps creation are implemented in the
 package:
 
--   By "Hotspots" : with this method we use recombination hotspots to
+-   "By Hotspots": with this method we use recombination hotspots to
     segment the genome. The package contains recombination hotspots for
     the Human Genome in builds 35 (hg17), 36 (hg18) and 37 (hg19) in
     datasets `hotspots_hg17`, `hotspots_hg18`,`hotspots_hg19`. The
     default recombination hotspots dataset used is `hotspots_hg19`.
     Segments should contain at least a user defined number of markers.
-    Markers are then randomly selected within each segment along
-    the genome. By doing this process we obtain a submap (a list
-    of marker).
+    Markers are then randomly selected within each segment along the
+    genome. By doing this process we obtain a submap (a list of marker).
 
--   By "Distance" : with this method we use a fixed step based on
-    genetic or physiscal distance (0.5 cM by default) to pick a marker
-    randomly along the genome. More technically, segments are created
-    whenever there is a gap larger than the step (0.5 cM) between
-    adjacent markers. Each segment is then subdivided in
-    several mini-segments. By default we create 20 mini-segments, each
+-   "By Distance" or "by SNPs": with this method we use a fixed step
+    based on genetic or physiscal distance (0.5 cM by default) to pick a
+    marker randomly along the genome. More technically, segments are
+    created whenever there is a gap larger than the step (0.5 cM)
+    between adjacent markers. Each segment is then subdivided in several
+    mini-segments. By default we create 20 mini-segments, each
     containing at least 50 markers. If this is not possible (not enough
     markers), we do not create mini-segments. After this process is
     done, we loop over the mini-segments, pick a random marker and walk
     through the mini-segments by picking the nearest marker after taking
     a step (default 0.5 cM) downstream and upstream the mini-segments.
 
-The wrapper calls two different functions : `createSegmentsListBySnps`
-and `createSegmentsListBySnps`. The first function
-`createSegmentsListBySnps` is used to create a list of segments though
-the genome. The second function `makeAllSubmapsBySnps` or
-`makeAllSubsmapsbyHotspots` is used to create the submaps.
+The function `Fantasio` calls two different functions for submaps
+creation, based on the value of `segments`: `segmentsListByHotspots` and
+`segmentsListByDistance`. The first function `segmentsListByDistance` is
+used to create a list of segments though the genome. The second function
+`makeAllSubmapsByDistance` or `makeAllSubsmapsbyHotspots` is used to
+create the submaps.
 
 ### 2.1 Hotspots (Default)
 
@@ -314,18 +314,18 @@ n.consecutive.marker should be set to 1.
 In order to use the `segment.option` argument you need to pass a list of
 arguments, each variable name in the list must be an argument name in
 the function. The function that will be called is either
-`createsSegmentsListBySnps` if `segments` argument is equal to
-"Distance" or `createSegmentsListByHotspots` if `segments` argument is
-equal to "Hotspots" and the arguments list will be passed to it. So
-refer to these functions for possible arguments.
+`createsSegmentsListByDistance` if `segments` argument is equal to
+"Distance" or `segmentsListByHotspots` if `segments` argument is equal
+to "Hotspots" and the arguments list will be passed to it. So refer to
+these functions for possible arguments.
 
-    l <- list(number_of_marker=50) #default is 0
+    l <- list(minMarkers=50) #default is 0
     F1.l <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, list.id = "all")
 
 In the case of "Hotspots", by default, we do not require to have a
-minimum number of markers in each segment (number\_of\_marker = 0). With
-the above command line, we impose to have at least 50 markers in a
-segment. Otherwise it is merged with the previous segment.
+minimum number of markers in each segment (`minMarkers = 0`). With the
+above command line, we impose to have at least 50 markers in a segment.
+Otherwise it is merged with the previous segment.
 
 3. Step by step usage of the package Fantasio
 ---------------------------------------------
@@ -337,9 +337,9 @@ segment. Otherwise it is merged with the previous segment.
 We will now create segments, which will be use to create the submaps
 later, further explication below, for now use this command :
 
-    s1 <- createSegmentsListByHotspots(x.be)
+    s1 <- segmentsListByHotspots(x.be)
 
-    ## You are currently using version hg19 of hotspot
+    ## Using hotspots from  hotspot_hg19 
     ## Gathering all hotspots for the genome : ......................
     ## Gathering all the genome's markers : ......................
     ## Finding which markers are between two hotspots : ......................
@@ -388,7 +388,9 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    F1 <- makeAllSubmapsByHotspots(x.be, 5, s1, verbose=FALSE, list.id = "all") 
+    F1 <- makeAllSubmapsByHotspots(x.be, 5, s1)
+    F1 <- festim(F1)
+    F1 <- setSummary(F1, list.id = "all")
 
 For the sake of clarity we have only created 5 submaps, but generally we
 do 100.
@@ -490,19 +492,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02003113 0.03288352
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03713675 0.04073148
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03801298 0.04685599
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04686362 0.05199458
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.01904648 0.02982844
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03768878 0.04105253
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03927225 0.04879470
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.04962745 0.05549931
     ## 5 HGDP00611 HGDP00611      1   0 / 5      NA         NA         NA
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05183701 0.07092354
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05654334 0.07166133
     ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02490477 0.02202143 0.14172686 1.617130e-25   TRUE             5
-    ## 2 0.03931884 0.03943023 0.07900239 3.458234e-56   TRUE             5
-    ## 3 0.04239332 0.04084947 0.12635718 5.583410e-49   TRUE             5
-    ## 4 0.05026514 0.05041279 0.16769022 2.483917e-61   TRUE             5
+    ## 1 0.02398260 0.02223782 0.12777625 6.389929e-28   TRUE             5
+    ## 2 0.03938708 0.04008926 0.08056515 3.394329e-58   TRUE             5
+    ## 3 0.04355957 0.04497204 0.11638164 2.523944e-51   TRUE             5
+    ## 4 0.05171237 0.05123748 0.16288443 1.124609e-62   TRUE             5
     ## 5         NA         NA         NA           NA     NA            NA
-    ## 6 0.05829826 0.05600072 0.31084696 5.941254e-38   TRUE             5
+    ## 6 0.06396400 0.06282001 0.36810700 3.393475e-40   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -528,10 +530,10 @@ description of each structure in this object :
     F1@FLOD_recap[1:10, 1:10] # an individual * marker matrix
 
 -   HBDsegments : a list of dataframe, each datafram is for an
-    individual and it contains a list of HBDsegments (start and
-    end positions). By default, a region is HBD if it contains at least
-    5 markers (n.consecutive.marker=5) with a HBD probability larger
-    than 0.5 (threshold=0.5).
+    individual and it contains a list of HBDsegments (start and end
+    positions). By default, a region is HBD if it contains at least 5
+    markers (n.consecutive.marker=5) with a HBD probability larger than
+    0.5 (threshold=0.5).
 
 <!-- -->
 
@@ -577,7 +579,9 @@ We use the same segment list that is used before (s1).
 As said before the only argument that changes is "recap.by.segments", it
 is put to TRUE. And we recommend to adjust "n.consecutive.marker".
 
-    F2 <- makeAllSubmapsByHotspots(x.be, 5, s1, verbose=FALSE, recap.by.segments = TRUE, n.consecutive.marker=1, list.id = "all")
+    F2 <- makeAllSubmapsByHotspots(x.be, 5, s1)
+    F2 <- festim(F2)
+    F2 <- setSummary(F2, recap.by.segments = TRUE, n.consecutive.marker = 1, list.id = "all")
 
 ### 3.3 Distance
 
@@ -586,7 +590,7 @@ is put to TRUE. And we recommend to adjust "n.consecutive.marker".
 We will now create segments, which will be used to create the submaps
 later :
 
-    s3 <- createSegmentsListBySnps(x.be)
+    s3 <- segmentsListByDistance(x.be)
 
     ## Finding segments for the genome : .......................
     ## Finding which markers are between two segments: .......................
@@ -621,7 +625,9 @@ This function creates a dataframe with three colums :
 We will now head toward the creation of submaps using the following
 commands :
 
-    F3 <- makeAllSubmapsBySnps(x.be, 5, s3, verbose=FALSE, list.id = "all")
+    F3 <- makeAllSubmapsByDistance(x.be, 5, s3)
+    F3 <- festim(F3)
+    F3 <- setSummary(F3, list.id = "all")
 
 The variable submaps becomes an submapsList object, you can watch the
 different elements of it with :
@@ -641,7 +647,7 @@ make the differents submaps in the following functions :
 
 -   Fantasio
 -   makeAllSubmapsByHotspots
--   makeAllSubmapsBySnps
+-   makeAllSubmapsByDistance
 
 <!-- -->
 
@@ -670,13 +676,13 @@ make the differents submaps in the following functions :
     rollmean function of the R package zoo. This allows checking the
     consistency of HFLOD calculations (i.e. checking the fact that a
     high HFLOD score is not due to one submap only). A moving average is
-    computed to remove the impact of a submap with a false
-    positive signal.
+    computed to remove the impact of a submap with a false positive
+    signal.
 
 -   For method "Hotspots by segments", the use of the moving average
     does not make much sense as results are already average over the
-    snps of a segment between hospots regions. We recommend
-    using MA=FALSE.
+    snps of a segment between hospots regions. We recommend using
+    MA=FALSE.
 
 ### 5.3 HBD plot for a chromosome
 

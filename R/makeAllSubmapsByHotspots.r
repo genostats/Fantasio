@@ -1,4 +1,4 @@
-#' Creation of submaps using hotposts in the genome
+#' Creation of submaps based on hotposts in the genome
 #' 
 #' This function creates N submaps and allows the creation of summary files
 #' 
@@ -45,7 +45,7 @@
 #' @return return a new list object containing every dataframe and object created 
 #' 
 #' @seealso Fantasio
-#' @seealso makeSubmapsBySnps
+#' @seealso makeAllSubmapsByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
@@ -63,19 +63,13 @@
 #' #Please refer to vignette 
 #'
 #' @export
-makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3,
-                                     run.festim=TRUE, list.id, run.proba=TRUE, recap.by.segments = FALSE, verbose=TRUE, debug=FALSE,
-                                     threshold=0.5, q = 1e-04, quality=95, n.consecutive.marker=5)
-{
+makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3) {
 
   if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByHotspots' ")
   
-  ff <- function(i, run.festim) {
-    spider <- createSubmapByHotspots(bedmatrix, segmentsList, epsilon=epsilon) 
-    if(run.festim) 
-      spider <- festim(spider, verbose=verbose, debug=debug)
-    spider
+  ff <- function(i) {
+    createSubmapByHotspots(bedmatrix, segmentsList, epsilon = epsilon) 
   }
 
   if(n.cores != 1 & .Platform$OS.type != "unix") {
@@ -84,24 +78,18 @@ makeAllSubmapsByHotspots <- function(bedmatrix, n = 100, segmentsList = segments
   }
   
   if(n.cores == 1) {
-    submap <- lapply(1:n, ff, run.festim = run.festim)
-  }else {
+    submap <- lapply(1:n, ff)
+  } else {
     RNGkind("L'Ecuyer-CMRG")
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
       s <- rbind(s, nextRNGStream(s[i-1,]))
-    cl <- makeForkCluster(n.cores) #creation of slaves
-    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) #use of paralelisation
-    submap <- parLapply(cl, 1:n, ff, run.festim = run.festim)
+    cl <- makeForkCluster(n.cores) 
+    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) 
+    submap <- parLapply(cl, 1:n, ff)
     stopCluster(cl)
     gc()
   }
   
-  submaps <- new("submapsList", submap, bedmatrix, segmentsList, recap.by.segments)
-  
-  submaps <- setSummary(submaps, run_a_f = run.festim, probs = run.proba, recap.by.segments=recap.by.segments, list.id=list.id, threshold=threshold, q=q, quality=quality, n.consecutive.marker=n.consecutive.marker)
-  if(verbose) cat("Creation of all the Submaps by hotspots over ! \n")
-  submaps
+  new("submapsList", submap, bedmatrix, segmentsList, NA)
 }
-
-

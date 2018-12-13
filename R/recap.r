@@ -12,7 +12,7 @@
 #' @details This function returns a list of two dataframes with HBD and FLOD in it.
 #' 
 #' @seealso Fantasio
-#' @seealso makeSubmapsBySnps
+#' @seealso makeAllSubmapsByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
@@ -23,8 +23,7 @@
 #' @return This function returns a list of dataframes. 
 #'
 #' @export
-recap <- function(submaps, recap.by.segments=FALSE, list.id)
-{
+recap <- function(submaps, recap.by.segments = submaps@bySegments, list.id) {
   
   if(class(submaps@atlas[[1]])[1] != "snpsMatrix" & class(submaps@atlas[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 

@@ -5,7 +5,7 @@
 \title{Creation of a list of segments}
 \usage{
 segmentsListByHotspots(bedmatrix, intensity = 10,
-  hotspots = "hotspot_hg19", minMarkers = 50, verbose = TRUE)
+  hotspots = hotspot_hg19, minMarkers = 0, verbose = TRUE)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -26,7 +26,7 @@ Creates a list of segments delimited by recombination hotspots
 }
 \details{
 This function creates an object of class hotspots.segments, containing a list of segments delimited
-by hotspots, The object is a list of list of vectors indices of SNPs. There are as many sublist as
+by hotspots. The object is a list of list of vectors indices of SNPs. There are as many sublists as
 chromosomes. The indices correspond to SNPs in \code{bedmatrix}.
 
 The user can provide a hotspots data frame with a format similar to hotspot_hg19.
@@ -37,5 +37,5 @@ The user can provide a hotspots data frame with a format similar to hotspot_hg19
 
 }
 \seealso{
-\code{\link{Fantasio}}, \code{\link{segmentsListBySnps}}
+\code{\link{Fantasio}}, \code{\link{segmentsListByDistance}}
 }

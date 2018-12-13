@@ -16,7 +16,37 @@
 #'
 #' 
 #' @export
-festim <- function(x, verbose=TRUE, debug=FALSE) {
+festim <- function(x, n.cores = 1, verbose = FALSE, debug = FALSE) { # should be handled through a method ...
+  if(is(x, "fMatrix"))
+    festim_fmatrix(x, verbose, debug)
+  else if(is(x, "submapsList"))
+    festim_submapslist(x, n.cores, verbose, debug)
+  else
+    stop("festim should be applied of objects of class fMatrix or submapsList")
+}
+
+festim_submapslist <- function(x, n.cores, verbose, debug) {
+
+  if(n.cores != 1 & .Platform$OS.type != "unix") {
+    warning("FORK cluster unavailable only one core used")
+    n.cores <- 1
+  }
+
+  if(n.cores == 1) {
+    new_atlas <- lapply(x@atlas, festim_fmatrix, verbose = verbose, debug = debug)
+  } else {
+    cl <- makeForkCluster(n.cores) 
+    new_atlas <- parLapply(cl, x@atlas, festim_fmatrix, verbose = FALSE, debug = FALSE)
+    stopCluster(cl)
+  }
+  x@atlas <- new_atlas
+  x
+}
+
+
+# this functions uses slots that are common to 
+# it msat matrices, snpsMatrices (submaps by distance), HotspotsMatrices
+festim_fmatrix <- function(x, verbose = TRUE, debug = FALSE) {
   N <- nrow(x)
   x@a <- numeric(N)
   x@f <- numeric(N)

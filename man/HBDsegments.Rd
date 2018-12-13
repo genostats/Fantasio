@@ -4,8 +4,7 @@
 \alias{HBDsegments}
 \title{Find HBDsegments}
 \usage{
-HBDsegments(submaps, n.consecutive.marker = 5, threshold = 0.5,
-  recap.by.segments = FALSE)
+HBDsegments(submaps, n.consecutive.marker = 5, threshold = 0.5)
 }
 \arguments{
 \item{submaps}{a submapsList object}
@@ -13,8 +12,6 @@ HBDsegments(submaps, n.consecutive.marker = 5, threshold = 0.5,
 \item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)}
 
 \item{threshold}{the minimum value of HBD probabilities given for a marker (default is 0.5)}
-
-\item{recap.by.segments}{if the summary files has to be computed considering segments or snps (defaut is FALSE)}
 }
 \value{
 This function returns a list of dataframe with 11 columns :

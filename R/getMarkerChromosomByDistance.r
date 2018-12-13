@@ -1,4 +1,4 @@
-getMarkerChromosomBySnps <- function(x, map, pas, unit="cM")
+getMarkerChromosomByDistance <- function(x, map, pas, unit="cM")
 {
   submap <- c()
   for(i in 1:length(map))                    #loop over the chromosome segmetns

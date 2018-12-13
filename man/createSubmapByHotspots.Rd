@@ -5,7 +5,7 @@
 \title{Creation of a submaps}
 \usage{
 createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001,
-  fileName)
+  snpIndices)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -14,7 +14,7 @@ createSubmapByHotspots(bedmatrix, segmentsList, epsilon = 0.001,
 
 \item{epsilon}{genotype error rate (default is 0.001)}
 
-\item{fileName}{a fileName with the list of markers wanted for the submap}
+\item{snpIndices}{(optional) You have the possibility to pass your own list of markers}
 }
 \value{
 return an HostspotsMatrix object with some of his slots filled.
@@ -23,11 +23,9 @@ return an HostspotsMatrix object with some of his slots filled.
 This function creates a submaps using the list segments created by using the hotspots in the genome
 }
 \details{
-This function will iterates over the list of segments, then for each segments it will pick randomly one marker and put it into a vector.
+If snpIndices is given, the function creates a submap corresponding to the given SNPs.
 
-Once the iteration over the list is over, the function will create an object and filled some of his slot.
-
-If you are using a fileName, please make sure to have one marker per line.
+Otherwise, this function iterates over the list of segments, then for each segments it picks randomly one marker.
 
 This function is used internally in the package by the function makeAllSubmapsByHotspots
 }

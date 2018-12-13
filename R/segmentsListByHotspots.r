@@ -15,7 +15,7 @@
 #' 
 #' @return an hotspots.segments object
 #' 
-#' @seealso \code{\link{Fantasio}}, \code{\link{segmentsListBySnps}}
+#' @seealso \code{\link{Fantasio}}, \code{\link{segmentsListByDistance}}
 #' 
 #' @examples  
 #' #Please refer to vignette

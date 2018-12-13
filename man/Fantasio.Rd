@@ -8,10 +8,9 @@
 \usage{
 Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
   segment.options, n = 100, n.cores = 1, epsilon = 0.001,
-  run.festim = TRUE, list.id, run.proba = TRUE,
-  recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
+  run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
   threshold = 0.5, q = 1e-04, quality = 95,
-  n.consecutive.marker = 5)
+  n.consecutive.markers = 5)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -26,18 +25,11 @@ Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
 
 \item{epsilon}{genotype error rate (default is 0.001)}
 
-\item{run.festim}{whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)}
-
-\item{list.id}{a list of individuals from which to computes HBD, 
-FLOD score and HFLOD score (see details for more informations)}
-
 \item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)}
 
 \item{recap.by.segments}{if you want the summary of probabilities by snps or by segments (default is FALSE)}
 
 \item{verbose}{whether you want informations about computations (default is TRUE)}
-
-\item{debug}{whether you want advanced output for the computation process (default is FALSE)}
 
 \item{threshold}{the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)}
 
@@ -45,7 +37,7 @@ FLOD score and HFLOD score (see details for more informations)}
 
 \item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
+\item{n.consecutive.markers}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
 }
 \description{
 This function is used as a wrapper for the package Fantasio to create segments list and submaps
@@ -53,7 +45,7 @@ This function is used as a wrapper for the package Fantasio to create segments l
 \details{
 This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function :
 
-The first function `segmentsListBySnps` and`segmentsListByHotspots` is used to create a list of segments though the genome.
+The first function `segmentsListByDistance` and`segmentsListByHotspots` is used to create a list of segments though the genome.
 
 The second function `makeAllSubmapsBySnsp`and `makeAllSubmapsByHotspots` is used to create submaps.
 
@@ -67,7 +59,7 @@ Or the segments are made by using the gaps between markers (option Distance), th
 
 every segments and going through each segment from left to right using a supply step (by default it is 0.5 cM).
 
-To see which arguments can be passed in the list of args in the segment.options please go check the `segmentsListBySnps` or `segmentsListByHotspots` functions manual.
+To see which arguments can be passed in the list of args in the segment.options please go check the `segmentsListByDistance` or `segmentsListByHotspots` functions manual.
 
 When doing a number N of submaps using the options recap.by.segments,
 
@@ -85,9 +77,9 @@ for the same segments.
 \seealso{
 read.bed.matrix
 
-segmentsListBySnps
+segmentsListByDistance
 
-makeAllSubmapsBySnps
+makeAllSubmapsByDistance
 
 makeAllSubmapsByHotspots
 

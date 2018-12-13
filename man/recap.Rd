@@ -4,7 +4,7 @@
 \alias{recap}
 \title{HBD/FLOD recap}
 \usage{
-recap(submaps, recap.by.segments = FALSE, list.id)
+recap(submaps, recap.by.segments = submaps@bySegments, list.id)
 }
 \arguments{
 \item{submaps}{a submapsList object}
@@ -31,7 +31,7 @@ This function returns a list of two dataframes with HBD and FLOD in it.
 \seealso{
 Fantasio
 
-makeSubmapsBySnps
+makeAllSubmapsByDistance
 
 segmentsListByHotspots
 

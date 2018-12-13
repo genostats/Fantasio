@@ -2,14 +2,11 @@
 % Please edit documentation in R/makeAllSubmapsByHotspots.r
 \name{makeAllSubmapsByHotspots}
 \alias{makeAllSubmapsByHotspots}
-\title{Creation of submaps using hotposts in the genome}
+\title{Creation of submaps based on hotposts in the genome}
 \usage{
 makeAllSubmapsByHotspots(bedmatrix, n = 100,
   segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1,
-  epsilon = 0.001, run.festim = TRUE, list.id, run.proba = TRUE,
-  recap.by.segments = FALSE, verbose = TRUE, debug = FALSE,
-  threshold = 0.5, q = 1e-04, quality = 95,
-  n.consecutive.marker = 5)
+  epsilon = 0.001)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -90,7 +87,7 @@ for the same segments.
 \seealso{
 Fantasio
 
-makeSubmapsBySnps
+makeAllSubmapsByDistance
 
 segmentsListByHotspots
 

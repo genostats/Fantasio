@@ -34,11 +34,10 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' @param bedmatrix a bed.matrix object 
 #' @param segmentsList a list of segment for each chromosomes
 #' @param epsilon genotype error rate (default is 0.001)
-#' @param fileName a fileName with the list of markers wanted for the submap
+#' @param snpIndices (optional) You have the possibility to pass your own list of markers
 #' 
-#' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker and put it into a vector.
-#' @details Once the iteration over the list is over, the function will create an object and filled some of his slot.
-#' @details If you are using a fileName, please make sure to have one marker per line.
+#' @details If snpIndices is given, the function creates a submap corresponding to the given SNPs.
+#' @details Otherwise, this function iterates over the list of segments, then for each segments it picks randomly one marker.
 #' @details This function is used internally in the package by the function makeAllSubmapsByHotspots
 #' 
 #' @return return an HostspotsMatrix object with some of his slots filled.
@@ -50,18 +49,15 @@ getMarkerChromosom <- function(chrSegmentsList)
 #'
 #' 
 #' @export
-createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
+createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByHotspots' ")
   
-  if(!missing(fileName))
+  if(!missing(snpIndices))
   {
-    cat("Warning, you are using an advanced option : a user-specified submap\n")
-    res <- readChar(fileName, file.info(fileName)$size)
-    res <- unlist(strsplit(res, "\n"))
-    submap <- match(res, bedmatrix@snps$id)
-  }else{
+    submap <- snpIndices
+  } else {
     segmentSummary <- segmentsListSummary(segmentsList)
 
     shift <- cumsum(segmentSummary$number_of_segments)

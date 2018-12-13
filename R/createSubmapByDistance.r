@@ -1,30 +1,29 @@
 #' Creation of a submaps
 #' 
-#' This function creates a submaps using the list segments created by using gap between markers
+#' This function creates a submap using the list segments created by using gap between markers
 #' 
 #' @param bedmatrix a bed.matrix object 
-#' @param segmentsList a list of segment for each chromosomes
+#' @param segmentsList a list of segments for each chromosome
 #' @param epsilon genotype error rate (default is 0.001)
-#' @param fileName You have the possibility to pass your own list of marker, that is to say, your own submaps 
+#' @param snpIndices (optional) You have the possibility to pass your own list of markers
 #' 
-#' @details This function will iterates over the list of segments, then for each segments it will pick randomly one marker 
-#' and from this marker chose a marker every "step" step from back to end.
-#' @details Once the iteration over the list is over, the function will create an object and filled some of his slot.
-#' @details If you are using a fileName, please make sure to have one marker per line
+#' @details If snpIndices is given, the function creates a submap corresponding to the given SNPs.
+#' @details Otherwise, the function iterates over the list of segments, then for each segments it picks randomly one marker 
+#' and from this marker choses a marker every "step" step from back to end.
 #' 
-#' @return return an snpsMatrix object with some of his slots filled.
+#' @return return an snpsMatrix object 
 #' 
-#' @seealso makeSubmapsBySnps
+#' @seealso makeAllSubmapsByDistance
 #' 
 #' @examples  
 #' #Please refer to vignette 
 #'
 #' 
 #' @export
-createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName)
+createSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "snpsSegments")
-    stop("mismatch segments list, need a list of segments created by the function 'segmentsListBySnps' ")
+    stop("mismatch segments list, need a list of segments created by the function 'segmentsListByDistance' ")
   
   unit <- segmentsList@unit
   step <- segmentsList@gap 
@@ -34,20 +33,17 @@ createSubmapBySnps <- function(bedmatrix, segmentsList, epsilon = 1e-3, fileName
   
     
   
-  if(!missing(fileName))
+  if(!missing(snpIndices))
   {
-    cat("Warning, you are using an advanced option : a user-specified submap\n")
-    res <- readChar(fileName, file.info(fileName)$size)
-    res <- unlist(strsplit(res, "\n"))
-    submap <- match(res, bedmatrix@snps$id)
-  }else{
+    submap <- snpIndices 
+  } else {
     submap <- c()
     for(chr in 1:length(segmentsList@snpsSegments))
     {
       map <- segmentsList@snpsSegments[[chr]]
       if(length(map) > 0)
       {
-        v <- getMarkerChromosomBySnps(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
+        v <- getMarkerChromosomByDistance(x=bedmatrix, map=map, pas=step, unit=unit) #return an index vector of the marker pick randomly in the segment
         
         if(unit == "Bases")
         {

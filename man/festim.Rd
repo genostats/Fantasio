@@ -4,7 +4,7 @@
 \alias{festim}
 \title{Computation of a and f}
 \usage{
-festim(x, verbose = TRUE, debug = FALSE)
+festim(x, n.cores = 1, verbose = FALSE, debug = FALSE)
 }
 \arguments{
 \item{x}{a submap matrix}

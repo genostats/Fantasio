@@ -4,9 +4,9 @@
 \alias{setSummary}
 \title{Creation summary statistic files}
 \usage{
-setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
-  recap.by.segments = FALSE, q = 1e-04, threshold = 0.5,
-  quality = 95, n.consecutive.marker = 5)
+setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
+  q = 1e-04, threshold = 0.5, quality = 95,
+  n.consecutive.marker = 5)
 }
 \arguments{
 \item{submaps}{a submapsList object}
@@ -18,12 +18,10 @@ setSummary(submaps, list.id, run_a_f = TRUE, probs = TRUE,
 - enter a list of individual for a computation of HBD, FLOD score HFLOD score for them
 - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual}
 
-\item{run_a_f}{a flag indicating if the estimation of a and f has been computed for the submaps using `festim` (default is TRUE)}
-
 \item{probs}{a flag indicating if the HBD probabilities and FLOD score has been computed for the submaps (default is TRUE)}
 
 \item{recap.by.segments}{if the summary files has to be computed considering segments or snps (defaut is FALSE) 
-(more information in the documentation of `makeSubmapsByHotspots` or`makeSubmapsBySnps` functions)}
+(more information in the documentation of `makeAllSubmapsByHotspots` or`makeAllSubmapsByDistance` functions)}
 
 \item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
 
@@ -38,7 +36,7 @@ return a new list object containing every dataframe and object created
 }
 \description{
 This function is uses to ouput all the summary files after the creation of the submaps by the following two functions : 
-`makeSubmapsByHotspots` and `makeSubmapsBySnps` is over.
+`makeAllSubmapsByHotspots` and `makeAllSubmapsByDistance` is over.
 }
 \details{
 the function filled the empty slots of the submapsList object. It calls different functions and uses the results of each one to filled 
@@ -61,7 +59,7 @@ the object. This function computes summary for the following elements :
 \seealso{
 Fantasio
 
-makeSubmapsBySnps
+makeAllSubmapsByDistance
 
 segmentsListByHotspots
 
