@@ -14,7 +14,7 @@ recap.by.snps <- function(submaps, proba_HBD, proba_FLOD)
   marqueurs <- as.data.frame(table(unlist(sapply(proba_HBD, function(x) colnames(x)))), stringsAsFactors=FALSE)
   
   ##count the number of times an individuals has appeared
-  individuals <- as.vector(rownames(submaps@atlas[[1]]@HBD.prob))
+  individuals <- as.vector(rownames(submaps@submaps_list[[1]]@HBD.prob))
   
 
   matrice_HBD <- matrix(0, nrow = length(individuals), ncol = nrow(marqueurs))

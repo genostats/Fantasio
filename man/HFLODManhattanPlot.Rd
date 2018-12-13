@@ -8,7 +8,7 @@ HFLODManhattanPlot(submaps, regions, unit = "cM", MA = TRUE,
   nbSNP_MA = 50)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{regions}{a matrix containing the value to be highlighted in the plot}
 

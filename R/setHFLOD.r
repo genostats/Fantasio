@@ -2,11 +2,11 @@
 #' 
 #' This function is used to compute HFLOD scores on individuals in a sample
 #' 
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' 
-#' @details This function iterates over the slots atlas of the submapsList object.
+#' @details This function iterates over the slots submaps_list of the atlas object.
 #' 
-#' @return the submapsList object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
+#' @return the atlas object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
 #' The second value is the moving average probability.
 #' 
 #' @seealso setHBDprob
@@ -15,7 +15,7 @@
 #' @export
 setHFLOD <- function(submaps)
 {
-  if(class(submaps@atlas[[1]])[1] != "snpsMatrix" & class(submaps@atlas[[1]])[1] != "HostspotsMatrix")
+  if(class(submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
   
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
@@ -26,7 +26,7 @@ setHFLOD <- function(submaps)
 
   if(submaps@bySegments)
   {
-    index <- sapply(submaps@atlas, function(i) i@submap) #index of the marker
+    index <- sapply(submaps@submaps_list, function(i) i@submap) #index of the marker
     
     poscM <- matrix(0.0, nrow = nrow(index), ncol = ncol(index))
     posBp <- matrix(0.0, nrow = nrow(index), ncol = ncol(index))
@@ -47,7 +47,7 @@ setHFLOD <- function(submaps)
     }
     
     
-    HFLOD <- data.frame(CHR    = submaps@atlas[[1]]@map$chr, 
+    HFLOD <- data.frame(CHR    = submaps@submaps_list[[1]]@map$chr, 
                         pos_cM = poscM_mean, 
                         pos_Bp = posBp_mean)
     

@@ -8,7 +8,7 @@
   outfile, family.id, individual.id, build)
 }
 \arguments{
-\item{Submaps}{a submapsList object}
+\item{Submaps}{a atlas object}
 
 \item{ROHfile}{an ROH file}
 

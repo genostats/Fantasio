@@ -8,14 +8,14 @@ setClassUnion("matrixOrNULL",members=c("matrix", "NULL"))
 setClassUnion("characterOrNULL",members = c("character", "NULL"))
 setClassUnion("doubleOrNULL",members = c("numeric", "NULL"))
 
-#' Class submapsList
+#' Class atlas
 #'
-#' Class \code{submapsList} This is the class used to create an object which will contains every dataframe and list created when creating submaps.  
+#' Class \code{atlas} This is the class used to create an object which will contains every dataframe and list created when creating submaps.  
 #'
-#' @rdname submapsList-class
-#' @exportClass submapsList
+#' @rdname atlas-class
+#' @exportClass atlas
 #' @slot segments_list the list of segments 
-#' @slot atlas a list of submaps
+#' @slot submaps_list a list of submaps
 #' @slot likelihood_summary a dataframe with both likelihood0 and likelihood1 over the submaps
 #' @slot estimation_summary a dataframe with both a and f estimation over the submaps
 #' @slot marker_summary a dataframe indicating the number of times a marker has been chosen
@@ -28,9 +28,9 @@ setClassUnion("doubleOrNULL",members = c("numeric", "NULL"))
 #' @slot bySegments a boolean indicating wheter the creation of summary statistics was made by segments (see documentation of Fantasio function)
 #' @slot unit   the unit of the markers (cM or Bp).
 #' @slot gap   the value of the gap used to pick marker when doing submaps by snps. (see function Fantasio for more infos)
-setClass("submapsList", representation(
+setClass("atlas", representation(
         segments_list        = 'listOrNULL',
-        atlas                = 'list', 
+        submaps_list         = 'list', 
         likelihood_summary   = 'listOrNULL',
         estimation_summary   = 'listOrNULL', 
         marker_summary       = 'dataframeOrNULL',
@@ -45,7 +45,7 @@ setClass("submapsList", representation(
         gap                  = "doubleOrNULL"
 ))
 
-#' Constructor method of submapsList.
+#' Constructor method of atlas.
 #'
 #' @param .Object the object type
 #' @param submaps a list of submaps
@@ -54,9 +54,9 @@ setClass("submapsList", representation(
 #' @param bySegments a boolean
 #' @param unit the unit in which are markers (cM or Bp)
 #' @param gap the gap used to create segments in the By Distance method
-setMethod('initialize', signature='submapsList', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL)
+setMethod('initialize', signature='atlas', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL)
 {
-  .Object@atlas         <- submaps
+  .Object@submaps_list         <- submaps
   .Object@bedmatrix     <- bedmatrix
   .Object@segments_list <- segments_list
   .Object@bySegments    <- bySegments
@@ -66,12 +66,12 @@ setMethod('initialize', signature='submapsList', definition=function(.Object, su
 })
 
 
-#' Show method of submapsList.
+#' Show method of atlas.
 #'
-#' @param object an submapsList object
-setMethod('show', signature("submapsList"), 
+#' @param object an atlas object
+setMethod('show', signature("atlas"), 
   function(object){
-       cat('A list of', length(object@atlas), 'submaps\n ')
+       cat('A list of', length(object@submaps_list), 'submaps\n ')
   })
 
 

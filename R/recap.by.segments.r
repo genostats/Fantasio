@@ -12,7 +12,7 @@
 recap.by.segments <- function(submaps, proba_HBD, proba_FLOD)
 {
 
-  marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)#markers names
+  marker_names <- colnames(submaps@submaps_list[[1]]@HBD.prob)#markers names
   correspondance <- match(marker_names, submaps@bedmatrix@snps$id)
   
   chr <- submaps@bedmatrix@snps$chr[correspondance]#chromosome corresponding to this marker
@@ -21,7 +21,7 @@ recap.by.segments <- function(submaps, proba_HBD, proba_FLOD)
   columns_names <- paste(rep("Segment",length(marker_names)), seq(1,length(marker_names)), rep("chr", length(marker_names)), chr, sep = "_")
   
   
-  nom    <- as.vector(rownames(submaps@atlas[[1]]@HBD.prob)) #get the name of individuals
+  nom    <- as.vector(rownames(submaps@submaps_list[[1]]@HBD.prob)) #get the name of individuals
   matrice_HBD <- matrix(0, nrow=length(nom), ncol=ncol(proba_HBD[[1]]))
   matrice_FLOD <- matrix(0, nrow=length(nom), ncol=ncol(proba_FLOD[[1]]))
   

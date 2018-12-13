@@ -7,22 +7,22 @@
 setFLOD(submaps, condition, q = 1e-04)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{condition}{A vector containing a list of individuals. Only this list of individuals will have their FLOD scores computed}
 
 \item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual. Default is 0.0001.}
 }
 \value{
-the submapsList object with each FLOD.prob slot of each submaps in the slot atlas computed
+the atlas object with each FLOD.prob slot of each submaps in the slot submaps_list computed
 }
 \description{
 This function is uses to compute FLOD scores on individual present in a sample
 }
 \details{
-This function iterates over the slots atlas of the submapsList object.
+This function iterates over the slots submaps_list of the atlas object.
 
-For each submaps in the slots atlas of the object, the slot FLOD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
+For each submaps in the slots submaps_list of the object, the slot FLOD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
 }
 \seealso{
 setHBDprob

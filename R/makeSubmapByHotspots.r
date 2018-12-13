@@ -38,7 +38,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' 
 #' @details If snpIndices is given, the function creates a submap corresponding to the given SNPs.
 #' @details Otherwise, this function iterates over the list of segments, then for each segments it picks randomly one marker.
-#' @details This function is used internally in the package by the function makeAllSubmapsByHotspots
+#' @details This function is used internally in the package by the function makeAtlasByHotspots
 #' 
 #' @return return an HostspotsMatrix object with some of his slots filled.
 #' 
@@ -49,7 +49,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #'
 #' 
 #' @export
-createSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
+makeSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByHotspots' ")

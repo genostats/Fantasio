@@ -2,7 +2,7 @@
 #'
 #' This fonction to plot a manhanttan plot of the HFLOD score
 #'
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' @param regions a matrix containing the value to be highlighted in the plot
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param MA a boolean indicating whether a red line has to be drawn for the moving average
@@ -27,8 +27,8 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   if (class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
   
-  if (class(submaps@atlas[[1]])[1] != "snpsMatrix" &
-      class(submaps@atlas[[1]])[1] != "HostspotsMatrix")
+  if (class(submaps@submaps_list[[1]])[1] != "snpsMatrix" &
+      class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop(
       "need either an hotspots.segments list of submaps or a snpsSegments list of submaps."
     )
@@ -37,7 +37,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
     stop("HFLOD slots in the object is empty, cannot plot")
   
   if (submaps@bySegments &&
-      class(submaps@atlas[[1]])[1] == "snpsMatrix")
+      class(submaps@submaps_list[[1]])[1] == "snpsMatrix")
     stop("Cannot plot by segments for snpsMatrix object")
   
   

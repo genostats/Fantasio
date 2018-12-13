@@ -19,7 +19,7 @@
 #' 
 #' @details This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function : 
 #' @details The first function `segmentsListByDistance` and`segmentsListByHotspots` is used to create a list of segments though the genome. 
-#' @details The second function `makeAllSubmapsBySnsp`and `makeAllSubmapsByHotspots` is used to create submaps.
+#' @details The second function `makeAtlasBySnsp`and `makeAtlasByHotspots` is used to create submaps.
 #' @details The segments arguments accept only two options : Hotspots or Distance.
 #' @details Depending of the value of the segments argument (Hotspots or Distance) the segments are made by using the hotspots of recombinaison
 #' @details in the genome thanks to hotspots file, then the submaps are made by Hotspots by picking randomly a maker in every segments created before.
@@ -33,9 +33,9 @@
 #' 
 #' @seealso read.bed.matrix
 #' @seealso segmentsListByDistance
-#' @seealso makeAllSubmapsByDistance
-#' @seealso makeAllSubmapsByHotspots
-#' @seealso makeAllSubmapsByHotspots
+#' @seealso makeAtlasByDistance
+#' @seealso makeAtlasByHotspots
+#' @seealso makeAtlasByHotspots
 #'
 #' @examples
 #' #Please refer to vignette 
@@ -57,13 +57,13 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
   }
   if (segments == "Distance") {
     s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
-    h <- makeAllSubmapsByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
+    h <- makeAtlasByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
     h <- festim(h, n.cores = n.cores, verbose = verbose)
     h <- setSummary(h, run.proba, recap.by.segments, threshold = threshold, q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
   }
   else {
     s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
-    h <- makeAllSubmapsByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
+    h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
     h <- festim(h, n.cores = n.cores, verbose = verbose)
     h <- setSummary(h, run.proba, recap.by.segments, threshold = threshold, q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
   }

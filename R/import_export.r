@@ -11,7 +11,7 @@
 #' 
 #' 
 #' @exportClass fMatrix
-#' @exportClass submapsList
+#' @exportClass atlas
 #' @exportClass HostspotsMatrix
 #' @exportClass HostspotsSegments
 #' @exportClass snpsMatrix

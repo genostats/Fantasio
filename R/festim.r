@@ -19,10 +19,10 @@
 festim <- function(x, n.cores = 1, verbose = FALSE, debug = FALSE) { # should be handled through a method ...
   if(is(x, "fMatrix"))
     festim_fmatrix(x, verbose, debug)
-  else if(is(x, "submapsList"))
+  else if(is(x, "atlas"))
     festim_submapslist(x, n.cores, verbose, debug)
   else
-    stop("festim should be applied of objects of class fMatrix or submapsList")
+    stop("festim should be applied of objects of class fMatrix or atlas")
 }
 
 festim_submapslist <- function(x, n.cores, verbose, debug) {
@@ -33,13 +33,13 @@ festim_submapslist <- function(x, n.cores, verbose, debug) {
   }
 
   if(n.cores == 1) {
-    new_atlas <- lapply(x@atlas, festim_fmatrix, verbose = verbose, debug = debug)
+    new_submaps_list <- lapply(x@submaps_list, festim_fmatrix, verbose = verbose, debug = debug)
   } else {
     cl <- makeForkCluster(n.cores) 
-    new_atlas <- parLapply(cl, x@atlas, festim_fmatrix, verbose = FALSE, debug = FALSE)
+    new_submaps_list <- parLapply(cl, x@submaps_list, festim_fmatrix, verbose = FALSE, debug = FALSE)
     stopCluster(cl)
   }
-  x@atlas <- new_atlas
+  x@submaps_list <- new_submaps_list
   x
 }
 

@@ -7,7 +7,7 @@
 markerSummary(submaps)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 }
 \value{
 this function returns a dataframe.

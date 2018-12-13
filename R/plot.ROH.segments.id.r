@@ -3,7 +3,7 @@
 #' This function is use to plot HBDsegments for a specific infdividual using an ROH file
 #' 
 #' @param ROHfile an ROH file
-#' @param Submaps a submapsList object
+#' @param Submaps a atlas object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param regions a matrix containing the value to ve highlighted in the plot
 #' @param outfile the name of the plot

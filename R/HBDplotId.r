@@ -25,7 +25,7 @@
 #' @export
 HBDplotId <- function(Submaps, ROHfile, unit= "cM", individual.id, family.id, regions, outfile, build = 37)
 {
-  if(class(Submaps@atlas[[1]])[1] != "snpsMatrix" & class(Submaps@atlas[[1]])[1] != "HostspotsMatrix")
+  if(class(Submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(Submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
   
   if(class(Submaps@bedmatrix)[1] != "bed.matrix")

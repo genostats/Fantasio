@@ -7,17 +7,17 @@
 setHFLOD(submaps)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 }
 \value{
-the submapsList object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
+the atlas object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
 The second value is the moving average probability.
 }
 \description{
 This function is used to compute HFLOD scores on individuals in a sample
 }
 \details{
-This function iterates over the slots atlas of the submapsList object.
+This function iterates over the slots submaps_list of the atlas object.
 }
 \seealso{
 setHBDprob

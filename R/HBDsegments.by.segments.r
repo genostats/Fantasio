@@ -25,7 +25,7 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, th
   individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
   
   #find the name of the marker to find the index of the segments in the chromosome
-  marker_names <- colnames(submaps@atlas[[1]]@HBD.prob)
+  marker_names <- colnames(submaps@submaps_list[[1]]@HBD.prob)
   
   
   #from which chromosome this marker correspond

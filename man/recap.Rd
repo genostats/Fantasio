@@ -7,7 +7,7 @@
 recap(submaps, recap.by.segments = submaps@bySegments, list.id)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{recap.by.segments}{: whether you want the recap by segments or snps}
 
@@ -31,7 +31,7 @@ This function returns a list of two dataframes with HBD and FLOD in it.
 \seealso{
 Fantasio
 
-makeAllSubmapsByDistance
+makeAtlasByDistance
 
 segmentsListByHotspots
 

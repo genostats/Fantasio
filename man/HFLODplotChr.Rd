@@ -8,7 +8,7 @@ HFLODplotChr(submaps, unit = "cM", chr, regions, color2 = "green4",
   MA = TRUE, nbSNP_MA = 50)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{unit}{the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")}
 

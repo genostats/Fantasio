@@ -7,7 +7,7 @@
 setHBDprob(submaps, list.id, quality = 95)
 }
 \arguments{
-\item{submaps}{A submapsList object}
+\item{submaps}{A atlas object}
 
 \item{list.id}{you can either :
 - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
@@ -19,15 +19,15 @@ setHBDprob(submaps, list.id, quality = 95)
 \item{quality}{The minimum percentage use to assume if a submap is valid (default is 95)}
 }
 \value{
-the submapsList object with each HBD.prob slot of each submaps in the slot atlas computed
+the atlas object with each HBD.prob slot of each submaps in the slot submaps_list computed
 }
 \description{
 This function is used to compute HBD probabilities on individuals in a sample
 }
 \details{
-This function iterates over the slots atlas of the submapsList object.
+This function iterates over the slots submaps_list of the atlas object.
 
-For each submaps in the slots atlas of the object, the slot HBD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
+For each submaps in the slots submaps_list of the object, the slot HBD.prob will be filled with a matrix of dimension : number_inidividual x number_of_markers
 
 By default the function only computes HBD probabilities for INBRED individuals and with a quality equal or greater than 95%. However if you pass the keyword "all" to 
 the list.id argument, this function will then computes HBD probabilities for all the individuals in your data. If you want a specific individual, then give a vector containing the family id 

@@ -3,7 +3,7 @@
 #' This function is use to plot HBDsegments for a chromosome using an ROH file
 #' 
 #' @param ROHfile an ROH file
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param chr the chromosome number from which to plot ROH
 #' @param outfile the name of the plot

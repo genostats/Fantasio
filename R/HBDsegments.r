@@ -2,7 +2,7 @@
 #' 
 #'This function creates HBDsegments used for creating plots                      
 #'
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)
 #' @param threshold the minimum value of HBD probabilities given for a marker (default is 0.5)
 #' 

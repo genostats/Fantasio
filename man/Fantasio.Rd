@@ -47,7 +47,7 @@ This function is a wrapper to make the usage of Fantasio, the package, easier. T
 
 The first function `segmentsListByDistance` and`segmentsListByHotspots` is used to create a list of segments though the genome.
 
-The second function `makeAllSubmapsBySnsp`and `makeAllSubmapsByHotspots` is used to create submaps.
+The second function `makeAtlasBySnsp`and `makeAtlasByHotspots` is used to create submaps.
 
 The segments arguments accept only two options : Hotspots or Distance.
 
@@ -79,9 +79,9 @@ read.bed.matrix
 
 segmentsListByDistance
 
-makeAllSubmapsByDistance
+makeAtlasByDistance
 
-makeAllSubmapsByHotspots
+makeAtlasByHotspots
 
-makeAllSubmapsByHotspots
+makeAtlasByHotspots
 }

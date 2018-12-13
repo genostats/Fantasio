@@ -35,7 +35,7 @@
 #' @return return a new list object containing every dataframe and object created 
 #' 
 #' @seealso Fantasio
-#' @seealso makeAllSubmapsByHotspots
+#' @seealso makeAtlasByHotspots
 #' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
@@ -54,13 +54,13 @@
 #'
 #' 
 #' @export
-makeAllSubmapsByDistance <- function(bedmatrix, n = 100, segmentsList = segmentsListByDistance(bedmatrix), n.cores = 1, epsilon = 1e-3) {
+makeAtlasByDistance <- function(bedmatrix, n = 100, segmentsList = segmentsListByDistance(bedmatrix), n.cores = 1, epsilon = 1e-3) {
 
   if(class(segmentsList)[1] != "snpsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByDistance' ")
   
   ff <- function(i) {
-    createSubmapByDistance(bedmatrix, segmentsList, epsilon = epsilon) 
+    makeSubmapByDistance(bedmatrix, segmentsList, epsilon = epsilon) 
   }
   
   if(n.cores != 1 & .Platform$OS.type != "unix") {
@@ -82,5 +82,5 @@ makeAllSubmapsByDistance <- function(bedmatrix, n = 100, segmentsList = segments
     gc()
   }
 
-  new("submapsList", submap, bedmatrix, segmentsList@snpsSegments, NA, segmentsList@unit , segmentsList@gap)
+  new("atlas", submap, bedmatrix, segmentsList@snpsSegments, NA, segmentsList@unit , segmentsList@gap)
 }

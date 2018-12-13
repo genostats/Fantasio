@@ -13,14 +13,14 @@
 #' 
 #' @return return an snpsMatrix object 
 #' 
-#' @seealso makeAllSubmapsByDistance
+#' @seealso makeAtlasByDistance
 #' 
 #' @examples  
 #' #Please refer to vignette 
 #'
 #' 
 #' @export
-createSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
+makeSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "snpsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByDistance' ")

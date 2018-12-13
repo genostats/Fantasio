@@ -2,7 +2,7 @@
 #' 
 #' This fonction plot the HFLOD score for a chromosome
 #' 
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM") 
 #' @param chr the chromosome number from which to plot HFLOD score
 #' @param regions a matrix containing the value to ve highlighted in the plot
@@ -29,13 +29,13 @@ HFLODplotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
   
-  if(class(submaps@atlas[[1]])[1] != "snpsMatrix" & class(submaps@atlas[[1]])[1] != "HostspotsMatrix")
+  if(class(submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.")
   
   if(is.null(submaps@HFLOD))
     stop("HFLOD slots in the object is empty, cannot plot")
   
-  if(submaps@bySegments && class(submaps@atlas[[1]])[1] == "snpsMatrix")
+  if(submaps@bySegments && class(submaps@submaps_list[[1]])[1] == "snpsMatrix")
     stop("Cannot plot by segments for snpsMatrix object")
   
   HFLOD <- submaps@HFLOD

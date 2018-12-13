@@ -1,10 +1,10 @@
 #' Creation summary statistic files
 #' 
 #' This function is uses to ouput all the summary files after the creation of the submaps by the following two functions : 
-#' `makeAllSubmapsByHotspots` and `makeAllSubmapsByDistance` is over.
+#' `makeAtlasByHotspots` and `makeAtlasByDistance` is over.
 #' 
 #' 
-#' @param submaps a submapsList object
+#' @param submaps a atlas object
 #' @param list.id you can either :
 #'     - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
 #'       for individuals who are considerated INBRED and with a QUALITY
@@ -13,13 +13,13 @@
 #'     - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual
 #' @param probs a flag indicating if the HBD probabilities and FLOD score has been computed for the submaps (default is TRUE)
 #' @param recap.by.segments if the summary files has to be computed considering segments or snps (defaut is FALSE) 
-#' (more information in the documentation of `makeAllSubmapsByHotspots` or`makeAllSubmapsByDistance` functions)
+#' (more information in the documentation of `makeAtlasByHotspots` or`makeAtlasByDistance` functions)
 #' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
 #' @param q  Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality The minimum percentage use to assume if a submap is valid (default is 95)
 #' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)
 #' 
-#' @details the function filled the empty slots of the submapsList object. It calls different functions and uses the results of each one to filled 
+#' @details the function filled the empty slots of the atlas object. It calls different functions and uses the results of each one to filled 
 #' the object. This function computes summary for the following elements :
 #' @details - summary for likelihood0/likelihood1
 #' @details - summary for estimation of a and f
@@ -32,7 +32,7 @@
 #' @return return a new list object containing every dataframe and object created 
 #' 
 #' @seealso Fantasio
-#' @seealso makeAllSubmapsByDistance
+#' @seealso makeAtlasByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
 #' @seealso setHBDprob
@@ -51,13 +51,13 @@
 setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
     q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.marker = 5) {
 
-  if(class(submaps)[1] != "submapsList")
-    stop("Need a submapsList matrix.")
+  if(class(submaps)[1] != "atlas")
+    stop("Need a atlas matrix.")
  
-  submaps@likelihood_summary <- submapLikelihood(submaps@atlas)
-  submaps@estimation_summary <- submapEstim(submaps@atlas)
-  submaps@marker_summary <- summaryMarker(submaps@atlas, submaps@bedmatrix)
-  submaps@submap_summary <- suppressWarnings(submapSummary(submaps@atlas))
+  submaps@likelihood_summary <- submapLikelihood(submaps@submaps_list)
+  submaps@estimation_summary <- submapEstim(submaps@submaps_list)
+  submaps@marker_summary <- summaryMarker(submaps@submaps_list, submaps@bedmatrix)
+  submaps@submap_summary <- suppressWarnings(submapSummary(submaps@submaps_list))
   
   test <- which(submaps@bedmatrix@ped$pheno == 2)
   if(probs & length(test) == 0 & missing(list.id) ) {
@@ -72,7 +72,7 @@ setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALS
     submaps <- setFLOD(submaps=submaps, condition=l1[[2]], q=q)
    
     # test class of first submap to check if recap is ok 
-    if(class(submaps@atlas[[1]])[1] == "snpsMatrix" & recap.by.segments) {
+    if(class(submaps@submaps_list[[1]])[1] == "snpsMatrix" & recap.by.segments) {
       warning("Submaps created by Distance force 'recap.by.segments = FALSE'")
       recap.by.segments <- FALSE
     }

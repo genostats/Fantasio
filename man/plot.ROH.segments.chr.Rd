@@ -10,7 +10,7 @@
 \arguments{
 \item{ROHfile}{an ROH file}
 
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{unit}{the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")}
 

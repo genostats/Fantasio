@@ -7,7 +7,7 @@
 HBDsegments(submaps, n.consecutive.marker = 5, threshold = 0.5)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)}
 

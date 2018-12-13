@@ -9,7 +9,7 @@ setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
   n.consecutive.marker = 5)
 }
 \arguments{
-\item{submaps}{a submapsList object}
+\item{submaps}{a atlas object}
 
 \item{list.id}{you can either :
 - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
@@ -21,7 +21,7 @@ setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
 \item{probs}{a flag indicating if the HBD probabilities and FLOD score has been computed for the submaps (default is TRUE)}
 
 \item{recap.by.segments}{if the summary files has to be computed considering segments or snps (defaut is FALSE) 
-(more information in the documentation of `makeAllSubmapsByHotspots` or`makeAllSubmapsByDistance` functions)}
+(more information in the documentation of `makeAtlasByHotspots` or`makeAtlasByDistance` functions)}
 
 \item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
 
@@ -36,10 +36,10 @@ return a new list object containing every dataframe and object created
 }
 \description{
 This function is uses to ouput all the summary files after the creation of the submaps by the following two functions : 
-`makeAllSubmapsByHotspots` and `makeAllSubmapsByDistance` is over.
+`makeAtlasByHotspots` and `makeAtlasByDistance` is over.
 }
 \details{
-the function filled the empty slots of the submapsList object. It calls different functions and uses the results of each one to filled 
+the function filled the empty slots of the atlas object. It calls different functions and uses the results of each one to filled 
 the object. This function computes summary for the following elements :
 
 - summary for likelihood0/likelihood1
@@ -59,7 +59,7 @@ the object. This function computes summary for the following elements :
 \seealso{
 Fantasio
 
-makeAllSubmapsByDistance
+makeAtlasByDistance
 
 segmentsListByHotspots
 
