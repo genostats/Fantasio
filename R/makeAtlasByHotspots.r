@@ -7,16 +7,6 @@
 #' @param segmentsList a list of segment for each chromosomes
 #' @param n.cores the number of cores to use if you want to compute submaps using parellelism (default is 1)
 #' @param epsilon genotype error rate (default is 0.001)
-#' @param run.festim whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)
-#' @param list.id a list of individuals (see details for more information)
-#' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)  
-#' @param recap.by.segments if you want the summary of probabilities by snps or by segments (default is FALSE)
-#' @param verbose whether you want informations about computations (default is TRUE)
-#' @param debug whether you want advanced output for the computation process (default is FALSE)
-#' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
-#' @param q Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
-#' @param quality Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments
 #' 
 #' 
 #' @details This function is used to create submaps by randomly picking a marker

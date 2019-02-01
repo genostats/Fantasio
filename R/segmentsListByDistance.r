@@ -35,11 +35,11 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
     gap <- gap * 1e6
   }
 
+  chr.ids <- as.character(intersect( getOption("gaston.autosomes"), unique(bedmatrix@snps$chr)))
   # start and end of a segments
   if(verbose) cat("Finding segments for the genome : ")
   VI <- list()
-  for(i in getOption("gaston.autosomes"))
-  {
+  for(i in chr.ids) {
     if(verbose) cat(".")
     
     if(unit == "cM") {
@@ -72,15 +72,15 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   if(verbose) cat("\n")
   # number of snps in a chr
   VII <- table(bedmatrix@snps$chr)
-  VII <- VII[getOption("gaston.autosomes")]
+  VII <- VII[chr.ids]
   
   
   #find the marker of a segment
   if(verbose) cat("Finding which markers are between two segments: ")
-  shift <- sapply(getOption("gaston.autosomes"), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
+  shift <- sapply(chr.ids, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
   VIII <- list()
-  for(i in 1:length(VI))
+  for(i in names(VI))
   {
     cat(".")
     chr_segments <- VI[[i]]
@@ -102,12 +102,10 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   #finding the mini segments
   if(verbose) cat("Finding mini segments ")
   VIV <- list()
-  for(i in 1:length(VIII))
-  {
+  for(i in 1:length(VIII)) {
     cat(".")
     temp <- list()
-    for(j in 1:length(VIII[[i]]))
-    {
+    for(j in 1:length(VIII[[i]])) {
       if((length(VIII[[i]][[j]]) / nbSegments) >= minMarkers ) #>= minMarkers in one segments 
       {
         #decouper le segment en N (=nbSegments) mini-segments de taille T (=length(VIII[[i]][[j]])/nbSegments) marqueurs.
@@ -117,7 +115,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
         #Note: cette commande donne toujours exactement N (=nbSegments) mini-segments (commentaire en section details egalement)
         l <- split(VIII[[i]][[j]], ceiling(seq_along(VIII[[i]][[j]])/(length(VIII[[i]][[j]])/nbSegments))) 
         temp[[j]] <- l
-      }else{
+      } else {
         temp[[j]] <- VIII[[i]][[j]]
       }
     }

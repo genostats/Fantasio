@@ -1,3 +1,10 @@
+-- setAllelicFrequencies -- peut-être pas la meilleure solution
+   à revoir ...
+
+-- revoir le jeu de données cytobands pour les chr acrocentriques
+ 
+-- est-ce tout ce qui est exporté est illustré dans la vignette ?
+
 -- dans Fantasio() l'argument run.festim n'est pas utile
    c'est une fonction pour tout faire...
    -> DONE

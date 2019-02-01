@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2018-12-13"
+date: "2019-02-01"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,8 +14,8 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2018-12-13
-meta-json: {"date":"2018-12-13","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
+date: 2019-02-01
+meta-json: {"date":"2019-02-01","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
@@ -179,8 +179,6 @@ After that we can load the package.
 
     ## Loading required package: Fantasio
 
-    ## Loading required package: methods
-
     ## Loading required package: parallel
 
     ## Loading required package: gaston
@@ -225,8 +223,8 @@ We can load the HGDP-CEPH data as follows:
     filepath <- system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
     x <- read.bed.matrix(filepath)
 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.4/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.5/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.5/HGDP.CEPH/extdata/hgdp_ceph.bed
 
 The object `x` is a bed.matrix object (see gaston package for details).
 
@@ -282,7 +280,7 @@ By default, the submaps are created using the file of recombination
 hotspots and summarizing the results for each snp that appears in a
 submap.
 
-    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, list.id = "all") 
+    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5) 
 
 We require that at least n.consecutive.marker markers are HBD before
 calling a HBD segment. Default value for n.consecutive.marker=5.
@@ -303,11 +301,11 @@ For the "Hotspots" method, the results can also be summarized globally
 for each segment using option recap.by.segments=TRUE. In that case,
 n.consecutive.marker should be set to 1.
 
-    F2 <- Fantasio(bedmatrix=x.be, segments="Hotspots", recap.by.segments=TRUE, n.consecutive.marker=1, n=5, list.id = "all")
+    F2 <- Fantasio(bedmatrix=x.be, segments="Hotspots", recap.by.segments=TRUE, n.consecutive.marker=1, n=5)
 
 ### 2.3 Distance
 
-    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5, list.id = "all")
+    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5)
 
 ### 2.4 How to use the segment.option argument
 
@@ -320,7 +318,7 @@ to "Hotspots" and the arguments list will be passed to it. So refer to
 these functions for possible arguments.
 
     l <- list(minMarkers=50) #default is 0
-    F1.l <- Fantasio(bedmatrix=x, segments="Hotspots", segment.options=l, list.id = "all")
+    F1.l <- Fantasio(bedmatrix=x.be, segments="Hotspots", segment.options=l)
 
 In the case of "Hotspots", by default, we do not require to have a
 minimum number of markers in each segment (`minMarkers = 0`). With the
@@ -493,19 +491,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.01959898 0.02750346
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03854728 0.04236074
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.04164536 0.05531742
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.05292335 0.05503856
-    ## 5 HGDP00611 HGDP00611      1   2 / 5      40 0.00000000 0.01890225
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.05329763 0.07122527
-    ##        F_MEAN    F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.024135024 0.024731978 0.15414413 3.479024e-26   TRUE             5
-    ## 2 0.040730087 0.041205532 0.07306723 3.905109e-57   TRUE             5
-    ## 3 0.046871155 0.047043642 0.13846971 2.532996e-51   TRUE             5
-    ## 4 0.053725891 0.053128354 0.17162394 6.520162e-64   TRUE             5
-    ## 5 0.009451125 0.009451125 0.49019861 5.000002e-01  FALSE             1
-    ## 6 0.061067696 0.057618253 0.32368657 1.496729e-44   TRUE             5
+    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.02114235 0.02768671
+    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.03596808 0.04190659
+    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.03792127 0.04393952
+    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.05341174 0.06300909
+    ## 5 HGDP00611 HGDP00611      1   0 / 5      NA         NA         NA
+    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.04538955 0.06543014
+    ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
+    ## 1 0.02427193 0.02384263 0.12370444 1.593400e-26   TRUE             5
+    ## 2 0.03930186 0.04037158 0.06445932 1.330434e-60   TRUE             5
+    ## 3 0.04232792 0.04351446 0.12365986 3.248921e-50   TRUE             5
+    ## 4 0.05792048 0.05752624 0.18084286 2.300217e-63   TRUE             5
+    ## 5         NA         NA         NA           NA     NA            NA
+    ## 6 0.05727635 0.05897418 0.32571152 8.526095e-41   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -652,7 +650,7 @@ make the differents submaps in the following functions :
 
 <!-- -->
 
-    F6 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose=FALSE, n.cores=10, list.id = "all")
+    F6 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose=FALSE, n.cores=10)
 
 5. Plotting
 -----------

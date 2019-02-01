@@ -3,14 +3,14 @@
 #                                                                                #
 #!!! submaps : the list of object                                                #                                       
 #!!! HBD_recap : the HBD_recap dataframe                                         #
-#!!! n.consecutive.marker : the number of consecutives marker with an HBD >      #
+#!!! n.consecutive.markers : the number of consecutives markers with an HBD >      #
 #    threshold                                                                   #
-#!!! threshold : a threshold for the number of consecutive marker HBD            #
+#!!! threshold : a threshold for the number of consecutive markers HBD            #
 #                                                                                #
 #*** return a list of dataframe with HBD segment by snps                         #
 ##################################################################################
 
-HBDsegments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, threshold)
+HBDsegments.by.snps <- function(submaps, HBD_recap, n.consecutive.markers, threshold)
 {
   
   l <- list()
@@ -29,7 +29,7 @@ HBDsegments.by.snps <- function(submaps, HBD_recap, n.consecutive.marker, thresh
   
   correspondance <- match(colnames(HBD_recap), submaps@bedmatrix@snps$id)#match between marker's name in HBD_recap and the bedmatrix
   chr <- submaps@bedmatrix@snps$chr[correspondance]                      #chromosome on which we have the marker
-  min_segment_size <- n.consecutive.marker                               #minimum size of the marker
+  min_segment_size <- n.consecutive.markers                               #minimum size of the marker
   
   for(i in 1:nrow(HBD_recap))
   {

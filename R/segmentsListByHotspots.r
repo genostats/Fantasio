@@ -26,7 +26,6 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   if(class(bedmatrix)[1] != "bed.matrix" )
     stop("Need a bed.matrix")
   
-  
   if(verbose) 
     cat( paste("Using hotspots from ", deparse(substitute(hotspots)), "\n") )
   
@@ -37,9 +36,11 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   #Step 1 : list of all the genome's hotspot
   
   if(verbose) cat("Gathering all hotspots for the genome : ")
-  
+ 
+  chr.ids <- as.character(intersect(unique(bedmatrix@snps$chr), unique(hotspots$Chromosome)))
+ 
   VI <- list()
-  for ( i in unique(hotspots$Chromosome))
+  for (i in chr.ids)
   {
     cat(".")
     chr_hotspot <- hotspots[which(hotspots$Chromosome==i),]
@@ -55,7 +56,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   if(verbose) cat("Gathering all the genome's markers : ")
   
   VII <- list()
-  for(j in unique(hotspots$Chromosome))
+  for(j in chr.ids)
   { 
     cat(".")
     v <- bedmatrix@snps$pos[bedmatrix@snps$chr==j] 
@@ -66,10 +67,10 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   #Step 3 : list of all the segment in the genome
 
   if(verbose) cat("Finding which markers are between two hotspots : ")
-  shift <- sapply(unique(bedmatrix@snps$chr), function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
+  shift <- sapply(chr.ids, function(i) which(bedmatrix@snps$chr == i)[1]) - 1L
   
   VIII <- list()
-  for(i in unique(hotspots$Chromosome))
+  for(i in chr.ids)
   {
     cat(".")
     chr_segment <- VI[[i]]
@@ -79,7 +80,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
     {
       b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
       if (length(b)== 0) next
-      chr[[j]] <- b + shift[[i]]
+      chr[[j]] <- b + shift[i]
     }
     VIII[[i]] <- chr
     VIII[[i]] <- null.remover(VIII[[i]])

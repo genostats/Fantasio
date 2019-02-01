@@ -59,13 +59,15 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
     s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
     h <- makeAtlasByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
     h <- festim(h, n.cores = n.cores, verbose = verbose)
-    h <- setSummary(h, run.proba, recap.by.segments, threshold = threshold, q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+    h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, threshold = threshold, 
+                    q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
   }
   else {
     s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
     h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
     h <- festim(h, n.cores = n.cores, verbose = verbose)
-    h <- setSummary(h, run.proba, recap.by.segments, threshold = threshold, q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+    h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, threshold = threshold, 
+                    q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
   }
   h
 }

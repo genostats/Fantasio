@@ -17,7 +17,7 @@
 #' @param threshold the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)
 #' @param q  Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality The minimum percentage use to assume if a submap is valid (default is 95)
-#' @param n.consecutive.marker the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)
+#' @param n.consecutive.markers the number of consecutive markers with a probability equal or greater to the value of the threshold, to be used to find HBDsegments (default is 5)
 #' 
 #' @details the function filled the empty slots of the atlas object. It calls different functions and uses the results of each one to filled 
 #' the object. This function computes summary for the following elements :
@@ -49,7 +49,7 @@
 #' 
 #' @export
 setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
-    q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.marker = 5) {
+    q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.markers = 5) {
 
   if(class(submaps)[1] != "atlas")
     stop("Need a atlas matrix.")
@@ -61,9 +61,8 @@ setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALS
   
   test <- which(submaps@bedmatrix@ped$pheno == 2)
   if(probs & length(test) == 0 & missing(list.id) ) {
-    cat("Cannot computes HBD, FLOD score and HFLOD score without individuals\n")
-    cat("with pheno = 2. Use setSummary with a list.id argument.\n")
-    return(submaps)
+    warning("No cases (pheno = 2). HBD, FLOD and HFLOD are computed on all individuals")
+    list.id <- "all"
   }
   
   if(probs) {
@@ -80,7 +79,7 @@ setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALS
     l2 <- recap(submaps, list.id = list.id)
     submaps@HBD_recap <- l2[[1]]
     submaps@FLOD_recap <- l2[[2]]
-    submaps@HBDsegments <- HBDsegments(submaps, threshold = threshold, n.consecutive.marker = n.consecutive.marker) 
+    submaps@HBDsegments <- HBDsegments(submaps, threshold = threshold, n.consecutive.markers = n.consecutive.markers) 
     submaps@HFLOD <- setHFLOD(submaps)
   }
   submaps

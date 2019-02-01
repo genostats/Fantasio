@@ -4,13 +4,13 @@
 #                                                                                #
 #!!! Submaps : the list of objects                                               #                                       
 #!!! HBD_recap : a dataframe with HBD probabilities                              #
-#!!! n.consecutive.marker : the number of consecutive HBD probabilities >        #
+#!!! n.consecutive.markers : the number of consecutive HBD probabilities >        #
 #    threshold                                                                   #
 #                                                                                #
 #*** return a dataframe with HBDsegments                                        #
 ##################################################################################
 
-HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, threshold)
+HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, threshold)
 {
   l <- list()#liste des individus
   
@@ -28,9 +28,8 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, th
   marker_names <- colnames(submaps@submaps_list[[1]]@HBD.prob)
   
   
-  #from which chromosome this marker correspond
+  #to which chromosomes these markers correspond
   correspondance <- match(marker_names, submaps@bedmatrix@snps$id)
-  
   chromosome <- submaps@bedmatrix@snps$chr[correspondance]
   
   #find the positions and distances of all the segmetn
@@ -77,7 +76,7 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.marker, th
   }
   
   
-  min_segment_size = n.consecutive.marker
+  min_segment_size = n.consecutive.markers
   #create the dataframe for every individual
   for(i in 1:nrow(HBD_recap))
   {
