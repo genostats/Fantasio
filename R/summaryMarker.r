@@ -1,11 +1,11 @@
 #' How many markers have been selected 0, 1, ... times
 #' 
-#' Gives the number of markers of the initial bedmatrix that have never been picked in a submap,
-#' picked once, etc.
+#' Gives the number of markers of the initial bedmatrix that have never been picked in any submap,
+#' that have been picked once, etc.
 #'
 #' @param atlas an atlas 
 #' 
-#' @return A dataframe with columns
+#' @return A data frame with columns
 #' \describe{
 #'   \item{markers}{number of markers}
 #'   \item{picked}{number of times picked}
@@ -27,9 +27,6 @@ summaryMarker <- function(atlas) {
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
   
-  df <- data.frame(
-    markers = c(zero, res)
-    picked = 0:length(res),
-  )
+  df <- data.frame( markers = c(zero, res), picked = 0:length(res))
   df
 }

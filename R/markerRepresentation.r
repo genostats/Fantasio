@@ -1,11 +1,12 @@
 #' Markers selected through the submaps
 #' 
-#' This function gives for each marker the number of times it has been selected in a submap.
+#' This function gives for each marker (picked at least once) 
+#' the number of times it has been selected in a submap.
 #' 
-#' @param submaps a list containing the different submaps created
+#' @param atlas an atlas
 #' 
-#' @return This function returns a dataframe with columns: 
-#' @details \describe{
+#' @return A data frame with columns: 
+#' \describe{
 #'  \item{id}{id of the snps}
 #'  \item{chr}{chromosome}
 #'  \item{pos}{position in bp}
@@ -16,7 +17,7 @@
 #' @seealso setSummary
 #' 
 #' @export
-summaryMap <- function(atlas) {
+markerRepresentation <- function(atlas) {
     submaps <- atlas@submaps_list
     if (class(atlas)[1] != "atlas")
         stop("need an atlas")

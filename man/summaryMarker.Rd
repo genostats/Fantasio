@@ -2,27 +2,23 @@
 % Please edit documentation in R/summaryMarker.r
 \name{summaryMarker}
 \alias{summaryMarker}
-\title{Number of marker selected in a submap}
+\title{How many markers have been selected 0, 1, ... times}
 \usage{
-summaryMarker(submaps, bedmatrix)
+summaryMarker(atlas)
 }
 \arguments{
-\item{submaps}{a list of submaps}
-
-\item{bedmatrix}{a bed.matrix object}
+\item{atlas}{an atlas}
 }
 \value{
-this function returns a dataframe.
+A data frame with columns
+\describe{
+  \item{markers}{number of markers}
+  \item{picked}{number of times picked}
+}
 }
 \description{
-This function gives for each marker the number of time that it has been selected in a submap.
-}
-\details{
-the dataframe contains the following elements :
-
-- by columns is the number of markers used
-
-- by row is the number of time picked
+Gives the number of markers of the initial bedmatrix that have never been picked in any submap,
+that have been picked once, etc.
 }
 \seealso{
 setSummary
