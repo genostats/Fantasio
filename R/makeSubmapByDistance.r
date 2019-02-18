@@ -19,7 +19,7 @@
 #' #Please refer to vignette 
 #'
 #' 
-#' @export
+#' @keywords internal
 makeSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "snpsSegments")

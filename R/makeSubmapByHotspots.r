@@ -48,7 +48,7 @@ getMarkerChromosom <- function(chrSegmentsList)
 #' #Please refer to vignette 
 #'
 #' 
-#' @export
+#' @keywords internal
 makeSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpIndices)
 {
   if(class(segmentsList)[1] != "HostspotsSegments")

@@ -4,12 +4,12 @@
 \alias{HBDsegments}
 \title{Find HBDsegments}
 \usage{
-HBDsegments(submaps, n.consecutive.marker = 5, threshold = 0.5)
+HBDsegments(submaps, n.consecutive.markers = 5, threshold = 0.5)
 }
 \arguments{
 \item{submaps}{a atlas object}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)}
+\item{n.consecutive.markers}{the number of consecutive markers with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)}
 
 \item{threshold}{the minimum value of HBD probabilities given for a marker (default is 0.5)}
 }
@@ -43,10 +43,11 @@ This function creates HBDsegments used for creating plots
 }
 \details{
 The threshold is the minimum value from which we consider the marker is HBD. From this marker we want a minumum number of consecutive markers to create a HBD segment.
-(argument : n.consecutive.marker)
+(argument : n.consecutive.markers)
 }
 \seealso{
 setSummary
 
 setHBDprob
 }
+\keyword{internal}

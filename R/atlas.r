@@ -71,7 +71,7 @@ setMethod('initialize', signature='atlas', definition=function(.Object, submaps,
 #' @param object an atlas object
 setMethod('show', signature("atlas"), 
   function(object){
-       cat('A list of', length(object@submaps_list), 'submaps\n ')
+       cat('An atlas of', length(object@submaps_list), 'submaps\n ')
   })
 
 

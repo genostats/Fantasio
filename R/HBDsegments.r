@@ -25,8 +25,7 @@
 #' @seealso setSummary
 #' @seealso setHBDprob
 #' 
-#' 
-#' @export
+#' @keywords internal
 HBDsegments <- function(submaps, n.consecutive.markers = 5, threshold = 0.5)
 {
   

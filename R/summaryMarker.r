@@ -1,41 +1,35 @@
-#' Number of marker selected in a submap
+#' How many markers have been selected 0, 1, ... times
 #' 
-#' This function gives for each marker the number of time that it has been selected in a submap. 
+#' Gives the number of markers of the initial bedmatrix that have never been picked in a submap,
+#' picked once, etc.
+#'
+#' @param atlas an atlas 
 #' 
-#' @param submaps a list of submaps 
-#' @param bedmatrix a bed.matrix object
-#' 
-#' @details the dataframe contains the following elements :
-#' @details - by columns is the number of markers used
-#' @details - by row is the number of time picked
-#' 
-#' @return this function returns a dataframe.
+#' @return A dataframe with columns
+#' \describe{
+#'   \item{markers}{number of markers}
+#'   \item{picked}{number of times picked}
+#' } 
 #' 
 #' @seealso setSummary
 #' 
 #' @export
-summaryMarker <- function(submaps, bedmatrix)
-{
-  if(class(submaps[[1]])[1] != "snpsMatrix" & class(submaps[[1]])[1] != "HostspotsMatrix")
-    stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
-  if(class(bedmatrix)[1] != "bed.matrix")
-    stop("Need a bed.matrix")
-  
+summaryMarker <- function(atlas) {
+  submaps <- atlas@submaps_list
+  bedmatrix <- atlas@bedmatrix
   
   b <- summaryMap(submaps)
-
   res <- numeric(length(submaps))
 
-  for(i in 1:length(submaps))
-  {
+  for(i in 1:length(submaps)) {
     taille <- length(which(b$Freq == i))
     res[i] <- taille   
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
   
   df <- data.frame(
-    number_of_time_picked = 0:length(res),
-    number_of_markers = c(zero, res)
+    markers = c(zero, res)
+    picked = 0:length(res),
   )
   df
 }

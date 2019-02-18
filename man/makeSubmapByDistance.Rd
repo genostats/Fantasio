@@ -37,3 +37,4 @@ and from this marker choses a marker every "step" step from back to end.
 \seealso{
 makeAtlasByDistance
 }
+\keyword{internal}

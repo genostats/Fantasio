@@ -6,7 +6,7 @@
 \usage{
 setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
   q = 1e-04, threshold = 0.5, quality = 95,
-  n.consecutive.marker = 5)
+  n.consecutive.markers = 5)
 }
 \arguments{
 \item{submaps}{a atlas object}
@@ -29,7 +29,7 @@ setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
 
 \item{quality}{The minimum percentage use to assume if a submap is valid (default is 95)}
 
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of the threshold, to be use to fing HBDsegments (default is 5)}
+\item{n.consecutive.markers}{the number of consecutive markers with a probability equal or greater to the value of the threshold, to be used to find HBDsegments (default is 5)}
 }
 \value{
 return a new list object containing every dataframe and object created

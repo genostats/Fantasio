@@ -1,25 +1,34 @@
-#' Number of selected marker through the submaps
+#' Markers selected through the submaps
 #' 
-#' This function  will give the number of markers selected in your submaps.
+#' This function gives for each marker the number of times it has been selected in a submap.
 #' 
 #' @param submaps a list containing the different submaps created
 #' 
-#' @details make sure to provide a list of submaps in argument. This function returns a dataframe with 2 columns : 
-#' @details -snsp : the id of the snps 
-#' @details -Freq : the number of times the marke has been picked
-#' 
-#' @return  This function returns a dataframe.
+#' @return This function returns a dataframe with columns: 
+#' @details \describe{
+#'  \item{id}{id of the snps}
+#'  \item{chr}{chromosome}
+#'  \item{pos}{position in bp}
+#'  \item{dist}{position in cM}
+#'  \item{Freq}{number of times the marker has been picked}
+#' }
 #' 
 #' @seealso setSummary
 #' 
 #' @export
-summaryMap <- function(submaps)
-{
-  if(class(submaps[[1]])[1] != "snpsMatrix" & class(submaps[[1]])[1] != "HostspotsMatrix")
-    stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
-  
-  snps <- unlist(sapply(submaps, function(x) x@map$id)) #every markers that has been choosen on submaps
-  b <- as.data.frame(table(snps),  stringsAsFactors=FALSE)
-  b
+summaryMap <- function(atlas) {
+    submaps <- atlas@submaps_list
+    if (class(atlas)[1] != "atlas")
+        stop("need an atlas")
+    id <- unlist(sapply(submaps, function(x) x@map$id, simplify = FALSE))
+    b <- as.data.frame(table(id), stringsAsFactors = FALSE)
+    m <- match( b$id, atlas@bedmatrix@snps$id )
+    b$chr <- atlas@bedmatrix@snps$chr[m]
+    b$pos <- atlas@bedmatrix@snps$pos[m]
+    b$dist <- atlas@bedmatrix@snps$dist[m]
+    b <- b[ order(b$chr, b$pos), ]
+    b <- b[, c(1,3,4,5,2)]
+    rownames(b) <- NULL
+    b
 }
 

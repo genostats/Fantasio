@@ -2,9 +2,9 @@
 % Please edit documentation in R/summaryMap.r
 \name{summaryMap}
 \alias{summaryMap}
-\title{Number of selected marker through the submaps}
+\title{Markers selected through the submaps}
 \usage{
-summaryMap(submaps)
+summaryMap(atlas)
 }
 \arguments{
 \item{submaps}{a list containing the different submaps created}
@@ -16,11 +16,15 @@ This function returns a dataframe.
 This function  will give the number of markers selected in your submaps.
 }
 \details{
-make sure to provide a list of submaps in argument. This function returns a dataframe with 2 columns :
+make sure to provide a list of submaps in argument. This function returns a dataframe with columns :
 
--snsp : the id of the snps
-
--Freq : the number of times the marke has been picked
+\describe{
+ \item{id}{id of the snps}
+ \item{chr}{chromosome}
+ \item{pos}{position in bp}
+ \item{dist}{position in cM}
+ \item{Freq}{number of times the marker has been picked}
+}
 }
 \seealso{
 setSummary

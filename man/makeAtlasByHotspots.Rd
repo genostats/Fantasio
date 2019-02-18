@@ -18,26 +18,6 @@ makeAtlasByHotspots(bedmatrix, n = 100,
 \item{n.cores}{the number of cores to use if you want to compute submaps using parellelism (default is 1)}
 
 \item{epsilon}{genotype error rate (default is 0.001)}
-
-\item{run.festim}{whether you want to computes a, f, p.lrt, likelihood0/1 for each submaps (default is TRUE)}
-
-\item{list.id}{a list of individuals (see details for more information)}
-
-\item{run.proba}{whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)}
-
-\item{recap.by.segments}{if you want the summary of probabilities by snps or by segments (default is FALSE)}
-
-\item{verbose}{whether you want informations about computations (default is TRUE)}
-
-\item{debug}{whether you want advanced output for the computation process (default is FALSE)}
-
-\item{threshold}{the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)}
-
-\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
-
-\item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
-
-\item{n.consecutive.marker}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
 }
 \value{
 return a new list object containing every dataframe and object created

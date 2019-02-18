@@ -38,3 +38,4 @@ This function is used internally in the package by the function makeAtlasByHotsp
 \seealso{
 makeSubmapsByHotspots
 }
+\keyword{internal}
