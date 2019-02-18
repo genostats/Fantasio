@@ -1,10 +1,10 @@
 #' Creation summary statistic files
 #' 
-#' This function is uses to ouput all the summary files after the creation of the submaps by the following two functions : 
+#' This function is uses to ouput all the summary files after the creation of the atlas by the following two functions : 
 #' `makeAtlasByHotspots` and `makeAtlasByDistance` is over.
 #' 
 #' 
-#' @param submaps a atlas object
+#' @param atlas a atlas object
 #' @param list.id you can either :
 #'     - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
 #'       for individuals who are considerated INBRED and with a QUALITY
@@ -42,46 +42,45 @@
 #' @seealso setSummary
 #' @seealso submapLikelihood
 #' @seealso submapEstim
-#' @seealso summaryMarker
 #' @seealso submapSummary
 #' @seealso HBDsegments
 #' 
 #' 
 #' @export
-setSummary <- function (submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
+setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
     q = 1e-04, threshold = 0.5, quality = 95, n.consecutive.markers = 5) {
 
-  if(class(submaps)[1] != "atlas")
-    stop("Need a atlas matrix.")
+  if(class(atlas)[1] != "atlas")
+    stop("Need an atlas")
  
-  submaps@likelihood_summary <- submapLikelihood(submaps@submaps_list)
-  submaps@estimation_summary <- submapEstim(submaps@submaps_list)
-  submaps@marker_summary <- summaryMarker(submaps@submaps_list, submaps@bedmatrix)
-  submaps@submap_summary <- suppressWarnings(submapSummary(submaps@submaps_list))
+  atlas@likelihood_summary <- submapLikelihood(atlas@submaps_list)
+  atlas@estimation_summary <- submapEstim(atlas@submaps_list)
+  atlas@marker_summary <- summaryMarker(atlas)
+  atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
-  test <- which(submaps@bedmatrix@ped$pheno == 2)
+  test <- which(atlas@bedmatrix@ped$pheno == 2)
   if(probs & length(test) == 0 & missing(list.id) ) {
     warning("No cases (pheno = 2). HBD, FLOD and HFLOD are computed on all individuals")
     list.id <- "all"
   }
   
   if(probs) {
-    l1 <- setHBDprob(submaps, list.id=list.id, quality=quality)
-    submaps <- l1[[1]]
-    submaps <- setFLOD(submaps=submaps, condition=l1[[2]], q=q)
+    l1 <- setHBDprob(atlas, list.id=list.id, quality=quality)
+    atlas <- l1[[1]]
+    atlas <- setFLOD(submaps=atlas, condition=l1[[2]], q=q)
    
     # test class of first submap to check if recap is ok 
-    if(class(submaps@submaps_list[[1]])[1] == "snpsMatrix" & recap.by.segments) {
+    if(class(atlas@submaps_list[[1]])[1] == "snpsMatrix" & recap.by.segments) {
       warning("Submaps created by Distance force 'recap.by.segments = FALSE'")
       recap.by.segments <- FALSE
     }
-    submaps@bySegments <- recap.by.segments
-    l2 <- recap(submaps, list.id = list.id)
-    submaps@HBD_recap <- l2[[1]]
-    submaps@FLOD_recap <- l2[[2]]
-    submaps@HBDsegments <- HBDsegments(submaps, threshold = threshold, n.consecutive.markers = n.consecutive.markers) 
-    submaps@HFLOD <- setHFLOD(submaps)
+    atlas@bySegments <- recap.by.segments
+    l2 <- recap(atlas, list.id = list.id)
+    atlas@HBD_recap <- l2[[1]]
+    atlas@FLOD_recap <- l2[[2]]
+    atlas@HBDsegments <- HBDsegments(atlas, threshold = threshold, n.consecutive.markers = n.consecutive.markers) 
+    atlas@HFLOD <- setHFLOD(atlas)
   }
-  submaps
+  atlas
 }
 

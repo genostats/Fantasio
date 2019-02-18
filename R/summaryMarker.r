@@ -18,12 +18,11 @@ summaryMarker <- function(atlas) {
   submaps <- atlas@submaps_list
   bedmatrix <- atlas@bedmatrix
   
-  b <- summaryMap(submaps)
+  b <- markerRepresentation(atlas)
   res <- numeric(length(submaps))
 
   for(i in 1:length(submaps)) {
-    taille <- length(which(b$Freq == i))
-    res[i] <- taille   
+    res[i] <- sum(b$Freq == i)
   }
   zero <- length(bedmatrix@snps$chr) - sum(res)
   

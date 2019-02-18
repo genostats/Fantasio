@@ -4,12 +4,12 @@
 \alias{setSummary}
 \title{Creation summary statistic files}
 \usage{
-setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
+setSummary(atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   q = 1e-04, threshold = 0.5, quality = 95,
   n.consecutive.markers = 5)
 }
 \arguments{
-\item{submaps}{a atlas object}
+\item{atlas}{a atlas object}
 
 \item{list.id}{you can either :
 - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
@@ -35,7 +35,7 @@ setSummary(submaps, list.id, probs = TRUE, recap.by.segments = FALSE,
 return a new list object containing every dataframe and object created
 }
 \description{
-This function is uses to ouput all the summary files after the creation of the submaps by the following two functions : 
+This function is uses to ouput all the summary files after the creation of the atlas by the following two functions : 
 `makeAtlasByHotspots` and `makeAtlasByDistance` is over.
 }
 \details{
@@ -78,8 +78,6 @@ setSummary
 submapLikelihood
 
 submapEstim
-
-summaryMarker
 
 submapSummary
 
