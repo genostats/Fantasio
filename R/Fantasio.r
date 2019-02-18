@@ -51,6 +51,9 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
   segments <- match.arg(segments)
   if (missing(segment.options))
     segment.options <- list()
+  if(!("verbose" %in% segment.options))
+    segment.options$verbose = FALSE
+
   if (segments == "Distance" & recap.by.segments) {
     recap.by.segments <- FALSE
     warning("segments = \"Distance\" implies recap.by.segments = FALSE")

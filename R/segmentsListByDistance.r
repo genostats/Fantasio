@@ -82,7 +82,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   VIII <- list()
   for(i in names(VI))
   {
-    cat(".")
+    if(verbose) cat(".")
     chr_segments <- VI[[i]]
     mkr <- seq(1, VII[i])
     chr <- list()
@@ -103,7 +103,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   if(verbose) cat("Finding mini segments ")
   VIV <- list()
   for(i in 1:length(VIII)) {
-    cat(".")
+    if(verbose) cat(".")
     temp <- list()
     for(j in 1:length(VIII[[i]])) {
       if((length(VIII[[i]][[j]]) / nbSegments) >= minMarkers ) #>= minMarkers in one segments 

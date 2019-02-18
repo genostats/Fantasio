@@ -42,7 +42,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   VI <- list()
   for (i in chr.ids)
   {
-    cat(".")
+    if(verbose) cat(".")
     chr_hotspot <- hotspots[which(hotspots$Chromosome==i),]
     w <- which(chr_hotspot$IntensitycMMb > intensity)
     segment <- cbind(c(0,chr_hotspot$End[w]),
@@ -58,11 +58,11 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   VII <- list()
   for(j in chr.ids)
   { 
-    cat(".")
+    if(verbose) cat(".")
     v <- bedmatrix@snps$pos[bedmatrix@snps$chr==j] 
     VII[[j]] <- v
   }
-  cat("\n")
+  if(verbose) cat("\n")
   
   #Step 3 : list of all the segment in the genome
 
@@ -72,7 +72,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
   VIII <- list()
   for(i in chr.ids)
   {
-    cat(".")
+    if(verbose) cat(".")
     chr_segment <- VI[[i]]
     mkr <- VII[[i]]
     chr <- list()

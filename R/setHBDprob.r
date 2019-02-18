@@ -41,11 +41,10 @@ setHBDprob <- function(submaps, list.id, quality = 95)
     }
   }else{
     condition <- which(submaps@submap_summary$QUALITY >= quality & submaps@submap_summary$INBRED)
-    if(length(condition) == 0)
-    {
-      cat("WARNING :No inbred found with the following default parameters : QUALITY = ", quality , "; inbred = TRUE 
-          you can try to change quality parameters or give a vector of individual or use 'all' parameter \n 
-          !!! Instead using all the individuals in the sample\n")
+    if(length(condition) == 0) {
+      warning(strwrap(paste("No inbred found with the following default parameters : QUALITY = ", quality , ", inbred = TRUE.
+          You can try to change quality parameters or give a vector of individual with 'list.id' or use list.id = \"all\". 
+          We will use all the individuals in the sample"), prefix = " ", initial=""))
       #for simplicity sake, not returning an empty results
       condition <- 1:nrow(submaps@submap_summary)
     }
