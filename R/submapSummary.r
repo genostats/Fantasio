@@ -10,8 +10,8 @@
 #' @details - FID : family identifier
 #' @details - IID : individual identifier
 #' @details - STATUS : status (1 non affected, 2 affected, 0 unknown)
-#' @details - submaps : number of submaps used
-#' @details - QUALITY: percentage of valid submaps (i.e. submaps with a < 1)
+#' @details - SUBMAPS : number of valid submaps (i.e. submaps with a < a.threshold)
+#' @details - QUALITY: percentage of valid submaps 
 #' @details - F_MIN: minimum f on valid submaps
 #' @details - F_MAX: maximum f on valid submaps
 #' @details - F_MEAN: mean f on valid submaps
@@ -48,17 +48,14 @@ submapSummary <- function(submaps, a.threshold = 1)
     nValidSubmap[i] <- sum(l[i,], na.rm = TRUE)
   }
   
-  #treat the case when quality is equal to NA
-  submaps_used <- rowSums(sapply(submaps, function(x) x@a <= a.threshold))
+  submaps_used <- rowSums(sapply(submaps, function(x) x@a <= a.threshold), na.rm = TRUE )
   quality <- (submaps_used*100)/length(submaps)
-  n <- which(is.na(quality))
-  quality[n] <- 0
-  
+
   
   df <- data.frame(FID           = submaps[[1]]@ped$famid, 
                    IID           = submaps[[1]]@ped$id,
                    STATUS        = submaps[[1]]@ped$pheno,
-                   SUBMAPS       = paste(submaps_used, "/", length(submaps)),
+                   SUBMAPS       = submaps_used,
                    QUALITY       = quality,
                    F_MIN         = apply(f, 1, min, na.rm = TRUE), 
                    F_MAX         = apply(f, 1, max, na.rm = TRUE),
@@ -69,8 +66,7 @@ submapSummary <- function(submaps, a.threshold = 1)
                    INBRED        = pLRT_MEDIAN < 0.05, 
                    pLRT_inf_0.05 = nValidSubmap)
   
-  for(i in 1:nrow(df))
-  {
+  for(i in 1:nrow(df)) {
     if(!is.finite(df$F_MEDIAN[i]))
       df[i,5:13] <- NA
   }

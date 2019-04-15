@@ -18,7 +18,6 @@ setClassUnion("doubleOrNULL",members = c("numeric", "NULL"))
 #' @slot submaps_list a list of submaps
 #' @slot likelihood_summary a dataframe with both likelihood0 and likelihood1 over the submaps
 #' @slot estimation_summary a dataframe with both a and f estimation over the submaps
-#' @slot marker_summary a dataframe indicating the number of times a marker has been chosen
 #' @slot submap_summary a dataframe with summary statitistics about the submaps
 #' @slot HBD_recap a dataframe with for one individual and for one marker a mean computation of all the HBD probabilities computed, on every individuals.
 #' @slot FLOD_recap a dataframe with for one individual and for one marker a mean computation of all the FLOD scores computed, on every individuals.
@@ -33,7 +32,6 @@ setClass("atlas", representation(
         submaps_list         = 'list', 
         likelihood_summary   = 'listOrNULL',
         estimation_summary   = 'listOrNULL', 
-        marker_summary       = 'dataframeOrNULL',
         submap_summary       = 'dataframeOrNULL',
         HBD_recap            = 'matrixOrNULL',
         FLOD_recap           = 'matrixOrNULL',  

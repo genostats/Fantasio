@@ -1,8 +1,8 @@
 #' Creation of plot using ROH file
 #' 
-#' This function is use to plot HBDsegments for a specific infdividual using an ROH file
+#' This function plots HBDsegments for a specific individual using an ROH file
 #' 
-#' @param ROHfile an ROH file
+#' @param ROH a data frame
 #' @param Submaps a atlas object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param regions a matrix containing the value to ve highlighted in the plot
@@ -19,14 +19,13 @@
 #' @details -end
 #'  
 #' @return This function returns a plot of the HBDsegments for a specific individual
-#' 
-plot.ROH.segments.id <- function(Submaps, ROHfile, unit="cM", regions, outfile, family.id, individual.id, build)
+#' @keywords internal 
+plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, family.id, individual.id, build)
 {
-  ROH <- read.table(ROHfile,header=TRUE)
   ROH <- subset(ROH,ROH$FID==family.id & ROH$IID==individual.id)
   
   if(nrow(ROH) == 0)
-    return("No information found for this particular individual, please enter a right family.id and individual.id, and make sure individua_id is a character string")
+    return("No information found for this individual, please check family.id and individual.id values")
   
   if (missing(regions))
     myreg <- NULL

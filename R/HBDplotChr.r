@@ -3,7 +3,7 @@
 #' This function plots the HBDsegments for a given chromosom and all the individual
 #' 
 #' @param Submaps a list.submap object
-#' @param ROHfile a ROH file from which the segments will be plotted (optional)
+#' @param ROH a data frame from which the segments will be plotted (optional)
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param chr the chromosome number from which to plot HBD segment
 #' @param list.ids a vector containing a list of individuals from which only the HBDsegments for this chromosome will be ploted (optional)
@@ -27,7 +27,7 @@
 #'
 #' 
 #' @export
-HBDplotChr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, outfile, inbred = FALSE, build=37)
+HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile, inbred = FALSE, build=37)
 {
   if(inbred)
   {
@@ -46,9 +46,9 @@ HBDplotChr <- function(Submaps, ROHfile, unit="cM", chr, list.ids, regions, outf
   if(is.null(Submaps@HBD_recap))
     stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered INBRED.")
   
-  if(!missing(Submaps) & !missing(ROHfile))
+  if(!missing(Submaps) & !missing(ROH))
   {
-    plot.ROH.segments.chr(ROHfile = ROHfile, submaps = Submaps, unit = unit, chr = chr, outfile=outfile, listid=list.ids, regions=regions, build=build)
+    plot.ROH.segments.chr(ROH = ROH, submaps = Submaps, unit = unit, chr = chr, outfile=outfile, listid=list.ids, regions=regions, build=build)
   }else{
     if(!missing(Submaps))
       plot.HBDsegments.chr(Submaps=Submaps, unit=unit, chr=chr, list.ids=list.ids, regions=regions, outfile=outfile, build=build)

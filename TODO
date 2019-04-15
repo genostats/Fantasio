@@ -1,3 +1,13 @@
+
+-- dans la vignette, illustrer l'utilisation d'un fichier de ROH
+   générés par plink
+
+-- dans les fonctions de plot HBD ajouter bande grise un individu
+   sur deux / ou bien une ligne par individu, pour rendre le plot
+   plus lisible
+
+-- rassembler la doc des classes et méthodes en une seule page
+
 -- setAllelicFrequencies -- peut-être pas la meilleure solution
    à revoir ...
 
@@ -5,27 +15,8 @@
  
 -- est-ce tout ce qui est exporté est illustré dans la vignette ?
 
--- dans Fantasio() l'argument run.festim n'est pas utile
-   c'est une fonction pour tout faire...
-   -> DONE
-
--- reprendre la fonction makeAllSubmapsByDistance / ByHotspots
-   * festim ne devrait pas être appelé par défaut
-   * implique de refaire festim pour qu'il puisse tourner sur le résultat
-   * setSummary ne devrait pas être appelé dans cette fonction
-   * l'argument run_a_f de setSummary ne tient pas la route 
-   * idem pour recap.by.segments qui est stocké dans l'objet mais ne devrait pas l'être !
-   une fois ces modifs faites, il faudra appeler festim puis setSummary dans Fantasio
-   il faudra aussi virer les arguments qui ne sont là que pour être passés à setSummary
-   -> DONE
-
 !! j'ai supprimé l'argument run_a_f dans setSummary
 !! ---> verifier ce qui se passe si festim n'a pas tourné
-
-!! est-ce que la nécessité du hack avec get(deparse(substitute(bedmatrix)))
-!! disparaît si on ne passe plus par la fonction ff dans makeAllSubmapsEtc ?
-!! ou si on utilise do.call pour appeler makeAllSubmapsEtc ?
-!! PB je ne sais plus bien sur quelle machine le hack était nécessaire (bug intermittent)
 
 ********************************************************
 26/01/2018

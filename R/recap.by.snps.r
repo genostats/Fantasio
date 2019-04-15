@@ -8,8 +8,7 @@
 #*** return a list of two dataframes with HBD and FLOD recap by snps in it       #
 ##################################################################################
 
-recap.by.snps <- function(submaps, proba_HBD, proba_FLOD)
-{
+recap.by.snps <- function(submaps, proba_HBD, proba_FLOD) {
   ##count the number of times the marker has been picked
   marqueurs <- as.data.frame(table(unlist(sapply(proba_HBD, function(x) colnames(x)))), stringsAsFactors=FALSE)
   
@@ -34,19 +33,16 @@ recap.by.snps <- function(submaps, proba_HBD, proba_FLOD)
   
   dimnames(matrice_FLOD) <- list(individuals, colnames(matrice_HBD))
     
-  
   #find the index of the marker in every submaps
   az <- vapply(proba_HBD, function(jj) match(colnames(matrice_HBD), colnames(jj)), integer(length(marqueurs[,1])))
 
   
-  for( i in 1:ncol(matrice_HBD))
-  {
+  for( i in 1:ncol(matrice_HBD)) {
     az1 <- az[i,]
     I <- which(!is.na(az1))
     v <- sapply(I, function(i) proba_HBD[[i]][, az1[i]], simplify = F)
     w <- sapply(I, function(i) proba_FLOD[[i]][, az1[i]], simplify = F)
-    for( j in 1:length(v))
-    {
+    for( j in 1:length(v)) {
       matrice_HBD[,i] <- matrice_HBD[,i] + v[[j]]
       matrice_FLOD[,i] <- matrice_FLOD[,i] + w[[j]]
       nb_probs[,i] <- nb_probs[,i] + 1

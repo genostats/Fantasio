@@ -1,8 +1,8 @@
 #' Creation of plot using ROH file
 #' 
-#' This function is use to plot HBDsegments for a chromosome using an ROH file
+#' This function is used to plot HBDsegments for a chromosome using an ROH file
 #' 
-#' @param ROHfile an ROH file
+#' @param ROH a data frame
 #' @param submaps a atlas object
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param chr the chromosome number from which to plot ROH
@@ -19,13 +19,10 @@
 #' @details -end 
 #' 
 #' @return This function returns a plot of the HBDsegments for a specific chromosome
-#' 
-plot.ROH.segments.chr <- function(ROHfile, submaps, unit = "cM", chr, outfile, listid, regions, build)
+#' @keywords internal 
+plot.ROH.segments.chr <- function(ROH, submaps, unit = "cM", chr, outfile, listid, regions, build)
 {
-  ROH <- read.table(ROHfile,header=TRUE)
-  
   ROH$IID <- as.character(ROH$IID)
-
   
   if(missing(listid)) 
     listid <- as.character(unique(ROH$IID))[1:10]

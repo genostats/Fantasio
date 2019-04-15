@@ -2,9 +2,8 @@
 #' 
 #' This function creates HBD and FLOD recap dataframe.
 #' 
-#' @param submaps a atlas object
+#' @param atlas a atlas object
 #' @param recap.by.segments : whether you want the recap by segments or snps
-#' @param list.id : a list individual 
 #' 
 #' @details For each individual and each marker the function computes 
 #' @details the mean value of every HBD probabilities computed through the submaps.
@@ -23,44 +22,27 @@
 #' @return This function returns a list of dataframes. 
 #'
 #' @export
-recap <- function(submaps, recap.by.segments = submaps@bySegments, list.id) {
+recap <- function(atlas, recap.by.segments = atlas@bySegments) {
   
-  if(class(submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
+  if(class(atlas@submaps_list[[1]])[1] != "snpsMatrix" & class(atlas@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
-  if(class(submaps@bedmatrix)[1] != "bed.matrix")
+  if(class(atlas@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
     
-  if(!missing(list.id))
-  {
-    if(list.id == "all")
-    {
-      condition <- 1:nrow(submaps@submap_summary)
-    }else{
-      vec <- strsplit(list.id, "_")
-      condition <- sapply(vec, function(i) which(submaps@submap_summary$FID == i[1] & submaps@submap_summary$IID == i[2]))
-    }
-  }else{
-    condition <- which(submaps@submap_summary$QUALITY >= 95 & submaps@submap_summary$INBRED)
+  if(length(atlas@submaps_list) == 1) {
+    matrice_HBD <- atlas@submaps_list[[1]]@HBD.prob
+    matrice_FLOD <- atlas@submaps_list[[1]]@FLOD
+    l <- list(matrice_HBD, matrice_FLOD)
+    return(l)	
   }
   
-  if(length(submaps@submaps_list) == 1)
-  {
-  	matrice_HBD <- submaps@submaps_list[[1]]@HBD.prob
-  	matrice_FLOD <- submaps@submaps_list[[1]]@FLOD
-  	l <- list(matrice_HBD, matrice_FLOD)
-  	return(l)	
-  }
+  # HBD probabilities and FLOD scores
+  proba_HBD  <- submap.HBD(atlas)
+  FLOD <- submap.FLOD(atlas)
   
-  #list form for HBD probabilities and FLOD scores
-  proba_HBD  <- submap.HBD(submaps)
-  proba_FLOD <- submap.FLOD(submaps)
-  
-  if(recap.by.segments)
-  {
-    recap.by.segments(submaps, proba_HBD, proba_FLOD)
-  }
-  else
-  {
-    recap.by.snps(submaps, proba_HBD, proba_FLOD)
+  if(recap.by.segments) {
+    recap.by.segments(atlas, proba_HBD, FLOD)
+  } else {
+    recap.by.snps(atlas, proba_HBD, FLOD)
   }
 }  
