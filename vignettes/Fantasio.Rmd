@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2019-02-07"
+date: "2019-06-28"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,8 +14,8 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2019-02-07
-meta-json: {"date":"2019-02-07","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
+date: 2019-06-28
+meta-json: {"date":"2019-06-28","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
@@ -238,8 +238,8 @@ We can load the HGDP-CEPH data as follows:
     filepath <- system.file("extdata", "hgdp_ceph.bed", package="HGDP.CEPH")
     x <- read.bed.matrix(filepath)
 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.5/HGDP.CEPH/extdata/hgdp_ceph.rds 
-    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.5/HGDP.CEPH/extdata/hgdp_ceph.bed
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.6/HGDP.CEPH/extdata/hgdp_ceph.rds 
+    ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.6/HGDP.CEPH/extdata/hgdp_ceph.bed
 
 The object `x` is a bed.matrix object (see gaston package for details).
 
@@ -296,40 +296,63 @@ By default, the submaps are created using the file of recombination
 hotspots and summarizing the results for each snp that appears in a
 submap.
 
-    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=100, verbose = FALSE) 
+    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose = FALSE) 
 
-    ## Warning in setSummary(h, probs = run.proba, recap.by.segments =
-    ## recap.by.segments, : No cases (pheno = 2). HBD, FLOD and HFLOD are computed
-    ## on all individuals
+    ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
+    ## Using all inbred individuals with good estimation quality.
 
-Among the slots containg results of interest, we show here
-`F1@submap_summary` which contains a summmary of results accross submaps
-for all individuals:
+The function `markerRepresentation` gives for each marker of the
+original bed matrix the number of times it has been selected. It can be
+used in conjonction with `table` to obtain a summary of the number of
+markers never seen, seen once, twice, etc:
+
+    head(markerRepresentation(F1), 10)
+
+    ##            id chr     pos       dist Freq
+    ## 1   rs3094315   1  742429 0.09162711    0
+    ## 2  rs12562034   1  758311 0.09918407    0
+    ## 3   rs3934834   1  995669 0.49630053    0
+    ## 4   rs9442372   1 1008567 0.50394850    0
+    ## 5   rs3737728   1 1011278 0.50800870    0
+    ## 6  rs11260588   1 1011521 0.50867275    0
+    ## 7   rs9442398   1 1011558 0.50878962    0
+    ## 8   rs6687776   1 1020428 0.54737207    0
+    ## 9   rs9651273   1 1021403 0.54793723    0
+    ## 10  rs4970405   1 1038818 0.55291100    0
+
+    table(markerRepresentation(F1)$Freq)
+
+    ## 
+    ##      0      1      2      3      4      5 
+    ## 609571  45833   4344    741    134    295
+
+The slot `F1@submap_summary` contains a summmary of results accross
+submaps for all individuals:
 
     head(F1@submap_summary, 10)
 
-    ##          FID       IID STATUS   SUBMAPS QUALITY      F_MIN       F_MAX
-    ## 1  HGDP00607 HGDP00607      1 100 / 100     100 0.01679166 0.034371219
-    ## 2  HGDP00608 HGDP00608      1 100 / 100     100 0.03497414 0.046201230
-    ## 3  HGDP00609 HGDP00609      1 100 / 100     100 0.03746029 0.051208506
-    ## 4  HGDP00610 HGDP00610      1 100 / 100     100 0.04211075 0.070544013
-    ## 5  HGDP00611 HGDP00611      1  19 / 100      19 0.00000000 0.015778896
-    ## 6  HGDP00612 HGDP00612      1 100 / 100     100 0.04989643 0.070509748
-    ## 7  HGDP00613 HGDP00613      1  99 / 100      99 0.00000000 0.009245574
-    ## 8  HGDP00614 HGDP00614      1 100 / 100     100 0.02695225 0.043496459
-    ## 9  HGDP00615 HGDP00615      1 100 / 100     100 0.08124877 0.098639612
-    ## 10 HGDP00616 HGDP00616      1 100 / 100     100 0.06140839 0.083460434
-    ##          F_MEAN    F_MEDIAN   A_MEDIAN   pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1  0.0239954604 0.023841525 0.14016758  9.459242e-26   TRUE           100
-    ## 2  0.0393159934 0.039171530 0.07163529  4.335122e-59   TRUE           100
-    ## 3  0.0427719968 0.042577607 0.12479358  5.469856e-51   TRUE           100
-    ## 4  0.0526702707 0.052619550 0.16005520  3.885552e-63   TRUE           100
-    ## 5  0.0061815718 0.004300554 0.35829659  2.953533e-02   TRUE            10
-    ## 6  0.0611221967 0.061294436 0.33582665  2.173077e-41   TRUE           100
-    ## 7  0.0001807201 0.000000000 0.01000000  1.000000e+00  FALSE             2
-    ## 8  0.0323134937 0.031705604 0.14156091  2.760207e-32   TRUE           100
-    ## 9  0.0891309688 0.088276525 0.09566205 2.127892e-124   TRUE           100
-    ## 10 0.0711661477 0.071027504 0.14850016  1.981602e-81   TRUE           100
+    ##          FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
+    ## 1  HGDP00607 HGDP00607      1       5     100 0.01518434 0.03257575
+    ## 2  HGDP00608 HGDP00608      1       5     100 0.03604983 0.04426785
+    ## 3  HGDP00609 HGDP00609      1       5     100 0.04312059 0.04860821
+    ## 4  HGDP00610 HGDP00610      1       5     100 0.04401858 0.05961656
+    ## 5  HGDP00611 HGDP00611      1       1      20 0.02490008 0.02490008
+    ## 6  HGDP00612 HGDP00612      1       5     100 0.05371608 0.06379560
+    ## 7  HGDP00613 HGDP00613      1       4      80 0.00000000 0.00000000
+    ## 8  HGDP00614 HGDP00614      1       5     100 0.02913594 0.03884595
+    ## 9  HGDP00615 HGDP00615      1       5     100 0.08462442 0.09167799
+    ## 10 HGDP00616 HGDP00616      1       5     100 0.06818923 0.07438609
+    ##        F_MEAN   F_MEDIAN   A_MEDIAN   pLRT_MEDIAN INBRED pLRT_inf_0.05
+    ## 1  0.02113917 0.01732085 0.10465202  1.092893e-25   TRUE             5
+    ## 2  0.03850661 0.03771460 0.07515835  2.724017e-56   TRUE             5
+    ## 3  0.04576054 0.04606134 0.12890667  2.947722e-56   TRUE             5
+    ## 4  0.05325645 0.05450831 0.17332393  6.475594e-61   TRUE             5
+    ## 5  0.02490008 0.02490008 0.87109604  2.909188e-07   TRUE             1
+    ## 6  0.05805642 0.05836472 0.32193643  3.072248e-41   TRUE             5
+    ## 7  0.00000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
+    ## 8  0.03453203 0.03360089 0.15385938  4.542748e-34   TRUE             5
+    ## 9  0.08761414 0.08505159 0.09785348 2.225154e-123   TRUE             5
+    ## 10 0.07072148 0.07027205 0.14472321  3.146228e-84   TRUE             5
 
 If you are interested in the values of \\(f\\) and \\(a\\) accross the
 submaps, you can find them in `F1@estimation_summary`.
@@ -358,16 +381,32 @@ for each segment using option `recap.by.segments=TRUE`. In that case,
 `n.consecutive.marker` should be set to 1.
 
     F2 <- Fantasio(bedmatrix=x.be, segments="Hotspots", recap.by.segments=TRUE, 
-      n.consecutive.marker=1, n=100, verbose=FALSE)
+      n.consecutive.marker=1, n=5, verbose=FALSE)
 
-    ## Warning in setSummary(h, probs = run.proba, recap.by.segments =
-    ## recap.by.segments, : No cases (pheno = 2). HBD, FLOD and HFLOD are computed
-    ## on all individuals
+    ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
+    ## Using all inbred individuals with good estimation quality.
 
 Distance
 --------
 
-    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5)
+    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5, verbose = FALSE)
+
+    ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
+    ## Using all inbred individuals with good estimation quality.
+
+In addition to all the above mentionned summaries, the function
+`markerSummary` returns the number of SNPs in each submap. Note that
+when \`segments = "Hotspots", it's always the number of hotspot
+segments, but here it varies from submap to submap.
+
+    head(markerSummary(F3))
+
+    ##          number_of_markers_used
+    ## Submap 1                   6221
+    ## Submap 2                   6247
+    ## Submap 3                   6236
+    ## Submap 4                   6216
+    ## Submap 5                   6229
 
 How to use the segment.option argument
 --------------------------------------
@@ -592,15 +631,6 @@ description of each structure in this object :
 
     str(F1@estimation_summary)
 
--   marker\_summary : a dataframe, which gives the number of markers and
-    the number of times it has been picked,
-    -   number\_of\_time\_picked
-    -   number\_of\_marker
-
-<!-- -->
-
-    str(F1@marker_summary)
-
 -   submaps\_summary : a dataframe which gives several informations
     about the a and f computed over the submaps. The dataframe contains
     13 columns:
@@ -625,20 +655,20 @@ description of each structure in this object :
 
     head(F1@submap_summary)
 
-    ##         FID       IID STATUS SUBMAPS QUALITY       F_MIN       F_MAX
-    ## 1 HGDP00607 HGDP00607      1   5 / 5     100 0.023554131 0.025296133
-    ## 2 HGDP00608 HGDP00608      1   5 / 5     100 0.037625736 0.039117729
-    ## 3 HGDP00609 HGDP00609      1   5 / 5     100 0.038244878 0.051365326
-    ## 4 HGDP00610 HGDP00610      1   5 / 5     100 0.046591032 0.059201269
-    ## 5 HGDP00611 HGDP00611      1   1 / 5      20 0.004953602 0.004953602
-    ## 6 HGDP00612 HGDP00612      1   5 / 5     100 0.056078937 0.065441519
-    ##        F_MEAN    F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.024622216 0.025137092 0.15479649 1.240037e-27   TRUE             5
-    ## 2 0.038221978 0.038256615 0.06928447 8.307035e-56   TRUE             5
-    ## 3 0.044232489 0.044357765 0.13544907 4.967350e-49   TRUE             5
-    ## 4 0.052822097 0.054779642 0.17294471 1.477215e-61   TRUE             5
-    ## 5 0.004953602 0.004953602 0.53778936 1.835737e-02   TRUE             1
-    ## 6 0.058960763 0.057807282 0.31697145 1.291807e-40   TRUE             5
+    ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
+    ## 1 HGDP00607 HGDP00607      1       5     100 0.01774510 0.02258418
+    ## 2 HGDP00608 HGDP00608      1       5     100 0.03777834 0.04483457
+    ## 3 HGDP00609 HGDP00609      1       5     100 0.03867672 0.04752368
+    ## 4 HGDP00610 HGDP00610      1       5     100 0.05002053 0.06005744
+    ## 5 HGDP00611 HGDP00611      1       0      NA         NA         NA
+    ## 6 HGDP00612 HGDP00612      1       5     100 0.05702920 0.06499281
+    ##       F_MEAN   F_MEDIAN  A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
+    ## 1 0.02029768 0.02029054 0.1204826 1.399920e-23   TRUE             5
+    ## 2 0.04009542 0.03904313 0.0896712 5.420676e-58   TRUE             5
+    ## 3 0.04226154 0.03967114 0.1244590 4.944954e-49   TRUE             5
+    ## 4 0.05540552 0.05572329 0.1833339 1.046299e-59   TRUE             5
+    ## 5         NA         NA        NA           NA     NA            NA
+    ## 6 0.06033014 0.05958620 0.2955896 4.304676e-44   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
