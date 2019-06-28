@@ -57,7 +57,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
     myreg  <- regions
     color2 <- "green4"
     myreg$start = regions$start / 1e6
-    myref$end   = regions$end / 1e6
+    myreg$end   = regions$end / 1e6
   }
   
   if (unit == "cM") {

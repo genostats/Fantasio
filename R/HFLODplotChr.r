@@ -55,7 +55,7 @@ HFLODplotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
     myreg <- regions
     color2="green4"
     myreg$start = regions$start/1e6
-    myref$end   = regions$end/1e6
+    myreg$end   = regions$end/1e6
   }
   
   
