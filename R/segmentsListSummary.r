@@ -1,6 +1,6 @@
 #' Summary of marker picked
 #'
-#' This function is uses to return the number of segments and number of marker in the list of segments outputed by the function 
+#' This function returns the number of segments and number of marker in the list of segments outputed by the function 
 #' `segmentsListByHotspots`
 #'
 #' @param segmentList A list of segments
@@ -12,16 +12,16 @@
 #' @export
 segmentsListSummary <- function(segmentList)
 {
-  if(class(segmentList)[1] != "HostspotsSegments")
+  if(class(segmentList)[1] == "snpsSegments")
     segmentList <- segmentList@snpsSegments
+  else if(class(segmentList)[1] != "HostspotsSegments" & class(segmentList)[1] != "list")
+    stop("Argument must be of class 'snpsSegments', 'HostspotsSegments' or 'list'")
     
   #number of segments
   n_seg <- numeric(length(segmentList))
 
   for(i in 1:length(segmentList))
-  {
     n_seg[i] <- length(segmentList[[i]])
-  }
   #n_seg[23] <- NA
   #n_seg <- n_seg[!is.na(n_seg)]
   
