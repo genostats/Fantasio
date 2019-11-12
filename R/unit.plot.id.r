@@ -1,4 +1,4 @@
-unit.plot.id <- function(file, unit, byROHfile, individual.id)
+unit.plot.id <- function(file, unit, byROHfile)
 {
   if(byROHfile) {
     if (unit=="cM"){

@@ -21,21 +21,23 @@ plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, r
   HBD.recap <- Submaps@HBD_recap
   HBDsegments <- Submaps@HBDsegments
 
-  individuals_name <- rownames(HBD.recap)#get the name of the individual
-  individuals_name <- strsplit(individuals_name, "_")
-  individuals_name <- sapply(individuals_name, function(i) match(i[2], Submaps@bedmatrix@ped$id))
-  family_id <- Submaps@bedmatrix@ped$famid[individuals_name]
-  individuals_name <- Submaps@bedmatrix@ped$id[individuals_name]
+  # individuals_name <- rownames(HBD.recap)#get the name of the individual
+  # individuals_name <- strsplit(individuals_name, "_")
+  # individuals_name <- sapply(individuals_name, function(i) match(i[2], Submaps@bedmatrix@ped$id))
+  # family_id <- Submaps@bedmatrix@ped$famid[individuals_name]
+  # individuals_name <- Submaps@bedmatrix@ped$id[individuals_name]
   
-  id   <- which(individuals_name == individual.id)
-  if(length(id) == 0)
-    stop("No individual founded, please make sure that typo is correct.")
+  # id   <- which(individuals_name == individual.id)
+
+  # if(length(id) == 0)
+  #  stop("No individual found")
   
   HBDsegments_rbind <- do.call(rbind, HBDsegments) #binding lines 
   
   HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$individual==individual.id & HBDsegments_rbind$family==family.id)
+
   if(nrow(HBD) == 0)
-    stop("No individual founded, please make sure that typo is correct for individual.id and family.id arguments and in character.")
+    stop("No individual found")
   
   #regions options
   if (missing(regions)) 
@@ -45,11 +47,11 @@ plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, r
   
   #name the file
   if (missing(outfile)) 
-    outfile <- paste("HBD_", individuals_name[id],"_",unit,".png",sep="")
+    outfile <- paste("HBD_", individual.id,"_",unit,".png",sep="")
   else {
     outfile <- paste(outfile,".png",sep="") 
   }
 
-  plot.segments.id(fileOrSubmaps=HBD, individual.id=id, unit = unit, regions = myreg, main=paste("HBDsegments of ",family.id, "_", individual.id, sep = ""), build=build)
+  plot.segments.id(fileOrSubmaps=HBD, unit = unit, regions = myreg, main=paste("HBDsegments of", unique.ids(family.id, individual.id)), build=build)
 }
 

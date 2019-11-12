@@ -26,7 +26,8 @@ setHBDprob <- function(atlas, w.id)
   
   for(i in 1:length(atlas@submaps_list)) {
     HBD_prob <- matrix(NA, nrow = length(w.id), ncol = atlas@submaps_list[[i]]@ncol)#HBD matrix
-    dimnames(HBD_prob) <- list(rownames(HBD_prob) <- paste(famid,id, sep = "_"), colnames(HBD_prob) <- c(atlas@submaps_list[[i]]@map$id))
+    # dimnames(HBD_prob) <- list(rownames(HBD_prob) <- paste(famid,id, sep = "_"), colnames(HBD_prob) <- c(atlas@submaps_list[[i]]@map$id))
+    dimnames(HBD_prob) <- list( unique.ids(famid,id), atlas@submaps_list[[i]]@map$id)
     
     for (j in 1:nrow(HBD_prob)) {
       j1 <- w.id[j]

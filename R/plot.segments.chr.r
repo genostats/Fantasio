@@ -47,25 +47,40 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
   paintCytobands(chr,units=unit,pos=c(0,0.5), build=build, orientation="h",legend = FALSE, length.out = end)
   
   #draw the HBDsegments
-  tmp <- strsplit(list_id, "_")
-  list_id <- sapply(tmp, function(i) i[2])
+  # tmp <- strsplit(list_id, "_")
+  # list_id <- sapply(tmp, function(i) i[2])
   
-  for (j in 1:length(list_id)){
-    if(byROHfile)
-    {
-      toplot <- fileOrSubmaps[fileOrSubmaps$IID==list_id[j],]
-    }else{
-      toplot <- fileOrSubmaps[fileOrSubmaps$individual==list_id[j],]
+  # for (j in 1:length(list_id)){
+  #  if(byROHfile)
+  #  {
+  #    toplot <- fileOrSubmaps[fileOrSubmaps$IID==list_id[j],]
+  #  }else{
+  #    toplot <- fileOrSubmaps[fileOrSubmaps$individual==list_id[j],]
+  #  }
+  #  
+  #  
+  #  if (nrow(toplot) > 0) {
+  #     for (k in 1:nrow(toplot)) {
+  #      polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
+  #               y  = c(j,j,j+0.5,j+0.5),
+  #               col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$status[k])),
+  #               lwd=1)
+  #    }
+  #  }
+  # }
+
+  for (j in 1:length(list_id)){ # parcourt tous les individus...
+    if(byROHfile) {
+      toplot <- fileOrSubmaps[ unique.ids( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
+    } else {
+      toplot <- fileOrSubmaps[ unique.ids( fileOrSubmaps$family, fileOrSubmaps$individual) %in% list_id[j], ]
     }
-    
-    
-    if (nrow(toplot) > 0) {
-      for (k in 1:nrow(toplot)) {
-        polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
-                 y  = c(j,j,j+0.5,j+0.5),
-                 col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$status[k])),
-                 lwd=1)
-      }
+
+    for (k in seq_len(nrow(toplot))) { # !! seq_len permet de gérer le cas toplot = vide (pas de segment HBD sur ce chr)
+      polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
+               y  = c(j,j,j+0.5,j+0.5),
+               col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$status[k])),
+               lwd=1)
     }
   }
   

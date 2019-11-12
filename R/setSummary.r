@@ -57,7 +57,7 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
     test <- any( atlas@submap_summary$STATUS == 2 ) 
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
-        # on les probas HBD et les FLOD sur les individus consanguins avec qualité
+        # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
         w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
         w.HFLOD <- match( which(atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED & atlas@submap_summary$STATUS == 2), w.HBD )
@@ -73,8 +73,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
         w.HBD <- 1:nrow(atlas@submap_summary)
         w.HFLOD <- 1:length(w.HBD)
       } else {
-        vec <- strsplit(list.id, "_")
-        w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$FID == i[1] & atlas@submap_summary$IID == i[2]))
+        # vec <- strsplit(list.id, "_")
+        # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$FID == i[1] & atlas@submap_summary$IID == i[2]))
+        w.HBD <- match( list.id, unique.ids(atlas@submap_summary$FID, atlas@submap_summary$IID) )
         w.HFLOD <- 1:length(w.HBD)
       }
     }

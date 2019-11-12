@@ -14,15 +14,22 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, t
 {
   l <- list()#liste des individus
   
-  individuals_name <- rownames(HBD_recap)#get the name of the individual
-  individuals_name <- strsplit(individuals_name, "_")
-  individuals_name <- sapply(individuals_name, function(i) match(i[2], submaps@bedmatrix@ped$id))
-  #individuals_name <- individuals_name[!is.na(individuals_name)]
+  # individuals_name <- rownames(HBD_recap)#get the name of the individual
+  # individuals_name <- strsplit(individuals_name, "_")
+  # individuals_name <- sapply(individuals_name, function(i) match(i[2], submaps@bedmatrix@ped$id))
+  # #individuals_name <- individuals_name[!is.na(individuals_name)]
   
-  #find the status of the individual
-  STATUS <- submaps@bedmatrix@ped$pheno[individuals_name]
-  family_id <- submaps@bedmatrix@ped$famid[individuals_name]
-  individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
+  # #find the status of the individual
+  # STATUS <- submaps@bedmatrix@ped$pheno[individuals_name]
+  # family_id <- submaps@bedmatrix@ped$famid[individuals_name]
+  # individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
+
+  un.ids <- rownames(HBD_recap) # famid:id
+  STATUS <- submaps@bedmatrix@ped$pheno[ match( un.ids, unique.ids(submaps@bedmatrix@ped$famid, submaps@bedmatrix@ped$id) ) ]
+  individuals_name <- get.id(un.ids)
+  family_id <- get.famid(un.ids)
+
+  # ### fin modifs ####
   
   #find the name of the marker to find the index of the segments in the chromosome
   marker_names <- colnames(submaps@submaps_list[[1]]@HBD.prob)

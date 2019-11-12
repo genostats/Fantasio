@@ -34,7 +34,8 @@ HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile,
     list.ids <- which(Submaps@submap_summary$INBRED ==TRUE)
     ind      <- as.vector(Submaps@submap_summary$IID[list.ids])
     fam      <- as.vector(Submaps@submap_summary$FID[list.ids])
-    list.ids <- paste(ind, fam, sep="_")
+    # list.ids <- paste(ind, fam, sep="_")
+    list.ids <- unique.ids(fam, ind)
   }
   
   if(class(Submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(Submaps@submaps_list[[1]])[1] != "HostspotsMatrix")

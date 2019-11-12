@@ -25,7 +25,8 @@ plot.ROH.segments.chr <- function(ROH, submaps, unit = "cM", chr, outfile, listi
   ROH$IID <- as.character(ROH$IID)
   
   if(missing(listid)) 
-    listid <- as.character(unique(ROH$IID))[1:10]
+    listid <- unique.ids( ROH$FID, ROH$IID )
+    # listid <- as.character(unique(ROH$IID))[1:10]
 
   
   if(missing(regions)) 
