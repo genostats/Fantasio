@@ -3,7 +3,7 @@ title: "Fantasio"
 subtitle: 'Version 0.1'
 author: "Isuru HAUPE & Marie MICHEL"
 version: 0.1
-date: "2019-06-28"
+date: "2019-12-05"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
@@ -14,8 +14,8 @@ vignette: >
 ---
 
 author: Isuru HAUPE & Marie MICHEL
-date: 2019-06-28
-meta-json: {"date":"2019-06-28","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
+date: 2019-12-05
+meta-json: {"date":"2019-12-05","subtitle":"Version 0.1","output":"rmarkdown::html\\_vignette","version":"0.1","author":"Isuru HAUPE & Marie MICHEL","title":"Fantasio","vignette":"% % % % %"}
 output: rmarkdown::html\_vignette
 subtitle: Version 0.1
 title: Fantasio
@@ -32,7 +32,7 @@ vignette: % % % % %
     -   [Hotspots (Default)](#hotspots-default)
     -   [Hotspots by Segments](#hotspots-by-segments)
     -   [Distance](#distance)
-    -   [How to use the segment.option
+    -   [How to use the `segment.option`
         argument](#how-to-use-the-segment.option-argument)
 -   [Plotting results](#plotting-results)
     -   [HFLOD plots](#hflod-plots)
@@ -164,7 +164,7 @@ evaluated over the entire set I of inbred cases by computing a FLOD
 score, HFLOD(m,\\(\alpha\\)), at each marker *m*, in presence of genetic
 heterogeneity using a parameter \\(\alpha\\) (2):
 
-\\[HFLOD(m,\alpha)=\sum log_{10} \left[\alpha.\frac{P\left(Y_{m,s}^{(i)} | H_{1}\right)}{P\left(Y_{m,s}^{(i)} | H_{0}\right)}+ (1 - \alpha)\right ]= \sum log_{10} \left[\alpha . exp \left(FLOD^{(i)}(m)*log(10)\right)+(1-\alpha)\right] \\]
+\\[HFLOD(m,\alpha)=\sum log_{10} \left[\alpha.\frac{P\left(Y_{m,s}^{(i)} | H_{1}\right)}{P\left(Y_{m,s}^{(i)} | H_{0}\right)}+ (1 - \alpha)\right ]= \sum log_{10} \left[\alpha . exp \left(FLOD^{(i)}(m) \times \log(10)\right)+(1-\alpha)\right] \\]
 
 This heterogeneity score is then maximized over \\(\alpha\\) to evaluate
 the evidence of linkage at marker *m* where \\(\alpha\\) is the estimate
@@ -208,7 +208,7 @@ After that we can load the package.
     ## 
     ##     LdFlags
 
-    ## Gaston set number of threads to 4. Use setThreadOptions() to modify this.
+    ## Gaston set number of threads to 2. Use setThreadOptions() to modify this.
 
     ## 
     ## Attaching package: 'gaston'
@@ -242,16 +242,47 @@ We can load the HGDP-CEPH data as follows:
     ## Reading /home/rv/R/x86_64-pc-linux-gnu-library/3.6/HGDP.CEPH/extdata/hgdp_ceph.bed
 
 The object `x` is a bed.matrix object (see gaston package for details).
-
-We are going to work on the Bedouin population, so after updating the
-stats in `x` (this adds several informations such as allele frequencies,
-etc), we select this population:
+The statistics on SNPs and individual callrates, etc, have not been
+computed; run
 
     x <- set.stats(x)
 
     ## ped stats and snps stats have been set. 
     ## 'p' has been set. 
     ## 'mu' and 'sigma' have been set.
+
+to add them in the bed matrix. These data have genetic distances
+(centiMorgans) set in the `@snps` slot, column `dist`:
+
+    head(x@snps)
+
+    ##   chr         id       dist     pos A1 A2  N0  N1  N2 NAs N0.f N1.f N2.f
+    ## 1   1  rs3094315 0.09162711  742429  C  T  75 346 620   2   NA   NA   NA
+    ## 2   1 rs12562034 0.09918407  758311  A  G  81 275 674  13   NA   NA   NA
+    ## 3   1  rs3934834 0.49630053  995669  T  C  58 268 717   0   NA   NA   NA
+    ## 4   1  rs9442372 0.50394850 1008567  A  G 149 423 471   0   NA   NA   NA
+    ## 5   1  rs3737728 0.50800870 1011278  T  C  45 290 708   0   NA   NA   NA
+    ## 6   1 rs11260588 0.50867275 1011521  A  G   3  49 991   0   NA   NA   NA
+    ##   NAs.f  callrate        maf         hz
+    ## 1    NA 0.9980825 0.23823247 0.33237272
+    ## 2    NA 0.9875360 0.21213592 0.26699029
+    ## 3    NA 1.0000000 0.18408437 0.25695110
+    ## 4    NA 1.0000000 0.34563758 0.40556088
+    ## 5    NA 1.0000000 0.18216683 0.27804410
+    ## 6    NA 1.0000000 0.02636625 0.04697987
+
+Most datasets come with physical positions (column `pos` in `@snps`),
+but no genetic distance. They can be added with Gaston. First, you need
+install the HumanGeneticMap package with
+`install.packages("HumanGeneticMap", repos="https://genostats.github.io/R/")`.
+Then, you would run
+
+    x <- set.dist(x, HumanGeneticMap::genetic.map.b36)
+
+as the SNP positions in these data are on hg18/b36 reference.
+
+We are going to work on the Bedouin population. To select this
+population run:
 
     x.be <- select.inds(x, population == "Bedouin")
 
@@ -296,7 +327,9 @@ By default, the submaps are created using the file of recombination
 hotspots and summarizing the results for each snp that appears in a
 submap.
 
-    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose = FALSE) 
+    F1 <- Fantasio(bedmatrix=x.be, segments="Hotspots", 
+                   segment.options = list(hotspots = hotspot_hg18), n = 5, 
+                   verbose = FALSE) 
 
     ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
     ## Using all inbred individuals with good estimation quality.
@@ -324,7 +357,7 @@ markers never seen, seen once, twice, etc:
 
     ## 
     ##      0      1      2      3      4      5 
-    ## 609571  45833   4344    741    134    295
+    ## 597120  56805   5770    849    167    207
 
 The slot `F1@submap_summary` contains a summmary of results accross
 submaps for all individuals:
@@ -332,27 +365,27 @@ submaps for all individuals:
     head(F1@submap_summary, 10)
 
     ##          FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1  HGDP00607 HGDP00607      1       5     100 0.01518434 0.03257575
-    ## 2  HGDP00608 HGDP00608      1       5     100 0.03604983 0.04426785
-    ## 3  HGDP00609 HGDP00609      1       5     100 0.04312059 0.04860821
-    ## 4  HGDP00610 HGDP00610      1       5     100 0.04401858 0.05961656
-    ## 5  HGDP00611 HGDP00611      1       1      20 0.02490008 0.02490008
-    ## 6  HGDP00612 HGDP00612      1       5     100 0.05371608 0.06379560
-    ## 7  HGDP00613 HGDP00613      1       4      80 0.00000000 0.00000000
-    ## 8  HGDP00614 HGDP00614      1       5     100 0.02913594 0.03884595
-    ## 9  HGDP00615 HGDP00615      1       5     100 0.08462442 0.09167799
-    ## 10 HGDP00616 HGDP00616      1       5     100 0.06818923 0.07438609
+    ## 1  HGDP00607 HGDP00607      1       5     100 0.02157463 0.02975595
+    ## 2  HGDP00608 HGDP00608      1       5     100 0.03598537 0.04014125
+    ## 3  HGDP00609 HGDP00609      1       5     100 0.03770926 0.04391735
+    ## 4  HGDP00610 HGDP00610      1       5     100 0.04608449 0.05159924
+    ## 5  HGDP00611 HGDP00611      1       5     100 0.00000000 0.00000000
+    ## 6  HGDP00612 HGDP00612      1       5     100 0.05271932 0.06154670
+    ## 7  HGDP00613 HGDP00613      1       5     100 0.00000000 0.00000000
+    ## 8  HGDP00614 HGDP00614      1       5     100 0.02673050 0.02959198
+    ## 9  HGDP00615 HGDP00615      1       5     100 0.08825122 0.09179361
+    ## 10 HGDP00616 HGDP00616      1       5     100 0.06184717 0.07342747
     ##        F_MEAN   F_MEDIAN   A_MEDIAN   pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1  0.02113917 0.01732085 0.10465202  1.092893e-25   TRUE             5
-    ## 2  0.03850661 0.03771460 0.07515835  2.724017e-56   TRUE             5
-    ## 3  0.04576054 0.04606134 0.12890667  2.947722e-56   TRUE             5
-    ## 4  0.05325645 0.05450831 0.17332393  6.475594e-61   TRUE             5
-    ## 5  0.02490008 0.02490008 0.87109604  2.909188e-07   TRUE             1
-    ## 6  0.05805642 0.05836472 0.32193643  3.072248e-41   TRUE             5
+    ## 1  0.02509236 0.02335224 0.12817870  7.712220e-36   TRUE             5
+    ## 2  0.03727983 0.03690066 0.06623341  2.713908e-71   TRUE             5
+    ## 3  0.03969614 0.03930664 0.10762384  2.408180e-72   TRUE             5
+    ## 4  0.04907297 0.04996023 0.15620517  1.710978e-78   TRUE             5
+    ## 5  0.00000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
+    ## 6  0.05633190 0.05428361 0.31500034  3.339610e-60   TRUE             5
     ## 7  0.00000000 0.00000000 0.01000000  1.000000e+00  FALSE             0
-    ## 8  0.03453203 0.03360089 0.15385938  4.542748e-34   TRUE             5
-    ## 9  0.08761414 0.08505159 0.09785348 2.225154e-123   TRUE             5
-    ## 10 0.07072148 0.07027205 0.14472321  3.146228e-84   TRUE             5
+    ## 8  0.02843419 0.02861240 0.14528516  9.475249e-42   TRUE             5
+    ## 9  0.09013144 0.08993900 0.09207497 1.113737e-170   TRUE             5
+    ## 10 0.07049517 0.07208411 0.14735086 3.466959e-105   TRUE             5
 
 If you are interested in the values of \\(f\\) and \\(a\\) accross the
 submaps, you can find them in `F1@estimation_summary`.
@@ -380,8 +413,9 @@ For the "Hotspots" method, the results can also be summarized globally
 for each segment using option `recap.by.segments=TRUE`. In that case,
 `n.consecutive.marker` should be set to 1.
 
-    F2 <- Fantasio(bedmatrix=x.be, segments="Hotspots", recap.by.segments=TRUE, 
-      n.consecutive.marker=1, n=5, verbose=FALSE)
+    F2 <- Fantasio(bedmatrix = x.be, segments = "Hotspots", 
+                   segment.options = list(hotspots = hotspot_hg18), n = 5, 
+                   recap.by.segments = TRUE, n.consecutive.marker = 1, verbose = FALSE)
 
     ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
     ## Using all inbred individuals with good estimation quality.
@@ -389,7 +423,7 @@ for each segment using option `recap.by.segments=TRUE`. In that case,
 Distance
 --------
 
-    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n=5, verbose = FALSE)
+    F3 <- Fantasio(bedmatrix=x.be, segments="Distance", n = 5, verbose = FALSE)
 
     ## Warning in setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, : No individual with pheno = 2.
     ## Using all inbred individuals with good estimation quality.
@@ -402,14 +436,14 @@ segments, but here it varies from submap to submap.
     head(markerSummary(F3))
 
     ##          number_of_markers_used
-    ## Submap 1                   6221
-    ## Submap 2                   6247
-    ## Submap 3                   6236
-    ## Submap 4                   6216
-    ## Submap 5                   6229
+    ## Submap 1                   6235
+    ## Submap 2                   6211
+    ## Submap 3                   6225
+    ## Submap 4                   6226
+    ## Submap 5                   6221
 
-How to use the segment.option argument
---------------------------------------
+How to use the `segment.option` argument
+----------------------------------------
 
 In order to use the `segment.option` argument you need to pass a list of
 arguments, each variable name in the list must be an argument name in
@@ -419,8 +453,8 @@ the function. The function that will be called is either
 to "Hotspots" and the arguments list will be passed to it. So refer to
 these functions for possible arguments.
 
-    l <- list(minMarkers=50) #default is 0
-    F1.l <- Fantasio(bedmatrix=x.be, segments="Hotspots", segment.options=l)
+    l <- list(hotspots = hotspot_hg18, minMarkers = 50) # default is 0
+    F4 <- Fantasio(bedmatrix = x.be, segments = "Hotspots", segment.options = l)
 
 In the case of "Hotspots", by default, we do not require to have a
 minimum number of markers in each segment (`minMarkers = 0`). With the
@@ -509,9 +543,9 @@ Hotspots
 We will now create segments, which will be use to create the submaps
 later, further explication below, for now use this command :
 
-    s1 <- segmentsListByHotspots(x.be)
+    s1 <- segmentsListByHotspots(x.be, hotspots = hotspot_hg18)
 
-    ## Using hotspots from  hotspot_hg19 
+    ## Using hotspots from  hotspot_hg18 
     ## Gathering all hotspots for the genome : ......................
     ## Gathering all the genome's markers : ......................
     ## Finding which markers are between two hotspots : ......................
@@ -526,28 +560,28 @@ You can watch a summary of what was done with :
     segmentsListSummary(s1)
 
     ##    chromosome number_of_segments number_of_markers
-    ## 1           1                904             48532
-    ## 2           2                895             52722
-    ## 3           3                750             43507
-    ## 4           4                702             39040
-    ## 5           5                721             39933
-    ## 6           6                719             42184
-    ## 7           7                564             34754
-    ## 8           8                589             36417
-    ## 9           9                563             30276
-    ## 10         10                669             33427
-    ## 11         11                537             31255
-    ## 12         12                601             31039
-    ## 13         13                475             24595
-    ## 14         14                401             20926
-    ## 15         15                383             19098
-    ## 16         16                429             19028
-    ## 17         17                374             16052
-    ## 18         18                442             19496
-    ## 19         19                217             10397
-    ## 20         20                384             16228
-    ## 21         21                225              9301
-    ## 22         22                207              9379
+    ## 1           1               1143             47146
+    ## 2           2               1075             51611
+    ## 3           3                939             42555
+    ## 4           4                882             38215
+    ## 5           5                870             39191
+    ## 6           6                834             41404
+    ## 7           7                726             34011
+    ## 8           8                706             35659
+    ## 9           9                699             29513
+    ## 10         10                782             32753
+    ## 11         11                663             30521
+    ## 12         12                739             30331
+    ## 13         13                574             23931
+    ## 14         14                481             20314
+    ## 15         15                509             18429
+    ## 16         16                549             18487
+    ## 17         17                475             15527
+    ## 18         18                552             18911
+    ## 19         19                323             10004
+    ## 20         20                465             15759
+    ## 21         21                262              9025
+    ## 22         22                271              8956
 
 This function creates a dataframe with three colums :
 
@@ -656,19 +690,19 @@ description of each structure in this object :
     head(F1@submap_summary)
 
     ##         FID       IID STATUS SUBMAPS QUALITY      F_MIN      F_MAX
-    ## 1 HGDP00607 HGDP00607      1       5     100 0.01774510 0.02258418
-    ## 2 HGDP00608 HGDP00608      1       5     100 0.03777834 0.04483457
-    ## 3 HGDP00609 HGDP00609      1       5     100 0.03867672 0.04752368
-    ## 4 HGDP00610 HGDP00610      1       5     100 0.05002053 0.06005744
-    ## 5 HGDP00611 HGDP00611      1       0      NA         NA         NA
-    ## 6 HGDP00612 HGDP00612      1       5     100 0.05702920 0.06499281
-    ##       F_MEAN   F_MEDIAN  A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
-    ## 1 0.02029768 0.02029054 0.1204826 1.399920e-23   TRUE             5
-    ## 2 0.04009542 0.03904313 0.0896712 5.420676e-58   TRUE             5
-    ## 3 0.04226154 0.03967114 0.1244590 4.944954e-49   TRUE             5
-    ## 4 0.05540552 0.05572329 0.1833339 1.046299e-59   TRUE             5
-    ## 5         NA         NA        NA           NA     NA            NA
-    ## 6 0.06033014 0.05958620 0.2955896 4.304676e-44   TRUE             5
+    ## 1 HGDP00607 HGDP00607      1       5     100 0.02285938 0.02736264
+    ## 2 HGDP00608 HGDP00608      1       5     100 0.03522362 0.04283326
+    ## 3 HGDP00609 HGDP00609      1       5     100 0.03725644 0.04265333
+    ## 4 HGDP00610 HGDP00610      1       5     100 0.04620609 0.05513670
+    ## 5 HGDP00611 HGDP00611      1       5     100 0.00000000 0.00000000
+    ## 6 HGDP00612 HGDP00612      1       5     100 0.04960362 0.05981393
+    ##       F_MEAN   F_MEDIAN   A_MEDIAN  pLRT_MEDIAN INBRED pLRT_inf_0.05
+    ## 1 0.02502562 0.02448654 0.12492400 2.331201e-39   TRUE             5
+    ## 2 0.03920225 0.03859060 0.06508525 1.179229e-70   TRUE             5
+    ## 3 0.03971927 0.04050947 0.11307391 3.476406e-75   TRUE             5
+    ## 4 0.04983107 0.04942325 0.14693226 2.746219e-81   TRUE             5
+    ## 5 0.00000000 0.00000000 0.01000000 1.000000e+00  FALSE             0
+    ## 6 0.05436803 0.05333275 0.29343698 1.206360e-55   TRUE             5
 
 -   bySegments : a boolean indicating whether the creation of summary
     statistics for HBD and FLOD has to be made by segments or not. By
@@ -798,7 +832,7 @@ commands :
 The variable submaps becomes an submapsList object, you can watch the
 different elements of it with :
 
-    str(F3) #careful it can become huge depending on your data sizes
+    str(F3) # careful it can become huge depending on your data sizes
 
 Parallelism with the package
 ============================
@@ -809,10 +843,9 @@ say, the selection of markers. Make sure to have an environment that can
 support the usage of multiple CPU.
 
 Use the `n.cores` argument, i.e the number of CPU that will be used to
-make the differents submaps in the following functions :
+make the differents submaps in the functions `Fantasio`,
+`makeAtlasByHotspots`, `makeAtlasByDistance` :
 
--   Fantasio makeAtlasByHotspots makeAtlasByDistance
-
-<!-- -->
-
-    F6 <- Fantasio(bedmatrix=x.be, segments="Hotspots", n=5, verbose=FALSE, n.cores=10)
+    F1 <- Fantasio(bedmatrix = x.be, segments = "Hotspots", 
+                   segment.options = list(hotspots = hotspot_hg18), n = 5, 
+                   verbose = FALSE, n.cores = 10)
