@@ -38,7 +38,7 @@ HBDsegments.by.snps <- function(submaps, HBD_recap, n.consecutive.markers, thres
   chr <- submaps@bedmatrix@snps$chr[correspondance]                      #chromosome on which we have the marker
   min_segment_size <- n.consecutive.markers                               #minimum size of the marker
   
-  for(i in 1:nrow(HBD_recap))
+  for(i in seq_len(nrow(HBD_recap)))
   {
     data<-c(HBD_recap[i,])#save the line 
     test<- (data >= threshold)#test

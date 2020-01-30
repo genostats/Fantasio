@@ -31,8 +31,8 @@ setHFLOD <- function(atlas, w.id)
     poscM_mean <- numeric(nrow(index))
     posBp_mean <- numeric(nrow(index))
     
-    for(i in 1:nrow(index)) {
-      for(j in 1:ncol(index))#get position of the marker
+    for(i in seq_len(nrow(index))) {
+      for(j in seq_len(ncol(index)))#get position of the marker
       {
         poscM[i, j] <- atlas@bedmatrix@snps$dist[index[i,j]]
         posBp[i, j] <- atlas@bedmatrix@snps$pos[index[i,j]]
@@ -62,7 +62,7 @@ setHFLOD <- function(atlas, w.id)
   HFLOD_value <- numeric(nrow(HFLOD))
   ALPHA_value <- numeric(nrow(HFLOD))
   
-  for (j in 1:nrow(HFLOD)) {
+  for (j in seq_len(nrow(HFLOD))) {
     # function h(alpha)
     h <- function(alpha)
       return(sum(log10( alpha*exp(atlas@FLOD_recap[w.id,j]*log(10))+(1-alpha) ), na.rm = TRUE))

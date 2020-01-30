@@ -60,15 +60,15 @@ makeAtlasByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListB
   }
   
   if(n.cores == 1) {
-    submap <- lapply(1:n, ff)
+    submap <- lapply(seq_len(n), ff)
   } else {
     RNGkind("L'Ecuyer-CMRG")
     s <- matrix(.Random.seed, nrow = 1)
     for(i in 2:n.cores) 
       s <- rbind(s, nextRNGStream(s[i-1,]))
     cl <- makeForkCluster(n.cores) 
-    parLapply(cl, 1:n.cores, function(i) .Random.seed <<- s[i,] ) 
-    submap <- parLapply(cl, 1:n, ff)
+    parLapply(cl, seq_len(n.cores), function(i) .Random.seed <<- s[i,] ) 
+    submap <- parLapply(cl, seq_len(n), ff)
     stopCluster(cl)
     gc()
   }

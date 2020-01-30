@@ -36,7 +36,7 @@ recap.by.segments <- function(submaps, proba_HBD, FLOD) {
     Sum_FLOD <- 0
     cpt <- 0
     
-    for(i in 1:length(proba_HBD))   # every submaps
+    for(i in seq_along(proba_HBD))   # every submaps
     {
       # get the line corresponding to our individual in the submap i 
       line <- which(nom[j] == rownames(proba_HBD[[i]]))  

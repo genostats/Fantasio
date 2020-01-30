@@ -37,12 +37,12 @@ recap.by.snps <- function(submaps, proba_HBD, proba_FLOD) {
   az <- vapply(proba_HBD, function(jj) match(colnames(matrice_HBD), colnames(jj)), integer(length(marqueurs[,1])))
 
   
-  for( i in 1:ncol(matrice_HBD)) {
+  for( i in seq_len(ncol(matrice_HBD))) {
     az1 <- az[i,]
     I <- which(!is.na(az1))
     v <- sapply(I, function(i) proba_HBD[[i]][, az1[i]], simplify = F)
     w <- sapply(I, function(i) proba_FLOD[[i]][, az1[i]], simplify = F)
-    for( j in 1:length(v)) {
+    for( j in seq_along(v)) {
       matrice_HBD[,i] <- matrice_HBD[,i] + v[[j]]
       matrice_FLOD[,i] <- matrice_FLOD[,i] + w[[j]]
       nb_probs[,i] <- nb_probs[,i] + 1

@@ -1,7 +1,7 @@
 cleanHotspots <- function(l, number_of_marker)
 {
   index <- c()
-  for(i in 1:length(l)) {
+  for(i in seq_along(l)) {
     if(length(l[[i]]) < number_of_marker) {
       if(i == length(l))
         l[[i-1]] <- c(l[[i-1]], l[[i]])

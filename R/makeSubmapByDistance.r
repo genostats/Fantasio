@@ -38,7 +38,7 @@ makeSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpInd
     submap <- snpIndices 
   } else {
     submap <- c()
-    for(chr in 1:length(segmentsList@snpsSegments))
+    for(chr in seq_along(segmentsList@snpsSegments))
     {
       map <- segmentsList@snpsSegments[[chr]]
       if(length(map) > 0)

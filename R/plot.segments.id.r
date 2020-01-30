@@ -17,7 +17,7 @@ plot.segments.id <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
     
     
     #chromosome loop
-    for (i in 1:22) {
+    for (i in seq_len(22)) {
       if (i < 12) {
         i2 <- i
         offset_y <- lengthChromosome(12, unit, build) + ecart
@@ -37,7 +37,7 @@ plot.segments.id <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
       if (!is.null(regions)) {
         regions_chr <- regions[regions$chr == i,]
         if (nrow(regions_chr) > 0) {
-          for (k in 1:nrow(regions_chr)) {
+          for (k in seq_len(nrow(regions_chr))) {
             xx <- c(rep(larg * i2, 2), rep(larg * (i2 + 0.5), 2))
             
             yy <- c( 0.25 * ecart + abs( lengthChromosome(i, unit, build) - c(regions_chr$start[k], regions_chr$end[k])),
@@ -56,7 +56,7 @@ plot.segments.id <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
       }
       
       if (nrow(seg_chr) > 0) {
-        for (k in 1:nrow(seg_chr)) {
+        for (k in seq_len(nrow(seg_chr))) {
           xx <- c(rep(larg * i2, 2), rep(larg * (i2 + 0.5), 2))
           
           yy <- c( 0.25 * ecart + abs( lengthChromosome(i, unit, build) - c(seg_chr[k, pos1], seg_chr[k, pos2])),

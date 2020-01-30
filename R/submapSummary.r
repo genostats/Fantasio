@@ -43,7 +43,7 @@ submapSummary <- function(submaps, a.threshold = 1)
   l <- p < 0.05
   
   nValidSubmap <- numeric(nrow(l))
-  for (i in 1:nrow(l))
+  for (i in seq_len(nrow(l)))
   {
     nValidSubmap[i] <- sum(l[i,], na.rm = TRUE)
   }
@@ -66,7 +66,7 @@ submapSummary <- function(submaps, a.threshold = 1)
                    INBRED        = pLRT_MEDIAN < 0.05, 
                    pLRT_inf_0.05 = nValidSubmap)
   
-  for(i in 1:nrow(df)) {
+  for(i in seq_len(nrow(df))) {
     if(!is.finite(df$F_MEDIAN[i]))
       df[i,5:13] <- NA
   }

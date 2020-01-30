@@ -26,13 +26,13 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   a <- file(mapfile, open = "r") #closing and opening the file to start from the beginning
   
-  for(i in 1:maxrow)
+  for(i in seq_len(maxrow))
   {
     L <- scan(a, what = "character", nlines = 1, quiet = TRUE)
     le <- length(L)   
     co <- (le-4) / 2
-    freq[i, 1:co] <- as.numeric( L[seq(6, le, by = 2)] ) #filling the frequencies matrix
-    geno[i, 1:co] <- L[ seq(5, le, by = 2) ] #filling the name of allele matrix
+    freq[i, seq_len(co)] <- as.numeric( L[seq(6, le, by = 2)] ) #filling the frequencies matrix
+    geno[i, seq_len(co)] <- L[ seq(5, le, by = 2) ] #filling the name of allele matrix
     map$id[i] <- L[1]
     map$chr[i] <- as.integer(L[2])
     map$distance[i] <- as.numeric(L[3])
@@ -67,7 +67,7 @@ read.msat.matrix <- function(mapfile, datafile) {
   #OBJECTIV
   #read by line the file et fill by columns the genotype matrix
   
-  for (i in 1:maxrow_datafile)
+  for (i in seq_len(maxrow_datafile))
   {
     
     L <- scan(b, what = "character", nlines = 1, quiet = TRUE)
@@ -75,7 +75,7 @@ read.msat.matrix <- function(mapfile, datafile) {
     if(le == 0) break
     matrice_genotype[, 2*i-1] <- L[seq(7,le, by = 2)]
     matrice_genotype[, 2*i] <- L[seq(8,le, by = 2)]
-    ped[i, 1:6] <- L[seq(1,6)]
+    ped[i, seq_len(6)] <- L[seq(1,6)]
   }
   
   
@@ -86,9 +86,9 @@ read.msat.matrix <- function(mapfile, datafile) {
   
   matrice_genotype_modif <- matrix(0L, nrow = maxrow, ncol = (2* maxrow_datafile)) 
   
-  for (i in 1:ncol(geno))
+  for (i in seq_len(ncol(geno)))
   {
-    for(j in 1:nrow(geno))
+    for(j in seq_len(nrow(geno)))
     {
       matrice_genotype_modif [ j, matrice_genotype[j,] == geno[j,i] ] <- i
     }

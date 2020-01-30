@@ -18,7 +18,7 @@ markerSummary <- function(submaps)
 {
   df <- as.data.frame(sapply(submaps@submaps_list, function(x) ncol(x)))
   n_submaps <- numeric(length(submaps@submaps_list))
-  for(i in 1:length(submaps@submaps_list)) n_submaps[i] <- paste("Submap", i)
+  for(i in seq_along(submaps@submaps_list)) n_submaps[i] <- paste("Submap", i)
   rownames(df) <- n_submaps
   colnames(df) <- "number_of_markers_used"
   df

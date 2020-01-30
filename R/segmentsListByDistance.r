@@ -52,7 +52,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
       next()
     
     k <- c()
-    for(j in 1:length(chr_distances))
+    for(j in seq_along(chr_distances))
     {
       if(j == length(chr_distances))
         next()
@@ -86,7 +86,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
     chr_segments <- VI[[i]]
     mkr <- seq(1, VII[i])
     chr <- list()
-    for(j in 1:nrow(chr_segments))
+    for(j in seq_len(nrow(chr_segments)))
     {
       b <- which(mkr >= chr_segments[j,1] & mkr <= chr_segments[j,2])
       if(length(b)==0) next()
@@ -96,16 +96,16 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   }
   if(verbose) cat("\n")
   
-  for(i in 1:length(VIII))
+  for(i in seq_along(VIII))
     VIII[[i]] <- null.remover(VIII[[i]])
   
   #finding the mini segments
   if(verbose) cat("Finding mini segments ")
   VIV <- list()
-  for(i in 1:length(VIII)) {
+  for(i in seq_along(VIII)) {
     if(verbose) cat(".")
     temp <- list()
-    for(j in 1:length(VIII[[i]])) {
+    for(j in seq_along(VIII[[i]])) {
       if((length(VIII[[i]][[j]]) / nbSegments) >= minMarkers ) #>= minMarkers in one segments 
       {
         #decouper le segment en N (=nbSegments) mini-segments de taille T (=length(VIII[[i]][[j]])/nbSegments) marqueurs.

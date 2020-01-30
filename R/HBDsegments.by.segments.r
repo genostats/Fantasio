@@ -53,14 +53,14 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, t
   end_pos <- numeric(max)
   
 
-  for(i in 1:length(submaps@segments_list))
+  for(i in seq_along(submaps@segments_list))
   {
     segment_chr <- submaps@segments_list[[i]]#get the list of segments in the chromosome i
     
     start <- numeric(length(segment_chr))    #a vector with the number of segments for the chr i 
     end <- numeric(length(segment_chr))      #a vector with the number of segments for the chr i 
 
-    for(j in 1:length(segment_chr))          #loop over the segments
+    for(j in seq_along(segment_chr))          #loop over the segments
     {
       if(length(segment_chr[[j]])== 0) next()
       
@@ -85,7 +85,7 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, t
   
   min_segment_size = n.consecutive.markers
   #create the dataframe for every individual
-  for(i in 1:nrow(HBD_recap))
+  for(i in seq_len(nrow(HBD_recap)))
   {
     data<-c(HBD_recap[i,])
     test<- as.vector(data >= threshold)#test

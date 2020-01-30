@@ -55,7 +55,7 @@ festim_fmatrix <- function(x, verbose = TRUE, debug = FALSE) {
   x@p.lrt <- numeric(N)
 
   # res <- data.frame(f = numeric(N), a = numeric(N), likelihood = numeric(N), convergence = numeric(N), famid = numeric(N), id = numeric(N))
-  for(i in 1:nrow(x)) {
+  for(i in seq_len(nrow(x))) {
     logEmission <- get.log.emiss(x,i)
     likelihood0 <- .Call('festim_logLikelihood', PACKAGE = "Fantasio", logEmission, x@delta.dist, 0.01, 0)
 

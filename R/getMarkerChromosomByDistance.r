@@ -1,7 +1,7 @@
 getMarkerChromosomByDistance <- function(x, map, pas, unit="cM")
 {
   submap <- c()
-  for(i in 1:length(map))                    #loop over the chromosome segmetns
+  for(i in seq_along(map))                    #loop over the chromosome segmetns
   {
     isItAList <- is.list(map[[i]])
     
@@ -10,7 +10,7 @@ getMarkerChromosomByDistance <- function(x, map, pas, unit="cM")
     else
       looping <- 1
     
-    for(j in 1:looping)                       #loop over the mini segments in the segment
+    for(j in seq_len(looping))                       #loop over the mini segments in the segment
     {
       if(length(map[[i]]) == 0)               #test whether the segment is empty
         next()

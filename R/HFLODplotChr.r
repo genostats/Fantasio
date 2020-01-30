@@ -98,7 +98,7 @@ HFLODplotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
   if(!(missing(regions))){
     myreg_chr <-  myreg[which(myreg$CHR == chr),]
     if(nrow(myreg_chr) > 0){
-      for(i in 1:nrow(myreg_chr)){
+      for(i in seq_len(nrow(myreg_chr))){
         polygon(x = myreg_chr[i,c("start","end","end","start")]/coeff, 
                 y = c(rep(-1,2),rep(ymax+1,2)), 
                 col    = color2,
@@ -110,7 +110,7 @@ HFLODplotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
       points(toplot_pos, toplot_HFLOD, pch=16)
     }
   }
-  for (i in 1:3) 
+  for (i in seq_len(3)) 
     abline(h=i,col="grey",lwd=1,lty=2)
   
   abline(h=3.3,col="grey",lwd=2)

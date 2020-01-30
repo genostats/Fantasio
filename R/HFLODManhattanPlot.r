@@ -79,7 +79,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   if (!missing(regions)) {
     myreg_chr <-  myreg[which(myreg$CHR == c), ]
     if (nrow(myreg_chr) > 0) {
-      for (i in 1:nrow(myreg_chr)) {
+      for (i in seq_len(nrow(myreg_chr))) {
         polygon(
           x = myreg_chr[i, c("start", "end", "end", "start")],
           y = c(rep(-1, 2), rep(ymax + 1, 2)),
@@ -108,7 +108,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
     axis_mp <- c(axis_mp, max(c(0, axis_mp), na.rm = TRUE) + 10 + pos_chr)
   }
   chr_pos  <- cumsum(chr_pos + 10)
-  chr_axis <- sapply(1:length(chr_pos)-1, function(i) mean(c(chr_pos[i], chr_pos[i+1])))
+  chr_axis <- sapply(seq_along(chr_pos)-1, function(i) mean(c(chr_pos[i], chr_pos[i+1])))
   chr_axis <- chr_axis[-1]
   
   plot (
@@ -126,7 +126,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   )
   
   if (!missing(regions)) {
-    for (i in 1:nrow(myreg_mp)) {
+    for (i in seq_len(nrow(myreg_mp))) {
       polygon(
         x = myreg_mp[i, c("start", "end", "end", "start")] / coeff,
         y = c(rep(-10, 2), rep(max(HFLOD$HFLOD) + 10, 2)),
@@ -145,14 +145,14 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   if(MA)
     lines(axis_mp, zoo::rollmean(HFLOD$HFLOD, as.numeric(nbSNP_MA), fill = "extend"), col="red", lwd=2)
   
-  for (i in 1:length(unique(chromosome))) {
+  for (i in seq_along(unique(chromosome))) {
     abline(v = chr_pos[i], col = "grey", lwd = 2)
     axis(1, at = chr_axis[i], i, col.ticks = 0, cex.axis = 1.5)
   }
   
   abline(v = chr_pos[ length(chr_pos) ], col = "grey", lwd = 2)
   
-  for (i in 1:3)
+  for (i in seq_len(3))
     abline(
       h = i,
       col = "grey",

@@ -12,7 +12,7 @@ getMarkerChromosom <- function(chrSegmentsList)
   submap <- numeric(length(chrSegmentsList))
   
   #Step 4 : choose a random mkr
-  for( i in 1:length(chrSegmentsList))  # throughout the segment
+  for( i in seq_along(chrSegmentsList))  # throughout the segment
   {
     if(length(chrSegmentsList[[i]]) == 0) next  # empty segment
     if(length(chrSegmentsList[[i]]) == 1) 
@@ -66,7 +66,7 @@ makeSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpInd
 
     submap <- numeric(max)
 
-    for(chr in 1:length(segmentsList))
+    for(chr in seq_along(segmentsList))
     {
       chrMarker <- segmentsList[[chr]]
       randomMarkerVector <- getMarkerChromosom(chrMarker)

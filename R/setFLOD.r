@@ -23,13 +23,13 @@ setFLOD <- function(submaps, w.id, q = 1e-4) {
     stop("Need a bed.matrix.")
   
   #Computation of FLOD score with the formula
-  for(i in 1:length(submaps@submaps_list))
+  for(i in seq_along(submaps@submaps_list))
   {
     FLOD <- matrix(0.0, nrow = nrow(submaps@submaps_list[[i]]@HBD.prob), ncol = submaps@submaps_list[[i]]@ncol)
     rownames(FLOD) <- rownames(submaps@submaps_list[[i]]@HBD.prob) 
     colnames(FLOD) <- colnames(submaps@submaps_list[[i]]@HBD.prob)
     
-    for (j in 1:nrow(FLOD)) {
+    for (j in seq_len(nrow(FLOD))) {
       if( (submaps@submaps_list[[i]]@a[w.id[j]] < 1) & !is.na(submaps@submaps_list[[i]]@f[w.id[j]]) ) {
         FLOD[j,] <- log10((submaps@submaps_list[[i]]@HBD.prob[j,] + q * ( 1 - submaps@submaps_list[[i]]@HBD.prob[j,]))/
                                  (submaps@submaps_list[[i]]@f[w.id[j]] + q * ( 1 - submaps@submaps_list[[i]]@f[w.id[j]]))) 

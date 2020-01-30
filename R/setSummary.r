@@ -65,18 +65,18 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité
         w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
-        w.HFLOD <- 1:length(w.HBD)
+        w.HFLOD <- seq_along(w.HBD)
         warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
       }
     } else { # on calcule sur les individus donnés !
       if(list.id == "all") {
-        w.HBD <- 1:nrow(atlas@submap_summary)
-        w.HFLOD <- 1:length(w.HBD)
+        w.HBD <- seq_len(nrow)(atlas@submap_summary)
+        w.HFLOD <- seq_along(w.HBD)
       } else {
         # vec <- strsplit(list.id, "_")
         # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$FID == i[1] & atlas@submap_summary$IID == i[2]))
         w.HBD <- match( list.id, unique.ids(atlas@submap_summary$FID, atlas@submap_summary$IID) )
-        w.HFLOD <- 1:length(w.HBD)
+        w.HFLOD <- seq_along(w.HBD)
       }
     }
 

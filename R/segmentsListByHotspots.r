@@ -76,7 +76,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
     chr_segment <- VI[[i]]
     mkr <- VII[[i]]
     chr <- list()
-    for( j in 1:nrow(chr_segment))
+    for( j in seq_len(nrow(chr_segment)))
     {
       b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
       if (length(b)== 0) next

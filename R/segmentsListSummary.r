@@ -20,7 +20,7 @@ segmentsListSummary <- function(segmentList)
   #number of segments
   n_seg <- numeric(length(segmentList))
 
-  for(i in 1:length(segmentList))
+  for(i in seq_along(segmentList))
     n_seg[i] <- length(segmentList[[i]])
   #n_seg[23] <- NA
   #n_seg <- n_seg[!is.na(n_seg)]
@@ -28,10 +28,10 @@ segmentsListSummary <- function(segmentList)
   
   #number of markers 
   n_mark <- numeric(length(segmentList))
-  for(i in 1:length(segmentList))
+  for(i in seq_along(segmentList))
   {
     res <- numeric(length(segmentList[[i]]))
-    for(j in 1:length(segmentList[[i]]))
+    for(j in seq_along(segmentList[[i]]))
     {
       res[j] <- length(segmentList[[i]][[j]])
     }
@@ -42,7 +42,7 @@ segmentsListSummary <- function(segmentList)
   
   #dataframe
   df <- data.frame(
-    chromosome = if(class(segmentList)[1] == "HostspotsSegments") 1:length(segmentList) else getOption("gaston.autosomes"),
+    chromosome = if(class(segmentList)[1] == "HostspotsSegments") seq_along(segmentList) else getOption("gaston.autosomes"),
     number_of_segments = n_seg, 
     number_of_markers= n_mark
   )
