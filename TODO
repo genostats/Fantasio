@@ -1,3 +1,5 @@
+-- methode Summary pour les objets de classe "atlas" ou ...
+
 -- chasser les incohérences entre famid/id, FID/IID, family/individual (etc ?)
    (fonction pour changer les noms de colonne dans les données ROH de plink ?)
 
@@ -14,6 +16,8 @@
 
 -- setAllelicFrequencies -- peut-être pas la meilleure solution
    à revoir ...
+   [ Il serait bcp plus intéressant qu'elle fasse le petit grigri
+     cité dans ~/DATA/DataXP/ ]
 
 -- revoir le jeu de données cytobands pour les chr acrocentriques
  
