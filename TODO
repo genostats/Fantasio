@@ -1,4 +1,7 @@
--- methode Summary pour les objets de classe "atlas" ou ...
+-- pourquoi la vignette ne s'installe pas ?
+
+-- methode Summary pour les objets de classe "atlas" 
+   -> afficher le @submap_summary (s'il existe)
 
 -- chasser les incohérences entre famid/id, FID/IID, family/individual (etc ?)
    (fonction pour changer les noms de colonne dans les données ROH de plink ?)
