@@ -70,7 +70,7 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
       }
     } else { # on calcule sur les individus donnés !
       if(list.id == "all") {
-        w.HBD <- seq_len(nrow)(atlas@submap_summary)
+        w.HBD <- seq_len(nrow(atlas@submap_summary))
         w.HFLOD <- seq_along(w.HBD)
       } else {
         # vec <- strsplit(list.id, "_")

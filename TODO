@@ -1,3 +1,12 @@
+-- Fantasio n'aime pas :
+   * que les identifiants des chr ne soient pas numériques 
+     (fonctions graphiques)
+   * que les phénotypes soient 'NA' (calcul des FLOD ...)
+   --> vérifier au début.
+
+-- list.id = "all" : petit problème sématique
+   + pb de warning lors du test (list.id == "all")
+
 -- pourquoi la vignette ne s'installe pas ?
 
 -- methode Summary pour les objets de classe "atlas" 

@@ -41,7 +41,7 @@ setMethod('initialize', signature='msat.matrix', definition=function(.Object, nc
 msat.log.emiss <- function(x) {
   if(is.null(x@log.freq)) x@log.freq <- log(x@freq)
   logEmiss <- matrix(ncol = x@ncol, nrow = 2*x@nrow)
-  for(i in seq_len(x)@nrow) {
+  for(i in seq_len(x@nrow)) {
     Y1 <- x@msat[,2*i-1]
     Y2 <- x@msat[,2*i]
     logEmiss[ c(2*i-1,2*i) ,] <- .Call('festim_logEmiss', PACKAGE = "Fantasio", Y1, Y2, x@log.freq, x@epsilon)
