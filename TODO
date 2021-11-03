@@ -1,3 +1,20 @@
+-- dans @segments_list on a une liste de 22 élts, chacune pour un chr,
+   chacun de ces élts est une liste de vecteurs du type n:m 
+   -> pas besoin de séparer les chromosomes ;
+   -> pas besoin de stocker n:m, c(n,m) suffit
+   --> modifier non seulement la fonction de création de segments_lists
+       mais les fonctions qui l'utilisent
+
+-- est-ce que dans les élts de @submaps_list (qui sont des HotspotsMatrix)
+   il n'y a pas un peu trop d'information ? (il y a @submap, qui permet de
+   retrouver @map, est-ce nécessaire de le conserver ? le @ped est juste une
+   référence mais est-il utile ?)
+   Possibilité d'alléger les objets @HBD.prob et @FLOD (nom de col et ligne ?)
+
+-- setSummary renvoie un warning : "No individual with pheno = 2"
+   Est-ce que les phénotypes ne sont pas 0/1 ?
+   La fonction pourrait décider selon ce qu'elle voit.
+
 -- Fantasio n'aime pas :
    * que les identifiants des chr ne soient pas numériques 
      (fonctions graphiques)
