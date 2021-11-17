@@ -14,6 +14,8 @@
 -- setSummary renvoie un warning : "No individual with pheno = 2"
    Est-ce que les phénotypes ne sont pas 0/1 ?
    La fonction pourrait décider selon ce qu'elle voit.
+   --> après discussion plutôt inclure un argument du genre 
+       phen.code = "R" ou "plink"  (resp 0/1/NA et 1/2/0)
 
 -- Fantasio n'aime pas :
    * que les identifiants des chr ne soient pas numériques 
