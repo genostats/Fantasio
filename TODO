@@ -5,6 +5,9 @@
    --> modifier non seulement la fonction de création de segments_lists
        mais les fonctions qui l'utilisent
 
+   concernant les 'segments list by distance' on a ajouté des commentaires
+   dans la branche 'margot' dans getMarkerChromosomByDistance.r / select.marker.downstream.r
+
 -- est-ce que dans les élts de @submaps_list (qui sont des HotspotsMatrix)
    il n'y a pas un peu trop d'information ? (il y a @submap, qui permet de
    retrouver @map, est-ce nécessaire de le conserver ? le @ped est juste une
@@ -56,6 +59,10 @@
 
 !! j'ai supprimé l'argument run_a_f dans setSummary
 !! ---> verifier ce qui se passe si festim n'a pas tourné
+
+-- envisager fonction pour les ROH
+
+
 
 ********************************************************
 26/01/2018
