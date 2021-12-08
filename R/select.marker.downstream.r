@@ -1,3 +1,7 @@
+# cette fonction est supposée 
+# partie de la position 'random' et choisir à gauche de cette position des 
+# autres SNP avec une distance >= pas entre tous les SNPs
+
 select.marker.downstream <- function(x, vector, pas, random, unit)
 {
   random_snp <- random
@@ -9,8 +13,13 @@ select.marker.downstream <- function(x, vector, pas, random, unit)
   seg <- c(vector[random_snp])                               
   random_snp <- dist[random_snp]                        #get the dist of the random marker
   
+  # 'marker' est le SNP le plus proche de la position (random_snp - pas)
+  # il faudrait en fait prendre le SNP le plus proche *en dessous* (à gauche) de cette position
   marker <- which.min(abs(dist-(random_snp-pas)))       #find the nearest marker upstream
   
+  # ici on teste si marker est à une distance < pas de random_snp
+  # si c'est le cas on descend de 1
+  # -> ça marche mais hyper alambiqué, corriger le choix de 'marker' ci-dessus
   if((random_snp - dist[marker]) < pas)
   {
     if(marker == 1)
@@ -20,7 +29,8 @@ select.marker.downstream <- function(x, vector, pas, random, unit)
     marker <- marker - 1
   }
   seg <- c(vector[marker], seg)                          #find the position in the vector
-  
+ 
+  # La dessous on recommence en boucle : faire une seule boucle ! 
   while(marker > 1)
   {
     marker <- which.min(abs(dist-(dist[marker]-pas)))

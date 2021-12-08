@@ -27,7 +27,13 @@ getMarkerChromosomByDistance <- function(x, map, pas, unit="cM")
       }
       else
       {
-        random <- which(mini_segments == sample(mini_segments, 1))                  
+        random <- which(mini_segments == sample(mini_segments, 1))
+        # random <- sample.int(length(mini_segments), 1)                
+        ###
+        ### la condition ci-dessous n'est jamais vraie
+        ### si il faut un | à la place du & (pour éviter les extrémites)
+        ### alors si length(min_segments) est 2 : bcle infinie
+        ### random <- 1 + sample.int(length(mini_segments) - 2, 1) ferait l'affaire sinon
         while( random == 1 & random == length(mini_segments))
         {
           random <- which(mini_segments == sample(mini_segments, 1))
