@@ -1,6 +1,6 @@
 #' plot of HBD segment 
 #' 
-#' This function plots the HBDsegments for a given chromosom and all the individual
+#' This function plots the HBDsegments for a given chromosome and all the individuals
 #' 
 #' @param Submaps a list.submap object
 #' @param ROH a data frame from which the segments will be plotted (optional)
@@ -32,8 +32,8 @@ HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile,
   if(inbred)
   {
     list.ids <- which(Submaps@submap_summary$INBRED ==TRUE)
-    ind      <- as.vector(Submaps@submap_summary$IID[list.ids])
-    fam      <- as.vector(Submaps@submap_summary$FID[list.ids])
+    ind      <- as.vector(Submaps@submap_summary$id[list.ids])
+    fam      <- as.vector(Submaps@submap_summary$famid[list.ids])
     # list.ids <- paste(ind, fam, sep="_")
     list.ids <- unique.ids(fam, ind)
   }

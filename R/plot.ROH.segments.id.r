@@ -7,8 +7,8 @@
 #' @param unit the unit used to plot, two options are allowed "Bases", "cM" (default is "CM")
 #' @param regions a matrix containing the value to ve highlighted in the plot
 #' @param outfile the name of the plot
-#' @param family.id the individual id of the individual wanted
-#' @param individual.id the family id of the individual wanted
+#' @param id the individual id of the individual wanted
+#' @param famid the family id of the individual wanted
 #' @param build the value of the build to use to plot chromosome in the plot value accepted are 35, 36, 37, 38 (default is 37)
 #' 
 #' @details Use this function when you want to use an ROH file to plot your HBDsegments for a specific individual.
@@ -20,12 +20,12 @@
 #'  
 #' @return This function returns a plot of the HBDsegments for a specific individual
 #' @keywords internal 
-plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, family.id, individual.id, build)
+plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, famid, id, build)
 {
-  ROH <- subset(ROH,ROH$FID==family.id & ROH$IID==individual.id)
+  ROH <- subset(ROH,ROH$FID==famid & ROH$IID==id)
   
   if(nrow(ROH) == 0)
-    return("No information found for this individual, please check family.id and individual.id values")
+    return("No information found for this individual, please check famid and id values")
   
   if (missing(regions))
     myreg <- NULL
@@ -38,10 +38,10 @@ plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, fami
     ROH <- add_cM(ROH,Submaps)
   
   if(missing(outfile))
-    outfile <- paste("roh_",family.id,"_",individual.id,"_",unit,".png",sep="")
+    outfile <- paste("roh_",famid,"_",id,"_",unit,".png",sep="")
   else{
     outfile <- paste(outfile,".png",sep="") 
   }
   
-  plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, unit=unit, regions=myreg, main=paste("ROHs of ",family.id,":",individual.id,sep=""), build=build)
+  plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, unit=unit, regions=myreg, main=paste("ROHs of ",famid,":",id,sep=""), build=build)
 }

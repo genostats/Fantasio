@@ -21,8 +21,8 @@ setHBDprob <- function(atlas, w.id)
   if(class(atlas@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
   
-  id    <- as.vector(atlas@submap_summary$IID[w.id])
-  famid <- as.vector(atlas@submap_summary$FID[w.id])
+  id    <- as.vector(atlas@submap_summary$id[w.id])
+  famid <- as.vector(atlas@submap_summary$famid[w.id])
   
   for(i in seq_along(atlas@submaps_list)) {
     HBD_prob <- matrix(NA, nrow = length(w.id), ncol = atlas@submaps_list[[i]]@ncol)#HBD matrix

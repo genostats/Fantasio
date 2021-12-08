@@ -7,8 +7,8 @@
 #' 
 #' @details This function gives for each genotyped individual summary statistics about the calculations.
 #' @details This function returns a dataframe with 13 columns :
-#' @details - FID : family identifier
-#' @details - IID : individual identifier
+#' @details - famid : family identifier
+#' @details - id : individual identifier
 #' @details - STATUS : status (1 non affected, 2 affected, 0 unknown)
 #' @details - SUBMAPS : number of valid submaps (i.e. submaps with a < a.threshold)
 #' @details - QUALITY: percentage of valid submaps 
@@ -52,8 +52,8 @@ submapSummary <- function(submaps, a.threshold = 1)
   quality <- (submaps_used*100)/length(submaps)
 
   
-  df <- data.frame(FID           = submaps[[1]]@ped$famid, 
-                   IID           = submaps[[1]]@ped$id,
+  df <- data.frame(famid         = submaps[[1]]@ped$famid, 
+                   id            = submaps[[1]]@ped$id,
                    STATUS        = submaps[[1]]@ped$pheno,
                    SUBMAPS       = submaps_used,
                    QUALITY       = quality,

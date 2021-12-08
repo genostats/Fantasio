@@ -5,17 +5,17 @@
 #!!! unit : cM or Bases                                                          #
 #!!! regions : a region to be emphasize in the plot                              #
 #!!! outfile: (optional) a name for the plot                                     #
-#!!! family.id : the family id                                                   #
-#!!! individual.id = the individual id                                           #
+#!!! famid : the family id                                                   #
+#!!! id = the individual id                                           #
 #                                                                                #
 #*** return a plot                                                               #
 ##################################################################################
 
-plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, regions, outfile, build)
+plot.HBDsegments.id <- function(Submaps, unit= "cM", id, famid, regions, outfile, build)
 {
-  if(!is.character(individual.id))
+  if(!is.character(id))
     return("Need individual id as character")
-  if(!is.character(family.id))
+  if(!is.character(famid))
     return("Need family id as character")
   
   HBD.recap <- Submaps@HBD_recap
@@ -27,14 +27,14 @@ plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, r
   # family_id <- Submaps@bedmatrix@ped$famid[individuals_name]
   # individuals_name <- Submaps@bedmatrix@ped$id[individuals_name]
   
-  # id   <- which(individuals_name == individual.id)
+  # id   <- which(individuals_name == id)
 
   # if(length(id) == 0)
   #  stop("No individual found")
   
   HBDsegments_rbind <- do.call(rbind, HBDsegments) #binding lines 
   
-  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$individual==individual.id & HBDsegments_rbind$family==family.id)
+  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$individual==id & HBDsegments_rbind$family==famid)
 
   if(nrow(HBD) == 0)
     stop("No individual found")
@@ -47,11 +47,11 @@ plot.HBDsegments.id <- function(Submaps, unit= "cM", individual.id, family.id, r
   
   #name the file
   if (missing(outfile)) 
-    outfile <- paste("HBD_", individual.id,"_",unit,".png",sep="")
+    outfile <- paste("HBD_", id,"_",unit,".png",sep="")
   else {
     outfile <- paste(outfile,".png",sep="") 
   }
 
-  plot.segments.id(fileOrSubmaps=HBD, unit = unit, regions = myreg, main=paste("HBDsegments of", unique.ids(family.id, individual.id)), build=build)
+  plot.segments.id(fileOrSubmaps=HBD, unit = unit, regions = myreg, main=paste("HBDsegments of", unique.ids(famid, id)), build=build)
 }
 

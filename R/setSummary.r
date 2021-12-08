@@ -74,8 +74,8 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
         w.HFLOD <- seq_along(w.HBD)
       } else {
         # vec <- strsplit(list.id, "_")
-        # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$FID == i[1] & atlas@submap_summary$IID == i[2]))
-        w.HBD <- match( list.id, unique.ids(atlas@submap_summary$FID, atlas@submap_summary$IID) )
+        # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$famid == i[1] & atlas@submap_summary$id == i[2]))
+        w.HBD <- match( list.id, unique.ids(atlas@submap_summary$famid, atlas@submap_summary$id) )
         w.HFLOD <- seq_along(w.HBD)
       }
     }

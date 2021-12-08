@@ -5,8 +5,8 @@
 #' @param Submaps a list.submap object
 #' @param ROH (optional) a data frame from which the segments will be plotted
 #' @param unit the unit used to plot, "Bases" or "cM" (default is "CM")
-#' @param individual.id the individual id of the individual wanted
-#' @param family.id the family id of the individual wanted
+#' @param id the individual id of the individual wanted
+#' @param famid the family id of the individual wanted
 #' @param regions a specific region to be highlighted in the plot (optional)
 #' @param outfile a name for the plot (optional)
 #' @param build the value of the genome build to use to plot chromosome in the plot (35, 36, 37,or 38, default is 37)
@@ -27,7 +27,7 @@
 #' #Please refer to vignette 
 #' 
 #' @export
-HBDplotId <- function(Submaps, ROH, unit= "cM", individual.id, family.id, regions, outfile, build = 37)
+HBDplotId <- function(Submaps, ROH, unit= "cM", id, famid, regions, outfile, build = 37)
 {
   if(class(Submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(Submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
@@ -40,9 +40,9 @@ HBDplotId <- function(Submaps, ROH, unit= "cM", individual.id, family.id, region
   
   if(!missing(Submaps) & !missing(ROH))
   {
-    plot.ROH.segments.id(Submaps=Submaps, ROH, unit, individual.id=individual.id, family.id=family.id, regions, outfile=outfile, build=build)
+    plot.ROH.segments.id(Submaps=Submaps, ROH, unit, id=id, famid=famid, regions, outfile=outfile, build=build)
   }else{
     if(!missing(Submaps))
-      plot.HBDsegments.id(Submaps = Submaps, individual.id=individual.id, family.id=family.id, unit=unit, regions, outfile=outfile, build=build)
+      plot.HBDsegments.id(Submaps = Submaps, id=id, famid=famid, unit=unit, regions, outfile=outfile, build=build)
   }
 }
