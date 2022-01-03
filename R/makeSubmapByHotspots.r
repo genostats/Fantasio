@@ -19,7 +19,7 @@ getMarkerChromosom <- function(chrSegmentsList)
     {
       s <- chrSegmentsList[[i]]
     } else { 
-      s <- sample(chrSegmentsList[[i]], 1)
+      s <- sample(chrSegmentsList[[i]][1]:chrSegmentsList[[i]][2], 1)
     }
     submap[i] <- s
   }

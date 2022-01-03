@@ -36,7 +36,7 @@ HBDplotId <- function(Submaps, ROH, unit= "cM", id, famid, regions, outfile, bui
     stop("Need a bed.matrix.")
   
   if(is.null(Submaps@HBD_recap))
-    stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered INBRED.")
+    stop("HBD_recap is empty cannot plot, make sure to have atleast one individual considered inbred.")
   
   if(!missing(Submaps) & !missing(ROH))
   {

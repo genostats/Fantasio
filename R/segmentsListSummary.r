@@ -33,7 +33,7 @@ segmentsListSummary <- function(segmentList)
     res <- numeric(length(segmentList[[i]]))
     for(j in seq_along(segmentList[[i]]))
     {
-      res[j] <- length(segmentList[[i]][[j]])
+      res[j] <- length(segmentList[[i]][[j]][1]:segmentList[[i]][[j]][2])
     }
     res <- sum(res)
     n_mark[i] <- res

@@ -48,14 +48,12 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
       chr_distances <- bedmatrix@snps$pos[which(bedmatrix@snps$chr==i)]
     }
 
-    if(length(chr_distances) == 0)
-      next()
+    if(length(chr_distances) == 0) next
     
     k <- c()
     for(j in seq_along(chr_distances))
     {
-      if(j == length(chr_distances))
-        next()
+      if(j == length(chr_distances)) next
       if(chr_distances[j+1] - chr_distances[j] > gap)
         k <- c(k, j, (j+1) )
     }
@@ -89,8 +87,13 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
     for(j in seq_len(nrow(chr_segments)))
     {
       b <- which(mkr >= chr_segments[j,1] & mkr <= chr_segments[j,2])
-      if(length(b)==0) next()
+      if(length(b)==0) next
+      if(length(b)==1) {
       chr[[j]] <- b + shift[[i]]
+      } else {
+      c <- c(b[1], b[length(b)])
+      chr[[j]] <- c + shift[[i]]
+      }
     }
     VIII[[i]] <- chr
   }
@@ -106,18 +109,22 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
     if(verbose) cat(".")
     temp <- list()
     for(j in seq_along(VIII[[i]])) {
-      if((length(VIII[[i]][[j]]) / nbSegments) >= minMarkers ) #>= minMarkers in one segments 
-      {
-        #decouper le segment en N (=nbSegments) mini-segments de taille T (=length(VIII[[i]][[j]])/nbSegments) marqueurs.
-        #si T est un entier, la taille du mini-segment est exactement T
-        #si T n'est pas un entier, la taille est round(T) ou round(T)+1 en fonction des resultats de ceiling(...)
-        #La proportion de mini-segments de taille round(T)+1 augmente lorsque T approche de round(T)+1
-        #Note: cette commande donne toujours exactement N (=nbSegments) mini-segments (commentaire en section details egalement)
-        l <- split(VIII[[i]][[j]], ceiling(seq_along(VIII[[i]][[j]])/(length(VIII[[i]][[j]])/nbSegments))) 
+    	if (length(VIII[[i]][[j]]) == 1) {
+    	temp [[j]] = VIII[[i]][[j]]
+    	} 
+    	
+    	else {
+    		if ((length(VIII[[i]][[j]][1]:VIII[[i]][[j]][2]) / nbSegments) >= minMarkers){
+        		l <- split(VIII[[i]][[j]][1]:VIII[[i]][[j]][2], ceiling(seq_along(VIII[[i]][[j]][1]:VIII[[i]][[j]][2])/(length(VIII[[i]][[j]][1]:VIII[[i]][[j]][2])/nbSegments))) 
+        		for (k in 1:length(l)){
+        			if (length(l[[k]]) == 1) next 
+        			l[[k]] <- c(l[[k]][1], l[[k]][length(l[[k]])])
+        		}
         temp[[j]] <- l
       } else {
         temp[[j]] <- VIII[[i]][[j]]
       }
+     }
     }
     VIV[[i]] <- temp
     VIV[[i]] <- null.remover(VIV[[i]])
@@ -126,3 +133,5 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   
   new("snpsSegments", gap, unit, VIV)
 }
+
+

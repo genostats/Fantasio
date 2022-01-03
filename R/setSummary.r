@@ -7,7 +7,7 @@
 #' @param atlas a atlas object
 #' @param list.id you can either :
 #'     - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
-#'       for individuals who are considerated INBRED and with a QUALITY
+#'       for individuals who are considerated inbred and with a quality
 #'       greater or equal to 95%}
 #'     - enter a list of individual for a computation of HBD, FLOD score HFLOD score for them
 #'     - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual
@@ -54,17 +54,17 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
   if(probs) {
-    test <- any( atlas@submap_summary$STATUS == 2 ) 
+    test <- any( atlas@submap_summary$status == 2 ) 
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
         # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
-        w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
-        w.HFLOD <- match( which(atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED & atlas@submap_summary$STATUS == 2), w.HBD )
+        w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
+        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$status == 2), w.HBD )
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité
-        w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
+        w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         w.HFLOD <- seq_along(w.HBD)
         warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
       }
