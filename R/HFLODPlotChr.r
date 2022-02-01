@@ -24,7 +24,7 @@
 #' #Please refer to vignette 
 #'
 #' @export
-HFLODplotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA = TRUE, nbSNP_MA = 50) 
+HFLODPlotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA = TRUE, nbSNP_MA = 50) 
 {
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")

@@ -27,7 +27,7 @@
 #'
 #' 
 #' @export
-HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile, inbred = FALSE, build=37)
+HBDPlotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile, inbred = FALSE, build=37)
 {
   if(inbred)
   {
@@ -35,7 +35,7 @@ HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile,
     ind      <- as.vector(Submaps@submap_summary$id[list.ids])
     fam      <- as.vector(Submaps@submap_summary$famid[list.ids])
     # list.ids <- paste(ind, fam, sep="_")
-    list.ids <- unique.ids(fam, ind)
+    list.ids <- uniqueIds(fam, ind)
   }
   
   if(class(Submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(Submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
@@ -49,9 +49,9 @@ HBDplotChr <- function(Submaps, ROH, unit="cM", chr, list.ids, regions, outfile,
   
   if(!missing(Submaps) & !missing(ROH))
   {
-    plot.ROH.segments.chr(ROH = ROH, submaps = Submaps, unit = unit, chr = chr, outfile=outfile, listid=list.ids, regions=regions, build=build)
+    plotROHSegmentsChr(ROH = ROH, submaps = Submaps, unit = unit, chr = chr, outfile=outfile, listid=list.ids, regions=regions, build=build)
   }else{
     if(!missing(Submaps))
-      plot.HBDsegments.chr(Submaps=Submaps, unit=unit, chr=chr, list.ids=list.ids, regions=regions, outfile=outfile, build=build)
+      plotHBDSegmentsChr(Submaps=Submaps, unit=unit, chr=chr, list.ids=list.ids, regions=regions, outfile=outfile, build=build)
   }
 }

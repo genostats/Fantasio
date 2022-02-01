@@ -8,7 +8,7 @@
 #*** return a list of two dataframes with HBD and FLOD recap by snps in it       #
 ##################################################################################
 
-recap.by.snps <- function(submaps, proba_HBD, proba_FLOD) {
+recapBySnps <- function(submaps, proba_HBD, proba_FLOD) {
   ##count the number of times the marker has been picked
   marqueurs <- as.data.frame(table(unlist(sapply(proba_HBD, function(x) colnames(x)))), stringsAsFactors=FALSE)
   

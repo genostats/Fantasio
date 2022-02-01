@@ -1,7 +1,7 @@
 # à partir de la position 'random' la fonction choisit à gauche de cette position les 
 # autres SNP avec une distance >= pas entre tous les SNPs
 
-select.marker.downstream <- function(x, vector, pas, random, unit)
+selectMarkerDownstream <- function(x, vector, pas, random, unit)
 {
   marker <- random
   if(unit=="Bases")				#get the distance to find which are the nearest markers

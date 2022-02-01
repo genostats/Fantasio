@@ -1,4 +1,4 @@
-submap.HBD <- function(h)
+submapHBDRecap <- function(h)
 {
   if(class(h@submaps_list[[1]])[1] != "snpsMatrix" & class(h@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 

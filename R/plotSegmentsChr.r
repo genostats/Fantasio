@@ -1,9 +1,9 @@
-plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, list_id, regions, color2="green4", build=37)
+plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, list_id, regions, color2="green4", build=37)
 {
   if(length(list_id) > 20 )
     list_id <- list_id[seq_len(20)]
   
-  l <- unit.plot.chr(file = fileOrSubmaps, unit, byROHfile = byROHfile) 
+  l <- unitPlotChr(file = fileOrSubmaps, unit, byROHfile = byROHfile) 
   pos1   <- l$pos1
   pos2   <- l$pos2
   myxlab <- l$myxlab
@@ -71,9 +71,9 @@ plot.segments.chr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, 
 
   for (j in seq_along(list_id)){ # parcourt tous les individus...
     if(byROHfile) {
-      toplot <- fileOrSubmaps[ unique.ids( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
+      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
     } else {
-      toplot <- fileOrSubmaps[ unique.ids( fileOrSubmaps$family, fileOrSubmaps$individual) %in% list_id[j], ]
+      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$family, fileOrSubmaps$individual) %in% list_id[j], ]
     }
 
     for (k in seq_len(nrow(toplot))) { # !! seq_len permet de gérer le cas toplot = vide (pas de segment HBD sur ce chr)

@@ -20,12 +20,12 @@
 #' 
 #' @return This function returns a plot of the HBDsegments for a specific chromosome
 #' @keywords internal 
-plot.ROH.segments.chr <- function(ROH, submaps, unit = "cM", chr, outfile, listid, regions, build)
+plotROHSegmentsChr <- function(ROH, submaps, unit = "cM", chr, outfile, listid, regions, build)
 {
   ROH$IID <- as.character(ROH$IID)
   
   if(missing(listid)) 
-    listid <- unique.ids( ROH$FID, ROH$IID )
+    listid <- uniqueIds( ROH$FID, ROH$IID )
     # listid <- as.character(unique(ROH$IID))[seq_len(10)]
 
   
@@ -41,7 +41,7 @@ plot.ROH.segments.chr <- function(ROH, submaps, unit = "cM", chr, outfile, listi
   
   
   if(unit=="cM") 
-    ROH <- add_cM(ROH,submaps)
+    ROH <- addCM(ROH,submaps)
   
   
   if(missing(outfile))
@@ -51,5 +51,5 @@ plot.ROH.segments.chr <- function(ROH, submaps, unit = "cM", chr, outfile, listi
   }
 
   
-  plot.segments.chr(byROHfile=TRUE, fileOrSubmaps=ROH,unit= unit,chr= chr,list_id = listid, regions = myreg, build=build)
+  plotSegmentsChr(byROHfile=TRUE, fileOrSubmaps=ROH,unit= unit,chr= chr,list_id = listid, regions = myreg, build=build)
 }

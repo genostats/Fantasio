@@ -9,7 +9,7 @@
 ##################################################################################
 
 
-recap.by.segments <- function(submaps, proba_HBD, FLOD) {
+recapBySegments <- function(submaps, proba_HBD, FLOD) {
 
   marker_names <- colnames(submaps@submaps_list[[1]]@HBD.prob) # markers names
   correspondance <- match(marker_names, submaps@bedmatrix@snps$id)

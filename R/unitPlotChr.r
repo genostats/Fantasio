@@ -1,4 +1,4 @@
-unit.plot.chr <- function(file, unit, byROHfile)
+unitPlotChr <- function(file, unit, byROHfile)
 {
   if(byROHfile)
   {

@@ -10,7 +10,7 @@
 #*** a dataframe with log.emiss computed                                         #
 ##################################################################################
 
-bed.logEmiss <- function(x, map, epsilon = 1e-3) {
+bedLogEmiss <- function(x, map, epsilon = 1e-3) {
   
   if(epsilon < 0 | epsilon > 1)
     stop("The genotyping error rate 'epsilon' should be between 0 and 1")

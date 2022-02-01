@@ -12,7 +12,7 @@
 #*** return a new submap object                                                  #
 ##################################################################################
 
-plot.HBDsegments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile, build)
+plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, build)
 {
   HBD.recap <- Submaps@HBD_recap
   HBDsegments <- Submaps@HBDsegments
@@ -48,5 +48,5 @@ plot.HBDsegments.chr <- function(Submaps, unit, chr, list.ids, regions, outfile,
   else 
     outfile <- paste(outfile,".png",sep="") 
   
-  plot.segments.chr(fileOrSubmaps=HBD,unit= unit,chr= chr,list_id = list.ids,regions = myreg, build=build)
+  plotSegmentsChr(fileOrSubmaps=HBD,unit= unit,chr= chr,list_id = list.ids,regions = myreg, build=build)
 }

@@ -1,4 +1,4 @@
-unique.ids <- function(famid, id) paste(famid, id, sep = ":") 
+uniqueIds <- function(famid, id) paste(famid, id, sep = ":") 
 
 get.famid <- function(x) {
   if(is.null(x)) 

@@ -100,7 +100,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
   if(verbose) cat("\n")
   
   for(i in seq_along(VIII))
-    VIII[[i]] <- null.remover(VIII[[i]])
+    VIII[[i]] <- nullRemover(VIII[[i]])
   
   #finding the mini segments
   if(verbose) cat("Finding mini segments ")
@@ -127,7 +127,7 @@ segmentsListByDistance <- function(bedmatrix, gap=0.5, minMarkers=50, nbSegments
      }
     }
     VIV[[i]] <- temp
-    VIV[[i]] <- null.remover(VIV[[i]])
+    VIV[[i]] <- nullRemover(VIV[[i]])
   }
   if(verbose) cat("\n")
   

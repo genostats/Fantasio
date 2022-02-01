@@ -9,7 +9,7 @@
 #*** return the submap matrix with the modified dataframe                        #
 ##################################################################################
 
-get.log.emiss <- function(x, i) #line of log.emmis for the individual i 
+getLogEmiss <- function(x, i) #line of log.emmis for the individual i 
 {
   x@log.emiss[ c(2*i-1, 2*i), ]
 }

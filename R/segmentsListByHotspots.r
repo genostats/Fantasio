@@ -88,7 +88,7 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
       }
     }
     VIII[[i]] <- chr
-    VIII[[i]] <- null.remover(VIII[[i]])
+    VIII[[i]] <- nullRemover(VIII[[i]])
     VIII[[i]] <- cleanHotspots(VIII[[i]], minMarkers)  
   }
   if(verbose) cat("\n")

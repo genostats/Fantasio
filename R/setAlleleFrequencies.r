@@ -1,4 +1,4 @@
-#' This function assign allelic frequencies from a reference data set
+#' This function assign allele frequencies from a reference data set
 #' Use this function if you want to change the allelic frequencies in the bed.matrix object.
 
 #' @param x the bed.matrix to study
@@ -6,7 +6,7 @@
 
 #' @export
 
-setAllelicFrequencies <- function (x, x_ref)
+setAlleleFrequencies <- function (x, x_ref)
 {
       # look if missing SNPs in the reference dataset
 	res <- match(x@snps$id, x_ref@snps$id)

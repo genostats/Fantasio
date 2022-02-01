@@ -27,8 +27,8 @@ getMarkerChromosomByDistance <- function(x, map, pas, unit="cM")
       	 	l <- length(mini_segments[1]:mini_segments[2])  # choose one of them randomly
         	random <- sample(l, 1)				    
    
-        	start 	<- select.marker.downstream(x, mini_segments, pas, random, unit)	#downstream selection
-        	end   	<- select.marker.upstream(x, mini_segments, pas, random, unit)       #upstream selection
+        	start 	<- selectMarkerDownstream(x, mini_segments, pas, random, unit)	#downstream selection
+        	end   	<- selectMarkerUpstream(x, mini_segments, pas, random, unit)       #upstream selection
         	res 	<- c(start, end)
       }
       submap <- c(submap, res)

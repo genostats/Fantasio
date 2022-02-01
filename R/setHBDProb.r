@@ -13,7 +13,7 @@
 #' @seealso setHFLOD
 #' 
 #' @export
-setHBDprob <- function(atlas, w.id)
+setHBDProb <- function(atlas, w.id)
 {
   if(class(atlas@submaps_list[[1]])[1] != "snpsMatrix" & class(atlas@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
@@ -27,12 +27,12 @@ setHBDprob <- function(atlas, w.id)
   for(i in seq_along(atlas@submaps_list)) {
     HBD_prob <- matrix(NA, nrow = length(w.id), ncol = atlas@submaps_list[[i]]@ncol)#HBD matrix
     # dimnames(HBD_prob) <- list(rownames(HBD_prob) <- paste(famid,id, sep = "_"), colnames(HBD_prob) <- c(atlas@submaps_list[[i]]@map$id))
-    dimnames(HBD_prob) <- list( unique.ids(famid,id), atlas@submaps_list[[i]]@map$id)
+    dimnames(HBD_prob) <- list( uniqueIds(famid,id), atlas@submaps_list[[i]]@map$id)
     
     for (j in seq_len(nrow(HBD_prob))) {
       j1 <- w.id[j]
       if(!is.na(atlas@submaps_list[[i]]@a[j1]) & (atlas@submaps_list[[i]]@a[j1] <= 1) & !is.na(atlas@submaps_list[[i]]@f[j1])) {
-        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forward.backward(get.log.emiss(atlas@submaps_list[[i]], j1), 
+        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forward.backward(getLogEmiss(atlas@submaps_list[[i]], j1), 
                                                         atlas@submaps_list[[i]]@delta.dist, 
                                                         atlas@submaps_list[[i]]@a[j1],
                                                         atlas@submaps_list[[i]]@f[j1] )[2,]

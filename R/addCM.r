@@ -8,7 +8,7 @@
 #*** return the new dataframe modified                                           #
 ##################################################################################
 
-add_cM <- function (ROH, submaps) {
+addCM <- function (ROH, submaps) {
   
   ROH$POS1_cM <- 0
   ROH$POS2_cM <- 0

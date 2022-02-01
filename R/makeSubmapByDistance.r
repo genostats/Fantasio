@@ -80,7 +80,7 @@ makeSubmapByDistance <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpInd
   }
   
   
-  log.emiss <- bed.logEmiss(bedmatrix, map=submap, epsilon=epsilon)
+  log.emiss <- bedLogEmiss(bedmatrix, map=submap, epsilon=epsilon)
   
   new("snpsMatrix", step, length(submap), nrow(bedmatrix), submap, 
       bedmatrix@ped[,c("famid", "id", "father", "mother", "sex", "pheno")],

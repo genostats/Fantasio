@@ -26,16 +26,16 @@
 #' @seealso setHBDprob
 #' 
 #' @keywords internal
-HBDsegments <- function(submaps, n.consecutive.markers = 5, threshold = 0.5)
+HBDSegments <- function(submaps, n.consecutive.markers = 5, threshold = 0.5)
 {
   
   if(submaps@bySegments)
   {
-    HBDsegments.by.segments(submaps, submaps@HBD_recap, n.consecutive.markers, threshold)
+    HBDSegmentsBySegments(submaps, submaps@HBD_recap, n.consecutive.markers, threshold)
   }
   else
   {
-    HBDsegments.by.snps(submaps, submaps@HBD_recap, n.consecutive.markers, threshold)
+    HBDSegmentsBySnps(submaps, submaps@HBD_recap, n.consecutive.markers, threshold)
   }
 }
 

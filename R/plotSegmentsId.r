@@ -1,7 +1,7 @@
-plot.segments.id <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
+plotSegmentsId <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
             regions, color2 = "green4", main, build=37) {
     # chose which unit to use for the plot
-    l <- unit.plot.id(file = fileOrSubmaps, unit = unit, byROHfile)
+    l <- unitPlotId(file = fileOrSubmaps, unit = unit, byROHfile)
     ecart <- l$ecart
     larg  <- l$larg
     pos1  <- l$pos1

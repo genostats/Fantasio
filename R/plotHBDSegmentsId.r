@@ -11,7 +11,7 @@
 #*** return a plot                                                               #
 ##################################################################################
 
-plot.HBDsegments.id <- function(Submaps, unit= "cM", id, famid, regions, outfile, build)
+plotHBDSegmentsId <- function(Submaps, unit= "cM", id, famid, regions, outfile, build)
 {
   if(!is.character(id))
     return("Need individual id as character")
@@ -52,6 +52,6 @@ plot.HBDsegments.id <- function(Submaps, unit= "cM", id, famid, regions, outfile
     outfile <- paste(outfile,".png",sep="") 
   }
 
-  plot.segments.id(fileOrSubmaps=HBD, unit = unit, regions = myreg, main=paste("HBDsegments of", unique.ids(famid, id)), build=build)
+  plotSegmentsId(fileOrSubmaps=HBD, unit = unit, regions = myreg, main=paste("HBDsegments of", uniqueIds(famid, id)), build=build)
 }
 

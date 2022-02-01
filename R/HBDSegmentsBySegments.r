@@ -10,7 +10,7 @@
 #*** return a dataframe with HBDsegments                                        #
 ##################################################################################
 
-HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, threshold)
+HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, threshold)
 {
   l <- list()#liste des individus
   
@@ -25,7 +25,7 @@ HBDsegments.by.segments <- function(submaps, HBD_recap, n.consecutive.markers, t
   # individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
 
   un.ids <- rownames(HBD_recap) # famid:id
-  status <- submaps@bedmatrix@ped$pheno[ match( un.ids, unique.ids(submaps@bedmatrix@ped$famid, submaps@bedmatrix@ped$id) ) ]
+  status <- submaps@bedmatrix@ped$pheno[ match( un.ids, uniqueIds(submaps@bedmatrix@ped$famid, submaps@bedmatrix@ped$id) ) ]
   individuals_name <- get.id(un.ids)
   family_id <- get.famid(un.ids)
 

@@ -27,7 +27,7 @@
 #' #Please refer to vignette 
 #' 
 #' @export
-HBDplotId <- function(Submaps, ROH, unit= "cM", id, famid, regions, outfile, build = 37)
+HBDPlotId <- function(Submaps, ROH, unit= "cM", id, famid, regions, outfile, build = 37)
 {
   if(class(Submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(Submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
@@ -40,9 +40,9 @@ HBDplotId <- function(Submaps, ROH, unit= "cM", id, famid, regions, outfile, bui
   
   if(!missing(Submaps) & !missing(ROH))
   {
-    plot.ROH.segments.id(Submaps=Submaps, ROH, unit, id=id, famid=famid, regions, outfile=outfile, build=build)
+    plotROHSegmentsId(Submaps=Submaps, ROH, unit, id=id, famid=famid, regions, outfile=outfile, build=build)
   }else{
     if(!missing(Submaps))
-      plot.HBDsegments.id(Submaps = Submaps, id=id, famid=famid, unit=unit, regions, outfile=outfile, build=build)
+      plotHBDSegmentsId(Submaps = Submaps, id=id, famid=famid, unit=unit, regions, outfile=outfile, build=build)
   }
 }

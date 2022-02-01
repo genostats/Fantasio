@@ -20,7 +20,7 @@
 #'  
 #' @return This function returns a plot of the HBDsegments for a specific individual
 #' @keywords internal 
-plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, famid, id, build)
+plotROHSegmentsId <- function(Submaps, ROH, unit="cM", regions, outfile, famid, id, build)
 {
   ROH <- subset(ROH,ROH$FID==famid & ROH$IID==id)
   
@@ -35,7 +35,7 @@ plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, fami
   }
   
   if (unit=="cM")
-    ROH <- add_cM(ROH,Submaps)
+    ROH <- addCM(ROH,Submaps)
   
   if(missing(outfile))
     outfile <- paste("roh_",famid,"_",id,"_",unit,".png",sep="")
@@ -43,5 +43,5 @@ plot.ROH.segments.id <- function(Submaps, ROH, unit="cM", regions, outfile, fami
     outfile <- paste(outfile,".png",sep="") 
   }
   
-  plot.segments.id(byROHfile=TRUE, fileOrSubmaps=ROH, unit=unit, regions=myreg, main=paste("ROHs of ",famid,":",id,sep=""), build=build)
+  plotSegmentsId(byROHfile=TRUE, fileOrSubmaps=ROH, unit=unit, regions=myreg, main=paste("ROHs of ",famid,":",id,sep=""), build=build)
 }
