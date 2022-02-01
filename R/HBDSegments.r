@@ -23,7 +23,7 @@
 #' @return - end_dist
 #' 
 #' @seealso setSummary
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' 
 #' @keywords internal
 HBDSegments <- function(submaps, n.consecutive.markers = 5, threshold = 0.5)

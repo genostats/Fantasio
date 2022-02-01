@@ -31,7 +31,7 @@
 #' @seealso makeAtlasByHotspots
 #' @seealso segmentsListByHotspots
 #' @seealso festim
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setFLOD
 #' @seealso setHFLOD
 #' @seealso recap
@@ -39,7 +39,7 @@
 #' @seealso submapLikelihood
 #' @seealso submapEstim
 #' @seealso submapSummary
-#' @seealso HBDsegments
+#' @seealso HBDSegments
 #' 
 #' @examples  
 #' #Please refer to vignette 

@@ -14,10 +14,10 @@
 #' @seealso makeAtlasByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setFLOD
 #' @seealso setHFLOD
-#' @seealso HBDsegments
+#' @seealso HBDSegments
 #'
 #' @return This function returns a list of dataframes. 
 #'

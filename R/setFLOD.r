@@ -11,7 +11,7 @@
 #' 
 #' @return the atlas object with each FLOD.prob slot of each submaps in the slot submaps_list computed
 #' 
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setHFLOD
 #' 
 #' 

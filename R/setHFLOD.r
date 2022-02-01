@@ -10,7 +10,7 @@
 #' @return the atlas object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
 #' The second value is the moving average probability.
 #' 
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setFLOD
 #'
 #' @export
