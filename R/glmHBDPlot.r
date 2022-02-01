@@ -8,6 +8,8 @@
 #' @param n.cores number of cores for parallelization calculation (default = 1)
 #' @param save choose if plot are saved or not (default = FALSE)
 #' 
+#' @seealso glmHBD
+#' 
 #' @export
 
 	## Com Margot : à bouger :
