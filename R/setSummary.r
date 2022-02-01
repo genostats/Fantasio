@@ -33,7 +33,7 @@
 #' @seealso makeAtlasByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setFLOD
 #' @seealso setHFLOD
 #' @seealso recap
@@ -80,7 +80,7 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
       }
     }
 
-    atlas <- setHBDprob(atlas, w.id = w.HBD)
+    atlas <- setHBDProb(atlas, w.id = w.HBD)
     atlas <- setFLOD(atlas, w.HBD, q=q)
    
     # test class of first submap to check if recap is ok 
