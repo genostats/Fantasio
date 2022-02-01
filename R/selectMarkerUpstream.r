@@ -1,4 +1,4 @@
-select.marker.upstream <- function(x, vector, pas, random, unit)
+selectMarkerUpstream <- function(x, vector, pas, random, unit)
 {
   marker <- random
   if(unit=="Bases")				#get the distance to find which are the nearest markers
