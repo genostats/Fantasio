@@ -34,6 +34,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 	if(n.cores == 1 ) {
 		# unadjusted 
 		if (missing(covar_df)) {
+		  message("No covariates given for the analysis. \n To use covariates import a dataframe.")
 			for(i in 1:ncol(hbd)){
 				model <- glm( pheno ~ hbd[,i] , family = binomial)
 				final[i,'estimate'] 	<- summary(model)$coef[2,1]
@@ -46,6 +47,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 		# adjusted 
 		else {	
 			if(missing(covar)) {
+			  message("No covariates specified - All covariates of the dataframe will be used.")
 				df <- covar_df				 # take all covar given in the dataframe
 			} else {
 				df <- as.data.frame(covar_df[ , covar]) #rownames covar_df  = individual id 	
@@ -70,6 +72,8 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 		
 		if(missing(covar_df)) {
 
+		  message("No covariates given for the analysis. \n To use covariates import a dataframe.")
+		  
 			res <- foreach (i = 1:ncol(hbd), .combine = rbind) %dopar% {
 				model <- glm( pheno ~ hbd[,i] ,  family = binomial)
 				estimate <- summary(model)$coef[2,1]
@@ -83,6 +87,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 	 	else {
 	 	
 			if(missing(covar)) {
+			  message("No covariates specified - All covariates of the dataframe will be used.")
 				df <- covar_df				 # take all covar given in the dataframe
 			} else {
 				df <- as.data.frame(covar_df[ , covar]) #rownames covar_df  = individual id 	
