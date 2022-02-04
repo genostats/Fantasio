@@ -15,14 +15,13 @@
 	## Com Margot : à bouger :
 	library(qqman)
 
-
 glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALSE) {
 	
-	message("2) GLM on unadjusted data")
 	final_unadj 	<- glmHBD(x = x, expl_var = expl_var , n.cores = n.cores)
+	message("1) GLM on unadjusted data OK")
 
-  message("1) GLM on adjusted data")
 	final 		<- glmHBD(x = x, expl_var = expl_var , covar_df = covar_df , covar = covar, n.cores = n.cores )
+	message("2) GLM on adjusted data OK")
 	
 	final <- final [which(final$p_value != 0), ]
 	final_unadj <- final_unadj [which(final_unadj$p_value != 0), ]
