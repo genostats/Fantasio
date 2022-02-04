@@ -34,7 +34,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 	if(n.cores == 1 ) {
 		# unadjusted 
 		if (missing(covar_df)) {
-		  message("No covariates given for the analysis. \n To use covariates import a dataframe.")
+		  message("No covariates given for the analysis = unadjusted data. To use covariates import a dataframe.")
 			for(i in 1:ncol(hbd)){
 				model <- glm( pheno ~ hbd[,i] , family = binomial)
 				final[i,'estimate'] 	<- summary(model)$coef[2,1]
@@ -72,7 +72,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 		
 		if(missing(covar_df)) {
 
-		  message("No covariates given for the analysis. \n To use covariates import a dataframe.")
+		  message("No covariates given for the analysis = unadjusted data. To use covariates import a dataframe.")
 		  
 			res <- foreach (i = 1:ncol(hbd), .combine = rbind) %dopar% {
 				model <- glm( pheno ~ hbd[,i] ,  family = binomial)

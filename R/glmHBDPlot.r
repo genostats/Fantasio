@@ -18,10 +18,10 @@
 glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALSE) {
 	
 	final_unadj 	<- glmHBD(x = x, expl_var = expl_var , n.cores = n.cores)
-	message("-----------> GLM on UNADJUSTED data OK \n")
+	message("-----------> GLM on UNADJUSTED data Done \n")
 
 	final 		<- glmHBD(x = x, expl_var = expl_var , covar_df = covar_df , covar = covar, n.cores = n.cores )
-	message("-----------> GLM on ADJUSTED data OK \n")
+	message("-----------> GLM on ADJUSTED data Done \n")
 	
 	final <- final [which(final$p_value != 0), ]
 	final_unadj <- final_unadj [which(final_unadj$p_value != 0), ]
