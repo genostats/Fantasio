@@ -32,7 +32,7 @@ setHBDProb <- function(atlas, w.id)
     for (j in seq_len(nrow(HBD_prob))) {
       j1 <- w.id[j]
       if(!is.na(atlas@submaps_list[[i]]@a[j1]) & (atlas@submaps_list[[i]]@a[j1] <= 1) & !is.na(atlas@submaps_list[[i]]@f[j1])) {
-        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forward.backward(getLogEmiss(atlas@submaps_list[[i]], j1), 
+        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forwardBackward(getLogEmiss(atlas@submaps_list[[i]], j1), 
                                                         atlas@submaps_list[[i]]@delta.dist, 
                                                         atlas@submaps_list[[i]]@a[j1],
                                                         atlas@submaps_list[[i]]@f[j1] )[2,]
