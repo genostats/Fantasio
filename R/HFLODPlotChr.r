@@ -45,7 +45,7 @@ HFLODPlotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
   else
     pos <- HFLOD$pos_Bp
   
-  chromosome <- HFLOD$CHR
+  chromosome <- HFLOD$chr
   
   
   
@@ -74,12 +74,12 @@ HFLODPlotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
   chr_pos  <- 5 
   myreg_mp <- NULL
   
-  toplot_HFLOD <- HFLOD$HFLOD[HFLOD$CHR == chr]
-  toplot_MA    <- HFLOD$HFLOD[HFLOD$CHR == chr]
+  toplot_HFLOD <- HFLOD$HFLOD[HFLOD$chr == chr]
+  toplot_MA    <- HFLOD$HFLOD[HFLOD$chr == chr]
   if(unit == "cM")
-    toplot_pos   <- HFLOD$pos_cM[HFLOD$CHR == chr]
+    toplot_pos   <- HFLOD$pos_cM[HFLOD$chr == chr]
   else
-    toplot_pos   <- HFLOD$pos_Bp[HFLOD$CHR == chr]
+    toplot_pos   <- HFLOD$pos_Bp[HFLOD$chr == chr]
   
   ymax <- max(3.3,max(toplot_HFLOD))
   
@@ -96,7 +96,7 @@ HFLODPlotChr <- function(submaps, unit = "cM", chr, regions, color2="green4", MA
   
   
   if(!(missing(regions))){
-    myreg_chr <-  myreg[which(myreg$CHR == chr),]
+    myreg_chr <-  myreg[which(myreg$chr == chr),]
     if(nrow(myreg_chr) > 0){
       for(i in seq_len(nrow(myreg_chr))){
         polygon(x = myreg_chr[i,c("start","end","end","start")]/coeff, 
