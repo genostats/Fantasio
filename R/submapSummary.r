@@ -9,7 +9,7 @@
 #' @details This function returns a dataframe with 13 columns :
 #' @details - famid : family identifier
 #' @details - id : individual identifier
-#' @details - pheno : phenotype (1 non affected, 2 affected, 0 unknown)
+#' @details - status : status (1 non affected, 2 affected, 0 unknown)
 #' @details - submaps : number of valid submaps (i.e. submaps with a < a.threshold)
 #' @details - quality: percentage of valid submaps 
 #' @details - f_min: minimum f on valid submaps
@@ -54,7 +54,7 @@ submapSummary <- function(submaps, a.threshold = 1)
   
   df <- data.frame(famid         = submaps[[1]]@ped$famid, 
                    id            = submaps[[1]]@ped$id,
-                   pheno        = submaps[[1]]@ped$pheno,
+                   status        = submaps[[1]]@ped$pheno,
                    submaps       = submaps_used,
                    quality       = quality,
                    f_min         = apply(f, 1, min, na.rm = TRUE), 

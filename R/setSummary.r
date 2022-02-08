@@ -54,13 +54,13 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
   if(probs) {
-    test <- any( atlas@submap_summary$pheno == 2 ) 
+    test <- any( atlas@submap_summary$status == 2 ) 
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
         # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
-        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 2), w.HBD )
+        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$status == 2), w.HBD )
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité

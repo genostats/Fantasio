@@ -10,9 +10,9 @@
 #' (argument : n.consecutive.markers)
 #' 
 #' @return This function returns a list of dataframe with 11 columns : 
-#' @return - id
-#' @return - famid
-#' @return - pheno
+#' @return - individual
+#' @return - family
+#' @return - status
 #' @return - start
 #' @return - end
 #' @return - size
