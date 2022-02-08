@@ -77,17 +77,17 @@ HBDSegmentsBySnps <- function(submaps, HBD_recap, n.consecutive.markers, thresho
     
     #dataframe
     
-    segment_dataframe<-data.frame(individual = rep(individuals_name[i], length(start_pos)),
-                                  family     = rep(family_id[i], length(start_pos)),
-                                  status = rep(status[i], length(start_pos)),
-                                  start=good_segments_start, 
-                                  end=good_segments_end ,
-                                  size=good_segments_length,
+    segment_dataframe<-data.frame(id        = rep(individuals_name[i], length(start_pos)),
+                                  famid     = rep(family_id[i], length(start_pos)),
+                                  pheno     = rep(status[i], length(start_pos)),
+                                  start     = good_segments_start, 
+                                  end       = good_segments_end ,
+                                  size      = good_segments_length,
                                   chromosome=chr[as.numeric(good_segments_start)],
                                   start_pos = start_pos,
-                                  end_pos = end_pos,
-                                  start_dist = start_dist,
-                                  end_dist = end_dist)
+                                  end_pos   = end_pos,
+                                  start_dist= start_dist,
+                                  end_dist  = end_dist)
     
     #treating the case when segments overlaps two different chromosomes
     overlap <- which(segment_dataframe$start_dist > segment_dataframe$end_dist)

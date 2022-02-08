@@ -73,13 +73,13 @@ plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, li
     if(byROHfile) {
       toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
     } else {
-      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$family, fileOrSubmaps$individual) %in% list_id[j], ]
+      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$famid, fileOrSubmaps$id) %in% list_id[j], ]
     }
 
     for (k in seq_len(nrow(toplot))) { # !! seq_len permet de gérer le cas toplot = vide (pas de segment HBD sur ce chr)
       polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
                y  = c(j,j,j+0.5,j+0.5),
-               col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$status[k])),
+               col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$pheno[k])),
                lwd=1)
     }
   }

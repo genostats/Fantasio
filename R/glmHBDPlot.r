@@ -45,7 +45,8 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	
 	# adjusted
 	dev.new(width = 20, height= 5, ypos = 650)
-	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	grid(nx = NA, ny = NULL, col = 'grey50')
 	
 	} else { # save plots in png files 
 	
@@ -58,7 +59,8 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	dev.off()
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'.png'))
-	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	grid(nx = NA, ny = NULL, col = 'grey50')
 	dev.off()	
 	
 	}
