@@ -8,12 +8,9 @@
 #' @param n.cores number of cores for parallelization calculation (default = 1)
 #' @param save choose if plot are saved or not (default = FALSE)
 #' 
-#' @seealso glmHBDq()
+#' @seealso glmHBD()
 #' 
 #' @export
-
-	## Com Margot : à bouger :
-	library(qqman)
 
 glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALSE) {
 	
@@ -42,14 +39,13 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	print(p2)
 	
 	# Manhattan Plot
+	# Change colnames to fit with gaston
+	colnames(final)[colnames(final) == 'pos_Bp'] <- 'pos'
+	colnames(final)[colnames(final) == 'p_value'] <- 'p'
+	
 	# adjusted
 	dev.new(width = 20, height= 5, ypos = 650)
-	man <- manhattan(final, main = paste("Manhattan Plot GLM with ", expl_var) ,
-			  chr = "chr",
-			  bp = "pos_Bp",
-			  snp = "snps",
-			  p = "p_value",
-			  col = c("darksalmon", "darkturquoise") )
+	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
 	
 	} else { # save plots in png files 
 	
@@ -62,12 +58,7 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	dev.off()
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'.png'))
-	man <- manhattan(final, main = paste("Manhattan Plot GLM with ", expl_var) ,
-			  chr = "chr",
-			  bp = "pos_Bp",
-			  snp = "snps",
-			  p = "p_value",
-			  col = c("darksalmon", "darkturquoise") )
+	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
 	dev.off()	
 	
 	}
