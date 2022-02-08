@@ -48,7 +48,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   else
     pos <- HFLOD$pos_Bp
   
-  chromosome <- HFLOD$CHR
+  chromosome <- HFLOD$chr
   
   
   if (missing(regions))
@@ -77,7 +77,7 @@ HFLODManhattanPlot <- function(submaps, regions, unit = "cM", MA = TRUE, nbSNP_M
   myreg_mp <- NULL
   
   if (!missing(regions)) {
-    myreg_chr <-  myreg[which(myreg$CHR == c), ]
+    myreg_chr <-  myreg[which(myreg$chr == c), ]
     if (nrow(myreg_chr) > 0) {
       for (i in seq_len(nrow(myreg_chr))) {
         polygon(
