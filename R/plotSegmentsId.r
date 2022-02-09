@@ -62,8 +62,8 @@ plotSegmentsId <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
           yy <- c( 0.25 * ecart + abs( lengthChromosome(i, unit, build) - c(seg_chr[k, pos1], seg_chr[k, pos2])),
                    0.25 * ecart + abs( lengthChromosome(i, unit, build) - c(seg_chr[k, pos2], seg_chr[k, pos1])))
           
-          polygon( x = xx, y = yy + offset_y, col = ifelse(byROHfile, color(seg_chr$PHE[k]), color(seg_chr$status[k])),
-            border = ifelse( byROHfile, color(seg_chr$PHE[k]), color(seg_chr$status[k])),
+          polygon( x = xx, y = yy + offset_y, col = ifelse(byROHfile, color(seg_chr$PHE[k]), color(seg_chr$pheno[k])),
+            border = ifelse( byROHfile, color(seg_chr$PHE[k]), color(seg_chr$pheno[k])),
             lwd    = 1)
         }
       }

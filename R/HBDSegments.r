@@ -12,7 +12,7 @@
 #' @return This function returns a list of dataframe with 11 columns : 
 #' @return - individual
 #' @return - family
-#' @return - status
+#' @return - pheno
 #' @return - start
 #' @return - end
 #' @return - size
