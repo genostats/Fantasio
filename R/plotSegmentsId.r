@@ -52,7 +52,7 @@ plotSegmentsId <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
       if (byROHfile) {
         seg_chr <- fileOrSubmaps[fileOrSubmaps$CHR == i, ]
       } else {
-        seg_chr <- fileOrSubmaps[fileOrSubmaps$chr == i, ]
+        seg_chr <- fileOrSubmaps[fileOrSubmaps$chromosome == i, ]
       }
       
       if (nrow(seg_chr) > 0) {
