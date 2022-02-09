@@ -10,13 +10,13 @@
 #' (argument : n.consecutive.markers)
 #' 
 #' @return This function returns a list of dataframe with 11 columns : 
-#' @return - id
-#' @return - famid
+#' @return - individual
+#' @return - family
 #' @return - pheno
 #' @return - start
 #' @return - end
 #' @return - size
-#' @return - chr
+#' @return - chromosome
 #' @return - start_pos
 #' @return - end_pos
 #' @return - start_dist

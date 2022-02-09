@@ -37,10 +37,10 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   #Get the lines for the wanted chromosome in the HBDsegments dataframe
   HBDsegments_rbind <- do.call(rbind, HBDsegments) #bniding lines
   
-  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$chr==chr)#only the wanted lines
+  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$chromosome==chr)#only the wanted lines
   
-  HBD$id <- as.character(HBD$id) #otherwise factors level in the vector
-  HBD$famid <- as.character(HBD$famid)
+  HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
+  HBD$family <- as.character(HBD$family)
   
   #name the file
   if (missing(outfile) )
