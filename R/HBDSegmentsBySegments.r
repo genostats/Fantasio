@@ -109,13 +109,13 @@ HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, thr
     good_segments_end<-as.numeric( good_segments_start+good_segments_length -1)
     
     
-    segment_dataframe<-data.frame(individual  = rep(individuals_name[i], length(good_segments_start)),
-                                  family      = rep(family_id[i], length(good_segments_start)),
+    segment_dataframe<-data.frame(id          = rep(individuals_name[i], length(good_segments_start)),
+                                  famid       = rep(family_id[i], length(good_segments_start)),
                                   pheno       = rep(status[i], length(good_segments_start)),
                                   start       = good_segments_start, 
                                   end         = good_segments_end,
                                   size        = good_segments_length,
-                                  chromosome  = chromosome[good_segments_start],
+                                  chr         = chromosome[good_segments_start],
                                   start_pos   = start_pos[good_segments_start],
                                   end_pos     = end_pos[good_segments_end],
                                   start_dist  = start_dist[good_segments_start],
