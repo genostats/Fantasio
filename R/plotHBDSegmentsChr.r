@@ -17,15 +17,15 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   HBD.recap <- Submaps@HBD_recap
   HBDsegments <- Submaps@HBDsegments
   
-  if(missing(list.ids)) 
-  {
+  #if(missing(list.ids)) 
+  #{
     # individuals_name <- rownames(HBD.recap)#get the name of the individual
     # individuals_name <- strsplit(individuals_name, "_")
     # individuals_name <- sapply(individuals_name, function(i) match(i[2], Submaps@bedmatrix@ped$id))
     # individuals_name <- paste(Submaps@bedmatrix@ped$famid[individuals_name],Submaps@bedmatrix@ped$id[individuals_name], sep = "_")
     # list.ids <- individuals_name
-    list.ids <- rownames(HBD.recap)
-  }
+  #  list.ids <- rownames(HBD.recap)
+  #}
     
   
   if(missing(regions)) 
@@ -41,6 +41,10 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   
   HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
   HBD$family <- as.character(HBD$family)
+  
+  if missing(list.ids) {
+  list.ids <- unique(HBD$individual)  
+  }
   
   #name the file
   if (missing(outfile) )
