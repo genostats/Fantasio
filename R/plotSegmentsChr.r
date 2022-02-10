@@ -46,29 +46,6 @@ plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, li
   #paint the chromosome
   paintCytobands(chr,units=unit,pos=c(0,0.5), build=build, orientation="h",legend = FALSE, length.out = end)
   
-  #draw the HBDsegments
-  # tmp <- strsplit(list_id, "_")
-  # list_id <- sapply(tmp, function(i) i[2])
-  
-  # for (j in seq_along(list_id)){
-  #  if(byROHfile)
-  #  {
-  #    toplot <- fileOrSubmaps[fileOrSubmaps$IID==list_id[j],]
-  #  }else{
-  #    toplot <- fileOrSubmaps[fileOrSubmaps$individual==list_id[j],]
-  #  }
-  #  
-  #  
-  #  if (nrow(toplot) > 0) {
-  #     for (k in seq_len(nrow(toplot))) {
-  #      polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
-  #               y  = c(j,j,j+0.5,j+0.5),
-  #               col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$status[k])),
-  #               lwd=1)
-  #    }
-  #  }
-  # }
-
   for (j in seq_along(list_id)){ # parcourt tous les individus...
     if(byROHfile) {
       toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
