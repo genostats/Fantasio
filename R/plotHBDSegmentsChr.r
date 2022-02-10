@@ -42,7 +42,7 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
   HBD$family <- as.character(HBD$family)
   
-  if missing(list.ids) {
+  if (missing(list.ids)) {
   list.ids <- unique(HBD$individual)  
   }
   
