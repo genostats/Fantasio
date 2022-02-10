@@ -31,7 +31,7 @@ plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, li
        type="n", yaxt="n", ylab="", xlab=myxlab, 
        main=paste("HBDsegments on chromosome ",chr,sep=""))
 
-  axis(2, at = (seq_along(list_id))+0.25, list_id, col.ticks=0, las=2) 
+  axis(2, at = c(1: length(list_id)), list_id, col.ticks=0, las=2) 
   
   #treating regions option
   if(!is.null(regions)){
