@@ -78,7 +78,7 @@ plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, li
 
     for (k in seq_len(nrow(toplot))) { # !! seq_len permet de gérer le cas toplot = vide (pas de segment HBD sur ce chr)
       polygon( x  = c(toplot[k,pos1],toplot[k,pos2],toplot[k,pos2],toplot[k,pos1])/coeff,
-               y  = c(j,j,j+0.5,j+0.5),
+               y  = c(j-0.25,j-0.25,j+0.25,j+0.25),
                col=ifelse(byROHfile, color(toplot$PHE[k]), color(toplot$pheno[k])),
                lwd=1)
     }
