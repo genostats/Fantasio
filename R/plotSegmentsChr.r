@@ -48,9 +48,9 @@ plotSegmentsChr <- function(byROHfile=FALSE, fileOrSubmaps, unit = "cM", chr, li
   
   for (j in seq_along(list_id)){ # parcourt tous les individus...
     if(byROHfile) {
-      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$FID, fileOrSubmaps$IID) %in% list_id[j], ]
+      toplot <- fileOrSubmaps[fileOrSubmaps$IID %in% list_id[j], ]
     } else {
-      toplot <- fileOrSubmaps[ uniqueIds( fileOrSubmaps$family, fileOrSubmaps$individual) %in% list_id[j], ]
+      toplot <- fileOrSubmaps[fileOrSubmaps$individual %in% list_id[j], ]
     }
 
     for (k in seq_len(nrow(toplot))) { # !! seq_len permet de gérer le cas toplot = vide (pas de segment HBD sur ce chr)
