@@ -43,7 +43,7 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   HBD$family <- as.character(HBD$family)
   
   if (missing(list.ids)) {
-  list.ids <- unique(HBD$individual)  
+  list.ids <- unique(paste(HBD$individual, HBD$famid, sep = ":"))  
   }
   
   #name the file
