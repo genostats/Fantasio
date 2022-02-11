@@ -9,6 +9,7 @@
 phenoConverter = function (x, phen.code) {
 	if (phen.code == 'plink') {
 		x@ped$pheno <- ifelse(x@ped$pheno == 1, 0, ifelse(x@ped$pheno == 2, 1, NA))
-	} else continue
+	} else {continue}
+  x
 	}
 	
