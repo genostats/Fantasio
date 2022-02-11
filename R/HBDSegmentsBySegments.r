@@ -13,16 +13,6 @@
 HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, threshold)
 {
   l <- list()#liste des individus
-  
-  # individuals_name <- rownames(HBD_recap)#get the name of the individual
-  # individuals_name <- strsplit(individuals_name, "_")
-  # individuals_name <- sapply(individuals_name, function(i) match(i[2], submaps@bedmatrix@ped$id))
-  # #individuals_name <- individuals_name[!is.na(individuals_name)]
-  
-  # #find the status of the individual
-  # status <- submaps@bedmatrix@ped$pheno[individuals_name]
-  # family_id <- submaps@bedmatrix@ped$famid[individuals_name]
-  # individuals_name <- submaps@bedmatrix@ped$id[individuals_name]
 
   un.ids <- rownames(HBD_recap) # famid:id
   status <- submaps@bedmatrix@ped$pheno[ match( un.ids, uniqueIds(submaps@bedmatrix@ped$famid, submaps@bedmatrix@ped$id) ) ]
@@ -109,8 +99,8 @@ HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, thr
     good_segments_end<-as.numeric( good_segments_start+good_segments_length -1)
     
     
-    segment_dataframe<-data.frame(individual  = rep(individuals_name[i], length(good_segments_start)),
-                                  family      = rep(family_id[i], length(good_segments_start)),
+    segment_dataframe<-data.frame(id          = rep(individuals_name[i], length(good_segments_start)),
+                                  famid       = rep(family_id[i], length(good_segments_start)),
                                   pheno       = rep(status[i], length(good_segments_start)),
                                   start       = good_segments_start, 
                                   end         = good_segments_end,
@@ -136,3 +126,4 @@ HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, thr
   
   return(l)
 }
+

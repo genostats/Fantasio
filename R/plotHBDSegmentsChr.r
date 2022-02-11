@@ -14,19 +14,7 @@
 
 plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, build)
 {
-  HBD.recap <- Submaps@HBD_recap
   HBDsegments <- Submaps@HBDsegments
-  
-  #if(missing(list.ids)) 
-  #{
-    # individuals_name <- rownames(HBD.recap)#get the name of the individual
-    # individuals_name <- strsplit(individuals_name, "_")
-    # individuals_name <- sapply(individuals_name, function(i) match(i[2], Submaps@bedmatrix@ped$id))
-    # individuals_name <- paste(Submaps@bedmatrix@ped$famid[individuals_name],Submaps@bedmatrix@ped$id[individuals_name], sep = "_")
-    # list.ids <- individuals_name
-  #  list.ids <- rownames(HBD.recap)
-  #}
-    
   
   if(missing(regions)) 
     myreg <- NULL
@@ -39,11 +27,11 @@ plotHBDSegmentsChr <- function(Submaps, unit, chr, list.ids, regions, outfile, b
   
   HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$chromosome==chr)#only the wanted lines
   
-  HBD$individual <- as.character(HBD$individual) #otherwise factors level in the vector
-  HBD$family <- as.character(HBD$family)
+  HBD$id <- as.character(HBD$id) #otherwise factors level in the vector
+  HBD$famid <- as.character(HBD$famid)
   
   if (missing(list.ids)) {
-  list.ids <- unique(paste(HBD$individual, HBD$family, sep = ":"))  
+  list.ids <- unique(paste(HBD$id, HBD$famid, sep = ":"))  
   }
   
   #name the file
