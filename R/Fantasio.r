@@ -49,6 +49,9 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
                       n.consecutive.markers = 5, phen.code = 'R') {
+  
+  bedmatrix <- phenoConverter(x = bedmatrix, phen.code = phen.code)
+  
   segments <- match.arg(segments)
   if (missing(segment.options))
     segment.options <- list()
@@ -60,8 +63,6 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
     warning("segments = \"Distance\" implies recap.by.segments = FALSE")
   }
   
-  bedmatrix@ped$pheno <- phenoConverter(bedmatrix, phen.code)
-
   if(n.cores > 1) { # use hack to try avoiding "invalid external pointer" error
     if (segments == "Distance") {
       s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
