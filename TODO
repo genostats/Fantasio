@@ -1,13 +1,35 @@
--- Avec verbose == TRUE, éviter le défilement (backspace \b ou retour chariot \r)
-Estimation f and a for individual # 39 
-Estimation f and a for individual # 40 
-etc
-
 -- Gérer la présence de fréquences à 0, 1, ou manquantes quand 
    on utilise un panel de référence
 
 -- Les fréquences alléliques devraient être un argument de Fantasio
    (avec valeur par défaut x@p...)
+
+-- dans @segments_list on a une liste de 22 élts, chacune pour un chr,
+   chacun de ces élts est une liste de vecteurs du type n:m 
+   -> pas besoin de séparer les chromosomes ;
+   -> pas besoin de stocker n:m, c(n,m) suffit
+   --> modifier non seulement la fonction de création de segments_lists
+       mais les fonctions qui l'utilisent
+
+   concernant les 'segments list by distance' on a ajouté des commentaires
+   dans la branche 'margot' dans getMarkerChromosomByDistance.r / select.marker.downstream.r
+
+-- est-ce que dans les élts de @submaps_list (qui sont des HotspotsMatrix)
+   il n'y a pas un peu trop d'information ? (il y a @submap, qui permet de
+   retrouver @map, est-ce nécessaire de le conserver ? le @ped est juste une
+   référence mais est-il utile ?)
+   Possibilité d'alléger les objets @HBD.prob et @FLOD (nom de col et ligne ?)
+
+-- setSummary renvoie un warning : "No individual with pheno = 2"
+   Est-ce que les phénotypes ne sont pas 0/1 ?
+   La fonction pourrait décider selon ce qu'elle voit.
+   --> après discussion plutôt inclure un argument du genre 
+       phen.code = "R" ou "plink"  (resp 0/1/NA et 1/2/0)
+
+-- Avec verbose == TRUE, éviter le défilement (backspace \b ou retour chariot \r)
+Estimation f and a for individual # 39 
+Estimation f and a for individual # 40 
+etc
 
 -- Fantasio n'aime pas :
    * que les identifiants des chr ne soient pas numériques 
@@ -48,6 +70,10 @@ etc
 
 !! j'ai supprimé l'argument run_a_f dans setSummary
 !! ---> verifier ce qui se passe si festim n'a pas tourné
+
+-- envisager fonction pour les ROH
+
+
 
 ********************************************************
 26/01/2018
