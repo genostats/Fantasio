@@ -15,7 +15,10 @@
 #' @param q assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
 #' @param n.consecutive.markers number of consecutive markers with a probability equal or greater to the value of `HBD.threshold`, used to find HBDsegments
-#' 
+#' @param phen.code phenotype coding :
+#'        - 'R' : 0:control ; 1:cases ; NA:unknown (default)
+#'        - 'plink' : 1:control ; 2:cases ; 0/-9/NA:unknown
+#'        
 #' 
 #' @details This function is a wrapper to make the usage of the package easier. The function calls different functions: 
 #' @details The first function, `segmentsListByDistance` or `segmentsListByHotspots`, is used to create a list of segments. 
@@ -45,7 +48,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       n = 100, n.cores = 1, epsilon = 0.001,
                       run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
-                      n.consecutive.markers = 5) {
+                      n.consecutive.markers = 5, phen.code = 'R') {
   segments <- match.arg(segments)
   if (missing(segment.options))
     segment.options <- list()
@@ -56,6 +59,8 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
     recap.by.segments <- FALSE
     warning("segments = \"Distance\" implies recap.by.segments = FALSE")
   }
+  
+  bedmatrix@ped$pheno <- phenoConverter(bedmatrix, phen.code)
 
   if(n.cores > 1) { # use hack to try avoiding "invalid external pointer" error
     if (segments == "Distance") {

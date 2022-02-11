@@ -54,27 +54,25 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
   if(probs) {
-    test <- any( atlas@submap_summary$pheno == 2 ) 
+    test <- any( atlas@submap_summary$pheno == 1 ) 
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
         # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
-        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 2), w.HBD )
+        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         w.HFLOD <- seq_along(w.HBD)
-        warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
+        warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
       }
     } else { # on calcule sur les individus donnés !
       if(list.id == "all") {
         w.HBD <- seq_len(nrow(atlas@submap_summary))
         w.HFLOD <- seq_along(w.HBD)
       } else {
-        # vec <- strsplit(list.id, "_")
-        # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$famid == i[1] & atlas@submap_summary$id == i[2]))
         w.HBD <- match( list.id, uniqueIds(atlas@submap_summary$famid, atlas@submap_summary$id) )
         w.HFLOD <- seq_along(w.HBD)
       }
