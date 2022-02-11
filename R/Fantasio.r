@@ -50,7 +50,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
                       n.consecutive.markers = 5, phen.code = 'R') {
   
-  bed <- phenoConverter(x = bedmatrix, phen.code = phen.code)
+  bedmatrix <- phenoConverter(x = bedmatrix, phen.code = phen.code)
   
   segments <- match.arg(segments)
   if (missing(segment.options))
@@ -65,28 +65,28 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
   
   if(n.cores > 1) { # use hack to try avoiding "invalid external pointer" error
     if (segments == "Distance") {
-      s <- do.call(segmentsListByDistance, c(bedmatrix = bed, segment.options))
-      h <- makeAtlasByDistance(get(deparse(substitute(bed))), n, s, n.cores, epsilon)
+      s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
+      h <- makeAtlasByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
     } else {
-      s <- do.call(segmentsListByHotspots, c(bedmatrix = bed, segment.options))
-      h <- makeAtlasByHotspots(get(deparse(substitute(bed))), n, s, n.cores, epsilon)
+      s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
+      h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
     }
   } else { # don't use hack (it can be problematic when calling Fantasio from other function)
     if (segments == "Distance") {
-      s <- do.call(segmentsListByDistance, c(bedmatrix = bed, segment.options))
-      h <- makeAtlasByDistance(bed, n, s, n.cores, epsilon)
+      s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
+      h <- makeAtlasByDistance(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
     } else {
-      s <- do.call(segmentsListByHotspots, c(bedmatrix = bed, segment.options))
-      h <- makeAtlasByHotspots(bed, n, s, n.cores, epsilon)
+      s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
+      h <- makeAtlasByHotspots(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
