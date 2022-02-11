@@ -1,3 +1,14 @@
+-- Avec verbose == TRUE, éviter le défilement (backspace \b ou retour chariot \r)
+Estimation f and a for individual # 39 
+Estimation f and a for individual # 40 
+etc
+
+-- Gérer la présence de fréquences à 0, 1, ou manquantes quand 
+   on utilise un panel de référence
+
+-- Les fréquences alléliques devraient être un argument de Fantasio
+   (avec valeur par défaut x@p...)
+
 -- Fantasio n'aime pas :
    * que les identifiants des chr ne soient pas numériques 
      (fonctions graphiques)
