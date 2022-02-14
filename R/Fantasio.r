@@ -16,8 +16,8 @@
 #' @param quality minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
 #' @param n.consecutive.markers number of consecutive markers with a probability equal or greater to the value of `HBD.threshold`, used to find HBDsegments
 #' @param phen.code phenotype coding :
-#'        - 'R' : 0:control ; 1:cases ; NA:unknown (default)
-#'        - 'plink' : 1:control ; 2:cases ; 0/-9/NA:unknown
+#'        - 'R' : 0:control ; 1:case ; NA:unknown (default)
+#'        - 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown
 #'        
 #' 
 #' @details This function is a wrapper to make the usage of the package easier. The function calls different functions: 
@@ -67,13 +67,13 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- makeAtlasByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
     }
   } else { # don't use hack (it can be problematic when calling Fantasio from other function)
     if (segments == "Distance") {
@@ -81,13 +81,13 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- makeAtlasByDistance(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
     }
   }
   h
