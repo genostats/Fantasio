@@ -50,7 +50,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 			  message("No covariates specified - All covariates of the dataframe will be used.")
 				df <- covar_df				 # take all covar given in the dataframe
 			} else {
-				df <- as.data.frame(covar_df[ , covar]) #rownames covar_df  = individual id 	
+				df <- as.data.frame(covar_df[ id.index , covar]) #rownames covar_df  = individual id 	
 			}
 			
 			for(i in 1:ncol(hbd)){
@@ -90,7 +90,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1) {
 			  message("No covariates specified - All covariates of the dataframe will be used.")
 				df <- covar_df				 # take all covar given in the dataframe
 			} else {
-				df <- as.data.frame(covar_df[ , covar]) #rownames covar_df  = individual id 	
+				df <- as.data.frame(covar_df[ id.index , covar]) #rownames covar_df  = individual id 	
 			} 
 	 		
 			res <- foreach (i = 1:ncol(hbd), .combine = rbind) %dopar% {
