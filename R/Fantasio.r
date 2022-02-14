@@ -67,13 +67,13 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- makeAtlasByDistance(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
     }
   } else { # don't use hack (it can be problematic when calling Fantasio from other function)
     if (segments == "Distance") {
@@ -81,13 +81,13 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- makeAtlasByDistance(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
-                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code)
+                      q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
     }
   }
   h
