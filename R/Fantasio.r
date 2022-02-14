@@ -50,8 +50,6 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
                       n.consecutive.markers = 5, phen.code = 'R') {
   
-  bedmatrix <- phenoConverter(x = bedmatrix, phen.code = phen.code)
-  
   segments <- match.arg(segments)
   if (missing(segment.options))
     segment.options <- list()
