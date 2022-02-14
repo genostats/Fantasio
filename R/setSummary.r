@@ -44,8 +44,10 @@
 #' 
 #' @export
 setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
-    q = 1e-04, HBD.threshold = 0.5, quality = 95, n.consecutive.markers = 5) {
+    q = 1e-04, HBD.threshold = 0.5, quality = 95, n.consecutive.markers = 5, phen.code = c('plink', 'R')) {
 
+  phen.code <- match.arg(phen.code)
+  
   if(class(atlas)[1] != "atlas")
     stop("Need an atlas")
  
@@ -54,19 +56,31 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
   if(probs) {
-    test <- any( atlas@submap_summary$pheno == 1 ) 
+    if (phen.code == 'plink') {
+      test <- any( atlas@submap_summary$pheno == 1 ) 
+    } else {
+      test <- any( atlas@submap_summary$pheno == 2 ) 
+    }
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
         # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
-        w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
+        if (phen.code == 'plink') {
+          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
+        } else {
+          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 2), w.HBD )
+        }
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         w.HFLOD <- seq_along(w.HBD)
-        warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
+        if (phen.code == 'plink') {
+          warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
+        } else {
+          warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
+        }
       }
     } else { # on calcule sur les individus donnés !
       if(list.id == "all") {
