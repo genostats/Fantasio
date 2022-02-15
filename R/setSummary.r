@@ -67,9 +67,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
         # le HFLOD sur les atteints parmi ceux là
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         if (phen.code == 'plink') {
-          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
-        } else {
           w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 2), w.HBD )
+        } else {
+          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
         }
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
@@ -77,9 +77,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
         w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         w.HFLOD <- seq_along(w.HBD)
         if (phen.code == 'plink') {
-          warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
-        } else {
           warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
+        } else {
+          warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
         }
       }
     } else { # on calcule sur les individus donnés !
