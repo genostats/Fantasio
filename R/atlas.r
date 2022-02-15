@@ -57,7 +57,7 @@ setClass("atlas", representation(
 #' @param gap the gap used to create segments in the By Distance method
 #' @param logReg list of logistic regression results on adjusted and unadjusted data
 
-setMethod('initialize', signature='atlas', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL, logReg = list('unadj' = NULL, 'adj' = NULL))
+setMethod('initialize', signature='atlas', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL)
 {
   .Object@submaps_list        <- submaps
   .Object@bedmatrix           <- bedmatrix
@@ -65,7 +65,6 @@ setMethod('initialize', signature='atlas', definition=function(.Object, submaps,
   .Object@bySegments          <- bySegments
   .Object@unit                <- unit
   .Object@gap                 <- gap
-  .Object@logisticRegression  <- logReg
   .Object
 })
 
