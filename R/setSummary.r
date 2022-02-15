@@ -57,9 +57,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   
   if(probs) {
     if (phen.code == 'plink') {
-      test <- any( atlas@submap_summary$pheno == 1 ) 
-    } else {
       test <- any( atlas@submap_summary$pheno == 2 ) 
+    } else {
+      test <- any( atlas@submap_summary$pheno == 1 ) 
     }
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
