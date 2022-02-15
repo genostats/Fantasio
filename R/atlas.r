@@ -42,7 +42,7 @@ setClass("atlas", representation(
         bedmatrix            = 'bed.matrix', 
         bySegments           = "logical", 
         unit                 = "characterOrNULL", 
-        gap                  = "doubleOrNULL"
+        gap                  = "doubleOrNULL",
         logisticRegression   = "listOrNULL"
 ))
 
