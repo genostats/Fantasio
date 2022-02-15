@@ -27,6 +27,8 @@ setClassUnion("doubleOrNULL",members = c("numeric", "NULL"))
 #' @slot bySegments a boolean indicating wheter the creation of summary statistics was made by segments (see documentation of Fantasio function)
 #' @slot unit   the unit of the markers (cM or Bp).
 #' @slot gap   the value of the gap used to pick marker when doing submaps by snps. (see function Fantasio for more infos)
+#' @slot logisticRegression the results of logistic regression
+
 setClass("atlas", representation(
         segments_list        = 'listOrNULL',
         submaps_list         = 'list', 
@@ -41,6 +43,7 @@ setClass("atlas", representation(
         bySegments           = "logical", 
         unit                 = "characterOrNULL", 
         gap                  = "doubleOrNULL"
+        logisticRegression   = "listOrNULL"
 ))
 
 #' Constructor method of atlas.
@@ -52,14 +55,17 @@ setClass("atlas", representation(
 #' @param bySegments a boolean
 #' @param unit the unit in which are markers (cM or Bp)
 #' @param gap the gap used to create segments in the By Distance method
-setMethod('initialize', signature='atlas', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL)
+#' @param logReg list of logistic regression results on adjusted and unadjusted data
+
+setMethod('initialize', signature='atlas', definition=function(.Object, submaps, bedmatrix, segments_list, bySegments, unit=NULL, gap=NULL, logReg)
 {
-  .Object@submaps_list         <- submaps
-  .Object@bedmatrix     <- bedmatrix
-  .Object@segments_list <- segments_list
-  .Object@bySegments    <- bySegments
-  .Object@unit          <- unit
-  .Object@gap           <- gap
+  .Object@submaps_list        <- submaps
+  .Object@bedmatrix           <- bedmatrix
+  .Object@segments_list       <- segments_list
+  .Object@bySegments          <- bySegments
+  .Object@unit                <- unit
+  .Object@gap                 <- gap
+  .Object@logisticRegression  <- logReg
   .Object
 })
 
