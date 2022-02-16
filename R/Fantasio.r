@@ -11,6 +11,7 @@
 #' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)  
 #' @param recap.by.segments if you want the summary of probabilities by snps or by segments (default is FALSE)
 #' @param verbose whether you want informations about computations (default is TRUE)
+#' @param logistic whether you want to run the logistic regression (default is FALSE)
 #' @param HBD.threshold value of the HBD probability threshold used to determine whether a segment is HBD or not (default is 0.5)
 #' @param q assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
@@ -46,9 +47,11 @@
 #' @export
 Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.options,
                       n = 100, n.cores = 1, epsilon = 0.001,
-                      run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
+                      run.proba = TRUE, recap.by.segments = FALSE, 
+                      verbose = TRUE, run.logistic = FALSE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
-                      n.consecutive.markers = 5, phen.code = 'R') {
+                      n.consecutive.markers = 5, phen.code = c("R", "plink")
+                      expl.var = c("FLOD", "HBD_prob"), cov.df, covar) {
   
   segments <- match.arg(segments)
   if (missing(segment.options))
@@ -68,12 +71,16 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
+      h <- glmHBD(h, expl_var = expl.var, phen.code, n.cores, run = run.logistic )
+      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar,  phen.code, n.cores, run = run.logistic )
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
+      h <- glmHBD(h, expl_var = expl.var, phen.code, n.cores, run = run.logistic )
+      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar,  phen.code, n.cores, run = run.logistic )
     }
   } else { # don't use hack (it can be problematic when calling Fantasio from other function)
     if (segments == "Distance") {
@@ -82,12 +89,16 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
+      h <- glmHBD(h, expl_var = expl.var, phen.code, n.cores, run = run.logistic )
+      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar,  phen.code, n.cores, run = run.logistic )
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
+      h <- glmHBD(h, expl_var = expl.var, phen.code, n.cores, run = run.logistic )
+      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar,  phen.code, n.cores, run = run.logistic )
     }
   }
   h
