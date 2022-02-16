@@ -19,10 +19,10 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
   if (run) { 
 	  if (expl_var == 'HBD_prob') {
 		  # Recovery HBD_prob
-		  hbd <- x@HBD_recap
+		  hbd <- as.data.frame(x@HBD_recap)
 	  } else if (expl_var == 'FLOD') {
 		  # Recovery FLOD
-		  hbd <- x@FLOD_recap
+		  hbd <- as.data.frame(x@FLOD_recap)
 	  } else {
 		  stop("Explanatory variable must be 'HBD_prob' or 'FLOD'")
 	  }
@@ -56,9 +56,9 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 		  else {	
 			  if(missing(covar)) {
 			    message("No covariates specified - All covariates of the dataframe will be used.")
-				  df <- covar_df				 # take all covar given in the dataframe
+				  df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
-				  df <- as.data.frame(covar_df[ id.index , covar]) #rownames covar_df  = individual id 	
+				  df <- na.omit(as.data.frame(covar_df[ id , covar])) #rownames covar_df  = individual id 	
 			  }
 			
 			  for(i in 1:ncol(hbd)){
@@ -97,11 +97,11 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 	 	
 			  if(missing(covar)) {
 			    message("No covariates specified - All covariates of the dataframe will be used.")
-				  df <- covar_df				 # take all covar given in the dataframe
+				  df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
-				  df <- as.data.frame(covar_df[ id.index , covar]) #rownames covar_df  = individual id 	
+				  df <- na.omit(as.data.frame(covar_df[ id , covar]))  	
 			  } 
-	 		
+
 			  res <- foreach (i = 1:ncol(hbd), .combine = rbind) %dopar% {
 				  model <- glm( pheno ~ hbd[,i] + . , data = df, family = binomial)
 				  estimate <- summary(model)$coef[2,1]
