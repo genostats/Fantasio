@@ -12,23 +12,21 @@
 #' 
 #' @export
 
-glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALSE) {
+glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	
-	final_unadj 	<- glmHBD(x = x, expl_var = expl_var , n.cores = n.cores)
-	message("-----------> GLM on UNADJUSTED data Done \n")
+	unadj 	<- x@logisticRegression$unadj
 
-	final 		<- glmHBD(x = x, expl_var = expl_var , covar_df = covar_df , covar = covar, n.cores = n.cores )
-	message("-----------> GLM on ADJUSTED data Done \n")
+	adj 		<- x@logisticRegression$adj
 	
-	final <- final [which(final$p_value != 0), ]
-	final_unadj <- final_unadj [which(final_unadj$p_value != 0), ]
+	adj <- adj [which(adj$p_value != 0), ]
+	unadj <- unadj [which(unadj$p_value != 0), ]
 	
 	# QQ Plot
 	# unadjusted
-	p1 <- ggQQPlot(final_unadj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- unadjusted data"))
+	p1 <- ggQQPlot(unadj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- unadjusted data"))
 	
 	# adjusted
-	p2 <- ggQQPlot(final$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- adjusted data"))
+	p2 <- ggQQPlot(adj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- adjusted data"))
 	
 	if (save == FALSE) { # Default, just print plots on different windows
 
@@ -40,12 +38,12 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	
 	# Manhattan Plot
 	# Change colnames to fit with gaston
-	colnames(final)[colnames(final) == 'pos_Bp'] <- 'pos'
-	colnames(final)[colnames(final) == 'p_value'] <- 'p'
+	colnames(adj)[colnames(adj) == 'pos_Bp'] <- 'pos'
+	colnames(adj)[colnames(adj) == 'p_value'] <- 'p'
 	
 	# adjusted
 	dev.new(width = 20, height= 5, ypos = 650)
-	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	man <- gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
 	
 	} else { # save plots in png files 
 	
@@ -58,7 +56,7 @@ glmHBDPlot = function ( x, expl_var, covar_df , covar , n.cores = 1, save = FALS
 	dev.off()
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'.png'))
-	man <- gaston::manhattan(final, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	man <- gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
 	dev.off()	
 	
 	}
