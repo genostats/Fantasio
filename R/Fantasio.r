@@ -72,7 +72,10 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
+      if (missing(covar))
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
+      else 
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
     } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(get(deparse(substitute(bedmatrix))), n, s, n.cores, epsilon)
@@ -80,8 +83,10 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
-    }
+      if (missing(covar))
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
+      else 
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    }
   } else { # don't use hack (it can be problematic when calling Fantasio from other function)
     if (segments == "Distance") {
       s <- do.call(segmentsListByDistance, c(bedmatrix = bedmatrix, segment.options))
@@ -90,16 +95,20 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
-    } else {
+      if (missing(covar))
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
+      else 
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    } else {
       s <- do.call(segmentsListByHotspots, c(bedmatrix = bedmatrix, segment.options))
       h <- makeAtlasByHotspots(bedmatrix, n, s, n.cores, epsilon)
       h <- festim(h, n.cores = n.cores, verbose = verbose)
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
-    }
+      if (missing(covar))
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
+      else 
+        h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    }
   }
   h
 }
