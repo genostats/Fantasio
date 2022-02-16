@@ -50,6 +50,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  final[i,'p_value'] 	<- summary(model)$coef[2,4]
 			  }
 		  x@logisticRegression$unadj <- cbind(final, res)
+		  message("-----------> GLM on UNADJUSTED data Done \n")
 		  }
 		
 		  # adjusted 
@@ -69,6 +70,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  final[i,'p_value'] 	<- summary(model)$coef[2,4]
 			  }
 		  x@logisticRegression$adj <- cbind(final, res)  
+		  message("-----------> GLM on ADJUSTED data Done \n")
 		  }
 	  }
 	
@@ -90,7 +92,8 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  p_value <- summary(model)$coef[2,4]
 				  data.frame( estimate, std_error, z_value, p_value)
 			  }
-			x@logisticRegression$unadj <- cbind(final, res)  
+			x@logisticRegression$unadj <- cbind(final, res) 
+			message("-----------> GLM on UNADJUSTED data Done \n")
       }
 	 	
 	 	  else {
@@ -110,7 +113,8 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  p_value <- summary(model)$coef[2,4]
 				  data.frame( estimate, std_error, z_value, p_value)
 			  }
-			x@logisticRegression$adj <- cbind(final, res)  
+			x@logisticRegression$adj <- cbind(final, res)
+			message("-----------> GLM on UNADJUSTED data Done \n")
 	 	  }
 	 	 parallel::stopCluster(cl)
 	  }
