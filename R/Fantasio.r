@@ -50,7 +50,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       run.proba = TRUE, recap.by.segments = FALSE, 
                       verbose = TRUE, run.logistic = FALSE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
-                      n.consecutive.markers = 5, phen.code = c("R", "plink")
+                      n.consecutive.markers = 5, phen.code = c("R", "plink"),
                       expl.var = c("FLOD", "HBD_prob"), cov.df, covar) {
   
   segments <- match.arg(segments)
