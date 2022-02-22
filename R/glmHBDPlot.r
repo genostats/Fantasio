@@ -42,8 +42,11 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	colnames(adj)[colnames(adj) == 'p_value'] <- 'p'
 	
 	# adjusted
+	treshold = -log10(1/dim(x@submaps_list[[1]])[2])  #treshold based on the number of markers
 	dev.new(width = 20, height= 5, ypos = 650)
-	man <- gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	abline(h=treshold, col = 'red')
+	
 	
 	} else { # save plots in png files 
 	
