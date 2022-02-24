@@ -34,7 +34,7 @@ plotHBDSegmentsId <- function(Submaps, unit= "cM", id, famid, regions, outfile, 
   
   HBDsegments_rbind <- do.call(rbind, HBDsegments) #binding lines 
   
-  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$id==id & HBDsegments_rbind$famid==famid)
+  HBD <- subset(HBDsegments_rbind, HBDsegments_rbind$individual==id & HBDsegments_rbind$family==famid)
 
   if(nrow(HBD) == 0)
     stop("No individual found")
