@@ -56,9 +56,10 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 		  # adjusted 
 		  else {	
 			  if(missing(covar)) {
-			    message("No covariates specified - All covariates of the dataframe will be used.")
+			    message(paste0("No covariates specified - All covariates of the dataframe will be used : " , gsub(",", " +", toString(colnames(covar_df)))))
 				  df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
+			    message( paste0("Covariates = ", gsub(",", " +", toString(covar))))
 				  df <- na.omit(as.data.frame(covar_df[ id , covar])) #rownames covar_df  = individual id 	
 			  }
 			
@@ -99,9 +100,10 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 	 	  else {
 	 	
 			  if(missing(covar)) {
-			    message("No covariates specified - All covariates of the dataframe will be used.")
-				  df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
+			    message(paste0("No covariates specified - All covariates of the dataframe will be used : " , gsub(",", " +", toString(colnames(covar_df)))))
+			    df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
+			    message( paste0("Covariates = ", gsub(",", " +", toString(covar))))
 				  df <- na.omit(as.data.frame(covar_df[ id , covar]))  	
 			  } 
 
