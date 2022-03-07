@@ -30,22 +30,29 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	
 	if (save == FALSE) { # Default, just print plots on different windows
 
-	dev.new(height = 5.2, width = 5.5, xpos = 470)
+	dev.new(height = 5.1, width = 5)
 	print(p1)
 	
-	dev.new(height = 5.2, width = 5.5, xpos = 1000)
+	dev.new(height = 5.1, width = 5, ypos = 650)
 	print(p2)
 	
 	# Manhattan Plot
 	# Change colnames to fit with gaston
+	colnames(unadj)[colnames(unadj) == 'pos_Bp'] <- 'pos'
+	colnames(unadj)[colnames(unadj) == 'p_value'] <- 'p'
+	
+	dev.new(width = 14.25, height= 5.1, ypos = 0, xpos = 640)
+	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	#abline(h=treshold, col = 'red')
+	
 	colnames(adj)[colnames(adj) == 'pos_Bp'] <- 'pos'
 	colnames(adj)[colnames(adj) == 'p_value'] <- 'p'
 	
 	# adjusted
-	treshold = -log10(1/dim(x@submaps_list[[1]])[2])  #treshold based on the number of markers
-	dev.new(width = 20, height= 5, ypos = 650)
-	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
-	abline(h=treshold, col = 'red')
+	#treshold = -log10(1/dim(x@submaps_list[[1]])[2])  #treshold based on the number of markers
+	dev.new(width = 14.25, height= 5.1, ypos = 650, xpos = 640)
+	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	#abline(h=treshold, col = 'red')
 	
 	
 	} else { # save plots in png files 
@@ -58,8 +65,12 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	p2
 	dev.off()
 	
-	png(paste( 'manhattanplot.GLM.', expl_var,'.png'))
-	man <- gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var), chrom.col = c("darksalmon", "darkturquoise"))
+	png(paste( 'manhattanplot.GLM.', expl_var,'unadj.png'))
+	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	dev.off()	
+	
+	png(paste( 'manhattanplot.GLM.', expl_var,'adj.png'))
+	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
 	dev.off()	
 	
 	}
