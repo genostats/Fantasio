@@ -16,7 +16,7 @@
 #' 
 #' 
 #' @export
-setFLOD <- function(submaps, w.id, q = 1e-4) setFLOD <- function(submaps, w.id, q = 1e-4) {
+setFLOD <- function(submaps, w.id, q = 1e-4) {
   if(class(submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
