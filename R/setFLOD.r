@@ -39,4 +39,3 @@ setFLOD <- function(submaps, w.id, q = 1e-4) setFLOD <- function(submaps, w.id, 
   }
   return(submaps)
 }
-
