@@ -24,9 +24,11 @@ setHBDProb <- function(atlas, w.id)
   id    <- as.vector(atlas@submap_summary$id[w.id])
   famid <- as.vector(atlas@submap_summary$famid[w.id])
   
+  moy_HBD_prob <- matrix(0, nrow = length(w.id), ncol = atlas@submaps_list[[1]]@ncol)#HBD matrix
+  dimnames(moy_HBD_prob) <- list( uniqueIds(famid,id), lapply(c(1:atlas@submaps_list[[1]]@ncol), function(i) paste0('s', i)) )
+  
   for(i in seq_along(atlas@submaps_list)) {
     HBD_prob <- matrix(NA, nrow = length(w.id), ncol = atlas@submaps_list[[i]]@ncol)#HBD matrix
-    # dimnames(HBD_prob) <- list(rownames(HBD_prob) <- paste(famid,id, sep = "_"), colnames(HBD_prob) <- c(atlas@submaps_list[[i]]@map$id))
     dimnames(HBD_prob) <- list( uniqueIds(famid,id), atlas@submaps_list[[i]]@map$id)
     
     for (j in seq_len(nrow(HBD_prob))) {
@@ -39,11 +41,11 @@ setHBDProb <- function(atlas, w.id)
       }
     }
     HBD_prob[!is.finite(HBD_prob)] <- 0
-    atlas@submaps_list[[i]]@HBD.prob <- HBD_prob 
+    moy_HBD_prob <- moy_HBD_prob + HBD_prob/length(atlas@submaps_list)
   }
+  atlas@HBD_recap <- moy_HBD_prob
   atlas
 }
-
 
 
 
