@@ -22,7 +22,7 @@ setFLOD <- function(submaps, w.id, q = 1e-4) {
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
   
-  moy_FLOD <- matrix(0, nrow = length(w.id), ncol = submaps@submaps_list[[1]]@ncol)#HBD matrix
+  moy_FLOD <- matrix(0.0, nrow = nrow(submaps@submaps_list[[1]]@HBD.prob), ncol = submaps@submaps_list[[1]]@ncol)
   dimnames(moy_FLOD) <- list( rownames(submaps@submaps_list[[1]]@HBD.prob) , lapply(c(1:submaps@submaps_list[[1]]@ncol), function(i) paste0('s', i)) )
   
   #Computation of FLOD score with the formula
