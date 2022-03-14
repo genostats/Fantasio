@@ -21,29 +21,25 @@ setHBDProb <- function(atlas, w.id)
   if(class(atlas@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
   
-  id    <- as.vector(atlas@submap_summary$id[w.id])
-  famid <- as.vector(atlas@submap_summary$famid[w.id])
-  
-  moy_HBD_prob <- matrix(0, nrow = length(w.id), ncol = atlas@submaps_list[[1]]@ncol)#HBD matrix
-  dimnames(moy_HBD_prob) <- list( uniqueIds(famid,id), lapply(c(1:atlas@submaps_list[[1]]@ncol), function(i) paste0('s', i)) )
+  id    <- as.vector(atlas@submap_summary$IID[w.id])
+  famid <- as.vector(atlas@submap_summary$FID[w.id])
   
   for(i in seq_along(atlas@submaps_list)) {
     HBD_prob <- matrix(NA, nrow = length(w.id), ncol = atlas@submaps_list[[i]]@ncol)#HBD matrix
-    dimnames(HBD_prob) <- list( uniqueIds(famid,id), atlas@submaps_list[[i]]@map$id)
+    dimnames(HBD_prob) <- list( unique.ids(famid,id), atlas@submaps_list[[i]]@map$id)
     
     for (j in seq_len(nrow(HBD_prob))) {
       j1 <- w.id[j]
       if(!is.na(atlas@submaps_list[[i]]@a[j1]) & (atlas@submaps_list[[i]]@a[j1] <= 1) & !is.na(atlas@submaps_list[[i]]@f[j1])) {
-        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forwardBackward(getLogEmiss(atlas@submaps_list[[i]], j1), 
-                                                        atlas@submaps_list[[i]]@delta.dist, 
-                                                        atlas@submaps_list[[i]]@a[j1],
-                                                        atlas@submaps_list[[i]]@f[j1] )[2,]
+        HBD_prob[j,seq_len(ncol(HBD_prob))] <-forward.backward(get.log.emiss(atlas@submaps_list[[i]], j1), 
+                                                               atlas@submaps_list[[i]]@delta.dist, 
+                                                               atlas@submaps_list[[i]]@a[j1],
+                                                               atlas@submaps_list[[i]]@f[j1] )[2,]
       }
     }
     HBD_prob[!is.finite(HBD_prob)] <- 0
-    moy_HBD_prob <- moy_HBD_prob + HBD_prob/length(atlas@submaps_list)
+    atlas@submaps_list[[i]]@HBD.prob <- HBD_prob 
   }
-  atlas@HBD_recap <- moy_HBD_prob
   atlas
 }
 

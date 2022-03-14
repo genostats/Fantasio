@@ -16,14 +16,11 @@
 #' 
 #' 
 #' @export
-setFLOD <- function(submaps, w.id, q = 1e-4) {
+setFLOD <- function(submaps, w.id, q = 1e-4) setFLOD <- function(submaps, w.id, q = 1e-4) {
   if(class(submaps@submaps_list[[1]])[1] != "snpsMatrix" & class(submaps@submaps_list[[1]])[1] != "HostspotsMatrix")
     stop("need either an hotspots.segments list of submaps or a snpsSegments list of submaps.") 
   if(class(submaps@bedmatrix)[1] != "bed.matrix")
     stop("Need a bed.matrix.")
-  
-  moy_FLOD <- matrix(0.0, nrow = nrow(submaps@submaps_list[[1]]@HBD.prob), ncol = submaps@submaps_list[[1]]@ncol)
-  dimnames(moy_FLOD) <- list( rownames(submaps@submaps_list[[1]]@HBD.prob) , lapply(c(1:submaps@submaps_list[[1]]@ncol), function(i) paste0('s', i)) )
   
   #Computation of FLOD score with the formula
   for(i in seq_along(submaps@submaps_list))
@@ -35,12 +32,11 @@ setFLOD <- function(submaps, w.id, q = 1e-4) {
     for (j in seq_len(nrow(FLOD))) {
       if( (submaps@submaps_list[[i]]@a[w.id[j]] < 1) & !is.na(submaps@submaps_list[[i]]@f[w.id[j]]) ) {
         FLOD[j,] <- log10((submaps@submaps_list[[i]]@HBD.prob[j,] + q * ( 1 - submaps@submaps_list[[i]]@HBD.prob[j,]))/
-                                 (submaps@submaps_list[[i]]@f[w.id[j]] + q * ( 1 - submaps@submaps_list[[i]]@f[w.id[j]]))) 
+                            (submaps@submaps_list[[i]]@f[w.id[j]] + q * ( 1 - submaps@submaps_list[[i]]@f[w.id[j]]))) 
       }
     }
-    moy_FLOD <- moy_FLOD + FLOD/length(submaps@submaps_list)
+    submaps@submaps_list[[i]]@FLOD <- FLOD 
   }
-  submaps@FLOD_recap <- moy_FLOD
   return(submaps)
 }
 
