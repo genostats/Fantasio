@@ -58,12 +58,12 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	
 	} else { # save plots in png files 
 	
-	png(paste('qqplot.GLM.', expl_var,'U.png')) 		# U = unadjusted
-	p1
+	png(paste('qqplot.GLM.', expl_var,'unadj.png')) 		# U = unadjusted
+	print(p1)
 	dev.off()
 	
-	png(paste('qqplot.GLM.', expl_var, 'A.png'))		# A = adjusted
-	p2
+	png(paste('qqplot.GLM.', expl_var, 'adj.png'))		# A = adjusted
+	print(p2)
 	dev.off()
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'unadj.png'))
