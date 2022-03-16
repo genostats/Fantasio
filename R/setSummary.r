@@ -92,9 +92,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
       }
     }
 
-    atlas <- setHBDProbAndFLOD(atlas, w.id = w.HBD, q=q)
-    #atlas <- setHBDProb(atlas, w.id = w.HBD)
-    #atlas <- setFLOD(atlas, w.HBD, q=q)
+    #atlas <- setHBDProbAndFLOD(atlas, w.id = w.HBD, q=q)
+    atlas <- setHBDProb(atlas, w.id = w.HBD)
+    atlas <- setFLOD(atlas, w.HBD, q=q)
    
     # test class of first submap to check if recap is ok 
     if(class(atlas@submaps_list[[1]])[1] == "snpsMatrix" & recap.by.segments) {
@@ -104,9 +104,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
     atlas@bySegments <- recap.by.segments
 
     # recapitulation !
-    #l2 <- recap(atlas, recap.by.segments)
-    #atlas@HBD_recap <- l2[[1]]
-    #atlas@FLOD_recap <- l2[[2]]
+    l2 <- recap(atlas, recap.by.segments)
+    atlas@HBD_recap <- l2[[1]]
+    atlas@FLOD_recap <- l2[[2]]
 
     atlas@HBDsegments <- HBDSegments(atlas, threshold = HBD.threshold, n.consecutive.markers = n.consecutive.markers) 
     
