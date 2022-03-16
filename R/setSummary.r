@@ -108,9 +108,9 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
     #atlas@HBD_recap <- l2[[1]]
     #atlas@FLOD_recap <- l2[[2]]
 
-    #atlas@HBDsegments <- HBDSegments(atlas, threshold = HBD.threshold, n.consecutive.markers = n.consecutive.markers) 
+    atlas@HBDsegments <- HBDSegments(atlas, threshold = HBD.threshold, n.consecutive.markers = n.consecutive.markers) 
     
-    #atlas <- setHFLOD(atlas, w.HFLOD)
+    atlas <- setHFLOD(atlas, w.HFLOD)
   }
   atlas
 }
