@@ -49,7 +49,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  final[i,'z_value'] 	<- summary(model)$coef[2,3]
 				  final[i,'p_value'] 	<- summary(model)$coef[2,4]
 			  }
-		  x@logisticRegression$unadj <- cbind(final, res)
+		  x@logisticRegression$unadj <- final
 		  message("-----------> GLM on UNADJUSTED data Done \n")
 		  }
 		
@@ -70,7 +70,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  final[i,'z_value'] 	<- summary(model)$coef[2,3]
 				  final[i,'p_value'] 	<- summary(model)$coef[2,4]
 			  }
-		  x@logisticRegression$adj <- cbind(final, res)  
+		  x@logisticRegression$adj <- final 
 		  message("-----------> GLM on ADJUSTED data Done \n")
 		  }
 	  }
