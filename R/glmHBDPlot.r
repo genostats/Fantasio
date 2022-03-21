@@ -40,7 +40,7 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	
 	if (save == FALSE) { # Default, just print plots on different windows
 
-	opar <- par(mfrow = c(2,2))  
+	opar <- par(mfrow = c(2,1))  
 	
 	#dev.new(height = 5.1, width = 5)
 	print(p1)
