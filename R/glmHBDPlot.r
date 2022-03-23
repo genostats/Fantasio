@@ -40,7 +40,7 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	
 	if (save == FALSE) { # Default, just print plots on different windows
 
-	opar <- par(mfrow = c(2,1))  
+	#opar <- par(mfrow = c(2,1))  
 	
 	#dev.new(height = 5.1, width = 5)
 	print(p1)
@@ -57,7 +57,7 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
 	abline(h=treshold, col = 'red')
 	
-	par(opar)
+	#par(opar)
 	
 	} else { # save plots in png files 
 	
