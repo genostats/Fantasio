@@ -66,5 +66,11 @@ setHBDProbAndFLODBySnps <- function(atlas, w.id, q = 1e-4)
   
   atlas@FLOD_recap <- flod
   
+  po <- match(colnames(atlas@HBD_recap), atlas@bedmatrix@snps$id)
+  snp.chr <- atlas@bedmatrix@snps$chr[po]
+  snp.pos <- atlas@bedmatrix@snps$pos[po]
+  atlas@HBD_recap <- atlas@HBD_recap[, order(snp.chr, snp.pos)]
+  atlas@FLOD_recap <- atlas@FLOD_recap[, order(snp.chr, snp.pos)]
+  
   atlas
 }
