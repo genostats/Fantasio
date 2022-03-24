@@ -116,7 +116,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
 				  data.frame( estimate, std_error, z_value, p_value)
 			  }
 			x@logisticRegression$adj <- cbind(final, res)
-			message("-----------> GLM on UNADJUSTED data Done \n")
+			message("-----------> GLM on ADJUSTED data Done \n")
 	 	  }
 	 	 parallel::stopCluster(cl)
 	  }
