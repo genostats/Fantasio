@@ -22,7 +22,7 @@ HBDSegmentsBySegments <- function(submaps, HBD_recap, n.consecutive.markers, thr
   # ### fin modifs ####
   
   #find the name of the marker to find the index of the segments in the chromosome
-  marker_names <- colnames(submaps@submaps_list[[1]]@map$id)
+  marker_names <- submaps@submaps_list[[1]]@map$id
   
   #to which chromosomes these markers correspond
   correspondance <- match(marker_names, submaps@bedmatrix@snps$id)
