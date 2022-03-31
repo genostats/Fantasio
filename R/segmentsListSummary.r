@@ -30,11 +30,16 @@ segmentsListSummary <- function(segmentList)
     res <- numeric(length(segmentList[[i]]))
     for(j in seq_along(segmentList[[i]]))
     {
-    	if (length(segmentList[[i]][[j]]) == 0) next
-    	else if (length(segmentList[[i]][[j]]) == 1) { 
-    		res[j] <- 1 
-    	} else { res[j] <- length(segmentList[[i]][[j]][1]:segmentList[[i]][[j]][2])
-    	}
+      if (is.list(segmentList[[i]][[j]])) {
+        l <- sapply(segmentList[[i]][[j]], function(k) length(k[1]: k[2]) )
+        res[j] <- sum(l)
+      } else {
+    	  if (length(segmentList[[i]][[j]]) == 0) next
+    	  else if (length(segmentList[[i]][[j]]) == 1) { 
+    		  res[j] <- 1 
+    	  } else { res[j] <- length(segmentList[[i]][[j]][1]:segmentList[[i]][[j]][2])
+    	  }
+      }
     }
     res <- sum(res)
     n_mark[i] <- res
