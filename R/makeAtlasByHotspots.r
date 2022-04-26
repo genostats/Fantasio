@@ -70,7 +70,6 @@ makeAtlasByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListB
     }
     cl <- makeForkCluster(n.cores)
     parLapply(cl, seq_len(n.cores), seeder)
-    }
     submap <- parLapply(cl, seq_len(n), ff)
     stopCluster(cl)
     gc()
