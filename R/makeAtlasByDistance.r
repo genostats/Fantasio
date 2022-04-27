@@ -63,12 +63,14 @@ makeAtlasByDistance <- function(bedmatrix, n = 100, segmentsList = segmentsListB
   if(n.cores == 1) {
     submap <- lapply(seq_len(n), ff)
   } else {
-    RNGkind("L'Ecuyer-CMRG")
-    s <- matrix(.Random.seed, nrow = 1)
-    for(i in 2:n.cores) 
-      s <- rbind(s, nextRNGStream(s[i-1,]))
-    cl <- makeForkCluster(n.cores) 
-    parLapply(cl, seq_len(n.cores), function(i) .Random.seed <<- s[i,] ) 
+    seeder <- function(i) {
+      RNGkind("L'Ecuyer-CMRG")
+      s <- .Random.seed
+      for(k in 1:i) s <- nextRNGStream(s)
+      .Random.seed <<- s
+    }
+    cl <- makeForkCluster(n.cores)
+    parLapply(cl, seq_len(n.cores), seeder) 
     submap <- parLapply(cl, seq_len(n), ff)
     stopCluster(cl)
     gc()
