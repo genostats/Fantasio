@@ -21,12 +21,14 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	adj <- adj [which(adj$p_value != 0), ]
 	unadj <- unadj [which(unadj$p_value != 0), ]
 	
+	lim <- round(max(-log10(adj$p_value), -log10(unadj$p_value)))
+	
 	# QQ Plot
 	# unadjusted
-	p1 <- ggQQPlot(unadj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- unadjusted data"))
+	#p1 <- ggQQPlot(unadj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- unadjusted data"))
 	
 	# adjusted
-	p2 <- ggQQPlot(adj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- adjusted data"))
+	#p2 <- ggQQPlot(adj$p_value) + ggtitle(paste("QQ-plot GLM with", expl_var, "- adjusted data"))
 	
 	# Manhattan Plot
 	# Change colnames to fit with gaston
@@ -42,11 +44,12 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 
 	#opar <- par(mfrow = c(2,1))  
 	
+	# QQ Plot
 	#dev.new(height = 5.1, width = 5)
-	print(p1)
+	gaston::qqplot.pvalues(unadj$p, main = paste("QQ-plot GLM with", expl_var, "- unadjusted data"), ylim = c(0,lim) )
 	
 	#dev.new(height = 5.1, width = 5, ypos = 650)
-	print(p2)
+	gaston::qqplot.pvalues(adj$p, main = paste("QQ-plot GLM with", expl_var, "- adjusted data"), ylim = c(0,lim) )
 	
 	#dev.new(width = 14.25, height= 5.1, ypos = 0, xpos = 640)
 	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
