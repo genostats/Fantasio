@@ -49,15 +49,15 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	gaston::qqplot.pvalues(unadj$p, main = paste("QQ-plot GLM with", expl_var, "- unadjusted data"), ylim = c(0,lim) )
 	
 	#dev.new(height = 5.1, width = 5, ypos = 650)
-	gaston::qqplot.pvalues(adj$p, main = paste("QQ-plot GLM with", expl_var, "- adjusted data"), ylim = c(0,lim) )
+	gaston::qqplot.pvalues(adj$p, main = paste("QQ-plot GLM with", expl_var, "- adjusted data"), ylim = c(0,lim))
 	
 	#dev.new(width = 14.25, height= 5.1, ypos = 0, xpos = 640)
-	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"), ylim = c(0,lim))
 	abline(h=treshold, col = 'red')
 	
 	# adjusted
 	#dev.new(width = 14.25, height= 5.1, ypos = 650, xpos = 640)
-	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"), ylim = c(0,lim))
 	abline(h=treshold, col = 'red')
 	
 	#par(opar)
@@ -65,20 +65,20 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	} else { # save plots in png files 
 	
 	png(paste('qqplot.GLM.', expl_var,'unadj.png')) 		# U = unadjusted
-	print(p1)
+	gaston::qqplot.pvalues(unadj$p, main = paste("QQ-plot GLM with", expl_var, "- unadjusted data"), ylim = c(0,lim) )
 	dev.off()
 	
 	png(paste('qqplot.GLM.', expl_var, 'adj.png'))		# A = adjusted
-	print(p2)
+	gaston::qqplot.pvalues(adj$p, main = paste("QQ-plot GLM with", expl_var, "- adjusted data"), ylim = c(0,lim))
 	dev.off()
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'unadj.png'))
-	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(unadj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- unadjusted data"), chrom.col = c("darksalmon", "darkturquoise"), ylim = c(0,lim))
 	abline(h=treshold, col = 'red')
 	dev.off()	
 	
 	png(paste( 'manhattanplot.GLM.', expl_var,'adj.png'))
-	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"))
+	gaston::manhattan(adj, main = paste("Manhattan Plot \n GLM with ", expl_var, "- adjusted data"), chrom.col = c("darksalmon", "darkturquoise"), ylim = c(0,lim))
 	abline(h=treshold, col = 'red')
 	dev.off()	
 	
