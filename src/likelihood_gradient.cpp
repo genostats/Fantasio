@@ -4,6 +4,7 @@
 #include <ctime>
 #include <math.h>
 #include "LSE.h"
+#define SHOW(x) Rcpp::Rcout << #x << " = " << (x) << "\n";
 
 using namespace Rcpp;
 
@@ -30,25 +31,25 @@ NumericVector logLikelihood_gradientf(NumericMatrix logEmiss, NumericVector Dist
   for(int n = 1; n < N; n++) {
     // calcul des lt -------------------------
     double d = Dist[n-1];
-    if(d < 0) { // changement de chromosomoe
-      lt00 = log(1-f);
+    double ex = expm1(-a*d);
+    if(d < 0 || ex == -1) { // changement de chromosome || grande distance (a*d) 
+      lt00 = log1p(-f); // log(1-f);
       lt01 = log(f);
-      lt10 = log(1-f);
-      lt11 = log(f);
+      lt10 = lt00;      // log(1-f);
+      lt11 = lt01;      // log(f);
       df_lt00 = -1/(1-f);
       df_lt11 = 1/f;
       da_lt00 = da_lt01 = da_lt10 = da_lt11 = 0.;
     } else {
-      double ex = expm1(-a*d);
-      double t00 = 1 + f*ex;
       double t01 = -f*ex;
-      double t10 = -(1-f)*ex;
-      double t11 = 1 + (1-f)*ex;
+      double t00 = 1 - t01;      // 1 + f*ex;
+      double t11 = 1 + ex + t01; // 1 + (1-f)*ex; [plus stable numériquement quand ex proche de -1 (ou ex = -1) et f petit]
+      double t10 = 1 - t11;      // -(1-f)*ex;
 
-      lt00 = log(t00);
       lt01 = log(t01);
+      lt00 = log1p(-t01);     // log(t00);
+      lt11 = log1p(-t10);     // log(t11);
       lt10 = log(t10);
-      lt11 = log(t11);
 
       df_lt00 = ex/t00; 
       df_lt11 = -ex/t11; 
@@ -92,7 +93,6 @@ NumericVector logLikelihood_gradientf(NumericMatrix logEmiss, NumericVector Dist
   double lik = LSE(u, v);
   double df_lik = df_alpha0/(1+exp(v-u)) + df_alpha1/(1+1/exp(v-u));
   double da_lik = da_alpha0/(1+exp(v-u)) + da_alpha1/(1+1/exp(v-u));
-
   return NumericVector::create(lik, da_lik, df_lik);
 }
 
