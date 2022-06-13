@@ -2,7 +2,7 @@
 #' @param phen.code : c("plink", "R") 
 #' @export
 
-get_id_overlap <- function(bedmatrix, lim, chr, pheno = "all", phen.code = "plink") {
+getIdOverlap <- function(bedmatrix, lim, chr, pheno = "all", phen.code = "plink") {
   
   HFLOD <- bedmatrix@HFLOD
   HFLOD_chr <- HFLOD[(HFLOD$chr == chr & HFLOD$HFLOD >= lim),]
