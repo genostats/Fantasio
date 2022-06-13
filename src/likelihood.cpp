@@ -30,7 +30,8 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
   for(int n = 1; n < N; n++) {
     // calcul des lt
     double d = Dist[n-1];
-    if(d < 0) { // changement de chromosomoe
+    double ex = expm1(-a*d);
+    if(d < 0 || ex == -1) { // changement de chromosome || grande distance (a*d)
       lt00 = logumf;
       lt01 = logf;
       lt10 = logumf;
@@ -39,7 +40,6 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
       // attention à la façon de calculer log(1 - exp(-a*d))
       // quand a petit, log1p(-exp(-a*d)) marche moins bien que log(-expm1(-a*d))
       // [enfin ça change pas grand chose]
-      double ex = expm1(-a*d);
       lt00 = log1p(f*ex);
       lt01 = logf + log(-ex);
       lt10 = logumf + log(-ex);
