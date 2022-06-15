@@ -51,7 +51,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       verbose = TRUE, run.logistic = FALSE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
                       n.consecutive.markers = 5, phen.code = c("R", "plink"),
-                      expl.var = c("FLOD", "HBD_prob"), cov.df, covar) {
+                      expl.var = c("FLOD", "HBD_prob"), cov.df, cov) {
   
   segments <- match.arg(segments)
   if (missing(segment.options))
@@ -72,7 +72,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      if (missing(covar))
+      if (missing(cov))
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
       else 
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )
@@ -83,7 +83,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      if (missing(covar))
+      if (missing(cov))
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
       else 
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    }
@@ -95,7 +95,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      if (missing(covar))
+      if (missing(cov))
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
       else 
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    } else {
@@ -105,7 +105,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
       h <- setSummary(h, probs = run.proba, recap.by.segments = recap.by.segments, HBD.threshold = HBD.threshold, 
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
-      if (missing(covar))
+      if (missing(cov))
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
       else 
         h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, covar = cov,  phen.code = phen.code, n.cores = n.cores, run = run.logistic )    }
