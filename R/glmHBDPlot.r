@@ -21,7 +21,6 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	adj <- adj [which(adj$p_value != 0), ]
 	unadj <- unadj [which(unadj$p_value != 0), ]
 	
-	lim <- round(max(-log10(adj$p_value), -log10(unadj$p_value)))
 	
 	# QQ Plot
 	# unadjusted
@@ -39,6 +38,7 @@ glmHBDPlot = function ( x, expl_var, save = FALSE) {
 	colnames(adj)[colnames(adj) == 'p_value'] <- 'p'
 	
 	treshold = -log10(0.05/dim(x@submaps_list[[1]])[2])  #treshold based on the number of markers
+	lim <- round(max(-log10(adj$p), -log10(unadj$p), treshold))
 	
 	if (save == FALSE) { # Default, just print plots on different windows
 
