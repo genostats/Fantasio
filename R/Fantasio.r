@@ -53,10 +53,12 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       run.proba = TRUE, recap.by.segments = FALSE, 
                       verbose = TRUE, run.logistic = FALSE,
                       HBD.threshold = 0.5, q = 1e-04, quality = 95,
-                      n.consecutive.markers = 5, phen.code = c("R", "plink"),
+                      n.consecutive.markers = 5, phen.code = c("plink", "R"),
                       expl.var = c("FLOD", "HBD_prob"), cov.df, cov) {
   
   segments <- match.arg(segments)
+  phen.code <- match.arg(phen.code)
+  
   if (missing(segment.options))
     segment.options <- list()
   if(!("verbose" %in% segment.options))
