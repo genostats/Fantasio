@@ -8,7 +8,9 @@
 \alias{cytobands.b37}
 \alias{cytobands.b38}
 \title{Position of cytobands on the human chromosomes}
-\format{A data frame with 32996 rows and 7 variables}
+\format{
+A data frame with 32996 rows and 7 variables
+}
 \usage{
 data(cytobands.b35)
 }

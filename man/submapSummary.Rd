@@ -22,29 +22,29 @@ This function gives for each genotyped individual summary statistics about the c
 
 This function returns a dataframe with 13 columns :
 
-- FID : family identifier
+- famid : family identifier
 
-- IID : individual identifier
+- id : individual identifier
 
-- STATUS : status (1 non affected, 2 affected, 0 unknown)
+- pheno : phenotype (1 non affected, 2 affected, 0 unknown)
 
-- submaps : number of submaps used
+- submaps : number of valid submaps (i.e. submaps with a < a.threshold)
 
-- QUALITY: percentage of valid submaps (i.e. submaps with a < 1)
+- quality: percentage of valid submaps
 
-- F_MIN: minimum f on valid submaps
+- f_min: minimum f on valid submaps
 
-- F_MAX: maximum f on valid submaps
+- f_max: maximum f on valid submaps
 
-- F_MEAN: mean f on valid submaps
+- f_mean: mean f on valid submaps
 
-- F_MEDIAN: median f on valid submaps (recommended to estimate f)
+- f_median: median f on valid submaps (recommended to estimate f)
 
-- A_MEDIAN: median a on valid submaps (recommended to estimate a)
+- a_median: median a on valid submaps (recommended to estimate a)
 
-- pLRT_MEDIAN: median p-value of LRT tests on valid submaps
+- pLRT_median: median p-value of LRT tests on valid submaps
 
-- INBRED: a flag indicating if the individual is inbred (pLRT_MEDIAN <0.05) or not
+- inbred: a flag indicating if the individual is inbred (pLRT_median <0.05) or not
 
 - pLRT_<0.05: number of valid submaps with a LRT having a p-value below 0.05
 }

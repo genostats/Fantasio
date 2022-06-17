@@ -3,25 +3,39 @@
 \docType{package}
 \name{Fantasio}
 \alias{Fantasio}
-\alias{Fantasio-package}
 \title{Wrapper for the package Fantasio}
 \usage{
-Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
-  segment.options, n = 100, n.cores = 1, epsilon = 0.001,
-  run.proba = TRUE, recap.by.segments = FALSE, verbose = TRUE,
-  threshold = 0.5, q = 1e-04, quality = 95,
-  n.consecutive.markers = 5)
+Fantasio(
+  bedmatrix,
+  segments = c("Hotspots", "Distance"),
+  segment.options,
+  n = 100,
+  n.cores = 1,
+  epsilon = 0.001,
+  run.proba = TRUE,
+  recap.by.segments = FALSE,
+  verbose = TRUE,
+  run.logistic = FALSE,
+  HBD.threshold = 0.5,
+  q = 1e-04,
+  quality = 95,
+  n.consecutive.markers = 5,
+  phen.code = c("R", "plink"),
+  expl.var = c("FLOD", "HBD_prob"),
+  cov.df,
+  cov
+)
 }
 \arguments{
-\item{bedmatrix}{a bed.matrix object}
+\item{bedmatrix}{a bed.matrix}
 
 \item{segments}{The method to use for submap creation ("Hotspots" or "Distance")}
 
-\item{segment.options}{a  list of arguments to the function that will create the segments list. The names attribute of args gives the argument names.}
+\item{segment.options}{a list of arguments to the function that will create the segments list}
 
-\item{n}{the number of submaps wanted(default is 100)}
+\item{n}{the number of submaps (default is 100)}
 
-\item{n.cores}{the number of cores to use if you want to compute submaps using parellelism (default is 1)}
+\item{n.cores}{number of cores to use if you want to compute submaps using parellelism (default is 1)}
 
 \item{epsilon}{genotype error rate (default is 0.001)}
 
@@ -31,43 +45,45 @@ Fantasio(bedmatrix, segments = c("Hotspots", "Distance"),
 
 \item{verbose}{whether you want informations about computations (default is TRUE)}
 
-\item{threshold}{the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)}
+\item{run.logistic}{whether you want to run the logistic regression (default is FALSE)}
 
-\item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
+\item{HBD.threshold}{value of the HBD probability threshold used to determine whether a segment is HBD or not (default is 0.5)}
 
-\item{quality}{Allows the user to choose the minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
+\item{q}{assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
 
-\item{n.consecutive.markers}{the number of consecutive marker with a probabilitie equal or greater to the value of threshold, to be use to fing HBDsegments}
+\item{quality}{minimal quality (in \%) to include an inbred individual into the analysis (default is 95)}
+
+\item{n.consecutive.markers}{number of consecutive markers with a probability equal or greater to the value of `HBD.threshold`, used to find HBDsegments}
+
+\item{phen.code}{phenotype coding :
+- 'R' : 0:control ; 1:case ; NA:unknown (default)
+- 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown}
+
+\item{cov.df}{a dataframe containing covariates for logistic regression}
+
+\item{cov}{covariates of interest for logistic regression such as 'age', 'sex' , ...
+if missing, all covariates of the dataframe are considered}
 }
 \description{
 This function is used as a wrapper for the package Fantasio to create segments list and submaps
 }
 \details{
-This function is a wrapper to make the usage of Fantasio, the package, easier. The function calls differents function :
+This function is a wrapper to make the usage of the package easier. The function calls different functions:
 
-The first function `segmentsListByDistance` and`segmentsListByHotspots` is used to create a list of segments though the genome.
+The first function, `segmentsListByDistance` or `segmentsListByHotspots`, is used to create a list of segments.
 
-The second function `makeAtlasBySnsp`and `makeAtlasByHotspots` is used to create submaps.
+The second function, `makeAtlasByDistance` or `makeAtlasByHotspots`, is used to create submaps.
 
-The segments arguments accept only two options : Hotspots or Distance.
+Depending on the value of the `segments` argument (Hotspots or Distance), the segments are created based on recombination hotspots,
+ or based on markers' distance. In the latter case, the submaps are made by picking a random marker in
+ every segments and going through each segment from left to right using a given step (by default it is 0.5 cM).
 
-Depending of the value of the segments argument (Hotspots or Distance) the segments are made by using the hotspots of recombinaison
+The arguments that can be included in `segment.options` are described in `segmentsListByDistance` and `segmentsListByHotspots`.
 
-in the genome thanks to hotspots file, then the submaps are made by Hotspots by picking randomly a maker in every segments created before.
-
-Or the segments are made by using the gaps between markers (option Distance), then the submaps are made by picking a random marker in
-
-every segments and going through each segment from left to right using a supply step (by default it is 0.5 cM).
-
-To see which arguments can be passed in the list of args in the segment.options please go check the `segmentsListByDistance` or `segmentsListByHotspots` functions manual.
-
-When doing a number N of submaps using the options recap.by.segments,
-
-the different values computed from the
-
-snps picked randomly (a, f, p.lrt, ...) in a segments is considered different values
-
-for the same segments.
+If `recap.by.segments = FALSE`, the quantities such as HBD probabilities, FLOD, HFLOD, 
+  are recapitulated SNP by SNP, by taking the mean value accross submaps in which the SNP appear. 
+  If `recap.by.segments = TRUE` (only with `segments = "Hotspots"`), 
+  these quantities are averaged over all SNPs sampled in a segment.
 }
 \examples{
 #Please refer to vignette 
@@ -75,13 +91,13 @@ for the same segments.
 
 }
 \seealso{
-read.bed.matrix
+\code{\link{read.bed.matrix}}
 
-segmentsListByDistance
+\code{\link{segmentsListByDistance}}
 
-makeAtlasByDistance
+\code{\link{makeAtlasByDistance}}
 
-makeAtlasByHotspots
+\code{\link{makeAtlasByHotspots}}
 
-makeAtlasByHotspots
+\code{\link{makeAtlasByHotspots}}
 }

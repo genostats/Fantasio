@@ -5,5 +5,5 @@ log.proba.emission <- function(Y1, Y2, logFreq, epsilon = 1e-3) {
   if(nrow(logFreq) != N) stop()
   if(max(Y1, Y2) > ncol(logFreq)) stop()
 
-  .Call('festim_logEmiss', PACKAGE = "Fantasio", Y1, Y2, logFreq, epsilon)
+  .Call('_Fantasio_logEmiss', PACKAGE = "Fantasio", Y1, Y2, logFreq, epsilon)
 }

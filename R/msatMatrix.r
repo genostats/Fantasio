@@ -44,7 +44,7 @@ msat.log.emiss <- function(x) {
   for(i in seq_len(x@nrow)) {
     Y1 <- x@msat[,2*i-1]
     Y2 <- x@msat[,2*i]
-    logEmiss[ c(2*i-1,2*i) ,] <- .Call('festim_logEmiss', PACKAGE = "Fantasio", Y1, Y2, x@log.freq, x@epsilon)
+    logEmiss[ c(2*i-1,2*i) ,] <- .Call('_Fantasio_logEmiss', PACKAGE = "Fantasio", Y1, Y2, x@log.freq, x@epsilon)
   }
   logEmiss
 }

@@ -4,14 +4,12 @@
 \alias{recap}
 \title{HBD/FLOD recap}
 \usage{
-recap(submaps, recap.by.segments = submaps@bySegments, list.id)
+recap(atlas, recap.by.segments = atlas@bySegments)
 }
 \arguments{
-\item{submaps}{a atlas object}
+\item{atlas}{a atlas object}
 
 \item{recap.by.segments}{: whether you want the recap by segments or snps}
-
-\item{list.id}{: a list individual}
 }
 \value{
 This function returns a list of dataframes.
@@ -37,11 +35,11 @@ segmentsListByHotspots
 
 festim
 
-setHBDprob
+setHBDProb
 
 setFLOD
 
 setHFLOD
 
-HBDsegments
+HBDSegments
 }

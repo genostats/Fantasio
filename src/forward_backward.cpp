@@ -70,17 +70,3 @@ NumericMatrix forward_backward(NumericMatrix logEmiss, NumericVector Dist, doubl
   return Beta;
 }
 
-RcppExport SEXP festim_forward_backward(SEXP logEmissSEXP, SEXP DistSEXP, SEXP aSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericMatrix >::type logEmiss(logEmissSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Dist(DistSEXP);
-    Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type f(fSEXP);
-    __result = Rcpp::wrap(forward_backward(logEmiss, Dist, a, f));
-    return __result;
-END_RCPP
-}
-
-

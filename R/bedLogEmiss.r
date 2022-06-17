@@ -16,6 +16,6 @@ bedLogEmiss <- function(x, map, epsilon = 1e-3) {
     stop("The genotyping error rate 'epsilon' should be between 0 and 1")
   if(epsilon > 0.01)
     warning("A high genotyping error rate 'epsilon' is unlikely to give sensible results")
-  .Call('festim_m4_logEmiss', PACKAGE = "Fantasio", x@bed, x@p, map, epsilon)
+  .Call('_Fantasio_m4_logEmiss', PACKAGE = "Fantasio", x@bed, x@p, map, epsilon)
   
 }

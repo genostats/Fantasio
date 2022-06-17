@@ -53,16 +53,3 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
   return LSE(alpha0 + logEmiss(0,N-1), alpha1 + logEmiss(1,N-1));
 }
 
-RcppExport SEXP festim_logLikelihood(SEXP logEmissSEXP, SEXP DistSEXP, SEXP aSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericMatrix >::type logEmiss(logEmissSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Dist(DistSEXP);
-    Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type f(fSEXP);
-    __result = Rcpp::wrap(logLikelihood(logEmiss, Dist, a, f));
-    return __result;
-END_RCPP
-}
-

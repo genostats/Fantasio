@@ -16,5 +16,5 @@ forwardBackward <- function(logEmission, delta.Distance, a, f) {
     return( matrix( c(1,0), nrow = 2, ncol = ncol(logEmission) ) )
   if( f == 1) 
     return( matrix( c(0,1), nrow = 2, ncol = ncol(logEmission) ) )
-  .Call('festim_forward_backward', PACKAGE = "Fantasio", logEmission, delta.Distance, a, f)
+  .Call('_Fantasio_forward_backward', PACKAGE = "Fantasio", logEmission, delta.Distance, a, f)
 }

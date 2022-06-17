@@ -20,6 +20,7 @@ double transition_proba(int j, int i, double d, double a, double f) {
 }
 
 // On ne simule que la chaîne S
+// [[Rcpp::export]]
 NumericVector simu0(NumericVector Dist, double a, double f) {
   int N = Dist.length()+1;
   NumericVector S(N);
@@ -59,29 +60,4 @@ NumericMatrix simu_geno(NumericVector S, NumericMatrix Freq) {
   }
   return Y;
 }
-
-
-RcppExport SEXP festim_simu0(SEXP DistSEXP, SEXP aSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type Dist(DistSEXP);
-    Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type f(fSEXP);
-    __result = Rcpp::wrap(simu0(Dist, a, f));
-    return __result;
-END_RCPP
-}
-
-RcppExport SEXP festim_simu_geno(SEXP SSEXP, SEXP FreqSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type S(SSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type Freq(FreqSEXP);
-    __result = Rcpp::wrap(simu_geno(S, Freq));
-    return __result;
-END_RCPP
-}
-
 

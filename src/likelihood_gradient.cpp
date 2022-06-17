@@ -165,16 +165,3 @@ NumericVector logLikelihood_gradient(NumericMatrix logEmiss, NumericVector Dist,
     return logLikelihood_gradientf(logEmiss, Dist, a, f);
 }
 
-RcppExport SEXP festim_logLikelihood_gradient(SEXP logEmissSEXP, SEXP DistSEXP, SEXP aSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericMatrix >::type logEmiss(logEmissSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Dist(DistSEXP);
-    Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type f(fSEXP);
-    __result = Rcpp::wrap(logLikelihood_gradient(logEmiss, Dist, a, f));
-    return __result;
-END_RCPP
-}
-
