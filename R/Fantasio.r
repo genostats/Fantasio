@@ -11,7 +11,7 @@
 #' @param run.proba whether you want to computes HBD, FLOD score and HFLOD score (default is TRUE)  
 #' @param recap.by.segments if you want the summary of probabilities by snps or by segments (default is FALSE)
 #' @param verbose whether you want informations about computations (default is TRUE)
-#' @param logistic whether you want to run the logistic regression (default is FALSE)
+#' @param run.logistic whether you want to run the logistic regression (default is FALSE)
 #' @param HBD.threshold value of the HBD probability threshold used to determine whether a segment is HBD or not (default is 0.5)
 #' @param q assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)
 #' @param quality minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
@@ -19,11 +19,14 @@
 #' @param phen.code phenotype coding :
 #'        - 'R' : 0:control ; 1:case ; NA:unknown (default)
 #'        - 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown
+#' @param cov.df a dataframe containing covariates for logistic regression
+#' @param cov covariates of interest for logistic regression such as 'age', 'sex' , ...
+#' if missing, all covariates of the dataframe are considered
 #'        
 #' 
 #' @details This function is a wrapper to make the usage of the package easier. The function calls different functions: 
 #' @details The first function, `segmentsListByDistance` or `segmentsListByHotspots`, is used to create a list of segments. 
-#' @details The second function, `makeAtlasBySnsp` or `makeAtlasByHotspots`, is used to create submaps.
+#' @details The second function, `makeAtlasByDistance` or `makeAtlasByHotspots`, is used to create submaps.
 #' @details Depending on the value of the `segments` argument (Hotspots or Distance), the segments are created based on recombination hotspots,
 #'  or based on markers' distance. In the latter case, the submaps are made by picking a random marker in
 #'  every segments and going through each segment from left to right using a given step (by default it is 0.5 cM).
@@ -34,11 +37,11 @@
 #'   these quantities are averaged over all SNPs sampled in a segment.
 #'  
 #' 
-#' @seealso read.bed.matrix
-#' @seealso segmentsListByDistance
-#' @seealso makeAtlasByDistance
-#' @seealso makeAtlasByHotspots
-#' @seealso makeAtlasByHotspots
+#' @seealso \code{\link{read.bed.matrix}}
+#' @seealso \code{\link{segmentsListByDistance}}
+#' @seealso \code{\link{makeAtlasByDistance}}
+#' @seealso \code{\link{makeAtlasByHotspots}}
+#' @seealso \code{\link{makeAtlasByHotspots}}
 #'
 #' @examples
 #' #Please refer to vignette 

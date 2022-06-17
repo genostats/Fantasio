@@ -1,17 +1,20 @@
-#' Logistic regression on HBD prob or FLOD
+#' Logistic regression on HBD probability or FLOD score
 #' 
-#' @param x the bedmatrix after Fantasio()
+#' @param x an atlas object
 #' @param expl_var the explanatory variable 'FLOD' or 'HBD_prob'
 #' @param covar_df a dataframe containing covariates
-#' @param covar covariates of interest 
+#' @param covar covariates of interest such as 'age', 'sex' , ...
 #' if missing, all covariates of the dataframe are considered
 #' @param n.cores number of cores for parallelization calculation (default = 1)
-#' @param save choose if plot are saved or not (default = FALSE)
-#' @param run whether the fonction is called or not
+#' @param run whether the fonction is called or not (default = FALSE)
+#' @param phen.code phenotype coding :
+#'        - 'R' : 0:control ; 1:case ; NA:unknown (default)
+#'        - 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown
+#' if 'plink' the function automatically convert it to 'R' to run logistic regression
 #' 
 #' @export
 
-glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run, phen.code) {
+glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run = FALSE, phen.code) {
   
   if(class(x)[1] != "atlas")
     stop("Need an atlas")

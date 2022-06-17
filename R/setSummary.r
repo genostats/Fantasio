@@ -29,17 +29,16 @@
 #' 
 #' @return return an atlas containing every summary created
 #' 
-#' @seealso Fantasio
-#' @seealso makeAtlasByDistance
-#' @seealso segmentsListByHotspots
-#' @seealso festim
-#' @seealso setHBDProb
-#' @seealso setFLOD
-#' @seealso setHFLOD
-#' @seealso recap
-#' @seealso submapLikelihood
-#' @seealso submapEstim
-#' @seealso submapSummary
+#' @seealso \code{\link{Fantasio}}
+#' @seealso \code{\link{makeAtlasByDistance}}
+#' @seealso \code{\link{segmentsListByHotspots}}
+#' @seealso \code{\link{festim}}
+#' @seealso \code{\link{setHBDProbAndFLOD}}
+#' @seealso \code{\link{setHBDProbAndFLODBySnps}}
+#' @seealso \code{\link{setHFLOD}}
+#' @seealso \code{\link{submapLikelihood}}
+#' @seealso \code{\link{submapEstim}}
+#' @seealso \code{\link{submapSummary}}
 #' 
 #' 
 #' @export

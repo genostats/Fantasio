@@ -1,14 +1,11 @@
 #' QQ-Plot & Manhattan Plots for glm on HBD prob or FLOD
 #' 
-#' @param x the bedmatrix
+#' @param x an atlas object
 #' @param expl_var the explanatory variable 'FLOD' or 'HBD_prob'
-#' @param covar_df a dataframe containing covariates
-#' @param covar covariates of interest 
-#' if missing, all covariates of the dataframe are considered
 #' @param n.cores number of cores for parallelization calculation (default = 1)
-#' @param save choose if plot are saved or not (default = FALSE)
+#' @param save choose if plot are saved or not (.png format) (default = FALSE)
 #' 
-#' @seealso glmHBD()
+#' @seealso \code{\link{glmHBD}}
 #' 
 #' @export
 

@@ -1,3 +1,18 @@
+#' Computation of HBD probabilities and FLOD scores by snps 
+#' 
+#' This function is used to compute HBD probabilities and FLOD scores on individuals in a sample
+#' 
+#' @param atlas an atlas object
+#' @param w.id The indices of individals for which HBD probabilities are computed
+#' @details This function iterates over the slots submaps_list of the atlas object.
+#' @details For each submaps in the slots submaps_list of the object, the slots HBD_recap and FLOD_recap will be updated with a matrix of dimension : number_individual x number_of_markers
+#' 
+#' @return the atlas object with HBD_recap and FLOD_recap by snps
+#' 
+#' @seealso \code{\link{setHFLOD}}
+#' 
+#' @export
+
 setHBDProbAndFLODBySnps <- function(atlas, w.id, q = 1e-4)
 {
   if(class(atlas@submaps_list[[1]])[1] != "snpsMatrix" & class(atlas@submaps_list[[1]])[1] != "HostspotsMatrix")
