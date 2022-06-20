@@ -45,6 +45,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run = FALSE, phen
 		  # unadjusted 
 		  if (missing(covar_df)) {
 		    message("No covariates given for the analysis = unadjusted data. To use covariates import a dataframe.")
+		    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])"))
 			  for(i in 1:ncol(hbd)){
 				  model <- glm( pheno ~ hbd[,i] , family = binomial)
 				  final[i,'estimate'] 	<- summary(model)$coef[2,1]
@@ -60,9 +61,11 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run = FALSE, phen
 		  else {	
 			  if(missing(covar)) {
 			    message(paste0("No covariates specified - All covariates of the dataframe will be used : " , gsub(",", " +", toString(colnames(covar_df)))))
+			    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])", gsub(",", " +", toString(colnames(covar_df))) ))
 				  df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
-			    message( paste0("Covariates = ", gsub(",", " +", toString(covar))))
+			    message(paste0("Covariates = ", gsub(",", " +", toString(covar))))
+			    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])", gsub(",", " +", toString(covar))))
 				  df <- na.omit(as.data.frame(covar_df[ id , covar])) #rownames covar_df  = individual id 	
 			  }
 			
@@ -87,6 +90,7 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run = FALSE, phen
 		
 		  if(missing(covar_df)) {
 		    message("No covariates given for the analysis = unadjusted data. To use covariates import a dataframe.")
+		    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])"))
 		  
 			  res <- foreach (i = 1:ncol(hbd), .combine = rbind) %dopar% {
 				  model <- glm( pheno ~ hbd[,i] ,  family = binomial)
@@ -104,9 +108,11 @@ glmHBD <- function( x, expl_var, covar_df, covar, n.cores = 1, run = FALSE, phen
 	 	
 			  if(missing(covar)) {
 			    message(paste0("No covariates specified - All covariates of the dataframe will be used : " , gsub(",", " +", toString(colnames(covar_df)))))
+			    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])", gsub(",", " +", toString(colnames(covar_df))) ))
 			    df <- na.omit(covar_df[id,])				 # take all covar given in the dataframe
 			  } else {
 			    message( paste0("Covariates = ", gsub(",", " +", toString(covar))))
+			    message(paste0("Call : glm(formula = pheno ~ ",expl_var,"[,i])", gsub(",", " +", toString(covar))))
 				  df <- na.omit(as.data.frame(covar_df[ id , covar]))  	
 			  } 
 
