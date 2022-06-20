@@ -124,7 +124,7 @@ Fantasio <- function (bedmatrix, segments = c("Hotspots", "Distance"), segment.o
                       q = q, quality = quality, n.consecutive.markers = n.consecutive.markers, phen.code = phen.code)
       h <- glmHBD(h, expl_var = expl.var, phen.code = phen.code , n.cores = n.cores , run = run.logistic )
       
-      if(!missing(cov.df){
+      if(!missing(cov.df)) {
       	if (missing(cov))
         	h <- glmHBD(h, expl_var = expl.var, covar_df = cov.df, phen.code = phen.code, n.cores = n.cores, run = run.logistic )
       	else 
