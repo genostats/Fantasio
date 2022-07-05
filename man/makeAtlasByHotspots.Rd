@@ -4,9 +4,13 @@
 \alias{makeAtlasByHotspots}
 \title{Creation of submaps based on hotposts in the genome}
 \usage{
-makeAtlasByHotspots(bedmatrix, n = 100,
-  segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1,
-  epsilon = 0.001)
+makeAtlasByHotspots(
+  bedmatrix,
+  n = 100,
+  segmentsList = segmentsListByHotspots(bedmatrix),
+  n.cores = 1,
+  epsilon = 0.001
+)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}
@@ -43,14 +47,6 @@ You can check all the summary after they are been created by accesing their slot
 When using recap.by.segments with true value, we then consider that the 
 snps picked randomly in a segment is a representant of that segment.
 
-you can pass several arguments to the list.id arguments : 
-\itemize{
- \item{ignore this parameter if you want to compute HBD, FLOD and HFLOD for INRED individuals and with a QUALITY}
- \item{enter a list of individual for a computation of HBD, FLOD 
- score HFLOD score for them, each element of the vector should contains the familyId_individualId}
- \item{the character "all" for a computation of HBD, FLOD score and HFLOD score for every individual}
-}
-
 When doing a number N of submaps using the options recap.by.segments,
 
 the different values computed from the
@@ -73,7 +69,7 @@ segmentsListByHotspots
 
 festim
 
-setHBDprob
+setHBDProb
 
 setFLOD
 
@@ -87,9 +83,7 @@ submapLikelihood
 
 submapEstim
 
-summaryMarker
-
 submapSummary
 
-HBDsegments
+HBDSegments
 }

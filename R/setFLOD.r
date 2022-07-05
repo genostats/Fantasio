@@ -11,7 +11,7 @@
 #' 
 #' @return the atlas object with each FLOD.prob slot of each submaps in the slot submaps_list computed
 #' 
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setHFLOD
 #' 
 #' 
@@ -32,7 +32,7 @@ setFLOD <- function(submaps, w.id, q = 1e-4) {
     for (j in seq_len(nrow(FLOD))) {
       if( (submaps@submaps_list[[i]]@a[w.id[j]] < 1) & !is.na(submaps@submaps_list[[i]]@f[w.id[j]]) ) {
         FLOD[j,] <- log10((submaps@submaps_list[[i]]@HBD.prob[j,] + q * ( 1 - submaps@submaps_list[[i]]@HBD.prob[j,]))/
-                                 (submaps@submaps_list[[i]]@f[w.id[j]] + q * ( 1 - submaps@submaps_list[[i]]@f[w.id[j]]))) 
+                            (submaps@submaps_list[[i]]@f[w.id[j]] + q * ( 1 - submaps@submaps_list[[i]]@f[w.id[j]]))) 
       }
     }
     submaps@submaps_list[[i]]@FLOD <- FLOD 

@@ -19,7 +19,7 @@ getMarkerChromosom <- function(chrSegmentsList)
     {
       s <- chrSegmentsList[[i]]
     } else { 
-      s <- sample(chrSegmentsList[[i]], 1)
+      s <- sample(chrSegmentsList[[i]][1]:chrSegmentsList[[i]][2], 1)
     }
     submap[i] <- s
   }
@@ -82,7 +82,7 @@ makeSubmapByHotspots <- function(bedmatrix, segmentsList, epsilon = 1e-3, snpInd
     map$distance <- bedmatrix@snps$dist[submap]
   }
   
-  log.emiss <- bed.logEmiss(bedmatrix, submap, epsilon)
+  log.emiss <- bedLogEmiss(bedmatrix, submap, epsilon)
 
   new("HostspotsMatrix", length(submap), nrow(bedmatrix), submap, 
       bedmatrix@ped[,c("famid", "id", "father", "mother", "sex", "pheno")],

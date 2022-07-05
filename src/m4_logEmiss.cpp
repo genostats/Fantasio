@@ -40,17 +40,3 @@ NumericMatrix m4_logEmiss(XPtr<matrix4> p_A, NumericVector p, IntegerVector map,
   return logEmiss;
 }
 
-
-RcppExport SEXP festim_m4_logEmiss(SEXP p_ASEXP, SEXP pSEXP, SEXP mapSEXP, SEXP epsilonSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< XPtr<matrix4> >::type p_A(p_ASEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type map(mapSEXP);
-    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
-    rcpp_result_gen = Rcpp::wrap(m4_logEmiss(p_A, p, map, epsilon));
-    return rcpp_result_gen;
-END_RCPP
-}
-

@@ -4,8 +4,14 @@
 \alias{segmentsListByDistance}
 \title{Creation of a list of segments}
 \usage{
-segmentsListByDistance(bedmatrix, gap = 0.5, minMarkers = 50,
-  nbSegments = 20, unit = "cM", verbose = TRUE)
+segmentsListByDistance(
+  bedmatrix,
+  gap = 0.5,
+  minMarkers = 50,
+  nbSegments = 20,
+  unit = "cM",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}

@@ -4,8 +4,7 @@
 \alias{HFLODManhattanPlot}
 \title{Creation of an manhattan plot of the HFLOD}
 \usage{
-HFLODManhattanPlot(submaps, regions, unit = "cM", MA = TRUE,
-  nbSNP_MA = 50)
+HFLODManhattanPlot(submaps, regions, unit = "cM", MA = TRUE, nbSNP_MA = 50)
 }
 \arguments{
 \item{submaps}{a atlas object}

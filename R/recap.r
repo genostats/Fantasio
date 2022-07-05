@@ -14,10 +14,10 @@
 #' @seealso makeAtlasByDistance
 #' @seealso segmentsListByHotspots
 #' @seealso festim
-#' @seealso setHBDprob
+#' @seealso setHBDProb
 #' @seealso setFLOD
 #' @seealso setHFLOD
-#' @seealso HBDsegments
+#' @seealso HBDSegments
 #'
 #' @return This function returns a list of dataframes. 
 #'
@@ -37,12 +37,12 @@ recap <- function(atlas, recap.by.segments = atlas@bySegments) {
   }
   
   # HBD probabilities and FLOD scores
-  proba_HBD  <- submap.HBD(atlas)
-  FLOD <- submap.FLOD(atlas)
+  proba_HBD  <- submapHBDRecap(atlas)
+  FLOD <- submapFLODRecap(atlas)
   
   if(recap.by.segments) {
-    recap.by.segments(atlas, proba_HBD, FLOD)
+    recapBySegments(atlas, proba_HBD, FLOD)
   } else {
-    recap.by.snps(atlas, proba_HBD, FLOD)
+    recapBySnps(atlas, proba_HBD, FLOD)
   }
 }  

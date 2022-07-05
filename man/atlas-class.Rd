@@ -18,8 +18,6 @@ Class \code{atlas} This is the class used to create an object which will contain
 
 \item{\code{estimation_summary}}{a dataframe with both a and f estimation over the submaps}
 
-\item{\code{marker_summary}}{a dataframe indicating the number of times a marker has been chosen}
-
 \item{\code{submap_summary}}{a dataframe with summary statitistics about the submaps}
 
 \item{\code{HBD_recap}}{a dataframe with for one individual and for one marker a mean computation of all the HBD probabilities computed, on every individuals.}
@@ -37,5 +35,7 @@ Class \code{atlas} This is the class used to create an object which will contain
 \item{\code{unit}}{the unit of the markers (cM or Bp).}
 
 \item{\code{gap}}{the value of the gap used to pick marker when doing submaps by snps. (see function Fantasio for more infos)}
+
+\item{\code{logisticRegression}}{the results of logistic regression}
 }}
 

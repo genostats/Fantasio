@@ -4,8 +4,13 @@
 \alias{segmentsListByHotspots}
 \title{Creation of a list of segments}
 \usage{
-segmentsListByHotspots(bedmatrix, intensity = 10,
-  hotspots = hotspot_hg19, minMarkers = 0, verbose = TRUE)
+segmentsListByHotspots(
+  bedmatrix,
+  intensity = 10,
+  hotspots = hotspot_hg19,
+  minMarkers = 0,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}

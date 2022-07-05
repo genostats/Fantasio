@@ -7,7 +7,9 @@
 \alias{hotspot_hg18}
 \alias{hotspot_hg19}
 \title{Position of hotspots throughout the human genome}
-\format{Data frames with 32996 rows and 7 variables}
+\format{
+Data frames with 32996 rows and 7 variables
+}
 \usage{
 data(hotspot_hg17)
 }

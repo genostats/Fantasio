@@ -7,7 +7,7 @@
 #' @param atlas a atlas object
 #' @param list.id you can either :
 #'     - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
-#'       for individuals who are considerated INBRED and with a QUALITY
+#'       for individuals who are considerated inbred and with a quality
 #'       greater or equal to 95%}
 #'     - enter a list of individual for a computation of HBD, FLOD score HFLOD score for them
 #'     - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual
@@ -29,23 +29,24 @@
 #' 
 #' @return return an atlas containing every summary created
 #' 
-#' @seealso Fantasio
-#' @seealso makeAtlasByDistance
-#' @seealso segmentsListByHotspots
-#' @seealso festim
-#' @seealso setHBDprob
-#' @seealso setFLOD
-#' @seealso setHFLOD
-#' @seealso recap
-#' @seealso submapLikelihood
-#' @seealso submapEstim
-#' @seealso submapSummary
+#' @seealso \code{\link{Fantasio}}
+#' @seealso \code{\link{makeAtlasByDistance}}
+#' @seealso \code{\link{segmentsListByHotspots}}
+#' @seealso \code{\link{festim}}
+#' @seealso \code{\link{setHBDProbAndFLOD}}
+#' @seealso \code{\link{setHBDProbAndFLODBySnps}}
+#' @seealso \code{\link{setHFLOD}}
+#' @seealso \code{\link{submapLikelihood}}
+#' @seealso \code{\link{submapEstim}}
+#' @seealso \code{\link{submapSummary}}
 #' 
 #' 
 #' @export
 setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
-    q = 1e-04, HBD.threshold = 0.5, quality = 95, n.consecutive.markers = 5) {
+    q = 1e-04, HBD.threshold = 0.5, quality = 95, n.consecutive.markers = 5, phen.code = c('plink', 'R')) {
 
+  phen.code <- match.arg(phen.code)
+  
   if(class(atlas)[1] != "atlas")
     stop("Need an atlas")
  
@@ -54,34 +55,44 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
   atlas@submap_summary <- suppressWarnings(submapSummary(atlas@submaps_list))
   
   if(probs) {
-    test <- any( atlas@submap_summary$STATUS == 2 ) 
+    if (phen.code == 'plink') {
+      test <- any( atlas@submap_summary$pheno == 2 ) 
+    } else {
+      test <- any( atlas@submap_summary$pheno == 1 ) 
+    }
     if(missing(list.id)) { # pas de list.id : défaut 
       if(test) { # il y a des atteints
         # on calcule les probas HBD et les FLOD sur les individus consanguins avec qualité suffisante
         # le HFLOD sur les atteints parmi ceux là
-        w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
-        w.HFLOD <- match( which(atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED & atlas@submap_summary$STATUS == 2), w.HBD )
+        w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
+        if (phen.code == 'plink') {
+          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 2), w.HBD )
+        } else {
+          w.HFLOD <- match( which(atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred & atlas@submap_summary$pheno == 1), w.HBD )
+        }
       } else {
         # on calcule les probas HBD, les FLOD et les HFLOD sur tous les consanguins 
         # avec qualité
-        w.HBD   <- which( atlas@submap_summary$QUALITY >= quality & atlas@submap_summary$INBRED )
+        w.HBD   <- which( atlas@submap_summary$quality >= quality & atlas@submap_summary$inbred )
         w.HFLOD <- seq_along(w.HBD)
-        warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
+        if (phen.code == 'plink') {
+          warning("No individual with pheno = 2.\nUsing all inbred individuals with good estimation quality.")
+        } else {
+          warning("No individual with pheno = 1.\nUsing all inbred individuals with good estimation quality.")
+        }
       }
     } else { # on calcule sur les individus donnés !
       if(list.id == "all") {
         w.HBD <- seq_len(nrow(atlas@submap_summary))
         w.HFLOD <- seq_along(w.HBD)
       } else {
-        # vec <- strsplit(list.id, "_")
-        # w.HBD <- sapply(vec, function(i) which(atlas@submap_summary$FID == i[1] & atlas@submap_summary$IID == i[2]))
-        w.HBD <- match( list.id, unique.ids(atlas@submap_summary$FID, atlas@submap_summary$IID) )
+        w.HBD <- match( list.id, uniqueIds(atlas@submap_summary$famid, atlas@submap_summary$id) )
         w.HFLOD <- seq_along(w.HBD)
       }
     }
-
-    atlas <- setHBDprob(atlas, w.id = w.HBD)
-    atlas <- setFLOD(atlas, w.HBD, q=q)
+    
+    #atlas <- setHBDProb(atlas, w.id = w.HBD)
+    #atlas <- setFLOD(atlas, w.HBD, q=q)
    
     # test class of first submap to check if recap is ok 
     if(class(atlas@submaps_list[[1]])[1] == "snpsMatrix" & recap.by.segments) {
@@ -89,13 +100,19 @@ setSummary <- function (atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
       recap.by.segments <- FALSE
     }
     atlas@bySegments <- recap.by.segments
+    
+    if (atlas@bySegments == TRUE) {
+      atlas <- setHBDProbAndFLOD(atlas, w.id = w.HBD, q=q)
+    } else {
+      atlas <- setHBDProbAndFLODBySnps(atlas, w.id = w.HBD, q=q)
+    }
 
     # recapitulation !
-    l2 <- recap(atlas, recap.by.segments)
-    atlas@HBD_recap <- l2[[1]]
-    atlas@FLOD_recap <- l2[[2]]
+    #l2 <- recap(atlas, recap.by.segments)
+    #atlas@HBD_recap <- l2[[1]]
+    #atlas@FLOD_recap <- l2[[2]]
 
-    atlas@HBDsegments <- HBDsegments(atlas, threshold = HBD.threshold, n.consecutive.markers = n.consecutive.markers) 
+    atlas@HBDsegments <- HBDSegments(atlas, threshold = HBD.threshold, n.consecutive.markers = n.consecutive.markers) 
     
     atlas <- setHFLOD(atlas, w.HFLOD)
   }

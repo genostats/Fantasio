@@ -16,11 +16,11 @@ A data frame with columns:
  \item{chr}{chromosome}
  \item{pos}{position in bp}
  \item{dist}{position in cM}
- \item{Freq}{number of times the marker has been picked}
+ \item{Freq}{number of times the marker has been picked (0 for markers never selected in any submap)}
 }
 }
 \description{
-This function gives for each marker (picked at least once) 
+This function gives for each marker 
 the number of times it has been selected in a submap.
 }
 \seealso{

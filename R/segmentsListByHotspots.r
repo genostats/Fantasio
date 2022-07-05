@@ -80,15 +80,19 @@ segmentsListByHotspots <- function(bedmatrix, intensity = 10 , hotspots = hotspo
     {
       b <- which(mkr > chr_segment[j,1] & mkr < chr_segment[j,2]) #which markers are  between two hotspots
       if (length(b)== 0) next
-      chr[[j]] <- b + shift[i]
+      if (length(b) == 1) {
+	chr[[j]] <- b + shift[i]
+      } else {
+      c <- c(b[1], b[length(b)])
+      chr[[j]] <- c + shift[i]
+      }
     }
     VIII[[i]] <- chr
-    VIII[[i]] <- null.remover(VIII[[i]])
+    VIII[[i]] <- nullRemover(VIII[[i]])
     VIII[[i]] <- cleanHotspots(VIII[[i]], minMarkers)  
   }
   if(verbose) cat("\n")
   
-   
   new("HostspotsSegments", VIII)
 } 
 

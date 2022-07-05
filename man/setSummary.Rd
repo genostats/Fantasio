@@ -4,16 +4,24 @@
 \alias{setSummary}
 \title{Creation summary statistic files}
 \usage{
-setSummary(atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
-  q = 1e-04, threshold = 0.5, quality = 95,
-  n.consecutive.markers = 5)
+setSummary(
+  atlas,
+  list.id,
+  probs = TRUE,
+  recap.by.segments = FALSE,
+  q = 1e-04,
+  HBD.threshold = 0.5,
+  quality = 95,
+  n.consecutive.markers = 5,
+  phen.code = c("plink", "R")
+)
 }
 \arguments{
 \item{atlas}{a atlas object}
 
 \item{list.id}{you can either :
 - ignore this parameter if you want to compute HBD, FLOD and HFLOD 
-  for individuals who are considerated INBRED and with a QUALITY
+  for individuals who are considerated inbred and with a quality
   greater or equal to 95%}
 - enter a list of individual for a computation of HBD, FLOD score HFLOD score for them
 - use "all" for a computation of HBD, FLOD score and HFLOD score for every individual}
@@ -25,28 +33,25 @@ setSummary(atlas, list.id, probs = TRUE, recap.by.segments = FALSE,
 
 \item{q}{Allows the user to choose the assumed frequency of the mutation involved in the disease for each individual (default is 0.0001)}
 
-\item{threshold}{the value of the threshold when finding HBD segment, threshold is the probability of being HBD or not (default is 0.5)}
+\item{HBD.threshold}{value of the HBD probability threshold used to determine whether a segment is HBD or not (default is 0.5)}
 
 \item{quality}{The minimum percentage use to assume if a submap is valid (default is 95)}
 
 \item{n.consecutive.markers}{the number of consecutive markers with a probability equal or greater to the value of the threshold, to be used to find HBDsegments (default is 5)}
 }
 \value{
-return a new list object containing every dataframe and object created
+return an atlas containing every summary created
 }
 \description{
 This function is uses to ouput all the summary files after the creation of the atlas by the following two functions : 
 `makeAtlasByHotspots` and `makeAtlasByDistance` is over.
 }
 \details{
-the function filled the empty slots of the atlas object. It calls different functions and uses the results of each one to filled 
-the object. This function computes summary for the following elements :
+the function add content to the atlas object.
 
 - summary for likelihood0/likelihood1
 
 - summary for estimation of a and f
-
-- marker summary
 
 - summary for the submaps
 
@@ -57,29 +62,23 @@ the object. This function computes summary for the following elements :
 - comutation of HBDsegments
 }
 \seealso{
-Fantasio
+\code{\link{Fantasio}}
 
-makeAtlasByDistance
+\code{\link{makeAtlasByDistance}}
 
-segmentsListByHotspots
+\code{\link{segmentsListByHotspots}}
 
-festim
+\code{\link{festim}}
 
-setHBDprob
+\code{\link{setHBDProbAndFLOD}}
 
-setFLOD
+\code{\link{setHBDProbAndFLODBySnps}}
 
-setHFLOD
+\code{\link{setHFLOD}}
 
-recap
+\code{\link{submapLikelihood}}
 
-setSummary
+\code{\link{submapEstim}}
 
-submapLikelihood
-
-submapEstim
-
-submapSummary
-
-HBDsegments
+\code{\link{submapSummary}}
 }

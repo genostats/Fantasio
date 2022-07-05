@@ -30,7 +30,8 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
   for(int n = 1; n < N; n++) {
     // calcul des lt
     double d = Dist[n-1];
-    if(d < 0) { // changement de chromosomoe
+    double ex = expm1(-a*d);
+    if(d < 0 || ex == -1) { // changement de chromosome || grande distance (a*d)
       lt00 = logumf;
       lt01 = logf;
       lt10 = logumf;
@@ -39,7 +40,6 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
       // attention à la façon de calculer log(1 - exp(-a*d))
       // quand a petit, log1p(-exp(-a*d)) marche moins bien que log(-expm1(-a*d))
       // [enfin ça change pas grand chose]
-      double ex = expm1(-a*d);
       lt00 = log1p(f*ex);
       lt01 = logf + log(-ex);
       lt10 = logumf + log(-ex);
@@ -51,18 +51,5 @@ double logLikelihood(NumericMatrix logEmiss, NumericVector Dist, double a, doubl
     alpha0  = alpha0_;
   }
   return LSE(alpha0 + logEmiss(0,N-1), alpha1 + logEmiss(1,N-1));
-}
-
-RcppExport SEXP festim_logLikelihood(SEXP logEmissSEXP, SEXP DistSEXP, SEXP aSEXP, SEXP fSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericMatrix >::type logEmiss(logEmissSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Dist(DistSEXP);
-    Rcpp::traits::input_parameter< double >::type a(aSEXP);
-    Rcpp::traits::input_parameter< double >::type f(fSEXP);
-    __result = Rcpp::wrap(logLikelihood(logEmiss, Dist, a, f));
-    return __result;
-END_RCPP
 }
 

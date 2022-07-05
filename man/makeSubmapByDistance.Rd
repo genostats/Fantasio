@@ -4,8 +4,7 @@
 \alias{makeSubmapByDistance}
 \title{Creation of a submaps}
 \usage{
-makeSubmapByDistance(bedmatrix, segmentsList, epsilon = 0.001,
-  snpIndices)
+makeSubmapByDistance(bedmatrix, segmentsList, epsilon = 0.001, snpIndices)
 }
 \arguments{
 \item{bedmatrix}{a bed.matrix object}

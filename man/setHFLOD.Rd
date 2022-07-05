@@ -4,10 +4,12 @@
 \alias{setHFLOD}
 \title{Computation of HFLOD scores}
 \usage{
-setHFLOD(submaps)
+setHFLOD(atlas, w.id)
 }
 \arguments{
-\item{submaps}{a atlas object}
+\item{atlas}{a atlas object}
+
+\item{w.id}{vector of indices to be considered in the FLOD_recap matrix}
 }
 \value{
 the atlas object with it's slot HFLOD filled with a matrix of dimensions : number_of_marker x 2. The first column is the value of HFLOD for the marker. 
@@ -20,7 +22,7 @@ This function is used to compute HFLOD scores on individuals in a sample
 This function iterates over the slots submaps_list of the atlas object.
 }
 \seealso{
-setHBDprob
+setHBDProb
 
 setFLOD
 }

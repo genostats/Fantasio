@@ -32,16 +32,3 @@ NumericMatrix logEmiss(NumericVector Y1, NumericVector Y2, NumericMatrix logFreq
   return logEmiss;
 }
 
-RcppExport SEXP festim_logEmiss(SEXP Y1SEXP, SEXP Y2SEXP, SEXP logFreqSEXP, SEXP epsilonSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector >::type Y1(Y1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Y2(Y2SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type logFreq(logFreqSEXP);
-    Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
-    __result = Rcpp::wrap(logEmiss(Y1, Y2, logFreq, epsilon));
-    return __result;
-END_RCPP
-}
-
