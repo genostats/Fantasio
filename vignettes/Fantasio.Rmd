@@ -1,9 +1,9 @@
 ---
 title: "Fantasio"
-subtitle: 'Version 0.1'
-author: "Isuru HAUPE, Marie MICHEL, Anne-Louise Leutenegger, Hervé Perdry"
+subtitle: 'Version 0.2'
+author: "Margot DEROUIN, Isuru HAUPE, Marie MICHEL, Anne-Louise LEUTENEGGER, Hervé PERDRY"
 version: 0.2
-date: "2019-12-05"
+date: "2022-11-07"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
