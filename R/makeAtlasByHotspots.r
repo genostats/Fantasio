@@ -45,7 +45,7 @@
 #' #Please refer to vignette 
 #'
 #' @export
-makeAtlasByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3) {
+makeAtlasByHotspots <- function(bedmatrix, n = 100, segmentsList = segmentsListByHotspots(bedmatrix), n.cores = 1, epsilon = 1e-3, init.seed = FALSE) {
 
   if(class(segmentsList)[1] != "HostspotsSegments")
     stop("mismatch segments list, need a list of segments created by the function 'segmentsListByHotspots' ")
