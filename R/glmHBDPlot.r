@@ -120,7 +120,7 @@ glmHBDPlot = function ( x, expl_var, plot = c('all', 'unadj', 'adj'), qq = FALSE
 		}
 	}
 	
-		if (plot == 'adj') {
+	else if (plot == 'adj') {
 
 		if ('adj' %in% names(x@logisticRegression)){
 			adj <- x@logisticRegression$adj
