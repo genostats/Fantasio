@@ -134,7 +134,7 @@ glmHBDPlot = function ( x, expl_var, plot = c('all', 'unadj', 'adj'), qq = FALSE
 		colnames(adj)[colnames(adj) == 'p_value'] <- 'p'
 	
 		treshold = -log10(0.05/dim(x@submaps_list[[1]])[2])  #treshold based on the number of markers
-		lim <- round(max(-log10(adj$p), -log10(unadj$p), treshold))+1
+		lim <- round(max(-log10(adj$p), treshold))+1
 	
 		if (save == FALSE) { # Default, just print plots on different windows
 	
