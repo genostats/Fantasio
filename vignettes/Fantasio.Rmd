@@ -6,7 +6,7 @@ version: 0.2
 date: "2022-11-07"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Fantasio}
   %\VignetteDepends{Fantasio}
   %\VignettePackage{Fantasio}
   %\VignetteEngine{knitr::rmarkdown}
