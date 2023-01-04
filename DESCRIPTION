@@ -23,7 +23,7 @@ Imports: zoo
 NeedsCompilation: yes
 LazyLoad: yes
 LazyData: yes
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Suggests: knitr, rmarkdown, HGDP.CEPH
 VignetteBuilder: knitr
 Additional_repositories: https://genostats.github.io/R/

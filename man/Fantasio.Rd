@@ -20,7 +20,7 @@ Fantasio(
   q = 1e-04,
   quality = 95,
   n.consecutive.markers = 5,
-  phen.code = c("R", "plink"),
+  phen.code = c("plink", "R"),
   expl.var = c("FLOD", "HBD_prob"),
   cov.df,
   cov
@@ -56,8 +56,8 @@ Fantasio(
 \item{n.consecutive.markers}{number of consecutive markers with a probability equal or greater to the value of `HBD.threshold`, used to find HBDsegments}
 
 \item{phen.code}{phenotype coding :
-- 'R' : 0:control ; 1:case ; NA:unknown (default)
-- 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown}
+- 'R' : 0:control ; 1:case ; NA:unknown 
+- 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown (default)}
 
 \item{cov.df}{a dataframe containing covariates for logistic regression}
 

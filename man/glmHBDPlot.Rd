@@ -4,12 +4,23 @@
 \alias{glmHBDPlot}
 \title{QQ-Plot & Manhattan Plots for glm on HBD prob or FLOD}
 \usage{
-glmHBDPlot(x, expl_var, save = FALSE)
+glmHBDPlot(
+  x,
+  expl_var,
+  plot = c("all", "unadj", "adj"),
+  qq = FALSE,
+  save = FALSE
+)
 }
 \arguments{
 \item{x}{an atlas object}
 
 \item{expl_var}{the explanatory variable 'FLOD' or 'HBD_prob'}
+
+\item{plot}{choose to plot 'all' = adj + unadj, 'adj' only, 'unadj' only (default = all)
+if 'all' but only 'adj' or 'unadj' data are available the function will only plot available data}
+
+\item{qq}{choose to plot qqplot (default = FALSE)}
 
 \item{save}{choose if plot are saved or not (.png format) (default = FALSE)}
 
