@@ -17,8 +17,8 @@
 #' @param quality minimal quality (in \%) to include an inbred individual into the analysis (default is 95)
 #' @param n.consecutive.markers number of consecutive markers with a probability equal or greater to the value of `HBD.threshold`, used to find HBDsegments
 #' @param phen.code phenotype coding :
-#'        - 'R' : 0:control ; 1:case ; NA:unknown (default)
-#'        - 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown
+#'        - 'R' : 0:control ; 1:case ; NA:unknown 
+#'        - 'plink' : 1:control ; 2:case ; 0/-9/NA:unknown (default)
 #' @param cov.df a dataframe containing covariates for logistic regression
 #' @param cov covariates of interest for logistic regression such as 'age', 'sex' , ...
 #' if missing, all covariates of the dataframe are considered
