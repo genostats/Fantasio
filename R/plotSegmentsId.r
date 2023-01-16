@@ -1,5 +1,5 @@
 plotSegmentsId <- function (byROHfile = FALSE, fileOrSubmaps, unit = "cM",
-            regions, color2 = "green4", main, build=37) {
+            regions, color2 = "green4", main, build) {
     # chose which unit to use for the plot
     l <- unitPlotId(file = fileOrSubmaps, unit = unit, byROHfile)
     ecart <- l$ecart

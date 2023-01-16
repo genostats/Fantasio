@@ -11,7 +11,7 @@
 #*** return a plot                                                               #
 ##################################################################################
 
-plotHBDSegmentsId <- function(Submaps, unit= "cM", id, famid, regions, outfile, build)
+plotHBDSegmentsId <- function(Submaps, unit= "cM", id, famid, regions, outfile, quality, build)
 {
   if(!is.character(id))
     return("Need individual id as character")
@@ -39,10 +39,10 @@ plotHBDSegmentsId <- function(Submaps, unit= "cM", id, famid, regions, outfile, 
   if(nrow(HBD) == 0)
     if ((id %in% Submaps@submap_summary$id & famid %in% Submaps@submap_summary$famid ) == FALSE)
       stop("No individual found, check spelling of id and famid")
-    else if (Submaps@submap_summary$quality[which(Submaps@submap_summary$id == id & Submaps@submap_summary$famid == famid)]<95)
-      stop("No HBD segment evaluation for this individual because of low QUALITY (<95)")
+    else if (Submaps@submap_summary$quality[which(Submaps@submap_summary$id == id & Submaps@submap_summary$famid == famid)]<= quality)
+      stop("No HBD segment evaluation for this individual because of low QUALITY (<=",quality,")")
     else if(Submaps@submap_summary$inbred[which(Submaps@submap_summary$id == id & Submaps@submap_summary$famid == famid)] == FALSE)
-      stop("Individual with good QUALITY (>95) but No HBD segment evaluation because he is not inbred")
+      stop("Individual with good QUALITY (>=",quality,") but No HBD segment evaluation because he is not inbred")
   
   #regions options
   if (missing(regions)) 
